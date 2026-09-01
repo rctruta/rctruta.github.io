@@ -1,0 +1,87 @@
+:root {
+  --ink:#14161a; --mid:#4a5058; --soft:#6b7280; --line:#e3e6ea;
+  --bg:#ffffff; --panel:#f7f8fa; --accent:#1c5d99; --accent-soft:#eaf2f9;
+}
+* { box-sizing:border-box; margin:0; padding:0 }
+body {
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  color:var(--ink); background:var(--bg); -webkit-font-smoothing:antialiased;
+}
+.wrap { max-width:920px; margin:0 auto; padding:0 28px }
+a { color:var(--accent); text-decoration:none }
+a:hover { text-decoration:underline }
+
+header { padding:78px 0 52px; border-bottom:1px solid var(--line) }
+.hero { display:flex; gap:38px; align-items:flex-start }
+.hero-text { flex:1; min-width:0 }
+.portrait {
+  width:168px; height:168px; border-radius:50%; object-fit:cover;
+  flex-shrink:0; border:1px solid var(--line);
+}
+h1 { font-size:15px; letter-spacing:2.2px; text-transform:uppercase;
+     color:var(--soft); font-weight:600; margin-bottom:26px }
+.thesis { font-size:40px; line-height:1.2; font-weight:600;
+          letter-spacing:-0.9px; max-width:17em }
+.sub { font-size:18px; color:var(--mid); margin-top:22px; max-width:38em }
+.sub.small { font-size:16px; color:var(--soft) }
+
+.cta { margin-top:32px; display:flex; gap:14px; flex-wrap:wrap }
+.btn { display:inline-block; padding:11px 20px; border-radius:6px;
+       font-size:15px; font-weight:500 }
+.btn.solid { background:var(--ink); color:#fff }
+.btn.solid:hover { background:#2c3038; text-decoration:none }
+.btn.ghost { border:1px solid var(--line); color:var(--ink) }
+.btn.ghost:hover { border-color:var(--soft); text-decoration:none }
+
+section { padding:56px 0; border-bottom:1px solid var(--line) }
+h2 { font-size:13px; letter-spacing:1.8px; text-transform:uppercase;
+     color:var(--soft); font-weight:600; margin-bottom:30px }
+
+.metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:26px }
+.metric .n { font-size:31px; font-weight:600; letter-spacing:-0.8px }
+.metric .l { font-size:14px; color:var(--mid); margin-top:5px; line-height:1.45 }
+
+.proj { margin-bottom:52px }
+.proj:last-child { margin-bottom:0 }
+.proj h3 { font-size:23px; font-weight:600; letter-spacing:-0.3px; margin-bottom:6px }
+.proj .kicker { font-size:13px; letter-spacing:1.3px; text-transform:uppercase;
+                color:var(--accent); font-weight:600; margin-bottom:9px }
+.proj p { color:var(--mid); margin-bottom:13px; max-width:46em }
+
+.tags { display:flex; gap:7px; flex-wrap:wrap; margin:13px 0 }
+.tag { font-size:12px; padding:3px 9px; background:var(--panel);
+       border:1px solid var(--line); border-radius:4px; color:var(--mid) }
+.links { font-size:14.5px; display:flex; gap:16px; flex-wrap:wrap; margin-top:11px }
+
+figure { margin:20px 0 6px }
+figure img { width:100%; border:1px solid var(--line); border-radius:7px; display:block }
+figcaption { font-size:13px; color:var(--soft); margin-top:8px; line-height:1.5 }
+
+.note { background:var(--accent-soft); border-left:3px solid var(--accent);
+        padding:13px 17px; border-radius:0 5px 5px 0; font-size:14.5px;
+        color:var(--mid); margin-top:15px }
+
+ul.clean { list-style:none }
+ul.clean li { padding:11px 0; border-bottom:1px solid var(--line);
+              display:flex; gap:16px; flex-wrap:wrap; align-items:baseline }
+ul.clean li:last-child { border-bottom:none }
+.when { font-size:13px; color:var(--soft); min-width:118px }
+.what { flex:1; min-width:250px }
+.what em { color:var(--mid); font-style:normal }
+
+footer { padding:52px 0 70px }
+.qrs { display:flex; gap:34px; flex-wrap:wrap; margin-top:26px }
+.qrs div { text-align:center }
+.qrs img { width:96px; height:96px; display:block; border:1px solid var(--line);
+           border-radius:5px; padding:5px; background:#fff }
+.qrs span { font-size:12.5px; color:var(--soft); display:block; margin-top:7px }
+
+@media (max-width:720px) {
+  .hero { flex-direction:column-reverse; gap:24px }
+  .portrait { width:118px; height:118px }
+}
+@media (max-width:640px) {
+  .thesis { font-size:29px }
+  header { padding:52px 0 40px }
+  .wrap { padding:0 20px }
+}
