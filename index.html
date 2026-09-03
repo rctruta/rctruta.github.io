@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<header><div class="wrap"><div class="hero"><div class="hero-text">
+<header id="top"><div class="wrap"><div class="hero"><div class="hero-text">
 
   <h1>Ramona C. Truta</h1>
   <p class="sub">Hi, I'm Ramona, an Independent Researcher, Solutions Architect and Educator. I bring over 20 years of rigorous database engineering 
@@ -18,14 +18,20 @@
        and then publish the experiment alongside the result. In that way, you
   can reproduce it or show me where I'm wrong.</p>
 
-  
-
   <div class="cta">
-    <a class="btn solid" href="#work">See the work</a>
+    <a class="btn solid" href="#coding">See the work</a>
     <a class="btn ghost" href="https://linkedin.com/in/ramonactruta">LinkedIn</a>
     <a class="btn ghost" href="https://github.com/rctruta">GitHub</a>
     <a class="btn ghost" href="https://ramonactruta.substack.com">Substack</a>
   </div>
+  <nav class="jump">
+    <a href="#coding">Coding</a>
+    <a href="#teaching">Teaching</a>
+    <a href="#speaking">Speaking</a>
+    <a href="#podcasts">Podcasts</a>
+    <a href="#writing">Writing</a>
+  </nav>
+
 
 </div><img class="portrait" src="assets/photo.jpg" alt="Ramona C. Truta"></div></div></header>
 
@@ -42,15 +48,25 @@
     <div class="metric"><div class="n">110+</div><div class="l">graded agent runs across 16 studies, 7 models</div></div>
     <div class="metric"><div class="n">0.56&rarr;0.87</div><div class="l">retrieval precision, after finding a RAG system answering questions its sources couldn't support</div></div>
   </div>
+  <a class="totop" href="#top">back to top &uarr;</a>
 </div></section>
 -->
 
 <!-- ============================ WORK ============================ -->
-<section id="work"><div class="wrap">
-  <h2>Selected work</h2>
+<section id="coding"><div class="wrap">
+  <h2>Selected Coding Work</h2>
 
+  <nav class="jump">
+    <a href="#sqlbenchdag">sqlbenchdag</a>
+    <a href="#agent-traces">Agent traces</a>
+    <a href="#rag-accuracy">RAG accuracy</a>
+    <a href="#agent-memory">Agent memory</a>
+    <a href="#consensus-contagion">Consensus Contagion</a>
+    <a href="#agent-tools">Agent tooling</a>
+  </nav>
+  <br>
   <!-- ---------- sqlbenchdag ---------- -->
-  <div class="proj">
+  <div class="proj" id="sqlbenchdag">
     <div class="kicker">Open source &middot; PyPI &middot; MCP registry</div>
     <h3>sqlbenchdag &mdash; a reproducible benchmarking laboratory</h3>
 
@@ -86,10 +102,11 @@
 
     <div class="note"><strong><a href="https://mcpverzeichnis.com/en/server/io-github-rctruta-sqlbenchdag">MCP server published to the official registry</a></strong>
     &mdash; v0.1.2, 10 tools, active since 2026-08-10. Install with <code>uvx sqlbenchdag</code>.</div>
+    <a class="totop" href="#top">back to top &uarr;</a>
   </div>
 
   <!-- ---------- agent evaluation ---------- -->
-  <div class="proj">
+  <div class="proj" id="agent-traces">
     <div class="kicker">Agent evaluation</div>
 
  
@@ -108,10 +125,11 @@
       <a href="https://github.com/BauplanLabs/bauplan/issues/370">#370</a>
       <a href="https://github.com/BauplanLabs/bauplan/issues/371">#371</a>
     </div>
+    <a class="totop" href="#top">back to top &uarr;</a>
   </div>
 
   <!-- ---------- podcast-rag ---------- -->
-  <div class="proj">
+  <div class="proj" id="rag-accuracy">
     <div class="kicker">Retrieval accuracy</div>
     <h3>A RAG system answering 17 of 20 questions its sources couldn't support</h3>
 
@@ -127,10 +145,11 @@
 
     <div class="tags"><span class="tag">LanceDB</span><span class="tag">sentence-transformers</span><span class="tag">Hybrid search</span><span class="tag">Evaluation sets</span><span class="tag">Precision / recall</span></div>
     <div class="links"><a href="https://github.com/rctruta/podcast-rag">Repository</a></div>
+    <a class="totop" href="#top">back to top &uarr;</a>
   </div>
 
   <!-- ---------- security ---------- -->
-  <div class="proj">
+  <div class="proj" id="agent-memory">
     <div class="kicker">AI security</div>
     <h3>Semantic injection into agent memory</h3>
 
@@ -148,10 +167,11 @@
     </div>
 
     <div class="note">Authorised researcher, Anthropic Cyber Verification Program.</div>
+    <a class="totop" href="#top">back to top &uarr;</a>
   </div>
 
   <!-- ---------- consensus contagion ---------- -->
-  <div class="proj">
+  <div class="proj" id="consensus-contagion">
     <div class="kicker">Human oversight</div>
     <h3>Consensus Contagion &mdash; agent pipelines defer to authority over evidence</h3>
 
@@ -164,10 +184,11 @@
 
     <div class="tags"><span class="tag">RLHF</span><span class="tag">Agentic routing</span><span class="tag">Status bias</span><span class="tag">Deterministic grading</span></div>
     <div class="note">Presented at the Canadian Women in Cybersecurity Conference, Toronto, May 2026.</div>
+    <a class="totop" href="#top">back to top &uarr;</a>
   </div>
 
   <!-- ---------- tooling ---------- -->
-  <div class="proj">
+  <div class="proj" id="agent-tools">
     <div class="kicker">Working with agents</div>
     <h3>Tools and playbooks for collaborating with coding agents</h3>
 
@@ -183,43 +204,71 @@
       <a href="https://github.com/rctruta/awesome-pedantic-medallion">awesome-pedantic-medallion</a>
       <a href="https://ramonactruta.substack.com/p/a-readme-is-a-set-of-falsifiable">A README is a Set of Falsifiable Claims</a>
     </div>
-  </div>
+    <a class="totop" href="#top">back to top &uarr;</a>
+  </div></section>
 
-  <!-- ---------- teaching ---------- -->
-  <div class="proj">
-    <div class="kicker">Teaching</div>
-    <h3>Ten years as instructor of record, University of Toronto</h3>
+
+  <!-- ---------- TEACHING ---------- -->
+
+<section><div class="wrap">
+
+    <h2 id="teaching">Teaching</h2>
 
     <p>1,400+ students across 21 course offerings &mdash; databases, database system technology,
-    software engineering, programming on the web. Led the department's migration from IBM DB2 to
+    software engineering, programming on the web, over a decade period. Led the department's migration from IBM DB2 to
     PostgreSQL: platform evaluation, rewriting every course material, retraining instructors,
     carrying students through a change none of them chose. Introduced XQuery into the curriculum
     from my own M.Sc. research, with assignments on real public datasets. Nominated for the
     U of T Scarborough Teaching Award, 2007.</p>
 
-    <div class="tags"><span class="tag">Curriculum design</span><span class="tag">Technology adoption</span><span class="tag">Instructor training</span><span class="tag">Teaching Certificate</span></div>
-  </div>
+    <div class="tags">
+      <span class="tag">Curriculum design</span>
+      <span class="tag">Technology adoption</span>
+      <span class="tag">Instructor training</span>
+      <span class="tag">Teaching Certificate</span>
+    </div>
 
+  <a class="totop" href="#top">back to top &uarr;</a>
 </div></section>
 
 
 <!-- ============================ SPEAKING ============================ -->
 <section><div class="wrap">
-  <h2>Speaking</h2>
+  <h2 id="speaking">Speaking</h2>
   <ul class="clean">
     <li><span class="when">Nov 12, 2026</span><span class="what"><strong>Neo4j NODES 2026</strong> &mdash; <em>Structure Is Not Security: Poisoning Graph-Based Agent Memory Through the Extraction Pipeline</em></span></li>
     <li><span class="when">Oct 16&ndash;17, 2026</span><span class="what"><strong>Data in the D</strong>, Detroit &mdash; <em>Measure What Matters</em></span></li>
     <li><span class="when">May 26, 2026</span><span class="what"><strong>Canadian Women in Cybersecurity</strong>, Toronto &mdash; <em>Consensus Contagion: Status Bias and the RLHF Tax in Agentic AI Routing Nodes</em></span></li>
     <li><span class="when">2026</span><span class="what"><strong>AI Tinkerers</strong>, Toronto &amp; Waterloo &mdash; <em>three talks</em></span></li>
-    <li><span class="when">Nov 6, 2025</span><span class="what"><strong>Neo4j NODES 2025</strong> &mdash; <em>Is My Brain a Knowledge Graph?</em></span></li>
-    <li><span class="when">2024</span><span class="what"><strong>Data Engineering &amp; ML Summit</strong> &mdash; <em>panel</em></span></li>
+    <li><span class="when">Nov 6, 2025</span><span class="what"><strong>Neo4j NODES 2025</strong> &mdash; 
+      <a href="https://www.youtube.com/watch?v=WnPM9WryIGg">Is My Brain a Knowledge Graph?</a></span></li>
+    <li><span class="when">Oct 3, 2024</span><span class="what"><strong>Data Engineering &amp; ML Summit</strong> &mdash; 
+      <em>Panel: Data Careers - Beyond Data Analytics And Engineering</em></span></li>
   </ul>
+  <a class="totop" href="#top">back to top &uarr;</a>
 </div></section>
+
+<section id="podcasts"><div class="wrap">
+  <h2 id="podcasts-h">Podcasts</h2>
+  <ul class="clean">
+    <li><span class="when">Mar 26, 2026</span><span class="what"><strong>Super Data Show</strong> &mdash; <a href="https://www.youtube.com/watch?v=gUekOnPsahI">AI Agent Memory is BROKEN | Here's How It Gets Exploited</a></span></li>
+    <li><span class="when">Oct 2, 2025</span><span class="what"><strong>The Data Engineering Channel</strong> &mdash; <a href="https://www.youtube.com/live/1HUCUU5G_Ns">The Truth About The Medallion Architecture</a> <em>(guest &amp; moderator)</em></span></li>
+    <li><span class="when">Aug 15, 2025</span><span class="what"><strong>The Data Engineering Channel</strong> &mdash; <a href="https://www.youtube.com/live/9d_k-uS2LcA">AI That Actually Helps Data Professionals</a></span></li>
+    <li><span class="when">Aug 4, 2025</span><span class="what"><strong>LEIT Data Podcast</strong> &mdash; <a href="https://www.youtube.com/watch?v=MFor0EJ7DyI">Staying Human in the AI Era</a></span></li>
+    <li><span class="when">Jul 18, 2025</span><span class="what"><strong>Christopher Gambill</strong> &mdash; <a href="https://www.youtube.com/watch?v=fK_75G-s77w">Learn These 10 AI Skills!</a></span></li>
+    <li><span class="when">Jun 27, 2025</span><span class="what"><strong>Christopher Gambill</strong> &mdash; <a href="https://www.youtube.com/watch?v=RKsm8-RyeeY">Data Architecture Principles That Skyrocket Your Career!</a></span></li>
+    <li><span class="when">Jun 4, 2025</span><span class="what"><strong>Agile Data Podcast #64</strong> &mdash; <a href="https://youtu.be/9VBus8KtyfI">The pattern of writing a data book</a> <em>(I interviewed Shane Gibson)</em></span></li>
+    <li><span class="when">Apr 28, 2025</span><span class="what"><strong>LEIT Data Podcast</strong> &mdash; <a href="https://youtu.be/AfeOP7GYFW0">Dashboard for the Human Spirit</a></span></li>
+    <li><span class="when">Aug 5, 2024</span><span class="what"><strong>LEIT Data Podcast</strong> &mdash; <a href="https://youtu.be/DfGq3cH2kAc">Data With Heart: The Human Connection in Data Value</a></span></li>
+  </ul>
+  <a class="totop" href="#top">back to top &uarr;</a>
+</div></section>
+
 
 
 <!-- ============================ WRITING ============================ -->
 <section><div class="wrap">
-  <h2>Writing</h2>
+  <h2 id="writing">Writing</h2>
   <ul class="clean">
     <li><span class="what"><a href="https://ramonactruta.substack.com/p/measuring-quack-duckdbs-new-client">Measuring Quack: DuckDB's New Client-Server Protocol</a> &mdash; <em>independent measurements of a protocol at beta, every number capsule-backed</em></span></li>
     <li><span class="what"><a href="https://ramonactruta.substack.com/p/the-blackboard-and-the-library">The Blackboard and the Library</a> &mdash; <em>agents need two kinds of memory: the blackboard you erase, and the library that persists</em></span></li>
@@ -228,12 +277,13 @@
     <li><span class="what"><a href="https://ramonactruta.substack.com/p/the-job-that-wasnt-how-ai-companies">The Job That Wasn't</a> &mdash; <em>what the take-home is actually collecting</em></span></li>
     <li><span class="what"><a href="https://ramonactruta.substack.com">All writing &rarr;</a></span></li>
   </ul>
+  <a class="totop" href="#top">back to top &uarr;</a>
 </div></section>
 
 
 <!-- ============================ CONTACT ============================ -->
 <footer><div class="wrap">
-  <h2>Contact</h2>
+  <h2 id="contact">Contact</h2>
 
   <!-- YOUR VOICE -->
   <p style="color:var(--mid);max-width:34em">Waterloo, Ontario. Open to work in AI enablement,
@@ -253,7 +303,8 @@
     <div><img src="assets/qr-github.png" alt="GitHub QR"><span>GitHub</span></div>
     <div><img src="assets/qr-substack.png" alt="Substack QR"><span>Substack</span></div>
   </div>
-</div></footer>
+  <a class="totop" href="#top">back to top &uarr;</a>
+  </div></footer>
 
 </body>
 </html>
