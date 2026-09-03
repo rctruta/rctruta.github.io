@@ -92,8 +92,8 @@
   <div class="proj">
     <div class="kicker">Agent evaluation</div>
 
-    <!-- YOUR VOICE - heading -->
-    <h3>Reading agent traces instead of asking agents how they did</h3>
+ 
+    <h3>Reading agent traces</h3>
 
     <p>Per-turn tracing and deterministic grading of coding agents working against a commercial
     lakehouse platform. The traces surfaced three defects I reported upstream &mdash; including
@@ -115,7 +115,7 @@
     <div class="kicker">Retrieval accuracy</div>
     <h3>A RAG system answering 17 of 20 questions its sources couldn't support</h3>
 
-    <!-- YOUR VOICE - the last sentence here is Claude's aphorism. -->
+    
     <p>I built a labelled evaluation set for a retrieval system I had written myself, and found it
     answering fluently, with citations, and with no error of any kind. Recalibrated the refusal
     threshold from 0.56 to 0.87 precision and validated out-of-sample. Confident output is not
@@ -123,7 +123,7 @@
 
     <p>Runs entirely from a local directory &mdash; LanceDB for vector, full-text and hybrid
     search, sentence-transformers for embeddings, no hosted cluster and no API key. Ask a
-    question, get an answer and a link to the exact second someone said it.</p>
+    question, get an answer and a link to the timestamp where it's answered.</p>
 
     <div class="tags"><span class="tag">LanceDB</span><span class="tag">sentence-transformers</span><span class="tag">Hybrid search</span><span class="tag">Evaluation sets</span><span class="tag">Precision / recall</span></div>
     <div class="links"><a href="https://github.com/rctruta/podcast-rag">Repository</a></div>
@@ -155,12 +155,12 @@
     <div class="kicker">Human oversight</div>
     <h3>Consensus Contagion &mdash; agent pipelines defer to authority over evidence</h3>
 
-    <!-- YOUR VOICE - "the one I keep returning to" is Claude's phrasing. -->
+
     <p>16 content-addressed studies, 7 models, 110+ graded runs. When a high-status persona is
     injected into an agentic routing decision, the pipeline follows the persona rather than the
-    engineering argument. The companion finding is the one I keep returning to: prompt-level
-    instructions get ignored under pressure while mechanical controls hold. Guidance a system can
-    choose to ignore is not a control.</p>
+    engineering argument. The companion finding is prompt-level
+    instructions get ignored under pressure while mechanical controls hold. 
+    </p>
 
     <div class="tags"><span class="tag">RLHF</span><span class="tag">Agentic routing</span><span class="tag">Status bias</span><span class="tag">Deterministic grading</span></div>
     <div class="note">Presented at the Canadian Women in Cybersecurity Conference, Toronto, May 2026.</div>
