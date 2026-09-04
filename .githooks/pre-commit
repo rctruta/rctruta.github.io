@@ -1,0 +1,12 @@
+#!/bin/sh
+# Claims gate for the public site. Runs the same verifier as the résumé repo.
+set -e
+CLAIMS="$HOME/claude-docs-allowed/Resume/.claims"
+PY="$(command -v python3)"
+[ -x "$CLAIMS/verify.py" ] || exit 0
+if ! "$PY" "$CLAIMS/verify.py" --check; then
+  echo "  -> A fact on the site no longer matches its source." >&2; exit 1
+fi
+if ! "$PY" "$CLAIMS/scan.py" --check "$(git rev-parse --show-toplevel)"; then
+  echo "  -> A banned claim appears in the site. See .claims/FACTS.yaml." >&2; exit 1
+fi
