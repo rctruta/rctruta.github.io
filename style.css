@@ -184,3 +184,7 @@ header .sub { font-size:17px; line-height:1.6; margin-top:0; max-width:40em; }
   footer .wrap { flex-direction: column; align-items: flex-start; gap: 6px; }
 }
 .cat-note { margin:-18px 0 20px; max-width:44em; }
+/* bio links: present but not shouty */
+header .sub a { color:var(--ink); text-decoration:none;
+                border-bottom:1px solid var(--green); padding-bottom:1px; }
+header .sub a:hover { color:var(--green); }
