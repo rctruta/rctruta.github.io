@@ -14,18 +14,10 @@
     <a href="contact.html">Contact</a>
   </span>
 </div></nav>
-<section><div class="wrap"><h2>Research</h2><nav class="jump">
-    <a href="#sqlbenchdag">sqlbenchdag</a>
-    <a href="#agent-traces">Agent traces</a>
-    <a href="#rag-accuracy">RAG accuracy</a>
-    <a href="#agent-memory">Agent memory</a>
-    <a href="#consensus-contagion">Consensus Contagion</a>
-    <a href="#agent-tools">Agent tooling</a>
-  </nav>
-  <br>
-  <!-- ---------- sqlbenchdag ---------- -->
-  <div class="proj" id="sqlbenchdag">
-    <div class="kicker">Open source &middot; PyPI &middot; MCP registry</div>
+<section><div class="wrap">
+  <h2>Database &amp; Query Engine Benchmarking</h2>
+  <p class="sub small cat-note">Measuring engines and protocols under controlled, cold-cache conditions. Every result ships with the experiment that produced it.</p>
+<div class="proj" id="sqlbenchdag">
     <h3>sqlbenchdag &mdash; a reproducible benchmarking laboratory</h3>
 
     <p>Every experiment is a capsule addressed by an 8-character SHA-256 fingerprint over its
@@ -66,54 +58,12 @@
 
 
 
-  <!-- ---------- agent evaluation ---------- -->
-  <div class="proj" id="agent-traces">
-    <div class="kicker">Agent evaluation</div>
-
- 
-    <h3>Reading agent traces</h3>
-
-    <p>Per-turn tracing and deterministic grading of coding agents working against a commercial
-    lakehouse platform. The traces surfaced three defects I reported upstream &mdash; including
-    an error message that actively sends an agent in the wrong direction, suggesting
-    <code>tanh</code> for a date function.</p>
-
-    <div class="tags"><span class="tag">Python</span><span class="tag">Per-turn tracing</span><span class="tag">Deterministic grading</span><span class="tag">LLM agents</span></div>
-
-    <div class="links">
-      <a href="https://github.com/rctruta/bauplan-agent-parse-study">Study &amp; traces</a>
-      <a href="https://github.com/BauplanLabs/bauplan/issues/369">Issue #369</a>
-      <a href="https://github.com/BauplanLabs/bauplan/issues/370">#370</a>
-      <a href="https://github.com/BauplanLabs/bauplan/issues/371">#371</a>
-    </div>
-    <a class="totop" href="#top">back to top &uarr;</a>
-    
-  </div>
-
-  <!-- ---------- podcast-rag ---------- -->
-  <div class="proj" id="rag-accuracy">
-    <div class="kicker">Retrieval accuracy</div>
-    <h3>A RAG system answering 17 of 20 questions its sources couldn't support</h3>
-
-    
-    <p>I built a labelled evaluation set for a retrieval system I had written myself, and found it
-    answering fluently, with citations, and with no error of any kind. Recalibrated the refusal
-    threshold from 0.56 to 0.87 precision and validated out-of-sample. Confident output is not
-    evidence; the failure mode to fear is the plausible one, not the obvious one.</p>
-
-    <p>Runs entirely from a local directory &mdash; LanceDB for vector, full-text and hybrid
-    search, sentence-transformers for embeddings, no hosted cluster and no API key. Ask a
-    question, get an answer and a link to the timestamp where it's answered.</p>
-
-    <div class="tags"><span class="tag">LanceDB</span><span class="tag">sentence-transformers</span><span class="tag">Hybrid search</span><span class="tag">Evaluation sets</span><span class="tag">Precision / recall</span></div>
-    <div class="links"><a href="https://github.com/rctruta/podcast-rag">Repository</a></div>
-    <a class="totop" href="#top">back to top &uarr;</a>
-    
-  </div>
-
-  <!-- ---------- security ---------- -->
-  <div class="proj" id="agent-memory">
-    <div class="kicker">AI security</div>
+  
+</div></section>
+<section><div class="wrap">
+  <h2>Agent Memory Security</h2>
+  <p class="sub small cat-note">Attacks on what an agent stores and later treats as its own knowledge. Maps to OWASP LLM01 (indirect prompt injection) and LLM04 (data poisoning).</p>
+<div class="proj" id="agent-memory">
     <h3>Semantic injection into agent memory</h3>
 
     <p>A deterministic exploit against an open-source agent memory system: text that reads as
@@ -134,9 +84,33 @@
     
   </div>
 
-  <!-- ---------- consensus contagion ---------- -->
-  <div class="proj" id="consensus-contagion">
-    <div class="kicker">Human oversight</div>
+  
+</div></section>
+<section><div class="wrap">
+  <h2>Agent Evaluation &amp; Reliability</h2>
+  <p class="sub small cat-note">Instrumenting agents and reading what they actually did, rather than asking them. Relates to OWASP LLM06 (excessive agency).</p>
+<div class="proj" id="agent-traces">
+    <h3>Reading agent traces</h3>
+
+    <p>Per-turn tracing and deterministic grading of coding agents working against a commercial
+    lakehouse platform. The traces surfaced three defects I reported upstream &mdash; including
+    an error message that actively sends an agent in the wrong direction, suggesting
+    <code>tanh</code> for a date function.</p>
+
+    <div class="tags"><span class="tag">Python</span><span class="tag">Per-turn tracing</span><span class="tag">Deterministic grading</span><span class="tag">LLM agents</span></div>
+
+    <div class="links">
+      <a href="https://github.com/rctruta/bauplan-agent-parse-study">Study &amp; traces</a>
+      <a href="https://github.com/BauplanLabs/bauplan/issues/369">Issue #369</a>
+      <a href="https://github.com/BauplanLabs/bauplan/issues/370">#370</a>
+      <a href="https://github.com/BauplanLabs/bauplan/issues/371">#371</a>
+    </div>
+    <a class="totop" href="#top">back to top &uarr;</a>
+    
+  </div>
+
+  
+<div class="proj" id="consensus-contagion">
     <h3>Consensus Contagion &mdash; agent pipelines defer to authority over evidence</h3>
 
 
@@ -152,9 +126,36 @@
     
   </div>
 
-  <!-- ---------- tooling ---------- -->
-  <div class="proj" id="agent-tools">
-    <div class="kicker">Working with agents</div>
+  
+</div></section>
+<section><div class="wrap">
+  <h2>Retrieval Integrity</h2>
+  <p class="sub small cat-note">Whether a retrieval system can support the answers it gives. Maps to OWASP LLM09 (misinformation).</p>
+<div class="proj" id="rag-accuracy">
+    <h3>A RAG system answering 17 of 20 questions its sources couldn't support</h3>
+
+    
+    <p>I built a labelled evaluation set for a retrieval system I had written myself, and found it
+    answering fluently, with citations, and with no error of any kind. Recalibrated the refusal
+    threshold from 0.56 to 0.87 precision and validated out-of-sample. Confident output is not
+    evidence; the failure mode to fear is the plausible one, not the obvious one.</p>
+
+    <p>Runs entirely from a local directory &mdash; LanceDB for vector, full-text and hybrid
+    search, sentence-transformers for embeddings, no hosted cluster and no API key. Ask a
+    question, get an answer and a link to the timestamp where it's answered.</p>
+
+    <div class="tags"><span class="tag">LanceDB</span><span class="tag">sentence-transformers</span><span class="tag">Hybrid search</span><span class="tag">Evaluation sets</span><span class="tag">Precision / recall</span></div>
+    <div class="links"><a href="https://github.com/rctruta/podcast-rag">Repository</a></div>
+    <a class="totop" href="#top">back to top &uarr;</a>
+    
+  </div>
+
+  
+</div></section>
+<section><div class="wrap">
+  <h2>Enforcement Tooling</h2>
+  <p class="sub small cat-note">Engineering that came out of the research: gates that hold when instructions don't.</p>
+<div class="proj" id="agent-tools">
     <h3>Tools and playbooks for collaborating with coding agents</h3>
 
     <p><strong>ai-agent-utils</strong> &mdash; a bootstrap that starts a repository with gates
@@ -172,9 +173,8 @@
       <a href="https://github.com/rctruta/ai-agent-utils">ai-agent-utils</a>
       <a href="https://github.com/rctruta/awesome-pedantic-medallion">awesome-pedantic-medallion</a>
       <a href="https://ramonactruta.substack.com/p/a-readme-is-a-set-of-falsifiable">A README is a Set of Falsifiable Claims</a>
-    </div></div>
-    <a class="totop" href="#top">back to top &uarr;</a>
+    </div>
 
-  </section>
+</div></section>
 <footer><div class="wrap"><span>&copy; 2025&ndash;2026 Ramona C. Truta</span><a href="contact.html">Contact</a></div></footer>
 </body></html>
