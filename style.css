@@ -145,3 +145,41 @@ h1 { font-family:Georgia,"Iowan Old Style","Times New Roman",serif;
 .topnav + header { padding-top:30px; }
 header { padding:30px 0 34px; }
 header .sub { font-size:17px; line-height:1.6; margin-top:0; max-width:40em; }
+
+/* ---------- phones ---------- */
+@media (max-width: 560px) {
+  .wrap { padding: 0 18px; }
+
+  /* list rows: stack the date above the content instead of forcing a 368px row */
+  ul.clean li { flex-direction: column; gap: 2px; }
+  .when { min-width: 0; }
+  .what { min-width: 0; }
+
+  /* QR codes wrap instead of overflowing */
+  .qrs { flex-wrap: wrap; gap: 18px; justify-content: flex-start; }
+  .qrs img { width: 78px; height: 78px; }
+
+  /* nothing may exceed the viewport */
+  img, figure img, svg, pre, table { max-width: 100%; height: auto; }
+  pre, code { overflow-x: auto; word-break: break-word; }
+
+  /* type: slightly smaller, still comfortable */
+  body { font-size: 16.5px; }
+  h1 { font-size: 27px; }
+  h2 { font-size: 15px; }
+  .proj h3 { font-size: 20px; line-height: 1.3; }
+  header .sub { font-size: 16px; }
+
+  /* hero stacks, portrait first */
+  .hero { flex-direction: column-reverse; align-items: flex-start; gap: 18px; }
+  .portrait-col { align-items: flex-start; }
+  .portrait { width: 104px; height: 104px; }
+
+  /* long identifiers and URLs must not push the page wide */
+  .links, .ev, .note { word-break: break-word; }
+  .tags { gap: 5px; }
+
+  header { padding: 22px 0 26px; }
+  section { padding: 30px 0; }
+  footer .wrap { flex-direction: column; align-items: flex-start; gap: 6px; }
+}
