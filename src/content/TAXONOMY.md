@@ -50,8 +50,17 @@ that matters for a given talk.
 | `co-host`    | she shared the chair for an episode                            |
 | `panelist`   | several voices, no single interviewer                          |
 
-"Itinerant podcaster" is how she describes the body of this work. It is a page
-headline, not a field value.
+**"Itinerant podcaster"** is a practice, not a chair, so it is a tag —
+`itinerant-podcaster` — and never a `role`.
+
+The role says which seat she was in. The tag says why she was there: turning up
+on a friend's own show to interview them about something they have done, on the
+principle that people who spend their time celebrating others deserve to be
+celebrated on their own show. Every itinerant-podcaster episode is also
+`role: guest host`; not every `guest host` episode earns the tag.
+
+Being a tag is what lets her decide episode by episode. A role value would
+decide for her.
 
 **`format`** — `live` or `recorded`. Determined by how it was captured, not how
 you watch it now. A YouTube URL containing `/live/` was a live stream.
