@@ -1,5 +1,5 @@
 import { defineCollection } from 'astro:content'
-import { glob } from 'astro/loaders'
+import { file, glob } from 'astro/loaders'
 import { z } from 'astro/zod'
 
 function removeDupsAndLowerCase(array: string[]) {
@@ -57,4 +57,40 @@ const docs = defineCollection({
     })
 })
 
-export const collections = { blog, docs }
+// Every public appearance — talks and podcasts — in one file.
+// The site renders it; podcast-clips reads the same file as its corpus
+// manifest. Shared fields are validated once; each kind adds its own.
+
+const appearanceBase = {
+  date: z.coerce.date(),
+  title: z.string(),
+  org: z.string(),
+  // A podcast is published once it has a url. Talks render regardless.
+  url: z.string().url().optional(),
+  note: z.string().optional(),
+  tags: z.array(z.string()).default([]).transform(removeDupsAndLowerCase)
+}
+
+const appearances = defineCollection({
+  loader: file('./src/content/appearances.yaml'),
+  schema: z.discriminatedUnion('kind', [
+    z.object({
+      kind: z.literal('talk'),
+      eventType: z.enum(['talk', 'keynote', 'panel', 'workshop']),
+      location: z.string(),
+      ...appearanceBase
+    }),
+    z.object({
+      kind: z.literal('podcast'),
+      // interviewee = she was the guest; interviewer = she asked the questions
+      role: z.enum(['guest', 'interviewer', 'co-host']),
+      format: z.enum(['live', 'recorded']),
+      // who she interviewed, when role is interviewer
+      counterpart: z.string().optional(),
+      transcript: z.string().optional(),
+      ...appearanceBase
+    })
+  ])
+})
+
+export const collections = { blog, docs, appearances }

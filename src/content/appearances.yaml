@@ -1,0 +1,180 @@
+# Canonical record of every public appearance.
+#
+# This file is the source of truth. The website renders it; podcast-clips reads
+# it as a corpus manifest. Nothing else should keep a second copy.
+#
+# Shared fields (all kinds):  id, kind, date, title, org, url, status, tags, note
+# kind: talk     adds  eventType, location
+# kind: podcast  adds  role, format, counterpart, transcript
+#
+# Nothing here records "is it out yet" — that is derived, so it cannot go stale:
+#   talk     always rendered; upcoming vs past comes from `date`
+#   podcast  rendered once it has a `url`; no url = recorded, not published
+# To publish an episode, paste its link. There is no second step.
+
+# ---------------------------------------------------------------- talks -----
+
+- id: nodes-2026
+  kind: talk
+  date: 2026-11-12
+  title: 'Structure Is Not Security: Poisoning Graph-Based Agent Memory Through the Extraction Pipeline'
+  org: Neo4j NODES 2026
+  eventType: talk
+  location: virtual
+  tags: [agent-memory, security]
+
+- id: data-in-the-d-2026
+  kind: talk
+  date: 2026-10-16
+  title: Measure What Matters
+  org: Data in the D
+  eventType: talk
+  location: Detroit
+  tags: [benchmarking]
+
+- id: cywic-2026
+  kind: talk
+  date: 2026-05-26
+  title: 'Consensus Contagion: Status Bias and the RLHF Tax in Agentic AI Routing Nodes'
+  org: Canadian Women in Cybersecurity
+  eventType: talk
+  location: Toronto
+  tags: [agent-evaluation, bias, security]
+
+- id: ai-tinkerers-2026
+  kind: talk
+  date: 2026-01-01
+  title: Three talks
+  org: AI Tinkerers
+  eventType: talk
+  location: Toronto & Waterloo
+  note: Three separate talks across 2026; dates to be split out.
+  tags: [agents]
+
+- id: nodes-2025
+  kind: talk
+  date: 2025-11-06
+  title: Is My Brain a Knowledge Graph?
+  org: Neo4j NODES 2025
+  eventType: talk
+  location: virtual
+  url: https://www.youtube.com/watch?v=WnPM9WryIGg
+  tags: [knowledge-graphs]
+
+- id: deml-summit-2024
+  kind: talk
+  date: 2024-10-03
+  title: 'Panel: Data Careers - Beyond Data Analytics And Engineering'
+  org: Data Engineering & ML Summit
+  eventType: panel
+  location: virtual
+  tags: [careers]
+
+# ------------------------------------------------------------- podcasts -----
+
+- id: joe-reis-2026
+  kind: podcast
+  date: 2026-09-12
+  title: 'TBD — interview with Joe Reis on his latest book'
+  org: Joe Reis
+  role: interviewer
+  format: recorded
+  counterpart: Joe Reis
+  note: >-
+    Second recording; the first take's audio was unusable. Joe agreed to switch
+    seats and be interviewed about his book. Verify title and release date
+    before this is rendered.
+  tags: [books, data]
+
+- id: super-data-show-2026-03
+  kind: podcast
+  date: 2026-03-26
+  title: AI Agent Memory is BROKEN | Here's How It Gets Exploited
+  org: Super Data Show
+  role: guest
+  format: recorded
+  url: https://www.youtube.com/watch?v=gUekOnPsahI
+  tags: [agent-memory, security]
+
+- id: dec-medallion-2025
+  kind: podcast
+  date: 2025-10-02
+  title: The Truth About The Medallion Architecture
+  org: The Data Engineering Channel
+  role: co-host
+  format: live
+  url: https://www.youtube.com/live/1HUCUU5G_Ns
+  note: Guest and moderator.
+  tags: [data-architecture]
+
+- id: dec-ai-helps-2025
+  kind: podcast
+  date: 2025-08-15
+  title: AI That Actually Helps Data Professionals
+  org: The Data Engineering Channel
+  role: guest
+  format: live
+  url: https://www.youtube.com/live/9d_k-uS2LcA
+  tags: [ai]
+
+- id: leit-staying-human-2025
+  kind: podcast
+  date: 2025-08-04
+  title: Staying Human in the AI Era
+  org: LEIT Data Podcast
+  role: guest
+  format: recorded
+  url: https://www.youtube.com/watch?v=MFor0EJ7DyI
+  tags: [ai, people]
+
+- id: gambill-ai-skills-2025
+  kind: podcast
+  date: 2025-07-18
+  title: Learn These 10 AI Skills!
+  org: Christopher Gambill
+  role: guest
+  format: recorded
+  url: https://www.youtube.com/watch?v=fK_75G-s77w
+  tags: [ai, careers]
+
+- id: gambill-data-architecture-2025
+  kind: podcast
+  date: 2025-06-27
+  title: Data Architecture Principles That Skyrocket Your Career!
+  org: Christopher Gambill
+  role: guest
+  format: recorded
+  url: https://www.youtube.com/watch?v=RKsm8-RyeeY
+  tags: [data-architecture, careers]
+
+- id: agile-data-64
+  kind: podcast
+  date: 2025-06-04
+  title: The pattern of writing a data book
+  org: Agile Data Podcast
+  role: interviewer
+  format: recorded
+  counterpart: Shane Gibson
+  url: https://youtu.be/9VBus8KtyfI
+  note: Episode 64.
+  tags: [books, data]
+
+- id: leit-dashboard-spirit-2025
+  kind: podcast
+  date: 2025-04-28
+  title: Dashboard for the Human Spirit
+  org: LEIT Data Podcast
+  role: guest
+  format: recorded
+  url: https://youtu.be/AfeOP7GYFW0
+  tags: [people]
+
+- id: leit-data-with-heart-2024
+  kind: podcast
+  date: 2024-08-05
+  title: 'Data With Heart: The Human Connection in Data Value'
+  org: LEIT Data Podcast
+  role: guest
+  format: recorded
+  url: https://youtu.be/DfGq3cH2kAc
+  tags: [people]
