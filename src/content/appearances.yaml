@@ -3,9 +3,9 @@
 # This file is the source of truth. The website renders it; podcast-clips reads
 # it as a corpus manifest. Nothing else should keep a second copy.
 #
-# Shared fields (all kinds):  id, kind, date, title, org, url, status, tags, note
-# kind: talk     adds  eventType, location
-# kind: podcast  adds  role, format, counterpart, transcript
+# Vocabulary is fixed — see TAXONOMY.md. The build fails on anything else.
+# `title` is the name of the thing and nothing else: role, format and venue
+# are fields, never prefixes.
 #
 # Nothing here records "is it out yet" — that is derived, so it cannot go stale:
 #   talk     always rendered; upcoming vs past comes from `date`
@@ -18,7 +18,7 @@
   kind: talk
   date: 2026-11-12
   title: 'Structure Is Not Security: Poisoning Graph-Based Agent Memory Through the Extraction Pipeline'
-  org: Neo4j NODES 2026
+  org: Neo4j NODES
   eventType: talk
   location: virtual
   tags: [agent-memory, security]
@@ -41,21 +41,29 @@
   location: Toronto
   tags: [agent-evaluation, bias, security]
 
-- id: ai-tinkerers-2026
+- id: ai-tinkerers-semantic-laundering
   kind: talk
-  date: 2026-01-01
-  title: Three talks
-  org: AI Tinkerers
+  date: 2026-02-26
+  title: 'Semantic Laundering: Agentic Memory'
+  org: AI Tinkerers Toronto
   eventType: talk
-  location: Toronto & Waterloo
-  note: Three separate talks across 2026; dates to be split out.
-  tags: [agents]
+  location: Toronto
+  tags: [agent-memory, security, demo]
+
+- id: ai-tinkerers-blueberry-muffin
+  kind: talk
+  date: 2026-01-29
+  title: 'Blueberry Muffin: Agent Memory Injection'
+  org: AI Tinkerers Toronto
+  eventType: talk
+  location: Toronto
+  tags: [agent-memory, security, demo]
 
 - id: nodes-2025
   kind: talk
   date: 2025-11-06
   title: Is My Brain a Knowledge Graph?
-  org: Neo4j NODES 2025
+  org: Neo4j NODES
   eventType: talk
   location: virtual
   url: https://www.youtube.com/watch?v=WnPM9WryIGg
@@ -64,7 +72,7 @@
 - id: deml-summit-2024
   kind: talk
   date: 2024-10-03
-  title: 'Panel: Data Careers - Beyond Data Analytics And Engineering'
+  title: 'Data Careers: Beyond Data Analytics And Engineering'
   org: Data Engineering & ML Summit
   eventType: panel
   location: virtual
@@ -77,7 +85,7 @@
   date: 2026-09-12
   title: 'TBD — interview with Joe Reis on his latest book'
   org: Joe Reis
-  role: interviewer
+  role: guest host
   format: recorded
   counterpart: Joe Reis
   note: >-
@@ -95,6 +103,47 @@
   format: recorded
   url: https://www.youtube.com/watch?v=gUekOnPsahI
   tags: [agent-memory, security]
+
+- id: dip-data-misaligned-2026
+  kind: podcast
+  date: 2026-03-20
+  title: 'Data, Misaligned; Bad Data Ruins AI'
+  org: The Data Intelligence Platform
+  role: guest
+  format: recorded
+  url: https://dataintelligenceplatform.substack.com/p/data-misaligned-e5b
+  tags: [data-quality, ai]
+
+- id: nerds-100-episodes-2026
+  kind: podcast
+  date: 2026-02-12
+  title: 100 Episodes Later... Data Nerd Awards and Unfiltered Data Predictions
+  org: Data Podcast for Nerds!
+  role: guest
+  format: recorded
+  url: https://www.youtube.com/watch?v=DmGtpu8Ek70
+  tags: [data]
+
+- id: nerds-year-in-review-2026
+  kind: podcast
+  date: 2026-01-22
+  title: 2025 Year-in-Review
+  org: Data Podcast for Nerds!
+  role: guest host
+  format: recorded
+  note: Format unverified — check whether this was streamed live. No link yet.
+  tags: [data]
+
+- id: dip-live-ole-2025
+  kind: podcast
+  date: 2025-11-28
+  title: Live with Ole Olesen-Bagneux and Ramona Truta
+  org: The Data Intelligence Platform
+  role: panelist
+  format: live
+  url: https://dataintelligenceplatform.substack.com/p/live-with-ole-olesen-bagneux-and
+  note: Two guests in conversation — confirm whether panelist or co-host is right.
+  tags: [metadata, data]
 
 - id: dec-medallion-2025
   kind: podcast
@@ -152,10 +201,10 @@
   date: 2025-06-04
   title: The pattern of writing a data book
   org: Agile Data Podcast
-  role: interviewer
+  role: guest host
   format: recorded
   counterpart: Shane Gibson
-  url: https://youtu.be/9VBus8KtyfI
+  url: https://www.youtube.com/watch?v=9VBus8KtyfI
   note: Episode 64.
   tags: [books, data]
 
@@ -166,8 +215,18 @@
   org: LEIT Data Podcast
   role: guest
   format: recorded
-  url: https://youtu.be/AfeOP7GYFW0
+  url: https://www.youtube.com/watch?v=AfeOP7GYFW0
   tags: [people]
+
+- id: nerds-monika-year-two-2025
+  kind: podcast
+  date: 2025-01-02
+  title: Highlights from Monika's Second Year as a Podcast Host
+  org: Data Podcast for Nerds!
+  role: guest
+  format: live
+  url: https://www.youtube.com/live/i6Ti3FaG0UU
+  tags: [data]
 
 - id: leit-data-with-heart-2024
   kind: podcast
@@ -176,5 +235,15 @@
   org: LEIT Data Podcast
   role: guest
   format: recorded
-  url: https://youtu.be/DfGq3cH2kAc
+  url: https://www.youtube.com/watch?v=DfGq3cH2kAc
   tags: [people]
+
+- id: nerds-monika-year-one-2024
+  kind: podcast
+  date: 2024-01-04
+  title: Highlights From Monika's First Year as a Podcast Host
+  org: Data Podcast for Nerds!
+  role: guest
+  format: live
+  url: https://www.youtube.com/live/AnjS72yGlqk
+  tags: [data]

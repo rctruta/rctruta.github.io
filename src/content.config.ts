@@ -82,10 +82,11 @@ const appearances = defineCollection({
     }),
     z.object({
       kind: z.literal('podcast'),
-      // interviewee = she was the guest; interviewer = she asked the questions
-      role: z.enum(['guest', 'interviewer', 'co-host']),
+      // See TAXONOMY.md. "guest host" = she asked the questions on someone
+      // else's show. "Itinerant podcaster" is a page headline, not a value.
+      role: z.enum(['guest', 'guest host', 'co-host', 'panelist']),
       format: z.enum(['live', 'recorded']),
-      // who she interviewed, when role is interviewer
+      // who she interviewed, only when role is "guest host"
       counterpart: z.string().optional(),
       transcript: z.string().optional(),
       ...appearanceBase

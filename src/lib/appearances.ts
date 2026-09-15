@@ -25,9 +25,9 @@ export async function podcasts() {
     .filter((e) => e.data.kind === 'podcast' && e.data.url)
     .sort(byNewest)
   return {
-    asGuest: published.filter((e) => e.data.kind === 'podcast' && e.data.role !== 'interviewer'),
-    asInterviewer: published.filter(
-      (e) => e.data.kind === 'podcast' && e.data.role === 'interviewer'
+    asGuest: published.filter((e) => e.data.kind === 'podcast' && e.data.role !== 'guest host'),
+    asGuestHost: published.filter(
+      (e) => e.data.kind === 'podcast' && e.data.role === 'guest host'
     ),
     /** Recorded, no link yet — for your own eyes, not the site. */
     unpublished: (await getCollection('appearances')).filter(
