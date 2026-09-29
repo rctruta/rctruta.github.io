@@ -15,6 +15,62 @@
   </span>
 </div></nav>
 <section><div class="wrap">
+  <h2 id="data-engineering">Data Engineering &amp; Modeling</h2>
+  <p class="sub small cat-note">Source systems into structures analysts and models can use. Migration, normalization, record linkage, and the SQL behaviour underneath it.</p>
+
+  <div class="proj" id="guelph-migration">
+    <h3>Legacy-to-PostgreSQL migration and record linkage &mdash; University of Guelph, 2011&ndash;2015</h3>
+
+    <p>Sole architect of the migration of a historical research database to PostgreSQL:
+    schema design and normalization cut storage by 73%. The result was a production
+    system with researchers as its direct clients &mdash; requirements gathering,
+    stakeholder translation, and ongoing support were part of the job, not adjacent
+    to it.</p>
+
+    <p>On top of it, probabilistic record linkage connecting WWI military service records
+    to census data: 97% linkage across 450,000 records at 89% precision. Blocking and
+    scoring were only half the problem; the harder half was validation, so I automated
+    family re-creation to check links against household structure, which raised
+    verification speed fourfold.</p>
+
+    <p>Two properties of that work carry into anything with dirty source data: the
+    ground truth is never handed to you, and a linkage rate means nothing without the
+    precision beside it.</p>
+
+    <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">Schema design</span><span class="tag">Normalization</span><span class="tag">Probabilistic record linkage</span><span class="tag">Data quality</span></div>
+  </div>
+
+  <div class="proj" id="sql-behaviour">
+    <h3>SQL behaviour under measurement</h3>
+
+    <p>Findings from the laboratory that are about the database rather than the benchmark.
+    Postgres index selectivity has a crossover: on cold cache a bitmap heap scan at 5%
+    selectivity is slower than a sequential scan, so the index becomes a liability &mdash;
+    EXPLAIN-confirmed, with the sequential scan winning outright past roughly 10%.
+    Separately, on three-valued logic: the null-safe <code>IS NOT DISTINCT FROM</code>
+    operator does not remove the quadratic cost of a join over nullable keys. It decides
+    whether the query degrades or hangs. That is an optimizer cliff in Postgres, not
+    something intrinsic to the semantics.</p>
+
+    <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">Query planning</span><span class="tag">Three-valued logic</span><span class="tag">EXPLAIN</span></div>
+
+    <div class="links">
+      <a href="https://ramonactruta.substack.com/p/the-pizza-logic-you-didnt-know-you">The Pizza Logic You Didn't Know You Kneaded</a>
+    </div>
+  </div>
+
+  <div class="proj" id="db2-postgres">
+    <h3>Departmental migration from IBM DB2 to PostgreSQL &mdash; University of Toronto</h3>
+
+    <p>Led the Computer Science department's move off DB2: platform evaluation, rewriting
+    the course materials that depended on it, retraining instructors, and supporting
+    students through the change. A migration whose hardest constraint was that several
+    hundred people had to keep working through it.</p>
+
+    <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">IBM DB2</span><span class="tag">Migration</span></div>
+  </div>
+</div></section>
+<section><div class="wrap">
   <h2 id="benchmarking">Database &amp; Query Engine Benchmarking</h2>
   <p class="sub small cat-note">Measuring engines and protocols under controlled, cold-cache conditions. Every result ships with the experiment that produced it.</p>
 <div class="proj" id="sqlbenchdag">
