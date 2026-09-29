@@ -67,8 +67,10 @@ const html = `<!DOCTYPE html>
 <section id="talks"><div class="wrap"><h2>Talks</h2>${list(talks.map((e) => row(e)))}</div></section>
 <section id="podcasts"><div class="wrap"><h2>Podcasts</h2>
   <p class="lede">${pods.length} episodes across ${shows} shows.</p>
+  <h3>As guest host</h3>
+  <p class="lede">Turning up on someone else's show to interview them about what they have made.</p>
+  ${list(asHost.map((e) => row(e, hostNote(e))))}
   <h3>As guest</h3>${list(asGuest.map((e) => row(e, note(e))))}
-  <h3>As guest host</h3>${list(asHost.map((e) => row(e, hostNote(e))))}
 </div></section>
 <footer><div class="wrap"><span>&copy; 2025&ndash;2026 Ramona C. Truta &middot; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a></span><a href="contact.html">Contact</a></div></footer>
 </body></html>
