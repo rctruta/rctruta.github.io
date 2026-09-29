@@ -60,7 +60,7 @@ const html = `<!DOCTYPE html>
     <a href="contact.html">Contact</a>
   </span>
 </div></nav>
-<nav class="subnav"><div class="wrap">
+<nav class="subnav" id="top"><div class="wrap">
   <a href="#talks">Talks</a>
   <a href="#podcasts">Podcasts</a>
 </div></nav>
