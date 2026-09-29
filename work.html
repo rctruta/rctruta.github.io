@@ -24,7 +24,7 @@
 </div></nav>
 <section><div class="wrap">
   <h2 id="data-engineering">Data Engineering &amp; Modeling</h2>
-  <p class="sub small cat-note">Source systems into structures analysts and models can use. Migration, normalization, record linkage, and the SQL behaviour underneath it.</p>
+  <p class="sub small cat-note">Source systems into structures analysts and models can use. Migration, entity resolution, record linkage, annotation quality control, and the SQL behaviour underneath it.</p>
 
   <div class="proj" id="guelph-migration">
     <h3>Legacy-to-PostgreSQL migration and record linkage &mdash; University of Guelph, 2011&ndash;2015</h3>
@@ -46,6 +46,81 @@
     precision beside it.</p>
 
     <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">Schema design</span><span class="tag">Normalization</span><span class="tag">Probabilistic record linkage</span><span class="tag">Data quality</span></div>
+  </div>
+
+  <div class="proj" id="name-coding">
+    <h3>Automating a hand-built name dictionary &mdash; first-name standardization across seven censuses</h3>
+
+    <p>Historians had been coding first names by hand: each name assigned a three-
+    to five-letter code standing for an equivalence class of spellings. It did not
+    scale, and every new census arrived with a fresh tail of names nobody had seen.
+    I automated it, starting from their 1871 dictionary as the seed.</p>
+
+    <p>The equivalence relation was phonetic and orthographic together &mdash; double
+    metaphone for blocking, then minimum Levenshtein distance within the block.
+    A second variant added substring substitution, which is what made French
+    spellings tractable. Two phases: generate candidate codes over a sample of
+    70,000 strings, then apply the replacement rules to whatever was left. Strings
+    that survived both were reported as unassigned rather than forced.</p>
+
+    <p>The finding that shaped the design: <strong>the expert dictionary contradicted
+    itself.</strong> Two strings sharing a code were not always equivalent under any
+    formal definition, and strings with different codes sometimes were. So instead of
+    emitting one answer, the system emitted several candidates and let the experts
+    choose &mdash; and some strings the experts themselves coded more than one way.
+    When the ground truth disagrees with itself, widening the output is more honest
+    than picking a winner.</p>
+
+    <p>Every candidate carried an expert verdict, good or bad, which made the system
+    measurable. The question I asked of it was whether the nearest candidate was also
+    the right one, because that determines whether the expensive far candidates can
+    be dropped: 96.5%, 92.0%, 89.3%, 88.6% across batches, down to 75.7% on the
+    hardest. I checked the other direction too &mdash; whether <em>wrong</em> codes
+    also sit at minimum distance &mdash; since a metric that scores well but cannot
+    discriminate is worth nothing.</p>
+
+    <p>The coded names carried forward across the 1852, 1871, 1880, 1881, 1891, 1901
+    and 1911 censuses, with a full ingest pipeline per census: process, detect
+    inconsistencies, apply coding, prepare for the model downstream.</p>
+
+    <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">Entity resolution</span><span class="tag">Double metaphone</span><span class="tag">Levenshtein</span><span class="tag">Python</span><span class="tag">Annotation QA</span></div>
+  </div>
+
+  <div class="proj" id="age-modeling">
+    <h3>Fitting the agreement function for record linkage &mdash; age difference across censuses</h3>
+
+    <p>Two records ten years apart rarely agree on age. To link them you need a
+    function turning that disagreement into evidence: <code>ageDiff</code> mapping an
+    age difference onto a weight between one and zero. I fitted five candidates &mdash;
+    normalized by constant factors, by frequency percentage, and by a fast-increasing
+    function &mdash; and chose between them on standard deviation against observed
+    frequencies, across five independent datasets and 11,813 records.</p>
+
+    <p>I also tested the received wisdom that women misreport age more often than men.
+    Running the regression separately by gender, the difference was slight: both
+    curves were the same function shifted by about a year. Not two models. One model
+    and an offset &mdash; which is the result you only get by checking rather than
+    assuming.</p>
+
+    <div class="tags"><span class="tag">Regression</span><span class="tag">Probabilistic record linkage</span><span class="tag">Model selection</span></div>
+  </div>
+
+  <div class="proj" id="gazette-provenance">
+    <h3>Provenance and verification for twenty transcribers &mdash; Police Gazette transcripts</h3>
+
+    <p>Convicted and discharged prisoner tables, locked inside PDFs, transcribed by a
+    team. The transcription was the easy part; knowing which line of which file was
+    wrong was not. So the design put one table per file and a metatable above them,
+    carrying for each file its source, its row count, who extracted it and who checked
+    it.</p>
+
+    <p>That is what made the work parallel and auditable at once: extraction and
+    checking could proceed independently, each unit was small enough to verify, and a
+    disagreement could be traced to a person and a row rather than to a batch. Facts
+    true of a whole file were stored once, on the file, not repeated on every record
+    inside it.</p>
+
+    <div class="tags"><span class="tag">Data provenance</span><span class="tag">Metadata modeling</span><span class="tag">Quality control</span><span class="tag">PDF extraction</span></div>
   </div>
 
   <div class="proj" id="sql-behaviour">
