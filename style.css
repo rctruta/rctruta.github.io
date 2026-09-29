@@ -199,7 +199,7 @@ section h3 { font-size:15px; font-weight:600; color:var(--soft); letter-spacing:
 .lede { color:var(--soft); margin:-4px 0 14px; font-size:14.5px }
 
 /* an acknowledgement someone else wrote */
-.praise { border-left:2px solid var(--green); padding:2px 0 2px 18px; margin:26px 0 0 }
+.praise { border-left:2px solid var(--green); padding:2px 0 2px 18px; margin:0 0 26px }
 .praise p { margin:0; font-size:16px; line-height:1.55 }
 .praise cite { display:block; margin-top:8px; font-style:normal; font-size:13.5px;
                color:var(--soft) }
