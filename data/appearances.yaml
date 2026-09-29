@@ -1,0 +1,264 @@
+# Canonical record of every public appearance.
+#
+# This file is the source of truth. The website renders it; podcast-clips reads
+# it as a corpus manifest. Nothing else should keep a second copy.
+#
+# Vocabulary is fixed — see TAXONOMY.md. The build fails on anything else.
+# `title` is the name of the thing and nothing else: role, format and venue
+# are fields, never prefixes.
+#
+# Nothing here records "is it out yet" — that is derived, so it cannot go stale:
+#   talk     always rendered; upcoming vs past comes from `date`
+#   podcast  rendered once it has a `url`; no url = recorded, not published
+# To publish an episode, paste its link. There is no second step.
+
+# ---------------------------------------------------------------- talks -----
+
+- id: nodes-2026
+  kind: talk
+  date: 2026-11-12
+  title: 'Structure Is Not Security: Poisoning Graph-Based Agent Memory Through the Extraction Pipeline'
+  org: Neo4j NODES
+  eventType: talk
+  location: virtual
+  tags: [agent-memory, security]
+
+- id: data-in-the-d-2026
+  kind: talk
+  date: 2026-10-16
+  title: Measure What Matters
+  org: Data in the D
+  eventType: talk
+  location: Detroit
+  tags: [benchmarking]
+
+- id: cywic-2026
+  kind: talk
+  date: 2026-05-26
+  title: 'Consensus Contagion: Status Bias and the RLHF Tax in Agentic AI Routing Nodes'
+  org: Canadian Women in Cybersecurity
+  eventType: talk
+  location: Toronto
+  tags: [agent-evaluation, bias, security]
+
+- id: ai-tinkerers-semantic-laundering
+  kind: talk
+  date: 2026-02-26
+  title: 'Semantic Laundering: Agentic Memory'
+  org: AI Tinkerers Toronto
+  eventType: talk
+  location: Toronto
+  tags: [agent-memory, security, demo]
+
+- id: ai-tinkerers-blueberry-muffin
+  kind: talk
+  date: 2026-01-29
+  title: 'Blueberry Muffin: Agent Memory Injection'
+  org: AI Tinkerers Toronto
+  eventType: talk
+  location: Toronto
+  tags: [agent-memory, security, demo]
+
+- id: ai-tinkerers-blueberry-muffin-waterloo
+  kind: talk
+  date: 2026-01-28
+  title: 'Blueberry Muffin: Semantic Injection'
+  org: AI Tinkerers Waterloo
+  eventType: talk
+  location: Waterloo
+  note: Substantially the same talk given in Toronto the following evening.
+  tags: [agent-memory, security, demo]
+
+- id: nodes-2025
+  kind: talk
+  date: 2025-11-06
+  title: Is My Brain a Knowledge Graph?
+  org: Neo4j NODES
+  eventType: talk
+  location: virtual
+  url: https://www.youtube.com/watch?v=WnPM9WryIGg
+  tags: [knowledge-graphs]
+
+- id: deml-summit-2024
+  kind: talk
+  date: 2024-10-03
+  title: 'Data Careers: Beyond Data Analytics And Engineering'
+  org: Data Engineering & ML Summit
+  eventType: panel
+  location: virtual
+  tags: [careers]
+
+# ------------------------------------------------------------- podcasts -----
+
+- id: joe-reis-2026
+  kind: podcast
+  date: 2026-09-12
+  title: Why Data Modeling Matters MORE in the Age of AI. Mixed Model Arts w/ Ramona Truta
+  org: Joe Reis
+  role: guest host
+  format: recorded
+  counterpart: Joe Reis
+  url: https://www.youtube.com/watch?v=zBJuD_EIJi4
+  note: >-
+    Second recording; the first take's audio was unusable. Joe agreed to switch
+    seats and be interviewed about Mixed Model Arts. Billed on his side as her
+    guesting, but she asked the questions.
+  tags: [books, data, itinerant-podcaster]
+
+- id: super-data-show-2026-03
+  kind: podcast
+  date: 2026-03-26
+  title: AI Agent Memory is BROKEN | Here's How It Gets Exploited
+  org: Super Data Show
+  role: guest
+  format: recorded
+  url: https://www.youtube.com/watch?v=gUekOnPsahI
+  tags: [agent-memory, security]
+
+- id: dip-data-misaligned-2026
+  kind: podcast
+  date: 2026-03-20
+  title: 'Data, Misaligned; Bad Data Ruins AI'
+  org: The Data Intelligence Platform
+  role: guest
+  format: recorded
+  url: https://dataintelligenceplatform.substack.com/p/data-misaligned-e5b
+  tags: [data-quality, ai]
+
+- id: nerds-100-episodes-2026
+  kind: podcast
+  date: 2026-02-12
+  title: 100 Episodes Later... Data Nerd Awards and Unfiltered Data Predictions
+  org: Data Podcast for Nerds!
+  role: guest
+  format: recorded
+  url: https://www.youtube.com/watch?v=DmGtpu8Ek70
+  tags: [data]
+
+- id: nerds-monika-year-three-2026
+  kind: podcast
+  date: 2026-01-22
+  title: Highlights from my Third Year as a Podcast Host
+  org: Data Podcast for Nerds!
+  role: guest host
+  format: recorded
+  url: https://www.youtube.com/watch?v=BeAIXeSagPY
+  note: Third in the series; the 2024 and 2025 editions are filed as `guest`.
+  tags: [data]
+
+- id: dip-live-ole-2025
+  kind: podcast
+  date: 2025-11-28
+  title: Live with Ole Olesen-Bagneux and Ramona Truta
+  org: The Data Intelligence Platform
+  role: co-host
+  format: live
+  url: https://dataintelligenceplatform.substack.com/p/live-with-ole-olesen-bagneux-and
+  note: >-
+    The show is a standing Friday live between Actian team members; she joined
+    when a regular was away. Just the two of them, a candid conversation rather
+    than an interview — his book came up among much else.
+  tags: [metadata, data]
+
+- id: dec-medallion-2025
+  kind: podcast
+  date: 2025-10-02
+  title: The Truth About The Medallion Architecture
+  org: The Data Engineering Channel
+  role: co-host
+  format: live
+  url: https://www.youtube.com/live/1HUCUU5G_Ns
+  note: Guest and moderator.
+  tags: [data-architecture]
+
+- id: dec-ai-helps-2025
+  kind: podcast
+  date: 2025-08-15
+  title: AI That Actually Helps Data Professionals
+  org: The Data Engineering Channel
+  role: guest
+  format: live
+  url: https://www.youtube.com/live/9d_k-uS2LcA
+  tags: [ai]
+
+- id: leit-staying-human-2025
+  kind: podcast
+  date: 2025-08-04
+  title: Staying Human in the AI Era
+  org: LEIT Data Podcast
+  role: guest
+  format: recorded
+  url: https://www.youtube.com/watch?v=MFor0EJ7DyI
+  tags: [ai, people]
+
+- id: gambill-ai-skills-2025
+  kind: podcast
+  date: 2025-07-18
+  title: Learn These 10 AI Skills!
+  org: Christopher Gambill
+  role: guest
+  format: recorded
+  url: https://www.youtube.com/watch?v=fK_75G-s77w
+  tags: [ai, careers]
+
+- id: gambill-data-architecture-2025
+  kind: podcast
+  date: 2025-06-27
+  title: Data Architecture Principles That Skyrocket Your Career!
+  org: Christopher Gambill
+  role: guest
+  format: recorded
+  url: https://www.youtube.com/watch?v=RKsm8-RyeeY
+  tags: [data-architecture, careers]
+
+- id: agile-data-64
+  kind: podcast
+  date: 2025-06-04
+  title: The pattern of writing a data book
+  org: Agile Data Podcast
+  role: guest host
+  format: recorded
+  counterpart: Shane Gibson
+  url: https://www.youtube.com/watch?v=9VBus8KtyfI
+  note: Episode 64.
+  tags: [books, data, itinerant-podcaster]
+
+- id: leit-dashboard-spirit-2025
+  kind: podcast
+  date: 2025-04-28
+  title: Dashboard for the Human Spirit
+  org: LEIT Data Podcast
+  role: guest
+  format: recorded
+  url: https://www.youtube.com/watch?v=AfeOP7GYFW0
+  tags: [people]
+
+- id: nerds-monika-year-two-2025
+  kind: podcast
+  date: 2025-01-02
+  title: Highlights from Monika's Second Year as a Podcast Host
+  org: Data Podcast for Nerds!
+  role: guest
+  format: live
+  url: https://www.youtube.com/live/i6Ti3FaG0UU
+  tags: [data]
+
+- id: leit-data-with-heart-2024
+  kind: podcast
+  date: 2024-08-05
+  title: 'Data With Heart: The Human Connection in Data Value'
+  org: LEIT Data Podcast
+  role: guest
+  format: recorded
+  url: https://www.youtube.com/watch?v=DfGq3cH2kAc
+  tags: [people]
+
+- id: nerds-monika-year-one-2024
+  kind: podcast
+  date: 2024-01-04
+  title: Highlights From Monika's First Year as a Podcast Host
+  org: Data Podcast for Nerds!
+  role: guest
+  format: live
+  url: https://www.youtube.com/live/AnjS72yGlqk
+  tags: [data]
