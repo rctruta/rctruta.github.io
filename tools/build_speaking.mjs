@@ -68,7 +68,7 @@ const html = `<!DOCTYPE html>
 <section id="podcasts"><div class="wrap"><h2>Podcasts</h2>
   <p class="lede">${pods.length} episodes across ${shows} shows.</p>
   <h3>As guest host</h3>
-  <p class="lede">Turning up on someone else's show to interview them about what they have made.</p>
+  <p class="lede">One of the biggest joys in my life is showing up for my friends. Celebrating them.</p>
   ${list(asHost.map((e) => row(e, hostNote(e))))}
   <h3>As guest</h3>${list(asGuest.map((e) => row(e, note(e))))}
 </div></section>

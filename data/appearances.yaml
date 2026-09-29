@@ -138,13 +138,16 @@
 - id: nerds-monika-year-three-2026
   kind: podcast
   date: 2026-01-22
-  title: Highlights from my Third Year as a Podcast Host
+  title: Highlights from Monika's Third Year as a Podcast Host
   org: Data Podcast for Nerds!
   role: guest host
   format: recorded
+  counterpart: Monika
   url: https://www.youtube.com/watch?v=BeAIXeSagPY
-  note: Third in the series; the 2024 and 2025 editions are filed as `guest`.
-  tags: [data]
+  note: >-
+    Published as "Highlights from my Third Year" on Monika's own channel; her
+    "my" reads as Ramona's here, so the host is named instead.
+  tags: [data, itinerant-podcaster]
 
 - id: dip-live-ole-2025
   kind: podcast
@@ -238,10 +241,11 @@
   date: 2025-01-02
   title: Highlights from Monika's Second Year as a Podcast Host
   org: Data Podcast for Nerds!
-  role: guest
+  role: guest host
   format: live
+  counterpart: Monika
   url: https://www.youtube.com/live/i6Ti3FaG0UU
-  tags: [data]
+  tags: [data, itinerant-podcaster]
 
 - id: leit-data-with-heart-2024
   kind: podcast
@@ -258,7 +262,8 @@
   date: 2024-01-04
   title: Highlights From Monika's First Year as a Podcast Host
   org: Data Podcast for Nerds!
-  role: guest
+  role: guest host
   format: live
+  counterpart: Monika
   url: https://www.youtube.com/live/AnjS72yGlqk
-  tags: [data]
+  tags: [data, itinerant-podcaster]
