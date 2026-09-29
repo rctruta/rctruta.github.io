@@ -84,7 +84,7 @@ const appearances = defineCollection({
       kind: z.literal('podcast'),
       // See TAXONOMY.md. "guest host" = she asked the questions on someone
       // else's show. "Itinerant podcaster" is a page headline, not a value.
-      role: z.enum(['guest', 'guest host', 'co-host', 'panelist']),
+      role: z.enum(['guest', 'guest host', 'co-host']),
       format: z.enum(['live', 'recorded']),
       // who she interviewed, only when role is "guest host"
       counterpart: z.string().optional(),
