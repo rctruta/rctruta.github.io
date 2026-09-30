@@ -266,7 +266,7 @@
     <p>The engine is generalized from a working implementation rather than designed on
     paper: the sqlbenchdag adapter carries its own graders, roles and tool surface, and
     the two runners &mdash; monolith and state machine &mdash; are the pair whose
-    comparison produced the 20.7&times; figure above. A new target is a new adapter
+    comparison produced the 20.7&times; result above. A new target is a new adapter
     against the same runners.</p>
 
     <div class="tags"><span class="tag">MCP</span><span class="tag">Per-turn tracing</span><span class="tag">Deterministic grading</span><span class="tag">Cost accounting</span><span class="tag">Content-addressed contracts</span></div>
@@ -295,6 +295,15 @@
     error. On the model that was already succeeding, the same skills raised token use
     roughly sixfold on that goal for the same correct answer. Guidance is not free, and
     it is worth most to whoever needs it most.</p>
+
+    <figure>
+      <img src="assets/malloy-skills-tokens.svg" alt="Tokens per run, baseline versus skills injected, across three goals and three models">
+      <figcaption>All 18 runs. Injecting the skills collapses the two models that were
+      struggling &mdash; Haiku on the count goal from 123,191 tokens and an exhausted
+      turn budget to 31,658 and a correct answer &mdash; and adds cost to Sonnet 5,
+      which was already answering correctly. Derived from the per-turn traces in the
+      study repository; n=1 per cell.</figcaption>
+    </figure>
 
     <div class="tags"><span class="tag">MCP</span><span class="tag">Agent skills</span><span class="tag">Ablation study</span><span class="tag">Per-turn tracing</span></div>
 
