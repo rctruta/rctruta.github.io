@@ -35,7 +35,7 @@ h1 { font-size:15px; letter-spacing:2.2px; text-transform:uppercase;
 .btn.ghost:hover { border-color:var(--soft); text-decoration:none }
 
 section { padding:56px 0; border-bottom:1px solid var(--line) }
-h2 { font-size:16px; letter-spacing:1.2px; text-transform:uppercase;
+h2 { font-size:22px; letter-spacing:1.1px; text-transform:uppercase;
      color:var(--green); font-weight:600; margin-bottom:30px }
 
 .metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:26px }
@@ -221,7 +221,7 @@ section h3 { font-size:20px; font-weight:600; color:var(--ink); letter-spacing:0
 
 /* compact multi-column lists, pencil-marked */
 ul.courses { list-style:none; margin:0; padding:0; columns:2; column-gap:38px }
-ul.courses li { break-inside:avoid; padding:3px 0 3px 22px; font-size:16px;
+ul.courses li { break-inside:avoid; padding:3px 0 3px 22px; font-size:17px;
                 line-height:1.45; text-indent:-22px }
 ul.courses li::before { content:"\270E"; color:var(--green); font-size:14px;
                         display:inline-block; width:22px; text-indent:0 }
