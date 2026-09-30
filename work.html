@@ -269,6 +269,16 @@
     comparison produced the 20.7&times; result above. A new target is a new adapter
     against the same runners.</p>
 
+    <figure>
+      <img src="assets/sbd-state-machine.png" alt="State machine: librarian specialist branching to answered, refused, or config builder; config builder to the poller, refused, or config_builder_failed; poller to the analyzer or poll_failed; analyzer to complete or analyzer_failed">
+      <figcaption>The specialist state machine. A goal enters at the librarian, which can
+      answer it from the existing catalog, refuse it as impossible, or send it on to build
+      a fresh experiment. Every path ends in a named terminal state, including the failures
+      &mdash; <code>refused</code>, <code>poll_failed</code>, <code>analyzer_failed</code>
+      &mdash; so a run that goes wrong says where, rather than thrashing. Most of these
+      states were discovered by probing, not designed up front.</figcaption>
+    </figure>
+
     <div class="tags"><span class="tag">MCP</span><span class="tag">Per-turn tracing</span><span class="tag">Deterministic grading</span><span class="tag">Cost accounting</span><span class="tag">Content-addressed contracts</span></div>
 
     <div class="links">
