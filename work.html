@@ -123,25 +123,6 @@
     <div class="tags"><span class="tag">Data modeling</span><span class="tag">OCR extraction</span><span class="tag">Data provenance</span><span class="tag">Quality control</span></div>
   </div>
 
-  <div class="proj" id="sql-behaviour">
-    <h3>SQL behaviour under measurement</h3>
-
-    <p>Findings from the laboratory that are about the database rather than the benchmark.
-    Postgres index selectivity has a crossover: on cold cache a bitmap heap scan at 5%
-    selectivity is slower than a sequential scan, so the index becomes a liability &mdash;
-    EXPLAIN-confirmed, with the sequential scan winning outright past roughly 10%.
-    Separately, on three-valued logic: the null-safe <code>IS NOT DISTINCT FROM</code>
-    operator does not remove the quadratic cost of a join over nullable keys. It decides
-    whether the query degrades or hangs. That is an optimizer cliff in Postgres, not
-    something intrinsic to the semantics.</p>
-
-    <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">Query planning</span><span class="tag">Three-valued logic</span><span class="tag">EXPLAIN</span></div>
-
-    <div class="links">
-      <a href="https://ramonactruta.substack.com/p/the-pizza-logic-you-didnt-know-you">The Pizza Logic You Didn't Know You Kneaded</a>
-    </div>
-  </div>
-
   <div class="proj" id="db2-postgres">
     <h3>Departmental migration from IBM DB2 to PostgreSQL &mdash; University of Toronto</h3>
 
@@ -197,6 +178,25 @@
 
 
   
+  <div class="proj" id="sql-behaviour">
+    <h3>SQL behaviour under measurement</h3>
+
+    <p>Findings from the laboratory that are about the database rather than the benchmark.
+    Postgres index selectivity has a crossover: on cold cache a bitmap heap scan at 5%
+    selectivity is slower than a sequential scan, so the index becomes a liability &mdash;
+    EXPLAIN-confirmed, with the sequential scan winning outright past roughly 10%.
+    Separately, on three-valued logic: the null-safe <code>IS NOT DISTINCT FROM</code>
+    operator does not remove the quadratic cost of a join over nullable keys. It decides
+    whether the query degrades or hangs. That is an optimizer cliff in Postgres, not
+    something intrinsic to the semantics.</p>
+
+    <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">Query planning</span><span class="tag">Three-valued logic</span><span class="tag">EXPLAIN</span></div>
+
+    <div class="links">
+      <a href="https://ramonactruta.substack.com/p/the-pizza-logic-you-didnt-know-you">The Pizza Logic You Didn't Know You Kneaded</a>
+    </div>
+  </div>
+
   <p class="totop"><a href="#top">&uarr; Top</a></p>
 </div></section>
 <section><div class="wrap">
