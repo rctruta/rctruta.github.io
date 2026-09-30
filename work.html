@@ -228,6 +228,69 @@
 <section><div class="wrap">
   <h2 id="agent-evaluation">Agent Evaluation &amp; Reliability</h2>
   <p class="sub small cat-note">Instrumenting agents and reading what they actually did, rather than asking them. Relates to OWASP LLM06 (excessive agency).</p>
+<div class="proj" id="harness-bench">
+    <h3>harness-bench &mdash; measuring a deployment before it is a deployment</h3>
+
+    <p>Everyone ships skills and MCP servers; almost nobody measures them. This reads a
+    tool surface, infers a taxonomy over it, probes it with content-addressed study
+    contracts, traces every turn, grades what can be graded deterministically, and
+    reports what an agent deployment will actually cost and where it will actually
+    fail &mdash; token cost per architecture, which guidance layers pay for themselves,
+    which model tier suffices, and which states the harness is missing.</p>
+
+    <p>Four results it was built on, each measured rather than assumed:</p>
+    <ul>
+      <li><strong>Harness architecture dominates model choice.</strong> Decomposing a
+      monolithic agent into specialists cut cost 20.7&times; at equal answer quality,
+      and pulled five models across two vendors into a single 18&ndash;35K token band.</li>
+      <li><strong>Prompt guidance is the weakest lever.</strong> An AGENTS.md added
+      roughly 50K tokens per run for no behavioral difference. Tool schemas and role
+      prompts are what move frontier models.</li>
+      <li><strong>Words don't bind; gates do.</strong> Every prompt-level instruction
+      was eventually ignored by some model. Every mechanical gate held.</li>
+      <li><strong>Uniform cross-model failure is a harness defect, not a model
+      defect</strong> &mdash; running a model ladder inside one contract makes that
+      signature identify itself.</li>
+    </ul>
+
+    <p>The states it checks for were not designed in advance. Refusal, suspend and
+    resume, a librarian role, resource caps &mdash; each was discovered by cheap probe
+    runs and only then given a name.</p>
+
+    <div class="tags"><span class="tag">MCP</span><span class="tag">Per-turn tracing</span><span class="tag">Deterministic grading</span><span class="tag">Cost accounting</span><span class="tag">Content-addressed contracts</span></div>
+
+    <div class="links">
+      <a href="https://github.com/rctruta/harness-bench">Repository</a>
+    </div>
+  </div>
+
+  <div class="proj" id="malloy-study">
+    <h3>Do bundled agent skills actually reach the agent? &mdash; Malloy Publisher study</h3>
+
+    <p>The Malloy Publisher ships agent skills alongside its MCP server. Two questions:
+    do those skills reach an autonomous agent at all, and what changes when they do.
+    Eighteen runs &mdash; three goals &times; three models &times; baseline against
+    skills-injected &mdash; with the full per-turn traces published and every table in
+    the report derived from them by script. No number in it is hand-typed.</p>
+
+    <p>The first answer is a packaging finding: the released image serves four utility
+    prompts, not the twenty-eight skills present on the project's main branch. The
+    skills exist, and an agent pulling the official image does not get them.</p>
+
+    <p>The second cuts both ways. Injecting the skills rescued the weaker models &mdash;
+    one went from exhausting its turn budget after twenty turns, 123,191 tokens and
+    seventeen query errors, to a correct answer in five turns, 31,658 tokens and one
+    error. On the model that was already succeeding, the same skills raised token use
+    roughly sixfold on that goal for the same correct answer. Guidance is not free, and
+    it is worth most to whoever needs it most.</p>
+
+    <div class="tags"><span class="tag">MCP</span><span class="tag">Agent skills</span><span class="tag">Ablation study</span><span class="tag">Per-turn tracing</span></div>
+
+    <div class="links">
+      <a href="https://github.com/rctruta/malloy-publisher-agent-study">Study &amp; all 18 traces</a>
+    </div>
+  </div>
+
 <div class="proj" id="agent-traces">
     <h3>Reading agent traces</h3>
 
