@@ -228,3 +228,9 @@ ul.courses li::before { content:"\270E"; color:var(--green); font-size:14px;
 
 /* the top bar is sticky and 63px tall, so anything jumped to must stop below it */
 [id] { scroll-margin-top: 76px; }
+
+/* tag index */
+a.tag { color:var(--mid); text-decoration:none }
+a.tag:hover { color:var(--green); border-color:var(--green); text-decoration:none }
+.tag-count { font-size:12.5px; font-weight:400; color:var(--soft); margin-left:6px;
+             border:1px solid var(--line); border-radius:9px; padding:1px 7px }
