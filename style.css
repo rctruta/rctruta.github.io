@@ -196,7 +196,7 @@ header .sub a:hover { color:var(--green); }
 .subnav a:hover { color:var(--green) }
 section h3 { font-size:15px; font-weight:600; color:var(--soft); letter-spacing:0.4px;
               text-transform:uppercase; margin:22px 0 8px }
-.lede { color:var(--soft); margin:-4px 0 14px; font-size:14.5px }
+.lede { color:var(--mid); margin:-4px 0 14px; font-size:15.5px }
 
 /* an acknowledgement someone else wrote */
 .praise { border-left:2px solid var(--green); padding:2px 0 2px 18px; margin:0 0 26px }
@@ -207,3 +207,13 @@ section h3 { font-size:15px; font-weight:600; color:var(--soft); letter-spacing:
 .totop { margin: 18px 0 0; font-size: 13px; }
 .totop a { color: var(--soft); text-decoration: none; }
 .totop a:hover { color: var(--green); }
+
+/* institution heading above a course list */
+.inst { font-size:16px; font-weight:600; color:var(--ink); margin:20px 0 8px }
+.inst .dept { font-weight:400; color:var(--mid) }
+
+/* compact multi-column course lists — no rules, no one-line-per-item sprawl */
+ul.courses { list-style:none; margin:0; padding:0; columns:2; column-gap:38px }
+ul.courses li { break-inside:avoid; padding:3px 0; font-size:16px; line-height:1.45 }
+ul.courses li code { font-size:14px; color:var(--soft); font-family:inherit }
+@media (max-width:620px) { ul.courses { columns:1 } }
