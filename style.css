@@ -190,7 +190,10 @@ header .sub a { color:var(--ink); text-decoration:none;
 header .sub a:hover { color:var(--green); }
 
 /* sub-navigation within a section page */
-.subnav { border-bottom:1px solid var(--line); padding:10px 0; font-size:14px }
+/* sits directly under the sticky top bar and stays there, so the in-page
+   navigation is available without scrolling back up */
+.subnav { border-bottom:1px solid var(--line); padding:10px 0; font-size:14px;
+          background:var(--bg); position:sticky; top:62px; z-index:19 }
 .subnav .wrap { display:flex; gap:20px }
 .subnav a { color:var(--soft); text-decoration:none }
 .subnav a:hover { color:var(--green) }
@@ -227,5 +230,7 @@ ul.courses li::before { content:"\270E"; color:var(--green); font-size:14px;
                         display:inline-block; width:22px; text-indent:0 }
 @media (max-width:620px) { ul.courses { columns:1 } }
 
-/* the top bar is sticky and 63px tall, so anything jumped to must stop below it */
-[id] { scroll-margin-top: 76px; }
+/* two stacked sticky bars: top nav 63px + sub-nav 45px. Anything jumped to
+   must clear both, or it lands underneath them. */
+[id] { scroll-margin-top: 122px; }
+.subnav[id] { scroll-margin-top: 0 }
