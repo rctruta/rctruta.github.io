@@ -63,14 +63,19 @@ const html = `<!DOCTYPE html>
 <nav class="subnav" id="top"><div class="wrap">
   <a href="#talks">Talks</a>
   <a href="#podcasts">Podcasts</a>
+  <a href="#guest-host">As guest host</a>
+  <a href="#as-guest">As guest</a>
 </div></nav>
-<section id="talks"><div class="wrap"><h2>Talks</h2>${list(talks.map((e) => row(e)))}</div></section>
+<section id="talks"><div class="wrap"><h2>Talks</h2>${list(talks.map((e) => row(e)))}
+  <p class="totop"><a href="#top">&uarr; Top</a></p>
+</div></section>
 <section id="podcasts"><div class="wrap"><h2>Podcasts</h2>
   <p class="lede">${pods.length} episodes across ${shows} shows.</p>
-  <h3>As guest host</h3>
+  <h3 id="guest-host">As guest host</h3>
   <p class="lede">One of the biggest joys in my life is showing up for my friends. Celebrating them.</p>
   ${list(asHost.map((e) => row(e, hostNote(e))))}
-  <h3>As guest</h3>${list(asGuest.map((e) => row(e, note(e))))}
+  <h3 id="as-guest">As guest</h3>${list(asGuest.map((e) => row(e, note(e))))}
+  <p class="totop"><a href="#top">&uarr; Top</a></p>
 </div></section>
 <footer><div class="wrap"><span>&copy; 2025&ndash;2026 Ramona C. Truta &middot; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a></span><a href="contact.html">Contact</a></div></footer>
 </body></html>

@@ -91,7 +91,6 @@ footer { padding:52px 0 70px }
 .jump { display:flex; flex-wrap:wrap; gap:7px 16px; margin-top:18px; font-size:15px; }
 .jump a { color:#4a5058; text-decoration:none; border-bottom:1px solid #e3e6ea; padding-bottom:1px; }
 .jump a:hover { color:#1c5d99; border-bottom-color:#1c5d99; }
-[id] { scroll-margin-top: 24px; }
 html { scroll-behavior: smooth; }
 
 /* back to top */
