@@ -194,8 +194,8 @@ header .sub a:hover { color:var(--green); }
 .subnav .wrap { display:flex; gap:20px }
 .subnav a { color:var(--soft); text-decoration:none }
 .subnav a:hover { color:var(--green) }
-section h3 { font-size:18px; font-weight:600; color:var(--ink); letter-spacing:0.4px;
-              text-transform:uppercase; margin:26px 0 10px }
+section h3 { font-size:20px; font-weight:600; color:var(--ink); letter-spacing:0.3px;
+              text-transform:none; margin:30px 0 10px }
 .lede { color:var(--mid); margin:-4px 0 14px; font-size:16.5px }
 
 /* an acknowledgement someone else wrote */
@@ -209,15 +209,15 @@ section h3 { font-size:18px; font-weight:600; color:var(--ink); letter-spacing:0
 .totop a:hover { color: var(--green); }
 
 /* the role held — a level above the institution */
-.role { font-size:21px; font-weight:700; letter-spacing:1.3px; text-transform:uppercase;
+.role { font-size:26px; font-weight:700; letter-spacing:1.1px; text-transform:uppercase;
         color:var(--ink); margin:30px 0 4px; padding-bottom:5px;
         border-bottom:1px solid var(--line) }
 .role:first-of-type { margin-top:18px }
 
 /* institution heading above a course list */
-.inst { font-size:19.5px; font-weight:600; color:var(--ink); margin:26px 0 8px;
+.inst { font-size:23px; font-weight:600; color:var(--ink); margin:32px 0 10px;
         line-height:1.35 }
-.inst .dept { font-weight:400; color:var(--mid) }
+.inst .dept { font-weight:400; color:var(--mid); font-size:18px }
 
 /* compact multi-column lists, pencil-marked */
 ul.courses { list-style:none; margin:0; padding:0; columns:2; column-gap:38px }
