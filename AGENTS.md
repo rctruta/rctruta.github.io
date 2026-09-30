@@ -37,6 +37,24 @@ prose, where it already is. This was decided after an audit found 54 tags of
 which 47 appeared exactly once — clicking one would have returned the page you
 were already on.
 
+## Linked material: the title is the link
+
+A document's own name is its reference. Do not add a separate line saying
+"(PDF)" — that is a second thing that has to stay in sync with the first, and it
+is the same duplication the tag audit removed.
+
+```html
+<h3><a href="assets/thing.pdf">What the thing is called</a>
+<span class="meta">PDF, 6 pages</span></h3>
+```
+
+Metadata about the file goes in `span.meta`, **visible, not on hover**. Tooltips
+do not exist on touch devices and screen readers treat them inconsistently; this
+site has already been found broken on a phone once.
+
+Anything with a `div.proj` wrapper and an id can carry tags, including course
+materials. Register the id in `data/TAGS.yaml` or the build fails.
+
 ## Never rename something that is published
 
 A rename breaks every link anyone holds, and a static host has no server-side

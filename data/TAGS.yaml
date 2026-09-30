@@ -21,6 +21,7 @@ vocabulary:
     AI security: Attacks on what an agent reads, stores, and later trusts.
     Migration: Moving a working system to a new platform without stopping its users.
     Team leadership: Running the people doing the work, and the mechanism that checks it.
+    Teaching: Course material built so a learner arrives at the answer rather than watching it appear.
 
   method:
     Deterministic grading: Scoring outcomes by rule, not by judgement, so a result can be re-derived.
@@ -57,3 +58,7 @@ projects:
   consensus-contagion: [AI evaluation, Deterministic grading, Ablation study]
   rag-accuracy: [AI evaluation, Evaluation sets, Python]
   agent-tools: [AI security, Deterministic grading, Python]
+
+  # teaching artifacts — course material is modeling work, and says so
+  xquery-assignment: [Data modeling, Teaching]
+  nf-handout: [Data modeling, Teaching]

@@ -209,26 +209,36 @@
 <section><div class="wrap">
   <h2 id="assignment">Sample materials</h2>
 
-  <h3>Querying a live public registry</h3>
+  <div class="proj" id="xquery-assignment">
+  <h3><a href="assets/csc343-clinical-trials-xquery.pdf">CSC343 Introduction to Databases, Assignment 3</a>
+  <span class="meta">PDF, 6 pages</span></h3>
 
-  <p><strong>CSC343 Introduction to Databases, Assignment 3.</strong> Students were
-  given 10,000 XML records of real clinical trials from
+  <p>Students were given 10,000 XML records of real clinical trials from
   <a href="https://clinicaltrials.gov/">clinicaltrials.gov</a>, with the collection's DTD.
   Before writing a query they had to read that DTD and explore the registry's own search
   interface &mdash; ten of the hundred points, awarded to anyone who submitted anything,
-  because the point was to make them look at the data.</p>
+  because the point was to make them look at the data. Then seven XQuery queries against a
+  114MB collection, each in its own file, each output in its own, run through Saxon.</p>
 
-  <p>Then seven XQuery queries against a 114MB collection, each in its own file, each output
-  in its own, run through Saxon. Structure rules and content rules stated up front, so an
-  answer was checkable rather than arguable. The XQuery came from my own M.Sc. research on
-  structural and semantic query optimization; the data came from a government registry that
-  was live while they worked on it.</p>
+  <p>Reading it back now: query languages force modeling decisions whether or not anyone
+  calls them that. This assignment made undergraduates define identity, semantics, null
+  handling and output contracts &mdash; none of it labelled data modeling, all of it exactly
+  that. <strong>Structure rules</strong> bound artifact to identity: <code>qX.xq</code>
+  produces <code>qX.xml</code>, one query per file. <strong>Content rules</strong> fixed the
+  semantics before any code existed &mdash; what counts as a trial being "performed", that a
+  trial's identity is its <code>nct_id</code>, how to eliminate duplicates, what to do when an
+  element is empty. Every question specified its output schema, so the shape of an answer was
+  settled before the query was written. And <code>collection.xml</code>, which students had to
+  generate, is a document whose entire content is references to ten thousand other documents.</p>
 
-  <div class="links">
-    <a href="assets/csc343-clinical-trials-xquery.pdf">The assignment (PDF)</a>
+  <p>I am not claiming to have anticipated anything. I am saying the work is on the page.</p>
+
+  <div class="tags"><a class="tag" href="tags.html#data-modeling">Data modeling</a><a class="tag" href="tags.html#teaching">Teaching</a></div>
   </div>
 
-  <h3>3NF decomposition, worked live</h3>
+  <div class="proj" id="nf-handout">
+  <h3><a href="assets/csc343-3nf-decomposition.pdf">3NF decomposition, worked live</a>
+  <span class="meta">PDF, 4 pages</span></h3>
 
   <p>These handouts were something I introduced, and nobody asked me to. Each one is
   deliberately empty: a relation, its functional dependencies, then every step of the
@@ -241,8 +251,7 @@
   appear and arriving at one. It also meant writing every handout myself, before every
   lecture that used one.</p>
 
-  <div class="links">
-    <a href="assets/csc343-3nf-decomposition.pdf">3NF decomposition handout (PDF)</a>
+  <div class="tags"><a class="tag" href="tags.html#data-modeling">Data modeling</a><a class="tag" href="tags.html#teaching">Teaching</a></div>
   </div>
 
   <p class="totop"><a href="#top">&uarr; Top</a></p>

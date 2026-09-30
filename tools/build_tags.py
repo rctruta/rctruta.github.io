@@ -16,7 +16,7 @@ import sys
 from collections import defaultdict
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-PAGES = ["work.html"]
+PAGES = ["work.html", "teaching.html"]
 SPEC = ROOT / "data" / "TAGS.yaml"
 
 
@@ -83,7 +83,10 @@ for name in PAGES:
         if pid not in projects:
             return block.group(0)
         heading = re.search(r"<h3[^>]*>(.*?)</h3>", body, re.S)
-        title = html.unescape(re.sub(r"<[^>]+>", " ", heading.group(1))) if heading else pid
+        raw = heading.group(1) if heading else pid
+        # the metadata span describes the file, not the work — keep it out of the title
+        raw = re.sub(r'<span class="meta">.*?</span>', "", raw, flags=re.S)
+        title = html.unescape(re.sub(r"<[^>]+>", " ", raw))
         title = re.sub(r"\s+", " ", title).strip()
         for t in projects[pid]:
             index[t].append((name, pid, title))
