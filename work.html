@@ -166,7 +166,7 @@
     <div class="tags"><span class="tag">Dagster</span><span class="tag">DuckDB</span><span class="tag">PostgreSQL</span><span class="tag">Polars</span><span class="tag">Arrow / ADBC</span><span class="tag">Docker</span><span class="tag">Pydantic</span><span class="tag">MCP</span></div>
 
     <div class="links">
-      <a href="https://github.com/rctruta/sql-benchmarks-dagster">Repository</a>
+      <a href="https://github.com/rctruta/sql-benchmarks-dagster">sql-benchmarks-dagster</a>
       <a href="https://pypi.org/project/sqlbenchdag/">pip install sqlbenchdag</a>
       <a href="https://ramonactruta.substack.com/p/measuring-quack-duckdbs-new-client">Write-up</a>
     </div>
@@ -253,14 +253,26 @@
       signature identify itself.</li>
     </ul>
 
+    <p><strong>Skills are a variable it measures, not a feature it assumes.</strong>
+    A study contract declares its cells &mdash; baseline against skills-injected &mdash;
+    and the same goals run through both, so the cost and behaviour of a skill layer is a
+    measurement rather than a claim in a README. That is what produced the Malloy
+    Publisher result below.</p>
+
     <p>The states it checks for were not designed in advance. Refusal, suspend and
     resume, a librarian role, resource caps &mdash; each was discovered by cheap probe
     runs and only then given a name.</p>
 
+    <p>The engine is generalized from a working implementation rather than designed on
+    paper: the sqlbenchdag adapter carries its own graders, roles and tool surface, and
+    the two runners &mdash; monolith and state machine &mdash; are the pair whose
+    comparison produced the 20.7&times; figure above. A new target is a new adapter
+    against the same runners.</p>
+
     <div class="tags"><span class="tag">MCP</span><span class="tag">Per-turn tracing</span><span class="tag">Deterministic grading</span><span class="tag">Cost accounting</span><span class="tag">Content-addressed contracts</span></div>
 
     <div class="links">
-      <a href="https://github.com/rctruta/harness-bench">Repository</a>
+      <a href="https://github.com/rctruta/harness-bench">harness-bench</a>
     </div>
   </div>
 
@@ -346,7 +358,7 @@
     question, get an answer and a link to the timestamp where it's answered.</p>
 
     <div class="tags"><span class="tag">LanceDB</span><span class="tag">sentence-transformers</span><span class="tag">Hybrid search</span><span class="tag">Evaluation sets</span><span class="tag">Precision / recall</span></div>
-    <div class="links"><a href="https://github.com/rctruta/podcast-rag">Repository</a></div>
+    <div class="links"><a href="https://github.com/rctruta/podcast-rag">podcast-rag</a></div>
     
   </div>
 
