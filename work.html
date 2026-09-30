@@ -295,13 +295,22 @@
     skills-injected &mdash; with the full per-turn traces published and every table in
     the report derived from them by script. No number in it is hand-typed.</p>
 
-    <p>The first answer, in July 2026, was a packaging finding: the released image served
-    four utility prompts rather than the twenty-eight skills then present on the project's
-    main branch. The skills existed, and an agent pulling the official image did not get
-    them. <strong>That gap has since been closed</strong> &mdash; the server now builds a
-    bundle so that hosts which only speak MCP receive the same guidance as hosts that read
-    skill files directly, with a manifest and tests holding every channel to it. The
-    finding is recorded here as measured, and as since fixed.</p>
+    <p><strong>Measured 15 July 2026</strong>, against <code>malloydata/publisher@ad6c09b</code>:
+    the released image served four utility prompts rather than the twenty-eight skills then
+    present on the project's main branch. The skills existed; an agent pulling the official
+    image did not get them.</p>
+
+    <p><strong>Fixed upstream, beginning 20 July 2026.</strong> The project shipped the
+    skills as their own package (<a href="https://github.com/malloydata/publisher/pull/899">#899</a>),
+    then bundled each skill as an MCP prompt
+    (<a href="https://github.com/malloydata/publisher/pull/944">#944</a>, 29 July), and by
+    2 September added a manifest with tests holding every delivery channel to it
+    (<a href="https://github.com/malloydata/publisher/pull/1088">#1088</a>). The server's
+    own code now states the intent: hosts that only speak MCP receive the same guidance as
+    hosts that read skill files directly. Skills on main today: 44.</p>
+
+    <p class="sub small">Both dates are checkable. Nothing here claims one caused the other.
+    Re-verified 29 September 2026.</p>
 
     <p>The second cuts both ways. Injecting the skills rescued the weaker models &mdash;
     one went from exhausting its turn budget after twenty turns, 123,191 tokens and
