@@ -24,13 +24,13 @@
 </div></nav>
 <section><div class="wrap">
   <h2 id="data-engineering">Data Engineering &amp; Modeling</h2>
-  <p class="sub small cat-note">Source systems into structures analysts and models can use. Migration, entity resolution, record linkage, annotation quality control, and the SQL behaviour underneath it.</p>
+  <p class="sub small cat-note">Data modeling is the throughline. Source systems into structures analysts and models can use &mdash; migration, entity resolution, record linkage, annotation quality control, and the SQL behaviour underneath it.</p>
 
   <div class="proj" id="guelph-migration">
     <h3>Legacy-to-PostgreSQL migration and record linkage &mdash; University of Guelph, 2011&ndash;2015</h3>
 
     <p>Sole architect of the migration of a historical research database to PostgreSQL:
-    schema design and normalization cut storage by 73%. The result was a production
+    the data model cut storage by 73%. The result was a production
     system with researchers as its direct clients &mdash; requirements gathering,
     stakeholder translation, and ongoing support were part of the job, not adjacent
     to it.</p>
@@ -45,7 +45,7 @@
     ground truth is never handed to you, and a linkage rate means nothing without the
     precision beside it.</p>
 
-    <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">Schema design</span><span class="tag">Normalization</span><span class="tag">Probabilistic record linkage</span><span class="tag">Data quality</span></div>
+    <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">Data modeling</span><span class="tag">Probabilistic record linkage</span><span class="tag">Data quality</span></div>
   </div>
 
   <div class="proj" id="name-coding">
@@ -83,7 +83,7 @@
     and 1911 censuses, with a full ingest pipeline per census: process, detect
     inconsistencies, apply coding, prepare for the model downstream.</p>
 
-    <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">Entity resolution</span><span class="tag">Double metaphone</span><span class="tag">Levenshtein</span><span class="tag">Python</span><span class="tag">Annotation QA</span></div>
+    <div class="tags"><span class="tag">Data modeling</span><span class="tag">PostgreSQL</span><span class="tag">Entity resolution</span><span class="tag">Double metaphone</span><span class="tag">Levenshtein</span><span class="tag">Python</span><span class="tag">Annotation QA</span></div>
   </div>
 
   <div class="proj" id="age-modeling">
@@ -102,7 +102,25 @@
     and an offset &mdash; which is the result you only get by checking rather than
     assuming.</p>
 
-    <div class="tags"><span class="tag">Regression</span><span class="tag">Probabilistic record linkage</span><span class="tag">Model selection</span></div>
+    <div class="tags"><span class="tag">Data modeling</span><span class="tag">Regression</span><span class="tag">Probabilistic record linkage</span><span class="tag">Model selection</span></div>
+  </div>
+
+  <div class="proj" id="police-gazette">
+    <h3>Getting convict transport records out of OCR &mdash; Police Gazette</h3>
+
+    <p>Nineteenth-century Police Gazettes recording prisoners transported to
+    Tasmania, held as OCR'd scans. The data the historians needed was in tables
+    inside those documents, and OCR does not respect a table. I wrote the extraction
+    design: fixed layouts for the two table types, one table per output file, a
+    naming convention tying every file back to its source page, and a separate
+    metadata table holding what is true of a whole file &mdash; its description,
+    its row count, who extracted it, who checked it &mdash; recorded once instead of
+    repeated on every row.</p>
+
+    <p>They took that document to a funding body and were awarded <strong>$34,000</strong>
+    to do the work. I had written it as a favour, and heard some months later.</p>
+
+    <div class="tags"><span class="tag">Data modeling</span><span class="tag">OCR extraction</span><span class="tag">Data provenance</span><span class="tag">Quality control</span></div>
   </div>
 
   <div class="proj" id="sql-behaviour">
