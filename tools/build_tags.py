@@ -1,118 +1,142 @@
-"""Build tags.html from the tags already written into the pages, and make every
-tag on those pages a link into it.
+"""Apply data/TAGS.yaml to the pages, and build tags.html from it.
 
     python3 tools/build_tags.py
 
-A tag is a claim that two pieces of work share something. Until it is a link,
-nobody can check that claim. This turns the tag vocabulary into an index with
-referential integrity: every tag resolves to the complete list of work carrying
-it, and a tag carried by only one thing says so plainly.
+A tag is a claim that two pieces of work share something. Until it resolves to
+the full list of work carrying it, nobody can check that claim. This writes the
+tag rows into the pages from one vocabulary, and builds the index they point at.
 
-Idempotent — re-running after editing a page rewrites both sides.
+Fails loudly on a tag that is not in the vocabulary, and on a project id in the
+pages that the vocabulary does not cover. Idempotent.
 """
 import html
 import pathlib
 import re
+import sys
 from collections import defaultdict
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-PAGES = ["work.html", "teaching.html", "writing.html", "speaking.html"]
+PAGES = ["work.html"]
+SPEC = ROOT / "data" / "TAGS.yaml"
+
+
+def parse_tags_yaml(text):
+    """Minimal reader for this file's shape — no third-party dependency."""
+    vocab, projects, section, facet = {}, {}, None, None
+    for raw in text.splitlines():
+        if not raw.strip() or raw.lstrip().startswith("#"):
+            continue
+        indent = len(raw) - len(raw.lstrip())
+        line = raw.strip()
+        if indent == 0 and line.endswith(":"):
+            section = line[:-1]
+            continue
+        if section == "vocabulary":
+            if indent == 2 and line.endswith(":"):
+                facet = line[:-1]
+                continue
+            if indent == 4:
+                term = line.split(":", 1)[0].strip()
+                vocab[term] = facet
+        elif section == "projects" and indent == 2:
+            pid, rest = line.split(":", 1)
+            projects[pid.strip()] = [
+                t.strip() for t in rest.strip().strip("[]").split(",") if t.strip()
+            ]
+    return vocab, projects
+
+
+vocab, projects = parse_tags_yaml(SPEC.read_text())
+
+unknown = {t: p for p, ts in projects.items() for t in ts if t not in vocab}
+if unknown:
+    sys.exit(
+        "tags not in the vocabulary — add them to data/TAGS.yaml first:\n  "
+        + "\n  ".join(f"{t}  (on {p})" for t, p in unknown.items())
+    )
 
 
 def slug(tag):
     return re.sub(r"[^a-z0-9]+", "-", tag.lower()).strip("-")
 
 
-# tag -> list of (page, anchor, title)
+def row(tags):
+    cells = "".join(
+        f'<a class="tag" href="tags.html#{slug(t)}">{html.escape(t)}</a>' for t in tags
+    )
+    return f'<div class="tags">{cells}</div>'
+
+
+# ---- write the tag rows into the pages -------------------------------------
+
 index = defaultdict(list)
+seen = set()
 
 for name in PAGES:
     page = ROOT / name
-    if not page.exists():
-        continue
     text = page.read_text()
 
-    # each project block: its id, its heading, and the tags inside it
-    for block in re.finditer(
-        r'<div class="proj"(?: id="([^"]*)")?>(.*?)(?=<div class="proj"|</div></section>)',
-        text,
-        re.S,
-    ):
-        anchor, body = block.group(1) or "", block.group(2)
+    def replace(block):
+        pid = block.group(1)
+        body = block.group(2)
+        seen.add(pid)
+        if pid not in projects:
+            return block.group(0)
         heading = re.search(r"<h3[^>]*>(.*?)</h3>", body, re.S)
-        title = re.sub(r"<[^>]+>", "", heading.group(1)).strip() if heading else name
-        title = html.unescape(re.sub(r"\s+", " ", title))
-        for tag in re.findall(r'<(?:span|a)[^>]*class="tag"[^>]*>(.*?)</(?:span|a)>', body):
-            entry = (name, anchor, title)
-            if entry not in index[html.unescape(tag)]:
-                index[html.unescape(tag)].append(entry)
+        title = html.unescape(re.sub(r"<[^>]+>", " ", heading.group(1))) if heading else pid
+        title = re.sub(r"\s+", " ", title).strip()
+        for t in projects[pid]:
+            index[t].append((name, pid, title))
+        body = re.sub(r'<div class="tags">.*?</div>', row(projects[pid]), body, flags=re.S)
+        return f'<div class="proj" id="{pid}">{body}'
 
-    # tags that sit outside a project block belong to the page itself
-    stripped = re.sub(
-        r'<div class="proj".*?(?=<div class="proj"|</div></section>)', "", text, flags=re.S
+    text = re.sub(
+        r'<div class="proj" id="([^"]*)">(.*?)(?=<div class="proj"|</div></section>)',
+        replace,
+        text,
+        flags=re.S,
     )
-    page_title = re.search(r"<h2[^>]*>(.*?)</h2>", stripped, re.S)
-    ptitle = (
-        html.unescape(re.sub(r"<[^>]+>", "", page_title.group(1)).strip())
-        if page_title
-        else name
-    )
-    for tag in re.findall(r'<(?:span|a)[^>]*class="tag"[^>]*>(.*?)</(?:span|a)>', stripped):
-        entry = (name, "", ptitle)
-        if entry not in index[html.unescape(tag)]:
-            index[html.unescape(tag)].append(entry)
-
-# ---- rewrite every tag on every page into a link into the index -------------
-
-for name in PAGES:
-    page = ROOT / name
-    if not page.exists():
-        continue
-    text = page.read_text()
-
-    def linkify(m):
-        tag = html.unescape(m.group(1))
-        return f'<a class="tag" href="tags.html#{slug(tag)}">{m.group(1)}</a>'
-
-    text = re.sub(r'<span class="tag">(.*?)</span>', linkify, text)
-    text = re.sub(r'<a class="tag" href="tags.html#[^"]*">(.*?)</a>', linkify, text)
     page.write_text(text)
+
+missing = sorted(seen - set(projects))
+if missing:
+    sys.exit("projects in the pages with no entry in data/TAGS.yaml:\n  " + "\n  ".join(missing))
 
 # ---- the index page --------------------------------------------------------
 
-shared = {t: v for t, v in index.items() if len(v) > 1}
-single = {t: v for t, v in index.items() if len(v) == 1}
+facets = defaultdict(list)
+for tag, facet in vocab.items():
+    if tag in index:
+        facets[facet].append(tag)
 
 
 def entries(items):
-    out = []
-    for pg, anchor, title in items:
-        href = f"{pg}#{anchor}" if anchor else pg
-        out.append(
-            f'    <li><span class="what"><a href="{href}">{html.escape(title)}</a>'
-            f' <em>{pg.replace(".html", "")}</em></span></li>'
-        )
-    return "\n".join(out)
+    return "\n".join(
+        f'    <li><span class="what"><a href="{pg}#{pid}">{html.escape(title)}</a></span></li>'
+        for pg, pid, title in items
+    )
 
 
-def group(d):
+def facet_html(facet):
     out = []
-    for tag in sorted(d, key=str.lower):
+    for tag in sorted(facets[facet], key=str.lower):
+        items = index[tag]
         out.append(
-            f'  <h3 id="{slug(tag)}">{html.escape(tag)} '
-            f'<span class="tag-count">{len(d[tag])}</span></h3>\n'
-            f'  <ul class="clean">\n{entries(d[tag])}\n  </ul>'
+            f'  <h3 id="{slug(tag)}">{html.escape(tag)}'
+            f' <span class="tag-count">{len(items)}</span></h3>\n'
+            f'  <ul class="clean">\n{entries(items)}\n  </ul>'
         )
     return "\n\n".join(out)
 
 
+total = sum(len(v) for v in index.values())
 doc = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ramona C. Truta &mdash; Index</title>
-<meta name="description" content="Every tag used across this site, and the work it points to.">
+<meta name="description" content="Every tag used on this site, and all the work it points to.">
 <link rel="stylesheet" href="style.css"></head><body>
-<!-- Generated by tools/build_tags.py from the tags on the other pages. Do not edit by hand. -->
+<!-- Generated by tools/build_tags.py from data/TAGS.yaml. Do not edit by hand. -->
 <nav class="topnav"><div class="wrap">
   <a class="brand" href="index.html">Ramona C. Truta</a>
   <span class="navlinks">
@@ -124,26 +148,36 @@ doc = f"""<!DOCTYPE html>
   </span>
 </div></nav>
 <nav class="subnav" id="top"><div class="wrap">
-  <a href="#shared">Shared</a>
-  <a href="#once">Used once</a>
+  <a href="#discipline">Discipline</a>
+  <a href="#method">Method</a>
+  <a href="#technology">Technology</a>
+  <a href="work.html">Back to Work</a>
 </div></nav>
 
 <section><div class="wrap">
-  <h2 id="shared">What connects the work</h2>
-  <p class="lede">{len(shared)} of {len(index)} tags appear on more than one piece of work.
-  These are the threads.</p>
+  <h2 id="discipline">Discipline</h2>
+  <p class="lede">What the work is about. The number beside each tag is how many pieces of
+  work carry it &mdash; a one means the term names something that has happened once so far.</p>
 
-{group(shared)}
+{facet_html("discipline")}
 
   <p class="totop"><a href="#top">&uarr; Top</a></p>
 </div></section>
 
 <section><div class="wrap">
-  <h2 id="once">Used once</h2>
-  <p class="lede">{len(single)} tags name something specific to a single piece of work.
-  Listed so the vocabulary is visible rather than implied.</p>
+  <h2 id="method">Method</h2>
+  <p class="lede">How a claim was established, rather than what it was about.</p>
 
-{group(single)}
+{facet_html("method")}
+
+  <p class="totop"><a href="#top">&uarr; Top</a></p>
+</div></section>
+
+<section><div class="wrap">
+  <h2 id="technology">Technology</h2>
+  <p class="lede">What it was built with.</p>
+
+{facet_html("technology")}
 
   <p class="totop"><a href="#top">&uarr; Top</a></p>
 </div></section>
@@ -153,4 +187,6 @@ doc = f"""<!DOCTYPE html>
 """
 
 (ROOT / "tags.html").write_text(doc)
-print(f"tags.html: {len(index)} tags, {len(shared)} shared, {len(single)} used once")
+print(f"tags.html: {len(index)} tags across {len(projects)} projects, {total} links")
+for facet in ("discipline", "method", "technology"):
+    print(f"  {facet:12} {len(facets[facet])} tags")

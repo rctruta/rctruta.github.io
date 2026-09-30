@@ -1,0 +1,59 @@
+# Controlled vocabulary for the tags on this site, and the tags each project carries.
+#
+# THE RULE: a tag must name something at least two pieces of work genuinely share,
+# or something a reader would filter on. Everything else is implementation detail
+# and belongs in the prose, where it already is.
+#
+# Decided 2026-09-29, collapsing 54 uncontrolled tags down to this list. Before
+# that, 47 of 54 tags appeared exactly once, so clicking one would have shown you
+# the page you were already on.
+#
+# tools/build_tags.py rewrites every tag row from this file and fails on any tag
+# not in `vocabulary`. Add the term here first, or the build stops.
+
+vocabulary:
+  discipline:
+    Data modeling: Representing a domain faithfully, so the structure survives contact with the data.
+    Entity resolution: Deciding whether two records describe the same thing, when nothing says so.
+    Data quality: Finding what is wrong in source data, and proving it is wrong.
+    Benchmarking: Measuring a system under conditions stated well enough to reproduce.
+    AI evaluation: Deciding whether a model or agent actually did what it claimed.
+    AI security: Attacks on what an agent reads, stores, and later trusts.
+    Migration: Moving a working system to a new platform without stopping its users.
+    Team leadership: Running the people doing the work, and the mechanism that checks it.
+
+  method:
+    Deterministic grading: Scoring outcomes by rule, not by judgement, so a result can be re-derived.
+    Per-turn tracing: Recording every step an agent took, rather than asking it afterwards.
+    Evaluation sets: A labelled set of cases, built so a system's accuracy is measurable.
+    Ablation study: Running the same goals with one thing changed, to isolate what it costs.
+    Content-addressed capsules: Fingerprinting the question, so a changed method changes the identifier.
+    Cold-cache measurement: Clearing every cache before each run, so the engine is measured and not the buffer pool.
+
+  technology:
+    PostgreSQL:
+    DuckDB:
+    Python:
+    Dagster:
+    Polars:
+    Arrow / ADBC:
+    MCP:
+
+# Which tags each project carries. Project ids match the `div.proj` ids in the pages.
+projects:
+  guelph-migration: [Data modeling, Entity resolution, Data quality, Migration, PostgreSQL, Team leadership]
+  name-coding: [Data modeling, Entity resolution, Evaluation sets, Data quality, PostgreSQL, Python]
+  age-modeling: [Data modeling, Entity resolution, Evaluation sets]
+  police-gazette: [Data modeling, Data quality]
+  db2-postgres: [Migration, PostgreSQL]
+
+  sqlbenchdag: [Benchmarking, Content-addressed capsules, Cold-cache measurement, Dagster, DuckDB, PostgreSQL, Polars, Arrow / ADBC, Python, MCP]
+  sql-behaviour: [Benchmarking, Cold-cache measurement, Data modeling, PostgreSQL, DuckDB]
+
+  agent-memory: [AI security, AI evaluation]
+  harness-bench: [AI evaluation, Deterministic grading, Per-turn tracing, Content-addressed capsules, MCP, Python]
+  malloy-study: [AI evaluation, Ablation study, Per-turn tracing, MCP]
+  agent-traces: [AI evaluation, Per-turn tracing, Deterministic grading, Python]
+  consensus-contagion: [AI evaluation, Deterministic grading, Ablation study]
+  rag-accuracy: [AI evaluation, Evaluation sets, Python]
+  agent-tools: [AI security, Deterministic grading, Python]
