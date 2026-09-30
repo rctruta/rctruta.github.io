@@ -226,3 +226,7 @@ ul.courses li { break-inside:avoid; padding:3px 0 3px 22px; font-size:17px;
 ul.courses li::before { content:"\270E"; color:var(--green); font-size:14px;
                         display:inline-block; width:22px; text-indent:0 }
 @media (max-width:620px) { ul.courses { columns:1 } }
+
+/* the top bar is sticky and 63px tall, so anything jumped to must stop below it */
+[id] { scroll-margin-top: 76px; }
+html { scroll-behavior: smooth; }
