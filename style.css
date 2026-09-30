@@ -222,6 +222,6 @@ section h3 { font-size:15px; font-weight:600; color:var(--soft); letter-spacing:
 ul.courses { list-style:none; margin:0; padding:0; columns:2; column-gap:38px }
 ul.courses li { break-inside:avoid; padding:3px 0 3px 22px; font-size:16px;
                 line-height:1.45; text-indent:-22px }
-ul.courses li::before { content:"\2710"; color:var(--green); font-size:14px;
+ul.courses li::before { content:"\270E"; color:var(--green); font-size:14px;
                         display:inline-block; width:22px; text-indent:0 }
 @media (max-width:620px) { ul.courses { columns:1 } }
