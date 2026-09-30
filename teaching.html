@@ -220,18 +220,10 @@
   because the point was to make them look at the data. Then seven XQuery queries against a
   114MB collection, each in its own file, each output in its own, run through Saxon.</p>
 
-  <p>Reading it back now: query languages force modeling decisions whether or not anyone
-  calls them that. This assignment made undergraduates define identity, semantics, null
-  handling and output contracts &mdash; none of it labelled data modeling, all of it exactly
-  that. <strong>Structure rules</strong> bound artifact to identity: <code>qX.xq</code>
-  produces <code>qX.xml</code>, one query per file. <strong>Content rules</strong> fixed the
-  semantics before any code existed &mdash; what counts as a trial being "performed", that a
-  trial's identity is its <code>nct_id</code>, how to eliminate duplicates, what to do when an
-  element is empty. Every question specified its output schema, so the shape of an answer was
-  settled before the query was written. And <code>collection.xml</code>, which students had to
-  generate, is a document whose entire content is references to ten thousand other documents.</p>
-
-  <p>I am not claiming to have anticipated anything. I am saying the work is on the page.</p>
+  <p>Structure rules and content rules stated up front, so an answer was checkable rather
+  than arguable. The XQuery came from my own M.Sc. research on structural and semantic query
+  optimization; the data came from a government registry that was live while they worked
+  on it.</p>
 
   <div class="tags"><a class="tag" href="tags.html#data-modeling">Data modeling</a><a class="tag" href="tags.html#teaching">Teaching</a></div>
   </div>
