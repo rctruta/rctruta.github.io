@@ -238,9 +238,23 @@ a.tag:hover { color:var(--green); border-color:var(--green); text-decoration:non
 h3 .meta { font-size:14px; font-weight:400; color:var(--soft); margin-left:9px;
            white-space:nowrap }
 
-/* site search — Pagefind, restyled to match rather than ship its defaults */
-.searchbox { border-top:1px solid var(--line); margin-top:40px; padding:26px 0 44px }
-#search { max-width:640px }
+
+/* search: a button in the nav, a dialog over the page */
+.searchbtn { background:none; border:0; padding:2px 0 0; cursor:pointer; color:var(--mid);
+             display:inline-flex; align-items:center }
+.searchbtn:hover { color:var(--green) }
+
+.searchmodal { position:fixed; inset:0; z-index:60; background:rgba(20,22,26,0.45);
+               display:flex; justify-content:center; align-items:flex-start;
+               padding:9vh 20px 20px; overflow-y:auto }
+.searchmodal[hidden] { display:none }
+.searchmodal__panel { position:relative; background:var(--bg); width:100%; max-width:660px;
+                      border-radius:10px; padding:26px 26px 14px;
+                      box-shadow:0 18px 60px rgba(0,0,0,0.28) }
+.searchmodal__close { position:absolute; top:8px; right:14px; background:none; border:0;
+                      font-size:26px; line-height:1; color:var(--soft); cursor:pointer; padding:4px }
+.searchmodal__close:hover { color:var(--ink) }
+
 :root {
   --pagefind-ui-scale:0.8;
   --pagefind-ui-primary:var(--ink);

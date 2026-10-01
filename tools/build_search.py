@@ -21,19 +21,54 @@ PAGES = [
     "writing.html", "tags.html", "contact.html",
 ]
 
-SNIPPET = """<div class="searchbox"><div class="wrap"><div id="search"></div></div></div>
+SNIPPET = """<div class="searchmodal" id="searchmodal" hidden>
+  <div class="searchmodal__panel" role="dialog" aria-modal="true" aria-label="Search this site">
+    <button type="button" class="searchmodal__close" aria-label="Close search" data-search-close>&times;</button>
+    <div id="search"></div>
+  </div>
+</div>
 <link href="pagefind/pagefind-ui.css" rel="stylesheet">
 <script src="pagefind/pagefind-ui.js"></script>
 <script>
-  window.addEventListener('DOMContentLoaded', () => {
-    new PagefindUI({
-      element: '#search',
-      showSubResults: true,
-      showImages: false,
-      pageSize: 8,
-      translations: { placeholder: 'Search this site', zero_results: 'Nothing for [SEARCH_TERM]' }
-    });
+(() => {
+  const modal = document.getElementById('searchmodal');
+  let ui = null;
+
+  const open = () => {
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    if (!ui) {
+      ui = new PagefindUI({
+        element: '#search',
+        showSubResults: true,
+        showImages: false,
+        pageSize: 8,
+        translations: {
+          placeholder: 'Search this site',
+          zero_results: 'Nothing found for [SEARCH_TERM]'
+        }
+      });
+    }
+    const input = modal.querySelector('input');
+    if (input) { input.focus(); input.select(); }
+  };
+
+  const close = () => {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  };
+
+  document.querySelectorAll('[data-search-open]').forEach(b => b.addEventListener('click', open));
+  document.querySelectorAll('[data-search-close]').forEach(b => b.addEventListener('click', close));
+
+  // clicking the backdrop closes; clicking inside the panel does not
+  modal.addEventListener('click', e => { if (e.target === modal) close(); });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !modal.hidden) close();
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); modal.hidden ? open() : close(); }
   });
+})();
 </script>"""
 
 run = subprocess.run(
@@ -51,7 +86,7 @@ for name in PAGES:
         continue
     text = page.read_text()
     text = re.sub(
-        r'<div class="searchbox">.*?</script>\n?', "", text, flags=re.S
+        r'<div class="search(?:box|modal)".*?</script>\n?', "", text, flags=re.S
     )  # idempotent
     text = text.replace("</body>", SNIPPET + "\n</body>", 1)
     page.write_text(text)
