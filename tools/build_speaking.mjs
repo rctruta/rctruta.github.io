@@ -23,7 +23,7 @@ const newest = (a, b) => String(b.date).localeCompare(String(a.date))
 
 // A title links to its url when there is one, and sits plain when there isn't.
 const titleHtml = (e) =>
-  e.url ? `<a href="${esc(e.url)}">${esc(e.title)}</a>` : `<em>${esc(e.title)}</em>`
+  e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a>` : `<em>${esc(e.title)}</em>`
 
 const row = (e, trailing = '') =>
   `    <li><span class="when">${when(e.date)}</span><span class="what">` +

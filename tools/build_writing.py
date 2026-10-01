@@ -60,7 +60,7 @@ def item(e):
         f'<a class="tag" href="tags.html#{slug(t)}">{html.escape(t)}</a>' for t in e["tags"]
     )
     return f"""  <div class="proj" id="{e['id']}">
-    <h3><a href="{e['url']}">{html.escape(e['title'])}</a>
+    <h3><a href="{e['url']}" target="_blank" rel="noopener">{html.escape(e['title'])}</a>
     <span class="meta">{html.escape(e['platform'])} &middot; {when(e['date'])}</span></h3>
     <p>{html.escape(e['argues'])}</p>
     <div class="tags">{tags}</div>
@@ -103,7 +103,7 @@ doc = f"""<!DOCTYPE html>
 
 {chr(10).join(body)}
 
-  <p><a href="https://ramonactruta.substack.com">Everything on Substack &rarr;</a></p>
+  <p><a href="https://ramonactruta.substack.com" target="_blank" rel="noopener">Everything on Substack &rarr;</a></p>
 </div></section>
 
 <footer><div class="wrap"><span>&copy; 2025&ndash;2026 Ramona C. Truta &middot; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a></span><a href="contact.html">Contact</a></div></footer>
