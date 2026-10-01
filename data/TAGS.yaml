@@ -48,6 +48,7 @@ vocabulary:
     SQL:
     XQuery:
     LanceDB:
+    Knowledge graphs:
     # Steganography:
     # Vision security:
 
@@ -55,9 +56,9 @@ vocabulary:
 projects:
   guelph-migration: [Data modeling, Entity resolution, Data quality, Migration, PostgreSQL, Team leadership]
   name-coding: [Data modeling, Entity resolution, Evaluation sets, Data quality, PostgreSQL, Python]
-  age-modeling: [Data modeling, Entity resolution, Evaluation sets]
-  police-gazette: [Data modeling, Data quality]
-  db2-postgres: [Migration, PostgreSQL]
+  age-modeling: [Data modeling, Entity resolution, Evaluation sets, Data quality]
+  police-gazette: [Data modeling, Data quality, Evaluation sets]
+  db2-postgres: [Migration, PostgreSQL, Team leadership, Teaching]
 
   sqlbenchdag: [Benchmarking, Content-addressed capsules, Cold-cache measurement, Dagster, DuckDB, PostgreSQL, Polars, Arrow / ADBC, Python, MCP, SQL, Study contracts]
   sql-behaviour: [Benchmarking, Cold-cache measurement, Data modeling, PostgreSQL, DuckDB, SQL]
@@ -67,13 +68,18 @@ projects:
   # substrate-steganography: [AI security, AI evaluation, Steganography, Vision security, Python]
   harness-bench: [AI evaluation, Deterministic grading, Per-turn tracing, Content-addressed capsules, MCP, Python, Study contracts]
   malloy-study: [AI evaluation, Ablation study, Per-turn tracing, MCP]
-  agent-traces: [AI evaluation, Per-turn tracing, Deterministic grading, Python]
-  consensus-contagion: [AI evaluation, Deterministic grading, Ablation study, RLHF, Study contracts]
+  agent-traces: [AI evaluation, Per-turn tracing, Deterministic grading, Python, Process telemetry]
+  consensus-contagion: [AI evaluation, Deterministic grading, Ablation study, RLHF, Study contracts, AI security, Python]
   rag-accuracy: [AI evaluation, Evaluation sets, Python, RAG, LanceDB]
   agent-tools: [AI security, Deterministic grading, Python, Git discipline]
   agent-telemetry: [AI evaluation, Process telemetry, Deterministic grading, Python]
-  site-infrastructure: [Data modeling, Git discipline, Python]
+  site-infrastructure: [Data modeling, Git discipline, Python, Study contracts]
 
-  # teaching artifacts — course material is modeling work, and says so
+  # teaching sections and artifacts
+  academic-leadership: [Team leadership, Teaching, Migration, PostgreSQL]
+  course-product-design: [Team leadership, Teaching, Data quality, Human agency]
+  teaching-philosophy: [Teaching, Migration]
+  courses-list: [Teaching]
+  service-outreach: [Teaching]
   xquery-assignment: [Data modeling, Teaching, XQuery]
   nf-handout: [Data modeling, Teaching]

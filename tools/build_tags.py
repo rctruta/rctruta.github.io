@@ -116,6 +116,22 @@ for block in re.split(r"\n(?=- id:)", wtext):
         if tag and tag in vocab:
             index[tag].append(("writing.html", wid or "", title))
 
+# speaking appearances live in appearances.yaml — index them from the source
+atext = (ROOT / "data" / "appearances.yaml").read_text()
+for block in re.split(r"\n(?=- id:)", atext):
+    if not block.lstrip().startswith("- id:"):
+        continue
+    def afield(k):
+        m = re.search(rf"^\s*(?:-\s*)?{k}: (.+?)\s*(?:#.*)?$", block, re.M)
+        return m.group(1).strip().strip("'\"") if m else None
+    aid, atitle, aorg, tags_line = afield("id"), afield("title"), afield("org"), re.search(r"^  tags: \[(.*)\]\s*$", block, re.M)
+    if not atitle or not tags_line:
+        continue
+    full_title = f"{aorg} &mdash; {atitle}" if aorg else atitle
+    for tag in (x.strip() for x in tags_line.group(1).split(",")):
+        if tag and tag in vocab:
+            index[tag].append(("speaking.html", aid or "", full_title))
+
 missing = sorted(seen - set(projects))
 if missing:
     sys.exit("projects in the pages with no entry in data/TAGS.yaml:\n  " + "\n  ".join(missing))

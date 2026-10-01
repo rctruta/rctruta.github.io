@@ -26,7 +26,7 @@ const titleHtml = (e) =>
   e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a>` : `<em>${esc(e.title)}</em>`
 
 const row = (e, trailing = '') =>
-  `    <li><span class="when">${when(e.date)}</span><span class="what">` +
+  `    <li id="${esc(e.id)}"><span class="when">${when(e.date)}</span><span class="what">` +
   `<strong>${esc(e.org)}</strong>${e.location && e.location !== 'virtual' ? `, ${esc(e.location)}` : ''}` +
   ` &mdash; ${titleHtml(e)}${trailing}</span></li>`
 

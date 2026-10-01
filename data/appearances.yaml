@@ -10,9 +10,7 @@
 # Nothing here records "is it out yet" — that is derived, so it cannot go stale:
 #   talk     always rendered; upcoming vs past comes from `date`
 #   podcast  rendered once it has a `url`; no url = recorded, not published
-# To publish an episode, paste its link. There is no second step.
-
-# ---------------------------------------------------------------- talks -----
+# To publish an episode, paste its link. There is no second step.# ---------------------------------------------------------------- talks -----
 
 - id: nodes-2026
   kind: talk
@@ -21,7 +19,7 @@
   org: Neo4j NODES
   eventType: talk
   location: virtual
-  tags: [agent-memory, security]
+  tags: [AI security, Knowledge graphs]
 
 - id: data-in-the-d-2026
   kind: talk
@@ -30,7 +28,7 @@
   org: Data in the D
   eventType: talk
   location: Detroit
-  tags: [benchmarking]
+  tags: [Benchmarking]
 
 - id: cywic-2026
   kind: talk
@@ -39,7 +37,7 @@
   org: Canadian Women in Cybersecurity
   eventType: talk
   location: Toronto
-  tags: [agent-evaluation, bias, security]
+  tags: [AI evaluation, RLHF]
 
 - id: ai-tinkerers-semantic-laundering
   kind: talk
@@ -48,7 +46,7 @@
   org: AI Tinkerers Toronto
   eventType: talk
   location: Toronto
-  tags: [agent-memory, security, demo]
+  tags: [AI security]
 
 - id: ai-tinkerers-blueberry-muffin
   kind: talk
@@ -57,7 +55,7 @@
   org: AI Tinkerers Toronto
   eventType: talk
   location: Toronto
-  tags: [agent-memory, security, demo]
+  tags: [AI security]
 
 - id: ai-tinkerers-blueberry-muffin-waterloo
   kind: talk
@@ -67,7 +65,7 @@
   eventType: talk
   location: Waterloo
   note: Substantially the same talk given in Toronto the following evening.
-  tags: [agent-memory, security, demo]
+  tags: [AI security]
 
 - id: nodes-2025
   kind: talk
@@ -77,7 +75,7 @@
   eventType: talk
   location: virtual
   url: https://www.youtube.com/watch?v=WnPM9WryIGg
-  tags: [knowledge-graphs]
+  tags: [Knowledge graphs]
 
 - id: deml-summit-2024
   kind: talk
@@ -86,7 +84,7 @@
   org: Data Engineering & ML Summit
   eventType: panel
   location: virtual
-  tags: [careers]
+  tags: [Teaching]
 
 # ------------------------------------------------------------- podcasts -----
 
@@ -103,7 +101,7 @@
     Second recording; the first take's audio was unusable. Joe agreed to switch
     seats and be interviewed about Mixed Model Arts. Billed on his side as her
     guesting, but she asked the questions.
-  tags: [books, data, itinerant-podcaster]
+  tags: [Data modeling]
 
 - id: super-data-show-2026-03
   kind: podcast
@@ -113,7 +111,7 @@
   role: guest
   format: recorded
   url: https://www.youtube.com/watch?v=gUekOnPsahI
-  tags: [agent-memory, security]
+  tags: [AI security]
 
 - id: dip-data-misaligned-2026
   kind: podcast
@@ -123,7 +121,7 @@
   role: guest
   format: recorded
   url: https://dataintelligenceplatform.substack.com/p/data-misaligned-e5b
-  tags: [data-quality, ai]
+  tags: [Data quality]
 
 - id: nerds-100-episodes-2026
   kind: podcast
@@ -132,8 +130,8 @@
   org: Data Podcast for Nerds!
   role: guest
   format: recorded
-  url: https://www.youtube.com/watch?v=DmGtpu8Ek70
-  tags: [data]
+  url: https://www.youtube.com/watch?v=DmGtpu8Ep70
+  tags: [Teaching]
 
 - id: nerds-monika-year-three-2026
   kind: podcast
@@ -147,7 +145,7 @@
   note: >-
     Published as "Highlights from my Third Year" on Monika's own channel; her
     "my" reads as Ramona's here, so the host is named instead.
-  tags: [data, itinerant-podcaster]
+  tags: [Teaching]
 
 - id: dip-live-ole-2025
   kind: podcast
@@ -161,7 +159,7 @@
     The show is a standing Friday live between Actian team members; she joined
     when a regular was away. Just the two of them, a candid conversation rather
     than an interview — his book came up among much else.
-  tags: [metadata, data]
+  tags: [Data modeling]
 
 - id: dec-medallion-2025
   kind: podcast
@@ -172,7 +170,7 @@
   format: live
   url: https://www.youtube.com/live/1HUCUU5G_Ns
   note: Guest and moderator.
-  tags: [data-architecture]
+  tags: [Data modeling]
 
 - id: dec-ai-helps-2025
   kind: podcast
@@ -182,7 +180,7 @@
   role: guest
   format: live
   url: https://www.youtube.com/live/9d_k-uS2LcA
-  tags: [ai]
+  tags: [AI evaluation]
 
 - id: leit-staying-human-2025
   kind: podcast
@@ -192,7 +190,7 @@
   role: guest
   format: recorded
   url: https://www.youtube.com/watch?v=MFor0EJ7DyI
-  tags: [ai, people]
+  tags: [Human agency]
 
 - id: gambill-ai-skills-2025
   kind: podcast
@@ -202,7 +200,7 @@
   role: guest
   format: recorded
   url: https://www.youtube.com/watch?v=fK_75G-s77w
-  tags: [ai, careers]
+  tags: [Teaching]
 
 - id: gambill-data-architecture-2025
   kind: podcast
@@ -212,7 +210,7 @@
   role: guest
   format: recorded
   url: https://www.youtube.com/watch?v=RKsm8-RyeeY
-  tags: [data-architecture, careers]
+  tags: [Data modeling]
 
 - id: agile-data-64
   kind: podcast
@@ -224,7 +222,7 @@
   counterpart: Shane Gibson
   url: https://www.youtube.com/watch?v=9VBus8KtyfI
   note: Episode 64.
-  tags: [books, data, itinerant-podcaster]
+  tags: [Teaching]
 
 - id: leit-dashboard-spirit-2025
   kind: podcast
@@ -234,7 +232,7 @@
   role: guest
   format: recorded
   url: https://www.youtube.com/watch?v=AfeOP7GYFW0
-  tags: [people]
+  tags: [Human agency]
 
 - id: nerds-monika-year-two-2025
   kind: podcast
@@ -245,7 +243,7 @@
   format: live
   counterpart: Monika Kay Royal
   url: https://www.youtube.com/live/i6Ti3FaG0UU
-  tags: [data, itinerant-podcaster]
+  tags: [Teaching]
 
 - id: leit-data-with-heart-2024
   kind: podcast
@@ -255,7 +253,7 @@
   role: guest
   format: recorded
   url: https://www.youtube.com/watch?v=DfGq3cH2kAc
-  tags: [people]
+  tags: [Human agency]
 
 - id: nerds-monika-year-one-2024
   kind: podcast
@@ -266,4 +264,4 @@
   format: live
   counterpart: Monika Kay Royal
   url: https://www.youtube.com/live/AnjS72yGlqk
-  tags: [data, itinerant-podcaster]
+  tags: [Teaching]
