@@ -28,7 +28,7 @@ MONTHS = ["January", "February", "March", "April", "May", "June",
 def parse(block):
     e = {}
     for key in ("id", "title", "url", "platform", "date", "argues"):
-        m = re.search(rf"^  {key}: (.+?)\s*(?:#.*)?$", block, re.M)
+        m = re.search(rf"^\s*(?:-\s*)?{key}: (.+?)\s*(?:#.*)?$", block, re.M)
         if m:
             e[key] = m.group(1).strip().strip('"')
     m = re.search(r"^  tags: \[(.*)\]\s*$", block, re.M)
@@ -59,7 +59,7 @@ def item(e):
     tags = "".join(
         f'<a class="tag" href="tags.html#{slug(t)}">{html.escape(t)}</a>' for t in e["tags"]
     )
-    return f"""  <div class="proj">
+    return f"""  <div class="proj" id="{e['id']}">
     <h3><a href="{e['url']}">{html.escape(e['title'])}</a>
     <span class="meta">{html.escape(e['platform'])} &middot; {when(e['date'])}</span></h3>
     <p>{html.escape(e['argues'])}</p>

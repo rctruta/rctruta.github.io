@@ -107,14 +107,14 @@ for block in re.split(r"\n(?=- id:)", wtext):
     if not block.lstrip().startswith("- id:"):
         continue
     def field(k):
-        m = re.search(rf"^  {k}: (.+?)\s*(?:#.*)?$", block, re.M)
+        m = re.search(rf"^\s*(?:-\s*)?{k}: (.+?)\s*(?:#.*)?$", block, re.M)
         return m.group(1).strip().strip('"') if m else None
-    title, tags_line = field("title"), re.search(r"^  tags: \[(.*)\]\s*$", block, re.M)
+    wid, title, tags_line = field("id"), field("title"), re.search(r"^  tags: \[(.*)\]\s*$", block, re.M)
     if not title or not tags_line:
         continue
     for tag in (x.strip() for x in tags_line.group(1).split(",")):
         if tag and tag in vocab:
-            index[tag].append(("writing.html", "", title))
+            index[tag].append(("writing.html", wid or "", title))
 
 missing = sorted(seen - set(projects))
 if missing:
