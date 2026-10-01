@@ -48,8 +48,8 @@ vocabulary:
     SQL:
     XQuery:
     LanceDB:
-    Steganography:
-    Vision security:
+    # Steganography:
+    # Vision security:
 
 # Which tags each project carries. Project ids match the `div.proj` ids in the pages.
 projects:
@@ -64,7 +64,7 @@ projects:
   lakehouse-semantics: [Benchmarking, PostgreSQL, DuckDB, SQL, Python]
 
   agent-memory: [AI security, AI evaluation]
-  substrate-steganography: [AI security, AI evaluation, Steganography, Vision security, Python]
+  # substrate-steganography: [AI security, AI evaluation, Steganography, Vision security, Python]
   harness-bench: [AI evaluation, Deterministic grading, Per-turn tracing, Content-addressed capsules, MCP, Python, Study contracts]
   malloy-study: [AI evaluation, Ablation study, Per-turn tracing, MCP]
   agent-traces: [AI evaluation, Per-turn tracing, Deterministic grading, Python]
