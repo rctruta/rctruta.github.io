@@ -74,7 +74,7 @@
   platform: Substack
   date: 2026-01-13
   argues: "Why AI agents need both working memory and institutional memory."
-  tags: [Data modeling, AI security]
+  tags: [Data modeling, AI security, Teaching]
 
 - id: boxing-day-incident
   title: "A Boxing Day 'Security Incident' (and why we need the Pedantic Medallion)"
@@ -106,7 +106,7 @@
   platform: Substack
   date: 2025-10-04
   argues: "A Medallion Architecture analogy hard to forget."
-  tags: [Data modeling, Data quality]
+  tags: [Data modeling, Data quality, Teaching]
 
 - id: pedantic-medallion
   title: "The Knowledge Architect's Playbook: The Pedantic Medallion"
@@ -130,7 +130,7 @@
   platform: Substack
   date: 2025-07-09
   argues: "A food-bite story on one of the most avoided SQL toppings: its 3-valued logic."
-  tags: [Data modeling, PostgreSQL]
+  tags: [Data modeling, PostgreSQL, Teaching]
 
 - id: stop-groupby
   title: "Stop Grouping by Everything"
@@ -154,11 +154,11 @@
 
 - id: embeddings-temperature
   title: "Understanding Embeddings Through Temperature"
-  url: [YOURS]
+  url: https://lnkd.in/p/gtw5SvJk
   platform: LinkedIn
-  date: [YOURS]
-  argues: [YOURS]
-  tags: [AI evaluation]
+  date: 2024-11-20
+  argues: "Embeddings aren't just technical tools; they're maps of meaning."
+  tags: [AI evaluation, Teaching]
 
 # The Defensive Joins Anti-Pattern is named on RESUME_ENGINEER.txt and I could
 # not find it published anywhere. Either it is unpublished, or it is

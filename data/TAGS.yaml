@@ -21,7 +21,8 @@ vocabulary:
     AI security: Attacks on what an agent reads, stores, and later trusts.
     Migration: Moving a working system to a new platform without stopping its users.
     Team leadership: Running the people doing the work, and the mechanism that checks it.
-    Teaching: Course material built so a learner arrives at the answer rather than watching it appear.
+    Teaching: Course material or explanatory writing built so a learner arrives at the answer rather than watching it appear.
+    Human agency: What people give up to a system, and what it costs them.
 
   method:
     Deterministic grading: Scoring outcomes by rule, not by judgement, so a result can be re-derived.
