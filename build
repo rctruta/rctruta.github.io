@@ -1,0 +1,36 @@
+#!/bin/sh
+# Rebuild everything the data drives, in the only order that is correct.
+#
+#     ./build
+#
+# Order matters. The tag index reads the writing data, so writing runs first.
+# Search indexes the finished pages, so it runs last — run it earlier and the
+# index describes the previous version of the site.
+#
+# Safe to run at any time. Every step is idempotent.
+
+set -e
+cd "$(dirname "$0")"
+export PATH="/opt/homebrew/bin:$PATH"
+
+echo "1/6  speaking      <- data/appearances.yaml"
+node tools/build_speaking.mjs
+
+echo "2/6  writing       <- data/writing.yaml"
+python3 tools/build_writing.py
+
+echo "3/6  tag index     <- data/TAGS.yaml + data/writing.yaml"
+python3 tools/build_tags.py
+
+echo "4/6  navigation    <- the NAV list in tools/build_nav.py"
+python3 tools/build_nav.py
+
+echo "5/6  malloy chart  <- numbers in tools/malloy_chart.py"
+python3 tools/malloy_chart.py
+
+echo "6/6  search        <- the finished pages"
+python3 tools/build_search.py
+
+echo
+echo "Done. Review with: git diff --stat"
+echo "Publish with:      git add -A && git commit -m '...' && git push"

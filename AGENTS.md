@@ -19,13 +19,12 @@ Edit the data, run the tool, commit both. A hand edit to a generated file is
 erased by the next build without warning.
 
 ```bash
-node tools/build_speaking.mjs     # after changing appearances
-python3 tools/build_writing.py    # after changing articles
-python3 tools/build_tags.py       # after changing tags
-python3 tools/build_nav.py        # after adding a page
-python3 tools/build_search.py     # ALWAYS LAST — the index must describe the final pages
-python3 tools/malloy_chart.py     # after changing the study numbers
+./build          # everything, in the only correct order
 ```
+
+Individual generators exist in `tools/` but are not run by hand — `./build`
+encodes the dependency order and running them out of order produces a search
+index that describes the previous version of the site.
 
 ## Vocabulary is controlled, and the build enforces it
 
