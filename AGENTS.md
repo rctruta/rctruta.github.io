@@ -12,6 +12,8 @@ something.
 | `writing.html` | `data/writing.yaml` | `tools/build_writing.py` |
 | `tags.html`, and every tag row in `work.html` and `teaching.html` | `data/TAGS.yaml` + `data/writing.yaml` | `tools/build_tags.py` |
 | `assets/malloy-skills-tokens.svg` | numbers in the script | `tools/malloy_chart.py` |
+| the top nav on every page | the `NAV` list in the script | `tools/build_nav.py` |
+| `pagefind/` and the search box on every page | the published pages | `tools/build_search.py` |
 
 Edit the data, run the tool, commit both. A hand edit to a generated file is
 erased by the next build without warning.
@@ -19,7 +21,9 @@ erased by the next build without warning.
 ```bash
 node tools/build_speaking.mjs     # after changing appearances
 python3 tools/build_writing.py    # after changing articles
-python3 tools/build_tags.py       # after changing tags — run this last
+python3 tools/build_tags.py       # after changing tags
+python3 tools/build_nav.py        # after adding a page
+python3 tools/build_search.py     # ALWAYS LAST — the index must describe the final pages
 python3 tools/malloy_chart.py     # after changing the study numbers
 ```
 

@@ -237,3 +237,21 @@ a.tag:hover { color:var(--green); border-color:var(--green); text-decoration:non
 /* the artifact's title is its link; its metadata sits beside it, visible on every device */
 h3 .meta { font-size:14px; font-weight:400; color:var(--soft); margin-left:9px;
            white-space:nowrap }
+
+/* site search — Pagefind, restyled to match rather than ship its defaults */
+.searchbox { border-top:1px solid var(--line); margin-top:40px; padding:26px 0 44px }
+#search { max-width:640px }
+:root {
+  --pagefind-ui-scale:0.8;
+  --pagefind-ui-primary:var(--ink);
+  --pagefind-ui-text:var(--ink);
+  --pagefind-ui-background:var(--bg);
+  --pagefind-ui-border:var(--line);
+  --pagefind-ui-tag:var(--panel);
+  --pagefind-ui-border-width:1px;
+  --pagefind-ui-border-radius:6px;
+  --pagefind-ui-font:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+.pagefind-ui__result-title a { color:var(--accent) }
+.pagefind-ui__result-title a:hover { color:var(--green) }
+.pagefind-ui__result-excerpt mark { background:var(--green-soft); color:var(--ink) }

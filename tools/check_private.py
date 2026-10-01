@@ -27,8 +27,10 @@ PATTERNS = [
     ("phone number", re.compile(r"\b(?:\+?1[\s.-]?)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}\b")),
 ]
 
-# files that legitimately carry contact details and are never published
-SKIP = {"AGENTS.md", "tools/check_private.py"}
+# files that legitimately carry contact details, and vendored output that is
+# not Ramona's data — pagefind/ is generated and carries its translators' credits
+SKIP_FILES = {"AGENTS.md", "tools/check_private.py"}
+SKIP_DIRS = ("pagefind/", "node_modules/")
 
 staged = subprocess.run(
     ["git", "diff", "--cached", "--name-only", "--diff-filter=ACM"],
@@ -37,7 +39,7 @@ staged = subprocess.run(
 
 found = []
 for name in staged:
-    if name in SKIP or not name.endswith((".html", ".css", ".js", ".yaml", ".md", ".json")):
+    if name in SKIP_FILES or name.startswith(SKIP_DIRS) or not name.endswith((".html", ".css", ".js", ".yaml", ".md", ".json")):
         continue
     path = ROOT / name
     if not path.exists():
