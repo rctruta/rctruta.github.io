@@ -145,6 +145,17 @@
 </div></section>
 
 <footer><div class="wrap"><span>&copy; 2025&ndash;2026 Ramona C. Truta &middot; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a></span><a href="contact.html">Contact</a></div></footer>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    new PagefindUI({
+      element: '#search',
+      showSubResults: true,
+      showImages: false,
+      pageSize: 8,
+      translations: { placeholder: 'Search this site', zero_results: 'Nothing for [SEARCH_TERM]' }
+    });
+  });
+</script>
 <div class="searchbox"><div class="wrap"><div id="search"></div></div></div>
 <link href="pagefind/pagefind-ui.css" rel="stylesheet">
 <script src="pagefind/pagefind-ui.js"></script>
