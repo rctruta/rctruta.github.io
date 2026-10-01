@@ -69,6 +69,17 @@ That is why `work.html` reads "Data Modeling & Data Engineering" above
 
 Same for moving files, changing URLs, or restructuring a directory that works.
 
+## Personal contact details are gated
+
+`tools/check_private.py` runs first in `.githooks/pre-commit` and blocks any
+commit putting an email address, phone number or street address into a file
+bound for the public site. To publish one deliberately, add it to `ALLOWED` in
+that file — the edit is the decision and it shows in the diff.
+
+This exists because on 2026-09-30 an agent published her personal Gmail address
+on the contact page unasked, and a rule written in this document did not stop
+it. Words do not bind; gates do.
+
 ## Claims are gated
 
 `.githooks/pre-commit` runs the verifier in `~/claude-docs-allowed/Resume/.claims`.
