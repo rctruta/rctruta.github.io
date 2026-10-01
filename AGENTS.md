@@ -9,7 +9,8 @@ something.
 | file | generated from | by |
 | --- | --- | --- |
 | `speaking.html` | `data/appearances.yaml` | `tools/build_speaking.mjs` |
-| `tags.html`, and every tag row in `work.html` | `data/TAGS.yaml` | `tools/build_tags.py` |
+| `writing.html` | `data/writing.yaml` | `tools/build_writing.py` |
+| `tags.html`, and every tag row in `work.html` and `teaching.html` | `data/TAGS.yaml` + `data/writing.yaml` | `tools/build_tags.py` |
 | `assets/malloy-skills-tokens.svg` | numbers in the script | `tools/malloy_chart.py` |
 
 Edit the data, run the tool, commit both. A hand edit to a generated file is
@@ -17,7 +18,8 @@ erased by the next build without warning.
 
 ```bash
 node tools/build_speaking.mjs     # after changing appearances
-python3 tools/build_tags.py       # after changing tags
+python3 tools/build_writing.py    # after changing articles
+python3 tools/build_tags.py       # after changing tags — run this last
 python3 tools/malloy_chart.py     # after changing the study numbers
 ```
 

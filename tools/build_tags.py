@@ -101,6 +101,21 @@ for name in PAGES:
     )
     page.write_text(text)
 
+# articles live in writing.yaml, not in a page — index them from the source
+wtext = (ROOT / "data" / "writing.yaml").read_text()
+for block in re.split(r"\n(?=- id:)", wtext):
+    if not block.lstrip().startswith("- id:"):
+        continue
+    def field(k):
+        m = re.search(rf"^  {k}: (.+?)\s*(?:#.*)?$", block, re.M)
+        return m.group(1).strip().strip('"') if m else None
+    title, tags_line = field("title"), re.search(r"^  tags: \[(.*)\]\s*$", block, re.M)
+    if not title or not tags_line:
+        continue
+    for tag in (x.strip() for x in tags_line.group(1).split(",")):
+        if tag and tag in vocab:
+            index[tag].append(("writing.html", "", title))
+
 missing = sorted(seen - set(projects))
 if missing:
     sys.exit("projects in the pages with no entry in data/TAGS.yaml:\n  " + "\n  ".join(missing))
