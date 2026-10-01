@@ -72,6 +72,7 @@ projects:
   rag-accuracy: [AI evaluation, Evaluation sets, Python, RAG, LanceDB]
   agent-tools: [AI security, Deterministic grading, Python, Git discipline]
   agent-telemetry: [AI evaluation, Process telemetry, Deterministic grading, Python]
+  site-infrastructure: [Data modeling, Git discipline, Python]
 
   # teaching artifacts — course material is modeling work, and says so
   xquery-assignment: [Data modeling, Teaching, XQuery]
