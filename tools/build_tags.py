@@ -127,7 +127,7 @@ for block in re.split(r"\n(?=- id:)", atext):
     aid, atitle, aorg, tags_line = afield("id"), afield("title"), afield("org"), re.search(r"^  tags: \[(.*)\]\s*$", block, re.M)
     if not atitle or not tags_line:
         continue
-    full_title = f"{aorg} &mdash; {atitle}" if aorg else atitle
+    full_title = f"{aorg} — {atitle}" if aorg else atitle
     for tag in (x.strip() for x in tags_line.group(1).split(",")):
         if tag and tag in vocab:
             index[tag].append(("speaking.html", aid or "", full_title))
