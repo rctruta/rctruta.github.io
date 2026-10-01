@@ -21,7 +21,8 @@ PAGES = [
     "writing.html", "tags.html", "contact.html",
 ]
 
-SNIPPET = """<div class="searchmodal" id="searchmodal" hidden>
+SNIPPET = """<!-- search:start -->
+<div class="searchmodal" id="searchmodal" hidden>
   <div class="searchmodal__panel" role="dialog" aria-modal="true" aria-label="Search this site">
     <button type="button" class="searchmodal__close" aria-label="Close search" data-search-close>&times;</button>
     <div id="search"></div>
@@ -69,7 +70,8 @@ SNIPPET = """<div class="searchmodal" id="searchmodal" hidden>
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); modal.hidden ? open() : close(); }
   });
 })();
-</script>"""
+</script>
+<!-- search:end -->"""
 
 run = subprocess.run(
     ["npx", "-y", "pagefind", "--site", ".", "--glob", "*.html"],
@@ -85,9 +87,12 @@ for name in PAGES:
     if not page.exists():
         continue
     text = page.read_text()
-    text = re.sub(
-        r'<div class="search(?:box|modal)".*?</script>\n?', "", text, flags=re.S
-    )  # idempotent
+    # strip any previous block wholesale — the snippet contains two </script>
+    # tags, so a non-greedy match to the first one leaves debris behind and the
+    # next run stacks a second search UI on top of it
+    text = re.sub(r'<!-- search:start -->.*?<!-- search:end -->\n?', "", text, flags=re.S)
+    text = re.sub(r'<div class="search(?:box|modal)".*?</script>\n?', "", text, flags=re.S)
+    text = re.sub(r'<link href="pagefind/.*?</script>\n?', "", text, flags=re.S)
     text = text.replace("</body>", SNIPPET + "\n</body>", 1)
     page.write_text(text)
     placed += 1
