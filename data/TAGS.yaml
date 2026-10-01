@@ -23,6 +23,7 @@ vocabulary:
     Team leadership: Running the people doing the work, and the mechanism that checks it.
     Teaching: Course material or explanatory writing built so a learner arrives at the answer rather than watching it appear.
     Human agency: What people give up to a system, and what it costs them.
+    RLHF: Measuring how RLHF alignment and status bias shift agent decision routing under pressure.
 
   method:
     Deterministic grading: Scoring outcomes by rule, not by judgement, so a result can be re-derived.
@@ -31,6 +32,7 @@ vocabulary:
     Ablation study: Running the same goals with one thing changed, to isolate what it costs.
     Content-addressed capsules: Fingerprinting the question, so a changed method changes the identifier.
     Cold-cache measurement: Clearing every cache before each run, so the engine is measured and not the buffer pool.
+    Git discipline: Enforcing pre-commit gates, claim verification, and reproducible proof state.
 
   technology:
     PostgreSQL:
@@ -40,6 +42,10 @@ vocabulary:
     Polars:
     Arrow / ADBC:
     MCP:
+    RAG:
+    SQL:
+    XQuery:
+    LanceDB:
 
 # Which tags each project carries. Project ids match the `div.proj` ids in the pages.
 projects:
@@ -49,17 +55,17 @@ projects:
   police-gazette: [Data modeling, Data quality]
   db2-postgres: [Migration, PostgreSQL]
 
-  sqlbenchdag: [Benchmarking, Content-addressed capsules, Cold-cache measurement, Dagster, DuckDB, PostgreSQL, Polars, Arrow / ADBC, Python, MCP]
-  sql-behaviour: [Benchmarking, Cold-cache measurement, Data modeling, PostgreSQL, DuckDB]
+  sqlbenchdag: [Benchmarking, Content-addressed capsules, Cold-cache measurement, Dagster, DuckDB, PostgreSQL, Polars, Arrow / ADBC, Python, MCP, SQL]
+  sql-behaviour: [Benchmarking, Cold-cache measurement, Data modeling, PostgreSQL, DuckDB, SQL]
 
   agent-memory: [AI security, AI evaluation]
   harness-bench: [AI evaluation, Deterministic grading, Per-turn tracing, Content-addressed capsules, MCP, Python]
   malloy-study: [AI evaluation, Ablation study, Per-turn tracing, MCP]
   agent-traces: [AI evaluation, Per-turn tracing, Deterministic grading, Python]
-  consensus-contagion: [AI evaluation, Deterministic grading, Ablation study]
-  rag-accuracy: [AI evaluation, Evaluation sets, Python]
-  agent-tools: [AI security, Deterministic grading, Python]
+  consensus-contagion: [AI evaluation, Deterministic grading, Ablation study, RLHF]
+  rag-accuracy: [AI evaluation, Evaluation sets, Python, RAG, LanceDB]
+  agent-tools: [AI security, Deterministic grading, Python, Git discipline]
 
   # teaching artifacts — course material is modeling work, and says so
-  xquery-assignment: [Data modeling, Teaching]
+  xquery-assignment: [Data modeling, Teaching, XQuery]
   nf-handout: [Data modeling, Teaching]
