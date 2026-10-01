@@ -170,7 +170,6 @@ doc = f"""<!DOCTYPE html>
   <a href="#discipline">Discipline</a>
   <a href="#method">Method</a>
   <a href="#technology">Technology</a>
-  <a href="work.html">Back to Work</a>
 </div></nav>
 
 <section><div class="wrap">
