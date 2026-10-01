@@ -162,6 +162,7 @@ doc = f"""<!DOCTYPE html>
     <a href="teaching.html">Teaching</a>
     <a href="speaking.html">Speaking</a>
     <a href="writing.html">Writing</a>
+    <a href="tags.html" class="here">Index</a>
     <a href="contact.html">Contact</a>
   </span>
 </div></nav>

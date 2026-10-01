@@ -57,6 +57,7 @@ const html = `<!DOCTYPE html>
     <a href="teaching.html">Teaching</a>
     <a href="speaking.html" class="here">Speaking</a>
     <a href="writing.html">Writing</a>
+    <a href="tags.html">Index</a>
     <a href="contact.html">Contact</a>
   </span>
 </div></nav>

@@ -90,12 +90,11 @@ doc = f"""<!DOCTYPE html>
     <a href="teaching.html">Teaching</a>
     <a href="speaking.html">Speaking</a>
     <a href="writing.html" class="here">Writing</a>
-    <a href="contact.html">Contact</a>
+      <a href="contact.html">Contact</a>
   </span>
 </div></nav>
 <nav class="subnav" id="top"><div class="wrap">
 {nav}
-  <a href="tags.html">Index</a>
 </div></nav>
 
 <section><div class="wrap">
