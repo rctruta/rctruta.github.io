@@ -174,7 +174,7 @@
       server-side parallelism, not transport (capsule <code>25b0e134</code>).</figcaption>
     </figure>
 
-    <div class="tags"><a class="tag" href="tags.html#benchmarking">Benchmarking</a><a class="tag" href="tags.html#content-addressed-capsules">Content-addressed capsules</a><a class="tag" href="tags.html#cold-cache-measurement">Cold-cache measurement</a><a class="tag" href="tags.html#dagster">Dagster</a><a class="tag" href="tags.html#duckdb">DuckDB</a><a class="tag" href="tags.html#postgresql">PostgreSQL</a><a class="tag" href="tags.html#polars">Polars</a><a class="tag" href="tags.html#arrow-adbc">Arrow / ADBC</a><a class="tag" href="tags.html#python">Python</a><a class="tag" href="tags.html#mcp">MCP</a><a class="tag" href="tags.html#sql">SQL</a></div>
+    <div class="tags"><a class="tag" href="tags.html#benchmarking">Benchmarking</a><a class="tag" href="tags.html#content-addressed-capsules">Content-addressed capsules</a><a class="tag" href="tags.html#cold-cache-measurement">Cold-cache measurement</a><a class="tag" href="tags.html#dagster">Dagster</a><a class="tag" href="tags.html#duckdb">DuckDB</a><a class="tag" href="tags.html#postgresql">PostgreSQL</a><a class="tag" href="tags.html#polars">Polars</a><a class="tag" href="tags.html#arrow-adbc">Arrow / ADBC</a><a class="tag" href="tags.html#python">Python</a><a class="tag" href="tags.html#mcp">MCP</a><a class="tag" href="tags.html#sql">SQL</a><a class="tag" href="tags.html#study-contracts">Study contracts</a></div>
 
     <div class="links">
       <a href="https://github.com/rctruta/sql-benchmarks-dagster" target="_blank" rel="noopener">sql-benchmarks-dagster</a>
@@ -208,6 +208,20 @@
     </div>
   </div>
 
+  <div class="proj" id="lakehouse-semantics">
+    <h3>lakehouse-semantics &mdash; SQL correctness and engine divergence matrix</h3>
+
+    <p>A suite of 23 correctness probes executed across DuckDB, DuckDB+Delta, PostgreSQL, and Databricks SQL. Rather than timing performance (which varies by serverless hardware allocation), these probes measure <strong>semantic determinism</strong>: integer division, NULL ordering in ASC scans, VARCHAR overflow behavior, and constraint enforcement paths.</p>
+
+    <p>The key finding: Databricks SQL accepts inline <code>CHECK</code> constraints in <code>CREATE TABLE</code> without enforcing them, while the identical constraint added via <code>ALTER TABLE ADD CONSTRAINT</code> is strictly enforced and raises <code>DELTA_VIOLATE_CONSTRAINT_WITH_VALUES</code>. A query 20% slower costs money; a query that silently returns different rows across engines costs trust.</p>
+
+    <div class="tags"><a class="tag" href="tags.html#benchmarking">Benchmarking</a><a class="tag" href="tags.html#postgresql">PostgreSQL</a><a class="tag" href="tags.html#duckdb">DuckDB</a><a class="tag" href="tags.html#sql">SQL</a><a class="tag" href="tags.html#python">Python</a></div>
+
+    <div class="links">
+      <a href="https://github.com/rctruta/lakehouse-semantics" target="_blank" rel="noopener">lakehouse-semantics</a>
+    </div>
+  </div>
+
   <p class="totop"><a href="#top">&uarr; Top</a></p>
 </div></section>
 <section><div class="wrap">
@@ -233,6 +247,20 @@
     
   </div>
 
+  <div class="proj" id="substrate-steganography">
+    <h3>Substrate Steganography &mdash; hiding agentic directives in plain sight</h3>
+
+    <p>A Category 1 Content Injection Trap engineered against vision-enabled LLMs (GPT-4o ViT). By sampling the RGB noise substrate of a standard visual artifact (a LinkedIn QR code), I embedded hidden semantic commands at an optical threshold imperceptible to the human eye, yet read as high-contrast edge vectors by the model's Vision Transformer.</p>
+
+    <p>The exploit revealed a critical safety destabilization: when sub-visual payload signals sit at the razor edge of optical confidence, safety guardrails (PII and facial recognition filters) flicker between full refusal and silent compliance depending on backend API tiling resolution (<code>detail: auto</code> vs <code>high</code>).</p>
+
+    <div class="tags"><a class="tag" href="tags.html#ai-security">AI security</a><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a><a class="tag" href="tags.html#steganography">Steganography</a><a class="tag" href="tags.html#vision-security">Vision security</a><a class="tag" href="tags.html#python">Python</a></div>
+
+    <div class="links">
+      <a href="https://github.com/rctruta/substrate-steganography" target="_blank" rel="noopener">substrate-steganography</a>
+    </div>
+  </div>
+
   
   <p class="totop"><a href="#top">&uarr; Top</a></p>
 </div></section>
@@ -242,12 +270,7 @@
 <div class="proj" id="harness-bench">
     <h3>harness-bench &mdash; measuring a deployment before it is a deployment</h3>
 
-    <p>Everyone ships skills and MCP servers; almost nobody measures them. This reads a
-    tool surface, infers a taxonomy over it, probes it with content-addressed study
-    contracts, traces every turn, grades what can be graded deterministically, and
-    reports what an agent deployment will actually cost and where it will actually
-    fail &mdash; token cost per architecture, which guidance layers pay for themselves,
-    which model tier suffices, and which states the harness is missing.</p>
+    <p>I engineered <strong>harness-bench</strong> to evaluate agent deployments before they reach production. While skills and MCP servers are shipped widely, harness-bench parses tool surfaces, infers execution taxonomies, executes content-addressed YAML study contracts, traces every turn, and deterministically grades agent execution to report real token costs and failure modes &mdash; token cost per architecture, which guidance layers pay for themselves, which model tier suffices, and which states the harness is missing.</p>
 
     <p>Four results it was built on, each measured rather than assumed:</p>
     <ul>
@@ -290,7 +313,7 @@
       states were discovered by probing, not designed up front.</figcaption>
     </figure>
 
-    <div class="tags"><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a><a class="tag" href="tags.html#deterministic-grading">Deterministic grading</a><a class="tag" href="tags.html#per-turn-tracing">Per-turn tracing</a><a class="tag" href="tags.html#content-addressed-capsules">Content-addressed capsules</a><a class="tag" href="tags.html#mcp">MCP</a><a class="tag" href="tags.html#python">Python</a></div>
+    <div class="tags"><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a><a class="tag" href="tags.html#deterministic-grading">Deterministic grading</a><a class="tag" href="tags.html#per-turn-tracing">Per-turn tracing</a><a class="tag" href="tags.html#content-addressed-capsules">Content-addressed capsules</a><a class="tag" href="tags.html#mcp">MCP</a><a class="tag" href="tags.html#python">Python</a><a class="tag" href="tags.html#study-contracts">Study contracts</a></div>
 
     <div class="links">
       <a href="https://github.com/rctruta/harness-bench" target="_blank" rel="noopener">harness-bench</a>
@@ -367,16 +390,11 @@
 
   
 <div class="proj" id="consensus-contagion">
-    <h3>Consensus Contagion &mdash; agent pipelines defer to authority over evidence</h3>
+    <h3>Consensus Contagion &mdash; status bias and the RLHF tax in agent routing</h3>
 
+    <p>Based on my <strong>adversarial-judgement-research</strong> framework (16 content-addressed study contracts, 7 models, 110+ graded runs): I proved that generalized LLM orchestrators evaluate simulated social status over technical merit. Injecting a high-status persona into routing decisions causes agentic state to collapse into authority bias (the RLHF tax). Prompt-level instructions fail under pressure; mechanical gates hold.</p>
 
-    <p>16 content-addressed studies, 7 models, 110+ graded runs. When a high-status persona is
-    injected into an agentic routing decision, the pipeline follows the persona rather than the
-    engineering argument. The companion finding is prompt-level
-    instructions get ignored under pressure while mechanical controls hold. 
-    </p>
-
-    <div class="tags"><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a><a class="tag" href="tags.html#deterministic-grading">Deterministic grading</a><a class="tag" href="tags.html#ablation-study">Ablation study</a><a class="tag" href="tags.html#rlhf">RLHF</a></div>
+    <div class="tags"><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a><a class="tag" href="tags.html#deterministic-grading">Deterministic grading</a><a class="tag" href="tags.html#ablation-study">Ablation study</a><a class="tag" href="tags.html#rlhf">RLHF</a><a class="tag" href="tags.html#study-contracts">Study contracts</a></div>
     <div class="note">Presented at the Canadian Women in Cybersecurity Conference, Toronto, May 2026.</div>
     
   </div>
@@ -430,6 +448,21 @@
       <a href="https://github.com/rctruta/awesome-pedantic-medallion" target="_blank" rel="noopener">awesome-pedantic-medallion</a>
       <a href="https://ramonactruta.substack.com/p/a-readme-is-a-set-of-falsifiable" target="_blank" rel="noopener">A README is a Set of Falsifiable Claims</a>
     </div>
+  </div>
+
+  <div class="proj" id="agent-telemetry">
+    <h3>agent-telemetry &mdash; transcript-derived process metrology for coding agents</h3>
+
+    <p>A local analytics package that parses raw JSONL session transcripts from coding agents (Claude Code) into un-opinionated process metrics: <code>tool_calls_per_turn</code>, <code>reads_before_first_edit</code>, <code>repeated_commands</code>, <code>error_rate</code>, <code>seconds_to_first_write</code>, and <code>edit_revisits</code>.</p>
+
+    <p>Prose instructions (in <code>CLAUDE.md</code> or prompt guidance) are hypotheses about agent behavior. By comparing session telemetry before and after introducing a rule, <code>agent-telemetry</code> evaluates whether a prompt-level instruction actually shifted model behavior. If a rule does not move its metric, the rule does not bind.</p>
+
+    <div class="tags"><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a><a class="tag" href="tags.html#process-telemetry">Process telemetry</a><a class="tag" href="tags.html#deterministic-grading">Deterministic grading</a><a class="tag" href="tags.html#python">Python</a></div>
+
+    <div class="links">
+      <a href="https://github.com/rctruta/agent-telemetry" target="_blank" rel="noopener">agent-telemetry</a>
+    </div>
+  </div>
 
   <p class="totop"><a href="#top">&uarr; Top</a></p>
 </div></section>

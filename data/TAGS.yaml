@@ -33,6 +33,8 @@ vocabulary:
     Content-addressed capsules: Fingerprinting the question, so a changed method changes the identifier.
     Cold-cache measurement: Clearing every cache before each run, so the engine is measured and not the buffer pool.
     Git discipline: Enforcing pre-commit gates, claim verification, and reproducible proof state.
+    Process telemetry: Deriving quantitative behavioral metrics directly from execution logs without judgment.
+    Study contracts: Enforcing reproducible experimental parameters via immutable YAML schemas.
 
   technology:
     PostgreSQL:
@@ -46,6 +48,8 @@ vocabulary:
     SQL:
     XQuery:
     LanceDB:
+    Steganography:
+    Vision security:
 
 # Which tags each project carries. Project ids match the `div.proj` ids in the pages.
 projects:
@@ -55,16 +59,19 @@ projects:
   police-gazette: [Data modeling, Data quality]
   db2-postgres: [Migration, PostgreSQL]
 
-  sqlbenchdag: [Benchmarking, Content-addressed capsules, Cold-cache measurement, Dagster, DuckDB, PostgreSQL, Polars, Arrow / ADBC, Python, MCP, SQL]
+  sqlbenchdag: [Benchmarking, Content-addressed capsules, Cold-cache measurement, Dagster, DuckDB, PostgreSQL, Polars, Arrow / ADBC, Python, MCP, SQL, Study contracts]
   sql-behaviour: [Benchmarking, Cold-cache measurement, Data modeling, PostgreSQL, DuckDB, SQL]
+  lakehouse-semantics: [Benchmarking, PostgreSQL, DuckDB, SQL, Python]
 
   agent-memory: [AI security, AI evaluation]
-  harness-bench: [AI evaluation, Deterministic grading, Per-turn tracing, Content-addressed capsules, MCP, Python]
+  substrate-steganography: [AI security, AI evaluation, Steganography, Vision security, Python]
+  harness-bench: [AI evaluation, Deterministic grading, Per-turn tracing, Content-addressed capsules, MCP, Python, Study contracts]
   malloy-study: [AI evaluation, Ablation study, Per-turn tracing, MCP]
   agent-traces: [AI evaluation, Per-turn tracing, Deterministic grading, Python]
-  consensus-contagion: [AI evaluation, Deterministic grading, Ablation study, RLHF]
+  consensus-contagion: [AI evaluation, Deterministic grading, Ablation study, RLHF, Study contracts]
   rag-accuracy: [AI evaluation, Evaluation sets, Python, RAG, LanceDB]
   agent-tools: [AI security, Deterministic grading, Python, Git discipline]
+  agent-telemetry: [AI evaluation, Process telemetry, Deterministic grading, Python]
 
   # teaching artifacts — course material is modeling work, and says so
   xquery-assignment: [Data modeling, Teaching, XQuery]
