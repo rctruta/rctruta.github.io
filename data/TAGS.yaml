@@ -23,6 +23,7 @@ vocabulary:
     Team leadership: Running the people doing the work, and the mechanism that checks it.
     Teaching: Course material or explanatory writing built so a learner arrives at the answer rather than watching it appear.
     Human agency: What people give up to a system, and what it costs them.
+    Storytelling: An analogy from lived experience carrying a technical idea, so the reader arrives at the mechanism through something they already know.
     RLHF: Measuring how RLHF alignment and status bias shift agent decision routing under pressure.
 
   method:

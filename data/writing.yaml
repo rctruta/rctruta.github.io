@@ -42,7 +42,7 @@
   platform: Substack
   date: 2026-05-01
   argues: "Why we pay compounding interest on unexamined feelings."
-  tags: [Human agency]
+  tags: [Human agency, Storytelling]
 
 - id: context-is-empathy
   title: "Context is Empathy: The Cognitive Firewalls We Build Under Pressure"
@@ -58,7 +58,7 @@
   platform: Substack
   date: 2026-04-03
   argues: "How I became a node in a Knowledge Graph I never joined."
-  tags: [AI security, Data modeling, Knowledge graphs]
+  tags: [AI security, Data modeling, Knowledge graphs, Storytelling]
 
 - id: inside-claude
   title: "Inside ~/.claude/: Structure is Not Security"
@@ -74,7 +74,7 @@
   platform: Substack
   date: 2026-01-13
   argues: "Why AI agents need both working memory and institutional memory."
-  tags: [Data modeling, AI security, Teaching]
+  tags: [Data modeling, AI security, Teaching, Storytelling]
 
 - id: boxing-day-incident
   title: "A Boxing Day 'Security Incident' (and why we need the Pedantic Medallion)"
@@ -82,7 +82,7 @@
   platform: Substack
   date: 2025-12-26
   argues: "When the Universe sends you a broken box to prove a point about AI integrity."
-  tags: [AI security, Data quality]
+  tags: [AI security, Data quality, Storytelling]
 
 - id: blueberry-muffin
   title: "The Blueberry Muffin Exploit"
@@ -106,7 +106,7 @@
   platform: Substack
   date: 2025-10-04
   argues: "A Medallion Architecture analogy hard to forget."
-  tags: [Data modeling, Data quality, Teaching]
+  tags: [Data modeling, Data quality, Teaching, Storytelling]
 
 - id: pedantic-medallion
   title: "The Knowledge Architect's Playbook: The Pedantic Medallion"
@@ -114,7 +114,7 @@
   platform: Substack
   date: 2025-09-28
   argues: "A manifesto for clarity in a world that rewards complexity."
-  tags: [Data modeling, Teaching]
+  tags: [Data modeling, Teaching, Storytelling]
 
 - id: cost-of-interruptions
   title: "The Knowledge Architect's Playbook: The Cost of Interruptions"
@@ -122,7 +122,7 @@
   platform: Substack
   date: 2025-09-21
   argues: "The ROI of a single click."
-  tags: [Data modeling]
+  tags: [Data modeling, Storytelling]
 
 - id: pizza-logic
   title: "The Pizza Logic You Didn't Know You Kneaded"
@@ -130,7 +130,7 @@
   platform: Substack
   date: 2025-07-09
   argues: "A food-bite story on one of the most avoided SQL toppings: its 3-valued logic."
-  tags: [Data modeling, PostgreSQL, Teaching, SQL]
+  tags: [Data modeling, PostgreSQL, Teaching, SQL, Storytelling]
 
 - id: stop-groupby
   title: "Stop Grouping by Everything"
@@ -146,7 +146,7 @@
   platform: Substack
   date: 2025-06-05
   argues: "Here I go again. Being seduced."
-  tags: [Human agency, AI security]
+  tags: [Human agency, AI security, Storytelling]
 
 # --- still needs you ---------------------------------------------------------
 # Paste the URL and date and this joins the list. It is the only piece on your
@@ -158,7 +158,7 @@
   platform: LinkedIn
   date: 2024-11-20
   argues: "Embeddings aren't just technical tools; they're maps of meaning."
-  tags: [AI evaluation, Teaching]
+  tags: [AI evaluation, Teaching, Storytelling]
 
 # The Defensive Joins Anti-Pattern is named on RESUME_ENGINEER.txt and I could
 # not find it published anywhere. Either it is unpublished, or it is
