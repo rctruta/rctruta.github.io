@@ -31,11 +31,11 @@ vocabulary:
     Per-turn tracing: Recording every step an agent took, rather than asking it afterwards.
     Evaluation sets: A labelled set of cases, built so a system's accuracy is measurable.
     Ablation study: Running the same goals with one thing changed, to isolate what it costs.
-    Content-addressed capsules: Fingerprinting the question, so a changed method changes the identifier.
+    Content addressing: Fingerprinting input configurations and query state via SHA-256 cryptographic hashes.
     Cold-cache measurement: Clearing every cache before each run, so the engine is measured and not the buffer pool.
-    Git discipline: Enforcing pre-commit gates, claim verification, and reproducible proof state.
+    Pre-commit gates: Enforcing automated hooks, claim verifiers, and privacy rules before code commits.
     Process telemetry: Deriving quantitative behavioral metrics directly from execution logs without judgment.
-    Study contracts: Enforcing reproducible experimental parameters via immutable YAML schemas.
+    Data contracts: Enforcing reproducible experimental parameters and data schemas via immutable YAML specifications.
 
   technology:
     PostgreSQL:
@@ -61,20 +61,20 @@ projects:
   police-gazette: [Data modeling, Data quality, Evaluation sets]
   db2-postgres: [Migration, PostgreSQL, Team leadership, Teaching]
 
-  sqlbenchdag: [Benchmarking, Content-addressed capsules, Cold-cache measurement, Dagster, DuckDB, PostgreSQL, Polars, Arrow / ADBC, Python, MCP, SQL, Study contracts]
+  sqlbenchdag: [Benchmarking, Content addressing, Cold-cache measurement, Dagster, DuckDB, PostgreSQL, Polars, Arrow / ADBC, Python, MCP, SQL, Data contracts]
   sql-behaviour: [Benchmarking, Cold-cache measurement, Data modeling, PostgreSQL, DuckDB, SQL]
   lakehouse-semantics: [Benchmarking, PostgreSQL, DuckDB, SQL, Python]
 
   agent-memory: [AI security, AI evaluation]
   # substrate-steganography: [AI security, AI evaluation, Steganography, Vision security, Python]
-  harness-bench: [AI evaluation, Deterministic grading, Per-turn tracing, Content-addressed capsules, MCP, Python, Study contracts]
+  harness-bench: [AI evaluation, Deterministic grading, Per-turn tracing, Content addressing, MCP, Python, Data contracts]
   malloy-study: [AI evaluation, Ablation study, Per-turn tracing, MCP]
   agent-traces: [AI evaluation, Per-turn tracing, Deterministic grading, Python, Process telemetry]
-  consensus-contagion: [AI evaluation, Deterministic grading, Ablation study, RLHF, Study contracts, AI security, Python]
+  consensus-contagion: [AI evaluation, Deterministic grading, Ablation study, RLHF, Data contracts, AI security, Python]
   rag-accuracy: [AI evaluation, Evaluation sets, Python, RAG, LanceDB]
-  agent-tools: [AI security, Deterministic grading, Python, Git discipline]
+  agent-tools: [AI security, Deterministic grading, Python, Pre-commit gates]
   agent-telemetry: [AI evaluation, Process telemetry, Deterministic grading, Python]
-  site-infrastructure: [Data modeling, Git discipline, Python, Study contracts]
+  site-infrastructure: [Data modeling, Pre-commit gates, Python, Data contracts]
 
   # teaching sections and artifacts
   academic-leadership: [Team leadership, Teaching, Migration, PostgreSQL]

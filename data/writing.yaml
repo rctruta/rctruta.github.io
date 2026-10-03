@@ -18,7 +18,7 @@
   platform: Substack
   date: 2026-07-12
   argues: "Testing mine found a security command that never worked."
-  tags: [AI evaluation, Git discipline]
+  tags: [AI evaluation, Pre-commit gates]
 
 - id: measuring-quack
   title: "Measuring Quack: DuckDB's New Client-Server Protocol"
