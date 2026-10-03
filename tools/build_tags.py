@@ -211,23 +211,21 @@ def facet_html(facet):
 
 
 def chiprow(facet):
-    """Every tag in the facet as a chip, linking down to its own section."""
+    """The facet's own terms as chips, at the head of its section."""
     chips = "".join(
         f'<a class="chip" href="#{slug(tag)}">{html.escape(tag)}'
         f'<b>{len(index[tag])}</b></a>'
         for tag in sorted(facets[facet], key=by_weight)
     )
-    return (
-        f'    <p class="chipgroup"><a href="#{facet}">{facet.title()}</a></p>\n'
-        f'    <div class="chiprow">{chips}</div>'
-    )
+    return f'  <div class="chiprow">{chips}</div>'
 
 
-overview = "\n".join(chiprow(f) for f in present)
 sections = "\n".join(
     f"""<section><div class="wrap">
   <h2 id="{f}">{f.title()}</h2>
-  <p class="lede">{FACET_NOTE.get(f, "")}</p>
+  <p class="lede">{FACET_NOTE.get(f, "")} {len(facets[f])} terms.</p>
+
+{chiprow(f)}
 
 {facet_html(f)}
 
@@ -260,12 +258,8 @@ doc = f"""<!DOCTYPE html>
 </div></nav>
 
 <section><div class="wrap">
-  <h2 id="all">Every term</h2>
   <p class="lede">{len(index)} terms, {total} links to the work carrying them. The number on a
-  term is how many pieces of work it points to. Click one to go straight there.</p>
-
-{overview}
-
+  term is how many pieces of work it points to.</p>
 </div></section>
 
 {sections}
