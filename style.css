@@ -284,9 +284,9 @@ h3 .meta { font-size:14px; font-weight:400; color:var(--soft); margin-left:9px;
 .chip:hover b { color:var(--green) }
 /* what kind of thing an index entry points at */
 .kind { font-size:12.5px; color:var(--soft); margin-left:10px; white-space:nowrap }
-.tag-subgroup { margin-top:12px; margin-bottom:14px }
-.tag-subheading { font-size:12px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase;
-                  color:var(--green); margin-bottom:6px }
+.tag-subgroup { margin-top:16px; margin-bottom:20px }
+.tag-subheading { font-size:13.5px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+                  color:var(--green); margin:16px 0 8px 0; border-bottom:1px solid var(--line); padding-bottom:4px }
 /* back to this facet's own terms, from anywhere inside it */
 .toterms { margin:10px 0 0; font-size:13px }
 .toterms a { color:var(--soft); text-decoration:none }
