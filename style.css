@@ -256,10 +256,16 @@ section h3 { font-size:20px; font-weight:600; color:var(--ink); letter-spacing:0
 .lede { color:var(--mid); margin:-4px 0 14px; font-size:16.5px }
 
 /* an acknowledgement someone else wrote */
-.praise { border-left:2px solid var(--green); padding:2px 0 2px 18px; margin:0 0 26px }
-.praise p { margin:0; font-size:16px; line-height:1.55 }
-.praise cite { display:block; margin-top:8px; font-style:normal; font-size:13.5px;
-               color:var(--soft) }
+.praise {
+  background: var(--accent-soft);
+  border-left: 3.5px solid var(--green);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  margin: 0 0 26px;
+}
+.praise p { margin:0; font-size:16px; line-height:1.6; color:var(--ink) }
+.praise cite { display:block; margin-top:10px; font-style:normal; font-size:13.5px;
+               color:var(--mid); font-weight:500 }
 .subnav .wrap { flex-wrap: wrap; row-gap: 6px; }
 .totop { margin: 18px 0 0; font-size: 13px; }
 .totop a { color: var(--soft); text-decoration: none; }
