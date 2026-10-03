@@ -57,6 +57,7 @@ class TestSitePipeline(unittest.TestCase):
             "AI evaluation",
             "Storytelling",
             "Knowledge graphs",
+            "PyPI",
         ]
         for term in expected_terms:
             self.assertIn(term, self.vocab, f"Missing term '{term}' in vocabulary")

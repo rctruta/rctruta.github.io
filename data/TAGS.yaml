@@ -50,6 +50,7 @@ vocabulary:
     XQuery:
     LanceDB:
     Knowledge graphs:
+    PyPI:
     # Steganography:
     # Vision security:
 
@@ -61,13 +62,13 @@ projects:
   police-gazette: [Data modeling, Data quality, Evaluation sets]
   db2-postgres: [Migration, PostgreSQL, Team leadership, Teaching]
 
-  sqlbenchdag: [Benchmarking, Content addressing, Cold-cache measurement, Dagster, DuckDB, PostgreSQL, Polars, Arrow / ADBC, Python, MCP, SQL, Data contracts]
+  sqlbenchdag: [Benchmarking, Content addressing, Cold-cache measurement, Dagster, DuckDB, PostgreSQL, Polars, Arrow / ADBC, Python, MCP, SQL, Data contracts, Pre-commit gates, PyPI]
   sql-behaviour: [Benchmarking, Cold-cache measurement, Data modeling, PostgreSQL, DuckDB, SQL]
   lakehouse-semantics: [Benchmarking, PostgreSQL, DuckDB, SQL, Python]
 
   agent-memory: [AI security, AI evaluation]
   # substrate-steganography: [AI security, AI evaluation, Steganography, Vision security, Python]
-  harness-bench: [AI evaluation, Deterministic grading, Per-turn tracing, Content addressing, MCP, Python, Data contracts]
+  harness-bench: [AI evaluation, Deterministic grading, Per-turn tracing, Content addressing, MCP, Python, Data contracts, Pre-commit gates]
   malloy-study: [AI evaluation, Ablation study, Per-turn tracing, MCP]
   agent-traces: [AI evaluation, Per-turn tracing, Deterministic grading, Python, Process telemetry]
   consensus-contagion: [AI evaluation, Deterministic grading, Ablation study, RLHF, Data contracts, AI security, Python]
