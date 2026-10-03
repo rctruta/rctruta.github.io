@@ -48,7 +48,10 @@ const html = `<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ramona C. Truta &mdash; Speaking</title>
 <meta name="description" content="Conference talks and podcast appearances.">
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
 <meta property="og:site_name" content="Ramona C. Truta">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Speaking &mdash; Ramona C. Truta">
