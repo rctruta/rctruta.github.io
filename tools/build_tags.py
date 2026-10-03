@@ -205,7 +205,8 @@ def facet_html(facet):
         out.append(
             f'  <h3 id="{slug(tag)}">{html.escape(tag)}'
             f' <span class="tag-count">{len(items)}</span></h3>\n'
-            f'  <ul class="clean">\n{entries(items)}\n  </ul>'
+            f'  <ul class="clean">\n{entries(items)}\n  </ul>\n'
+            f'  <p class="toterms"><a href="#terms-{facet}">&uarr; Terms</a></p>'
         )
     return "\n\n".join(out)
 
@@ -217,7 +218,7 @@ def chiprow(facet):
         f'<b>{len(index[tag])}</b></a>'
         for tag in sorted(facets[facet], key=by_weight)
     )
-    return f'  <div class="chiprow">{chips}</div>'
+    return f'  <div class="chiprow" id="terms-{facet}">{chips}</div>'
 
 
 sections = "\n".join(
