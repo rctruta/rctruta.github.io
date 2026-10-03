@@ -88,8 +88,13 @@ for name in PAGES:
         raw = re.sub(r'<span class="meta">.*?</span>', "", raw, flags=re.S)
         title = html.unescape(re.sub(r"<[^>]+>", " ", raw))
         title = re.sub(r"\s+", " ", title).strip()
+        # the kind is in the data; a reader should not have to guess it
+        if name == "teaching.html":
+            kind = "course material" if "assets/" in (heading.group(1) if heading else "") else "teaching"
+        else:
+            kind = "project"
         for t in projects[pid]:
-            index[t].append((name, pid, title))
+            index[t].append((name, pid, title, kind))
         body = re.sub(r'<div class="tags">.*?</div>', row(projects[pid]), body, flags=re.S)
         return f'<div class="proj" id="{pid}">{body}'
 
@@ -114,7 +119,7 @@ for block in re.split(r"\n(?=- id:)", wtext):
         continue
     for tag in (x.strip() for x in tags_line.group(1).split(",")):
         if tag and tag in vocab:
-            index[tag].append(("writing.html", wid or "", title))
+            index[tag].append(("writing.html", wid or "", title, "article"))
 
 # speaking appearances live in appearances.yaml — index them from the source
 atext = (ROOT / "data" / "appearances.yaml").read_text()
@@ -125,12 +130,13 @@ for block in re.split(r"\n(?=- id:)", atext):
         m = re.search(rf"^\s*(?:-\s*)?{k}: (.+?)\s*(?:#.*)?$", block, re.M)
         return m.group(1).strip().strip("'\"") if m else None
     aid, atitle, aorg, tags_line = afield("id"), afield("title"), afield("org"), re.search(r"^  tags: \[(.*)\]\s*$", block, re.M)
+    akind = afield("kind") or "appearance"
     if not atitle or not tags_line:
         continue
     full_title = f"{aorg} — {atitle}" if aorg else atitle
     for tag in (x.strip() for x in tags_line.group(1).split(",")):
         if tag and tag in vocab:
-            index[tag].append(("speaking.html", aid or "", full_title))
+            index[tag].append(("speaking.html", aid or "", full_title, akind))
 
 missing = sorted(seen - set(projects))
 if missing:
@@ -144,10 +150,19 @@ for tag, facet in vocab.items():
         facets[facet].append(tag)
 
 
+# order within a tag, so like sits with like
+KIND_ORDER = ["project", "article", "talk", "podcast", "course material", "teaching"]
+
+
 def entries(items):
+    ordered = sorted(
+        items,
+        key=lambda e: (KIND_ORDER.index(e[3]) if e[3] in KIND_ORDER else 99, e[2].lower()),
+    )
     return "\n".join(
-        f'    <li><span class="what"><a href="{pg}#{pid}">{html.escape(title)}</a></span></li>'
-        for pg, pid, title in items
+        f'    <li><span class="what"><a href="{pg}#{pid}">{html.escape(title)}</a>'
+        f'<span class="kind">{kind}</span></span></li>'
+        for pg, pid, title, kind in ordered
     )
 
 
