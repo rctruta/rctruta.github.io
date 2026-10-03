@@ -72,6 +72,7 @@ projects:
   malloy-study: [AI evaluation, Ablation study, Per-turn tracing, MCP]
   agent-traces: [AI evaluation, Per-turn tracing, Deterministic grading, Python, Process telemetry]
   consensus-contagion: [AI evaluation, Deterministic grading, Ablation study, RLHF, Data contracts, AI security, Python]
+  music-recommender: [AI evaluation, Evaluation sets, Python]
   rag-accuracy: [AI evaluation, Evaluation sets, Python, RAG, LanceDB]
   agent-tools: [AI security, Deterministic grading, Python, Pre-commit gates]
   agent-telemetry: [AI evaluation, Process telemetry, Deterministic grading, Python]

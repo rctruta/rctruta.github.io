@@ -424,6 +424,25 @@
     
   </div>
 
+  <div class="proj" id="music-recommender">
+    <h3>Music recommendation system &mdash; MIT Professional Education capstone</h3>
+
+    <p>Top-10 song recommendation over the Million Song Dataset Taste Profile Subset:
+    two million listening events, ten thousand songs. Four algorithm families compared
+    &mdash; user-user and item-item collaborative filtering, SVD matrix factorization,
+    co-clustering, and content-based &mdash; with grid-search cross-validation over each.</p>
+
+    <p>Revisited in 2026, the interesting result is the evaluation rather than the models.
+    Every one of the eight configurations reported Precision@10 of 1.0 while RMSE sat between
+    1.009 and 1.088, which cannot both be true of a working measurement. The relevance
+    threshold was a play count of one, and the test set contains only songs a user already
+    played &mdash; so every candidate counted as relevant and the metric reduced to k/k.
+    Perfect scores produced by arithmetic, not by the recommenders.</p>
+
+    <div class="tags"><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a><a class="tag" href="tags.html#evaluation-sets">Evaluation sets</a><a class="tag" href="tags.html#python">Python</a></div>
+    <div class="links"><a href="https://github.com/rctruta/music_recommendation_system" target="_blank" rel="noopener">music_recommendation_system</a></div>
+  </div>
+
   
   <p class="totop"><a href="#top">&uarr; Top</a></p>
 </div></section>
