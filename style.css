@@ -270,3 +270,15 @@ h3 .meta { font-size:14px; font-weight:400; color:var(--soft); margin-left:9px;
 .pagefind-ui__result-title a { color:var(--accent) }
 .pagefind-ui__result-title a:hover { color:var(--green) }
 .pagefind-ui__result-excerpt mark { background:var(--green-soft); color:var(--ink) }
+
+/* index overview: every term as a chip, so the page is navigable without scrolling it */
+.chipgroup { font-size:13px; letter-spacing:1px; text-transform:uppercase; color:var(--soft);
+             margin:22px 0 8px }
+.chipgroup a { color:var(--soft); text-decoration:none }
+.chipgroup a:hover { color:var(--green) }
+.chiprow { display:flex; flex-wrap:wrap; gap:7px 8px }
+.chip { font-size:14px; padding:4px 11px; border:1px solid var(--line); border-radius:14px;
+        color:var(--mid); text-decoration:none; white-space:nowrap }
+.chip:hover { border-color:var(--green); color:var(--green); text-decoration:none }
+.chip b { font-weight:600; color:var(--soft); margin-left:6px; font-size:12.5px }
+.chip:hover b { color:var(--green) }

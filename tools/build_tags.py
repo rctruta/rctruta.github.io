@@ -164,6 +164,64 @@ def facet_html(facet):
 
 
 total = sum(len(v) for v in index.values())
+
+# One line per facet, read from TAGS.yaml rather than hard-coded, so renaming or
+# adding a facet does not touch this file.
+FACET_NOTE = {
+    "discipline": "What the work is about.",
+    "domain": "What the work is about.",
+    "practice": "How I work &mdash; with students, with teams, with a reader.",
+    "method": "How a claim was established, rather than what it was about.",
+    "technology": "What it was built with.",
+}
+ORDER = ["domain", "discipline", "practice", "method", "technology"]
+present = [f for f in ORDER if f in facets] + [f for f in facets if f not in ORDER]
+
+
+def by_weight(tag):
+    """Heaviest first; ties alphabetical so the order is stable between builds."""
+    return (-len(index[tag]), tag.lower())
+
+
+def facet_html(facet):
+    out = []
+    for tag in sorted(facets[facet], key=by_weight):
+        items = index[tag]
+        out.append(
+            f'  <h3 id="{slug(tag)}">{html.escape(tag)}'
+            f' <span class="tag-count">{len(items)}</span></h3>\n'
+            f'  <ul class="clean">\n{entries(items)}\n  </ul>'
+        )
+    return "\n\n".join(out)
+
+
+def chiprow(facet):
+    """Every tag in the facet as a chip, linking down to its own section."""
+    chips = "".join(
+        f'<a class="chip" href="#{slug(tag)}">{html.escape(tag)}'
+        f'<b>{len(index[tag])}</b></a>'
+        for tag in sorted(facets[facet], key=by_weight)
+    )
+    return (
+        f'    <p class="chipgroup"><a href="#{facet}">{facet.title()}</a></p>\n'
+        f'    <div class="chiprow">{chips}</div>'
+    )
+
+
+overview = "\n".join(chiprow(f) for f in present)
+sections = "\n".join(
+    f"""<section><div class="wrap">
+  <h2 id="{f}">{f.title()}</h2>
+  <p class="lede">{FACET_NOTE.get(f, "")}</p>
+
+{facet_html(f)}
+
+  <p class="totop"><a href="#top">&uarr; Top</a></p>
+</div></section>"""
+    for f in present
+)
+subnav = "\n".join(f'  <a href="#{f}">{f.title()}</a>' for f in present)
+
 doc = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -183,38 +241,19 @@ doc = f"""<!DOCTYPE html>
   </span>
 </div></nav>
 <nav class="subnav" id="top"><div class="wrap">
-  <a href="#discipline">Discipline</a>
-  <a href="#method">Method</a>
-  <a href="#technology">Technology</a>
+{subnav}
 </div></nav>
 
 <section><div class="wrap">
-  <h2 id="discipline">Discipline</h2>
-  <p class="lede">What the work is about. The number beside each tag is how many pieces of
-  work carry it &mdash; a one means the term names something that has happened once so far.</p>
+  <h2 id="all">Every term</h2>
+  <p class="lede">{len(index)} terms, {total} links to the work carrying them. The number on a
+  term is how many pieces of work it points to. Click one to go straight there.</p>
 
-{facet_html("discipline")}
+{overview}
 
-  <p class="totop"><a href="#top">&uarr; Top</a></p>
 </div></section>
 
-<section><div class="wrap">
-  <h2 id="method">Method</h2>
-  <p class="lede">How a claim was established, rather than what it was about.</p>
-
-{facet_html("method")}
-
-  <p class="totop"><a href="#top">&uarr; Top</a></p>
-</div></section>
-
-<section><div class="wrap">
-  <h2 id="technology">Technology</h2>
-  <p class="lede">What it was built with.</p>
-
-{facet_html("technology")}
-
-  <p class="totop"><a href="#top">&uarr; Top</a></p>
-</div></section>
+{sections}
 
 <footer><div class="wrap"><span>&copy; 2025&ndash;2026 Ramona C. Truta &middot; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a></span><a href="contact.html">Contact</a></div></footer>
 </body></html>
@@ -222,5 +261,5 @@ doc = f"""<!DOCTYPE html>
 
 (ROOT / "tags.html").write_text(doc)
 print(f"tags.html: {len(index)} tags across {len(projects)} projects, {total} links")
-for facet in ("discipline", "method", "technology"):
+for facet in present:
     print(f"  {facet:12} {len(facets[facet])} tags")
