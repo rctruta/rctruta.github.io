@@ -150,20 +150,38 @@ for tag, facet in vocab.items():
         facets[facet].append(tag)
 
 
-# order within a tag, so like sits with like
-KIND_ORDER = ["project", "article", "talk", "podcast", "course material", "teaching"]
+CATEGORY_MAP = {
+    "project": "Projects",
+    "article": "Writing",
+    "talk": "Speaking",
+    "podcast": "Speaking",
+    "teaching": "Teaching",
+    "course material": "Teaching",
+}
+CATEGORY_ORDER = ["Projects", "Writing", "Speaking", "Teaching"]
 
 
 def entries(items):
-    ordered = sorted(
-        items,
-        key=lambda e: (KIND_ORDER.index(e[3]) if e[3] in KIND_ORDER else 99, e[2].lower()),
-    )
-    return "\n".join(
-        f'    <li><span class="what"><a href="{pg}#{pid}">{html.escape(title)}</a>'
-        f'<span class="kind">{kind}</span></span></li>'
-        for pg, pid, title, kind in ordered
-    )
+    groups = defaultdict(list)
+    for pg, pid, title, kind in items:
+        cat = CATEGORY_MAP.get(kind, "Other")
+        groups[cat].append((pg, pid, title, kind))
+
+    out = []
+    for cat in CATEGORY_ORDER:
+        if cat in groups:
+            group_items = sorted(groups[cat], key=lambda e: e[2].lower())
+            item_html = "\n".join(
+                f'      <li><span class="what"><a href="{pg}#{pid}">{html.escape(title)}</a></span></li>'
+                for pg, pid, title, kind in group_items
+            )
+            out.append(
+                f'  <div class="tag-subgroup">\n'
+                f'    <div class="tag-subheading">{cat}</div>\n'
+                f'    <ul class="clean">\n{item_html}\n    </ul>\n'
+                f'  </div>'
+            )
+    return "\n".join(out)
 
 
 def facet_html(facet):
@@ -205,7 +223,7 @@ def facet_html(facet):
         out.append(
             f'  <h3 id="{slug(tag)}">{html.escape(tag)}'
             f' <span class="tag-count">{len(items)}</span></h3>\n'
-            f'  <ul class="clean">\n{entries(items)}\n  </ul>\n'
+            f'{entries(items)}\n'
             f'  <p class="toterms"><a href="#terms-{facet}">&uarr; Terms</a></p>'
         )
     return "\n\n".join(out)
