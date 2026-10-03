@@ -59,9 +59,9 @@ figure { margin:20px 0 6px }
 figure img { width:100%; border:1px solid var(--line); border-radius:7px; display:block }
 figcaption { font-size:14px; color:var(--soft); margin-top:8px; line-height:1.5 }
 
-.note { background:var(--accent-soft); border-left:3px solid var(--accent);
-        padding:13px 17px; border-radius:0 5px 5px 0; font-size:14.5px;
-        color:var(--mid); margin-top:15px }
+.note { background:#f0f6fb; border:1px solid #d4e5f5; border-left:4px solid var(--accent);
+        padding:13px 17px; border-radius:6px; font-size:14.5px;
+        color:var(--ink); margin-top:15px }
 
 ul.clean { list-style:none }
 ul.clean li { padding:11px 0; border-bottom:1px solid var(--line);
