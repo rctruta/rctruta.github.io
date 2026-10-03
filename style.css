@@ -291,3 +291,14 @@ h3 .meta { font-size:14px; font-weight:400; color:var(--soft); margin-left:9px;
 .toterms { margin:10px 0 0; font-size:13px }
 .toterms a { color:var(--soft); text-decoration:none }
 .toterms a:hover { color:var(--green) }
+
+/* contact form */
+.contact-form { max-width:560px; margin-top:20px; display:flex; flex-direction:column; gap:16px }
+.contact-form .field { display:flex; flex-direction:column; gap:6px }
+.contact-form label { font-size:14.5px; font-weight:600; color:var(--ink) }
+.contact-form input, .contact-form textarea {
+  font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  padding:10px 14px; border:1px solid var(--line); border-radius:6px;
+  background:var(--bg); color:var(--ink); outline:none; transition:border-color 0.15s;
+}
+.contact-form input:focus, .contact-form textarea:focus { border-color:var(--accent) }
