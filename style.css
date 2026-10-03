@@ -130,15 +130,24 @@ footer .wrap { display:flex; justify-content:flex-start; align-items:center;
 footer a { color:var(--soft); text-decoration:none; border-bottom:1px solid var(--line); }
 footer a:hover { color:var(--green); border-bottom-color:var(--green); text-decoration:none; }
 
-/* ---------- contact page layout & form ---------- */
-.contact-grid { display:grid; grid-template-columns:1fr 300px; gap:48px; margin-top:32px }
-@media (max-width:768px) { .contact-grid { grid-template-columns:1fr; gap:36px } }
+/* ---------- contact page layout & cards ---------- */
+.contact-grid { display:grid; grid-template-columns:1fr 310px; gap:24px; align-items:stretch; margin-top:32px }
+@media (max-width:768px) { .contact-grid { grid-template-columns:1fr; gap:20px } }
 
-.form-col { min-width:0 }
-.form-col h3 { font-size:22px; font-weight:600; color:var(--ink); margin-bottom:6px }
-.subtext { color:var(--mid); font-size:15px; margin-bottom:20px }
+.form-col { display:flex; flex-direction:column }
+.form-col .contact-card { height:100%; justify-content:space-between }
 
-.contact-form { display:flex; flex-direction:column; gap:18px }
+.sidebar-col { display:flex; flex-direction:column; gap:20px; height:100% }
+.sidebar-col .contact-card { flex:1; justify-content:space-between }
+
+.contact-card {
+  padding:24px; background:#f0f6fb; border:1px solid #d4e5f5;
+  border-radius:8px; display:flex; flex-direction:column; gap:16px;
+}
+.contact-card h3 { font-size:19px; font-weight:600; color:var(--ink); margin:0 }
+.contact-card p.subtext { color:var(--mid); font-size:14.5px; margin-bottom:0 }
+
+.contact-form { display:flex; flex-direction:column; gap:16px }
 .contact-form .field-row { display:grid; grid-template-columns:1fr 1fr; gap:16px }
 @media (max-width:540px) { .contact-form .field-row { grid-template-columns:1fr } }
 
@@ -150,8 +159,8 @@ footer a:hover { color:var(--green); border-bottom-color:var(--green); text-deco
 .contact-form select,
 .contact-form textarea {
   font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
-  padding:11px 14px; border:1px solid var(--line); border-radius:6px;
-  background:var(--bg); color:var(--ink); outline:none;
+  padding:11px 14px; border:1px solid #cbdceb; border-radius:6px;
+  background:#fff; color:var(--ink); outline:none;
   transition:border-color 0.15s, box-shadow 0.15s;
 }
 .contact-form select { cursor:pointer; appearance:none;
@@ -161,31 +170,18 @@ footer a:hover { color:var(--green); border-bottom-color:var(--green); text-deco
 .contact-form input:focus,
 .contact-form select:focus,
 .contact-form textarea:focus {
-  border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft);
+  border-color:var(--accent); box-shadow:0 0 0 3px rgba(28,93,153,0.15);
 }
 
-.btn-large { padding:13px 26px; font-size:15.5px; border:none; cursor:pointer }
+.btn-large { padding:12px 24px; font-size:15px; border:none; cursor:pointer }
 
-.sidebar-col { display:flex; flex-direction:column; gap:20px }
-.contact-card {
-  padding:22px; background:var(--panel); border:1px solid var(--line);
-  border-radius:8px; display:flex; flex-direction:column; gap:10px;
-}
-.contact-card h3 { font-size:17px; font-weight:600; color:var(--ink); margin:0 }
-.contact-card p { font-size:14.5px; color:var(--mid); line-height:1.5 }
-.contact-card.substack { background:var(--accent-soft); border-color:rgba(28,93,153,0.2) }
-
-.sub-form { display:flex; flex-direction:column; gap:9px; margin-top:4px }
+.sub-form { display:flex; flex-direction:column; gap:10px; margin-top:6px }
 .sub-form input {
-  padding:9px 12px; font-size:14px; border:1px solid var(--line);
+  padding:10px 12px; font-size:14px; border:1px solid #cbdceb;
   border-radius:6px; background:#fff; color:var(--ink); outline:none;
 }
 .sub-form input:focus { border-color:var(--accent) }
-.sub-form button { border:none; cursor:pointer; font-size:14px; padding:9px 16px }
-
-.clean-links { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px }
-.clean-links li a { font-size:14.5px; color:var(--accent); font-weight:500 }
-.clean-links li a:hover { color:var(--green); text-decoration:underline }
+.sub-form button { border:none; cursor:pointer; font-size:14px; padding:10px 16px }
 
 /* --- home: fit on one screen, no scroll --- */
 .portrait-col { display:flex; flex-direction:column; align-items:center; gap:12px; flex-shrink:0; }
