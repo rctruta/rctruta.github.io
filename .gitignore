@@ -4,4 +4,6 @@ dist/
 .DS_Store
 *.zip
 static-site-template/
+__pycache__/
+
 

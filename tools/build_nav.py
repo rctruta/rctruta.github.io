@@ -11,23 +11,14 @@ if they disagree, this file wins and the generator should be corrected.
 """
 import pathlib
 import re
+from config_loader import load_config
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+CONFIG = load_config()
 
-# label -> file. Index is site-wide, so it sits with the sections, not inside one.
-NAV = [
-    ("Work", "work.html"),
-    ("Teaching", "teaching.html"),
-    ("Speaking", "speaking.html"),
-    ("Writing", "writing.html"),
-    ("Index", "tags.html"),
-    ("Contact", "contact.html"),
-]
-
-PAGES = [
-    "index.html", "work.html", "teaching.html", "speaking.html",
-    "writing.html", "tags.html", "contact.html",
-]
+NAV = [(item["label"], item["href"]) for item in CONFIG["navigation"]]
+PAGES = [item["href"] for item in CONFIG["navigation"]] + ["index.html"]
+BRAND = CONFIG["site"]["author"].get("name", CONFIG["site"].get("title", "Home"))
 
 
 def nav_html(current):
@@ -36,7 +27,7 @@ def nav_html(current):
         for label, href in NAV
     )
     return f"""<nav class="topnav"><div class="wrap">
-  <a class="brand" href="index.html">Ramona C. Truta</a>
+  <a class="brand" href="index.html">{BRAND}</a>
   <span class="navlinks">
 {links}
     <button type="button" class="searchbtn" aria-label="Search this site" title="Search this site (⌘K)" data-search-open>
@@ -45,6 +36,7 @@ def nav_html(current):
     </button>
   </span>
 </div></nav>"""
+
 
 
 changed = 0

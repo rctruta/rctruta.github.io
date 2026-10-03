@@ -1,0 +1,47 @@
+# Master Site Configuration (No hardcoded values in build tools)
+
+site:
+  title: "Ramona C. Truta"
+  tagline: "Data Engineering, AI Evaluation, and Database Performance"
+  description: "Personal website, essays, research notes, and public appearances by Ramona C. Truta."
+  url: "https://ramonactruta.com"
+  image: "https://ramonactruta.com/assets/photo.jpg"
+  copyright_license: "CC BY-NC-SA 4.0"
+  copyright_license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+  author:
+    name: "Ramona C. Truta"
+    contact_form: "https://formspree.io/f/xbldgyqa"
+    substack: "https://ramonactruta.substack.com"
+    substack_rss: "https://ramonactruta.substack.com/feed"
+    github: "https://github.com/rctruta"
+
+navigation:
+  - id: work
+    label: "Work"
+    href: "work.html"
+    enabled: true
+  - id: teaching
+    label: "Teaching"
+    href: "teaching.html"
+    enabled: true
+  - id: speaking
+    label: "Speaking"
+    href: "speaking.html"
+    enabled: true
+  - id: writing
+    label: "Writing"
+    href: "writing.html"
+    enabled: true
+  - id: index
+    label: "Index"
+    href: "tags.html"
+    enabled: true
+  - id: contact
+    label: "Contact"
+    href: "contact.html"
+    enabled: true
+
+features:
+  pagefind_search: true
+  privacy_checker: true
+  taxonomy_checker: true
