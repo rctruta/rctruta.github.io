@@ -24,55 +24,88 @@
   <h2>Contact</h2>
 
   <p class="lede">Open to contract and consulting work in Waterloo, Ontario; remote, or on
-  site in the Toronto&ndash;Waterloo corridor. Open to speaking engagements. Open to
+  site in the Toronto&ndash;Waterloo corridor. Open to speaking engagements, research advisory, and
   conversations that don't have a job attached.</p>
 
-  <p>The quickest way to reach me is to book a virtual coffee chat, send me a message, or connect on LinkedIn.</p>
+  <div class="contact-grid">
+    <div class="form-col">
+      <h3 id="form">Send a message</h3>
+      <p class="subtext">Have a project proposal, speaking invitation, or technical inquiry? Send a note below and I will reply directly.</p>
 
-  <div class="cta">
-    <a class="btn solid" href="https://calendly.com/ramonactruta/30min" target="_blank" rel="noopener">Book a coffee chat</a>
-    <a class="btn ghost" href="#form">Send a message</a>
-    <a class="btn ghost" href="https://linkedin.com/in/ramonactruta" target="_blank" rel="noopener">LinkedIn DM</a>
+      <form class="contact-form" action="https://formspree.io/f/xbldgyqa" method="POST">
+        <div class="field-row">
+          <div class="field">
+            <label for="name">Your Name <span class="req">*</span></label>
+            <input type="text" id="name" name="name" placeholder="Ada Lovelace" required>
+          </div>
+          <div class="field">
+            <label for="email">Your Email <span class="req">*</span></label>
+            <input type="email" id="email" name="email" placeholder="ada@example.com" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="topic">What is this regarding?</label>
+          <select id="topic" name="topic">
+            <option value="Consulting & Data Modeling">Consulting &amp; Data Modeling</option>
+            <option value="AI Security & System Integrity">AI Security &amp; System Integrity</option>
+            <option value="Speaking Engagement">Speaking Engagement</option>
+            <option value="Virtual Coffee Chat">Virtual Coffee Chat</option>
+            <option value="General Inquiry" selected>General Inquiry</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="message">Message <span class="req">*</span></label>
+          <textarea id="message" name="message" rows="5" placeholder="Tell me a bit about what you are working on..." required></textarea>
+        </div>
+
+        <div>
+          <button type="submit" class="btn solid btn-large">Send Message &rarr;</button>
+        </div>
+      </form>
+
+      <h3 style="margin-top: 44px;">What I do</h3>
+
+      <ul class="courses">
+        <li><a href="tags.html#ai-security">AI Security &amp; System Integrity</a> &mdash; red-teaming and exploit research on agent memory, vision encoders, and routing nodes</li>
+        <li><a href="tags.html#benchmarking">Benchmarking</a> databases and query engines, with the experiment published alongside the result</li>
+        <li><a href="tags.html#ai-evaluation">AI and agent evaluation</a> &mdash; what a deployment will cost, and where it will fail</li>
+        <li><a href="tags.html#teaching">Teaching</a> and technical enablement</li>
+        <li><a href="tags.html#data-modeling">Data modeling</a> &mdash; source systems into structures analysts and models can use</li>
+      </ul>
+    </div>
+
+    <div class="sidebar-col">
+      <div class="contact-card">
+        <h3>☕ Virtual Coffee Chat</h3>
+        <p>Prefer to chat live? Book a 30-minute virtual coffee chat directly on my calendar.</p>
+        <a class="btn ghost" href="https://calendly.com/ramonactruta/30min" target="_blank" rel="noopener">Book a 30-min Call &rarr;</a>
+      </div>
+
+      <div class="contact-card substack">
+        <h3>📬 Subscribe to Writing</h3>
+        <p>Get research notes on database engineering, AI system integrity, and benchmark evaluations.</p>
+        <form action="https://ramonactruta.substack.com/subscribe" method="post" target="_blank" class="sub-form">
+          <input type="email" name="email" placeholder="ada@example.com" required>
+          <button type="submit" class="btn solid">Subscribe</button>
+        </form>
+      </div>
+
+      <div class="contact-card">
+        <h3>Direct Links</h3>
+        <ul class="clean-links">
+          <li><a href="https://linkedin.com/in/ramonactruta" target="_blank" rel="noopener">LinkedIn Profile &nearr;</a></li>
+          <li><a href="https://github.com/rctruta" target="_blank" rel="noopener">GitHub Repositories &nearr;</a></li>
+          <li><a href="teaching.html#education">Education &amp; Credentials &rarr;</a></li>
+          <li><a href="https://orcid.org/0009-0008-4886-7777" target="_blank" rel="noopener">ORCID 0009-0008-4886-7777 &nearr;</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
-
-  <h3 id="form" style="margin-top: 36px;">Send a message</h3>
-
-  <form class="contact-form" action="https://formspree.io/f/xbldgyqa" method="POST">
-    <div class="field">
-      <label for="name">Your Name</label>
-      <input type="text" id="name" name="name" placeholder="Ada Lovelace" required>
-    </div>
-    <div class="field">
-      <label for="email">Your Email</label>
-      <input type="email" id="email" name="email" placeholder="ada@example.com" required>
-    </div>
-    <div class="field">
-      <label for="subject">Subject</label>
-      <input type="text" id="subject" name="subject" placeholder="Consulting / Inquiry / Coffee Chat">
-    </div>
-    <div class="field">
-      <label for="message">Message</label>
-      <textarea id="message" name="message" rows="5" placeholder="How can I help you?" required></textarea>
-    </div>
-    <div>
-      <button type="submit" class="btn solid">Send Message</button>
-    </div>
-  </form>
-
-  <h3 style="margin-top: 44px;">What I do</h3>
-
-  <ul class="courses">
-    <li><a href="tags.html#ai-security">AI Security &amp; System Integrity</a> &mdash; red-teaming and exploit research on agent memory, vision encoders, and routing nodes</li>
-    <li><a href="tags.html#benchmarking">Benchmarking</a> databases and query engines, with the experiment published alongside the result</li>
-    <li><a href="tags.html#ai-evaluation">AI and agent evaluation</a> &mdash; what a deployment will cost, and where it will fail</li>
-    <li><a href="tags.html#teaching">Teaching</a> and technical enablement</li>
-    <li><a href="tags.html#data-modeling">Data modeling</a> &mdash; source systems into structures analysts and models can use</li>
-  </ul>
-
-  <p style="margin-top: 24px;"><a href="teaching.html#education">Education and credentials &rarr;</a> &middot; <a href="https://orcid.org/0009-0008-4886-7777" target="_blank" rel="noopener">ORCID 0009-0008-4886-7777 &nearr;</a></p>
 </div></section>
 
-<footer><div class="wrap"><span>&copy; 2025&ndash;2026 Ramona C. Truta &middot; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a></span><a href="contact.html">Contact</a></div></footer>
+<footer><div class="wrap"><span>&copy; 2025&ndash;2026 Ramona C. Truta &middot; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a> &middot; <a href="contact.html">Contact</a></span></div></footer>
 <!-- search:start -->
 <div class="searchmodal" id="searchmodal" hidden>
   <div class="searchmodal__panel" role="dialog" aria-modal="true" aria-label="Search this site">

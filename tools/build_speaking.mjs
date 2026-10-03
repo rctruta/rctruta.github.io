@@ -78,7 +78,7 @@ const html = `<!DOCTYPE html>
   <h3 id="as-guest">As guest</h3>${list(asGuest.map((e) => row(e, note(e))))}
   <p class="totop"><a href="#top">&uarr; Top</a></p>
 </div></section>
-<footer><div class="wrap"><span>&copy; 2025&ndash;2026 Ramona C. Truta &middot; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a></span><a href="contact.html">Contact</a></div></footer>
+<footer><div class="wrap"><span>&copy; 2025&ndash;2026 Ramona C. Truta &middot; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a> &middot; <a href="contact.html">Contact</a></span></div></footer>
 </body></html>
 `
 

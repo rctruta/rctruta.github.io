@@ -106,7 +106,7 @@ doc = f"""<!DOCTYPE html>
   <p><a href="https://ramonactruta.substack.com" target="_blank" rel="noopener">Everything on Substack &rarr;</a></p>
 </div></section>
 
-<footer><div class="wrap"><span>&copy; 2025&ndash;2026 Ramona C. Truta &middot; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a></span><a href="contact.html">Contact</a></div></footer>
+<footer><div class="wrap"><span>&copy; 2025&ndash;2026 Ramona C. Truta &middot; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a> &middot; <a href="contact.html">Contact</a></span></div></footer>
 </body></html>
 """
 
