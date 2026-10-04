@@ -363,3 +363,73 @@ def load_appearances(vocab: TagVocabulary) -> List[Appearance]:
 
     appearances.sort(key=lambda a: a.date, reverse=True)
     return appearances
+
+
+# --- teaching: education and service -----------------------------------------
+# These were hardcoded as HTML inside tools/build_teaching.py while the same
+# facts sat unused in data/teaching.yaml. Editing the data changed nothing, and
+# one honour was written into two sections, so it rendered twice.
+
+class Degree(BaseModel):
+    degree: str
+    institution: str
+    thesis: Optional[str] = None
+    advisor: Optional[str] = None
+    url: Optional[str] = None          # e.g. a library catalogue record
+    # `year` is deliberately absent: dates invite age inference and add nothing.
+
+
+class Education(BaseModel):
+    degrees: List[Degree] = Field(default_factory=list)
+    certificates: List[str] = Field(default_factory=list)
+    honours: List[str] = Field(default_factory=list)
+
+
+class Service(BaseModel):
+    reviewing: List[str] = Field(default_factory=list)
+    outreach: List[str] = Field(default_factory=list)
+    outreach_note: str = ""
+    volunteering: List[str] = Field(default_factory=list)
+    affiliations: List[str] = Field(default_factory=list)
+
+
+def _block(text: str, key: str) -> str:
+    """The lines belonging to a top-level key, up to the next top-level key."""
+    m = re.search(rf"^{key}:\n(.*?)(?=^\w|\Z)", text, re.M | re.S)
+    return m.group(1) if m else ""
+
+
+def _str_list(block: str, key: str) -> List[str]:
+    sub = re.search(rf"^  {key}:\n((?:\s+- .*\n?)+)", block, re.M)
+    if not sub:
+        return []
+    return [re.sub(r'^\s*- ', '', ln).strip().strip('"')
+            for ln in sub.group(1).splitlines() if ln.strip().startswith("- ")]
+
+
+def load_education() -> Education:
+    text = (ROOT / "data" / "teaching.yaml").read_text()
+    block = _block(text, "education")
+    degrees = []
+    for chunk in re.split(r"\n(?=    - degree:)", block):
+        if "- degree:" not in chunk:
+            continue
+        def f(k):
+            m = re.search(rf'^\s+(?:- )?{k}: "(.*?)"\s*$', chunk, re.M)
+            return m.group(1) if m else None
+        degrees.append(Degree(degree=f("degree"), institution=f("institution"),
+                              thesis=f("thesis"), advisor=f("advisor"), url=f("url")))
+    return Education(degrees=degrees,
+                     certificates=_str_list(block, "certificates"),
+                     honours=_str_list(block, "honours"))
+
+
+def load_service() -> Service:
+    text = (ROOT / "data" / "teaching.yaml").read_text()
+    block = _block(text, "service")
+    note = re.search(r"^\s+note: \|\n((?:\s{6,}.*\n?)+)", block, re.M)
+    return Service(reviewing=_str_list(block, "reviewing"),
+                   outreach=_str_list(block, "outreach"),
+                   outreach_note=" ".join(l.strip() for l in note.group(1).splitlines()) if note else "",
+                   volunteering=_str_list(block, "volunteering"),
+                   affiliations=_str_list(block, "affiliations"))

@@ -4,6 +4,7 @@
 """
 import html
 import pathlib
+import model
 import re
 from page import render_tag_chips, render_page_shell, format_inline, format_blocks, AUTHOR
 
@@ -205,86 +206,65 @@ def load_teaching_html_sections():
         f'</div></section>'
     )
 
-    # 7. Education & Credentials
+    # 7 & 8. Education and Service — rendered from data/teaching.yaml via
+    # validated models. These were previously hardcoded here, which is why
+    # editing the data had no effect and one honour rendered twice.
+    edu = model.load_education()
+    svc = model.load_service()
+
+    def ul(items):
+        return ('  <ul class="courses">\n'
+                + "".join(f'    <li>{format_inline(i)}</li>\n' for i in items)
+                + '  </ul>\n\n')
+
+    def degree_line(d):
+        s = f'<strong>{html.escape(d.degree)}</strong> &mdash; {html.escape(d.institution)}'
+        if d.thesis:
+            title = f'<em>{html.escape(d.thesis)}</em>'
+            if d.url:
+                title = f'<a href="{d.url}">{title}</a>'
+            s += f'. Thesis: {title}'
+            if d.advisor:
+                s += f', supervised by {html.escape(d.advisor)}'
+        return s
+
     education_section = (
-        f'<section><div class="wrap">\n'
-        f'  <h2 id="education">Education &amp; credentials</h2>\n\n'
-        f'  <h3>Degrees</h3>\n'
-        f'  <ul class="courses">\n'
-        f'    <li><strong>M.Sc. Computer Science</strong> &mdash; University of Toronto, 2004. Thesis:\n'
-        f'    <em>Structural and Semantic Query Optimization in XQuery</em>, supervised by Alberto O. Mendelzon</li>\n'
-        f'    <li><strong>M.Sc. Computer Science</strong> &mdash; &ldquo;Babeș-Bolyai&rdquo; University, Romania, 1997.\n'
-        f'    Thesis: <em>Multimedia Synchronization</em></li>\n'
-        f'    <li><strong>B.Sc. Mathematics &amp; Computer Science</strong> &mdash; &ldquo;Babeș-Bolyai&rdquo; University, 1996</li>\n'
-        f'  </ul>\n\n'
-        f'  <h3>Certificates</h3>\n'
-        f'  <ul class="courses">\n'
-        f'    <li>Business Analyst Certificate &mdash; University of Waterloo, 2012</li>\n'
-        f'    <li>Teaching Certificate &mdash; &ldquo;Babeș-Bolyai&rdquo; University: psychology, pedagogy, methodology, practicum</li>\n'
-        f'    <li>Neo4j Certified Professional</li>\n'
-        f'    <li>Applied Data Science: Leveraging AI for Effective Decision Making &mdash; MIT Professional Education, 2023</li>\n'
-        f'    <li>Large Language Models &mdash; Databricks / edX, 2023</li>\n'
-        f'    <li>Delivering a Polished Classroom Presentation &mdash; Office of Teaching Advancement, University of Toronto</li>\n'
-        f'  </ul>\n\n'
-        f'  <h3>Honours</h3>\n'
-        f'  <ul class="courses">\n'
-        f'    <li>Nominee, University of Toronto Scarborough Teaching Award</li>\n'
-        f'    <li>Recipient, Grace Hopper Celebration of Women in Computing Scholarship</li>\n'
-        f'    <li>Recipient, International Recruitment Award, University of Toronto</li>\n'
-        f'    <li>Recipient, &ldquo;Babeș-Bolyai&rdquo; University Honours Scholarship, Romania</li>\n'
-        f'  </ul>\n\n'
-        f'  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
-        f'</div></section>'
+        '<section><div class="wrap">\n'
+        '  <h2 id="education">Education &amp; credentials</h2>\n\n'
+        '  <h3>Degrees</h3>\n'
+        + '  <ul class="courses">\n'
+        + "".join(f'    <li>{degree_line(d)}</li>\n' for d in edu.degrees)
+        + '  </ul>\n\n'
+        + '  <h3>Certificates</h3>\n' + ul(edu.certificates)
+        + '  <h3>Honours</h3>\n' + ul(edu.honours)
+        + '  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
+        + '</div></section>'
     )
 
-    # 8. Service
     service_section = (
-        f'<section><div class="wrap">\n'
-        f'  <h2 id="service">Service</h2>\n\n'
-        f'  <h3>Reviewing and editorial</h3>\n'
-        f'  <ul class="courses">\n'
-        f'    <li>Reviewer, <em>Journal of Information Systems Education</em> (2008&ndash;2011)</li>\n'
-        f'    <li>Reviewer, Data Warehousing and Knowledge Discovery (DaWaK)</li>\n'
-        f'    <li>Peer reviewer, Computer and Mathematical Sciences, U of T Scarborough</li>\n'
-        f'    <li>Notes editing, <em>Elements of Finite Model Theory</em>, Leonid Libkin (Springer)</li>\n'
-        f'  </ul>\n\n'
-        f'  <h3>Outreach and mentoring</h3>\n'
-        f'  <ul class="courses">\n'
-        f'    <li>Group leader, Gr8 Designs for Gr8 Girls, University of Toronto</li>\n'
-        f'    <li>Mentoring female students in computer science, throughout my teaching</li>\n'
-        f'    <li>Recipient, Grace Hopper Celebration of Women in Computing Scholarship</li>\n'
-        f'    <li>Invited lecture, Computing Insights, University of Toronto</li>\n'
-        f'  </ul>\n\n'
-        f'  <p>Encouraging women in computing was not an add-on. Female enrolment in Canadian computer\n'
-        f'  science and engineering programs is small, and students told me directly that having a\n'
-        f'  female instructor mattered, and that they had felt threatened by male peers. That is a\n'
-        f'  thing a teacher can do something about from inside a classroom.</p>\n\n'
-        f'  <h3>Professional affiliations</h3>\n'
-        f'  <ul class="courses">\n'
-        f'    <li>Canadian Association of University Teachers</li>\n'
-        f'    <li>Computer Science Teachers Association</li>\n'
-        f'    <li>Society for Teaching and Learning in Higher Education</li>\n'
-        f'    <li>ACM Special Interest Group on Management of Data</li>\n'
-        f'  </ul>\n\n'
-        f'  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
-        f'</div></section>'
+        '<section><div class="wrap">\n'
+        '  <h2 id="service">Service</h2>\n\n'
+        '  <h3>Reviewing and editorial</h3>\n' + ul(svc.reviewing)
+        + '  <h3>Outreach and mentoring</h3>\n' + ul(svc.outreach)
+        + (f'  <p>{format_inline(svc.outreach_note)}</p>\n\n' if svc.outreach_note else '')
+        + ('  <h3>Volunteering</h3>\n' + ul(svc.volunteering) if svc.volunteering else '')
+        + '  <h3>Professional affiliations</h3>\n' + ul(svc.affiliations)
+        + '  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
+        + '</div></section>'
     )
 
     return f"{phil_section}\n\n{leading_section}\n\n{product_section}\n\n{testimonials_section}\n\n{materials_section}\n\n{courses_section}\n\n{education_section}\n\n{service_section}"
 
 
 body_html = load_teaching_html_sections()
-subnav_items = [
-    '<a href="#philosophy">Philosophy</a>',
-    '<a href="#leading">Leading</a>',
-    '<a href="#product">A course is a product</a>',
-    '<a href="#testimonials">Testimonials</a>',
-    '<a href="#assignment">Materials</a>',
-    '<a href="#courses">Courses</a>',
-    '<a href="#education">Education</a>',
-    '<a href="#service">Service</a>'
-]
-subnav_html = "\n".join(f"  {item}" for item in subnav_items)
+# Derived from the headings it points at. A hardcoded list meant the nav read
+# "Philosophy" over a heading reading "Teaching" — two labels for one thing, and
+# it came back the moment this file was refactored. tools/test_tools.py now
+# fails the build if they ever diverge again.
+subnav_html = "\n".join(
+    f'  <a href="#{hid}">{re.sub(r"<[^>]+>", "", label).strip()}</a>'
+    for hid, label in re.findall(r'<h2 id="([a-z0-9-]+)">(.*?)</h2>', body_html, re.S)
+)
 
 title = f"{AUTHOR} — Teaching"
 description = "Teaching philosophy, course design, student testimonials, materials, and academic leadership."

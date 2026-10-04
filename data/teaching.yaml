@@ -153,11 +153,11 @@ education:
       year: "1996"
 
   certificates:
-    - "Business Analyst Certificate — University of Waterloo, 2012"
+    - "Business Analyst Certificate — University of Waterloo"
     - "Teaching Certificate — “Babeș-Bolyai” University: psychology, pedagogy, methodology, practicum"
     - "Neo4j Certified Professional"
-    - "Applied Data Science: Leveraging AI for Effective Decision Making — MIT Professional Education, 2023"
-    - "Large Language Models — Databricks / edX, 2023"
+    - "Applied Data Science: Leveraging AI for Effective Decision Making — MIT Professional Education"
+    - "Large Language Models — Databricks / edX"
     - "Delivering a Polished Classroom Presentation — Office of Teaching Advancement, University of Toronto"
 
   honours:
@@ -168,7 +168,7 @@ education:
 
 service:
   reviewing:
-    - "Reviewer, *Journal of Information Systems Education* (2008–2011)"
+    - "Reviewer, *Journal of Information Systems Education*"
     - "Reviewer, Data Warehousing and Knowledge Discovery (DaWaK)"
     - "Peer reviewer, Computer and Mathematical Sciences, U of T Scarborough"
     - "Notes editing, *Elements of Finite Model Theory*, Leonid Libkin (Springer)"
@@ -176,7 +176,6 @@ service:
   outreach:
     - "Group leader, Gr8 Designs for Gr8 Girls, University of Toronto"
     - "Mentoring female students in computer science, throughout my teaching"
-    - "Recipient, Grace Hopper Celebration of Women in Computing Scholarship"
     - "Invited lecture, Computing Insights, University of Toronto"
     note: |
       Encouraging women in computing was not an add-on. Female enrolment in Canadian computer science and engineering programs is small, and students told me directly that having a female instructor mattered, and that they had felt threatened by male peers. That is a thing a teacher can do something about from inside a classroom.
