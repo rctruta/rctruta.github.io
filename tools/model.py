@@ -375,7 +375,8 @@ class Degree(BaseModel):
     institution: str
     thesis: Optional[str] = None
     advisor: Optional[str] = None
-    url: Optional[str] = None          # e.g. a library catalogue record
+    url: Optional[str] = None          # the deposited copy, if there is one
+    isbn: Optional[str] = None
     # `year` is deliberately absent: dates invite age inference and add nothing.
 
 
@@ -418,7 +419,8 @@ def load_education() -> Education:
             m = re.search(rf'^\s+(?:- )?{k}: "(.*?)"\s*$', chunk, re.M)
             return m.group(1) if m else None
         degrees.append(Degree(degree=f("degree"), institution=f("institution"),
-                              thesis=f("thesis"), advisor=f("advisor"), url=f("url")))
+                              thesis=f("thesis"), advisor=f("advisor"),
+                              url=f("url"), isbn=f("isbn")))
     return Education(degrees=degrees,
                      certificates=_str_list(block, "certificates"),
                      honours=_str_list(block, "honours"))

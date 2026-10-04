@@ -144,6 +144,8 @@ education:
       year: "2004"
       thesis: "Structural and Semantic Query Optimization in XQuery"
       advisor: "Alberto O. Mendelzon"
+      url: "https://utoronto.scholaris.ca/server/api/core/bitstreams/68f216c8-0bb1-494f-a4f1-4e5f1730c2b8/content"
+      isbn: "0-612-91435-6"
     - degree: "M.Sc. Computer Science"
       institution: "“Babeș-Bolyai” University, Romania"
       year: "1997"
@@ -156,7 +158,7 @@ education:
     - "Business Analyst Certificate — University of Waterloo"
     - "Teaching Certificate — “Babeș-Bolyai” University: psychology, pedagogy, methodology, practicum"
     - "Neo4j Certified Professional"
-    - "Applied Data Science: Leveraging AI for Effective Decision Making — MIT Professional Education"
+    - "Applied Data Science Program: Leveraging AI for Effective Decision-Making — MIT Professional Education. Capstone: [music recommendation system](https://github.com/rctruta/music_recommendation_system)"
     - "Large Language Models — Databricks / edX"
     - "Delivering a Polished Classroom Presentation — Office of Teaching Advancement, University of Toronto"
 

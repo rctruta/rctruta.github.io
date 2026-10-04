@@ -226,6 +226,8 @@ def load_teaching_html_sections():
             s += f'. Thesis: {title}'
             if d.advisor:
                 s += f', supervised by {html.escape(d.advisor)}'
+            if d.isbn:
+                s += f' <span class="meta">ISBN {html.escape(d.isbn)}</span>'
         return s
 
     education_section = (
