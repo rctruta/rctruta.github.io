@@ -25,6 +25,7 @@ CONFIG = load_config()
 NAV = [(item["label"], item["href"], item["description"]) for item in CONFIG["navigation"]]
 PAGES = [item["href"] for item in CONFIG["navigation"]] + ["index.html"]
 BRAND = CONFIG["site"]["author"].get("name", CONFIG["site"].get("title", "Home"))
+SEARCH = html.escape(CONFIG["site"].get("search_label", "Search this site"), quote=True)
 
 
 def nav_html(current):
@@ -37,7 +38,7 @@ def nav_html(current):
   <a class="brand" href="index.html" title="Home" aria-label="Home">{BRAND}</a>
   <span class="navlinks">
 {links}
-    <button type="button" class="searchbtn" aria-label="Search this site" title="Search this site (⌘K)" data-search-open>
+    <button type="button" class="searchbtn" aria-label="{SEARCH}" data-tip="{SEARCH}" data-search-open>
       <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor"
            stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg>
     </button>

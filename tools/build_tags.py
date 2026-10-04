@@ -143,7 +143,13 @@ sections = "\n".join(
     for f in present
 )
 
-subnav_html = "\n".join(f'  <a href="#{f}">{facets_meta.get(f, None).label if f in facets_meta else f.title()}</a>' for f in present)
+# each facet already explains itself in TAGS.yaml; that note is the hover
+subnav_html = "\n".join(
+    f'  <a href="#{f}"'
+    f'{f' data-tip="{html.escape(facets_meta[f].note, quote=True)}"' if f in facets_meta and facets_meta[f].note else ""}'
+    f'>{facets_meta[f].label if f in facets_meta else f.title()}</a>'
+    for f in present
+)
 
 body_html = (
     f'<section><div class="wrap">\n'

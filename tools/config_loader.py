@@ -18,7 +18,7 @@ def load_config():
     }
 
     # Extract site metadata
-    for key in ("title", "tagline", "description", "url", "image", "copyright_license", "copyright_license_url"):
+    for key in ("title", "tagline", "description", "url", "image", "copyright_license", "copyright_license_url", "search_label"):
         m = re.search(rf"^\s*{key}:\s*[\"']?([^\"'\n]+)[\"']?", text, re.M)
         if m:
             config["site"][key] = m.group(1).strip()

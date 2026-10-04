@@ -16,7 +16,9 @@ subnav_links = []
 sections_html = []
 
 for sec in sections:
-    subnav_links.append(f'  <a href="#{sec.id}">{html.escape(sec.title.split("&")[0].strip())}</a>')
+    subnav_links.append(
+        f'  <a href="#{sec.id}" data-tip="{html.escape(sec.summary, quote=True)}">'
+        f'{html.escape(sec.title.split("&")[0].strip())}</a>')
     cards_html = "\n".join(render_project_card(item) for item in sec.items)
 
     sections_html.append(

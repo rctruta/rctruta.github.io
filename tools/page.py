@@ -15,6 +15,7 @@ SITE_URL = CONFIG["site"].get("url", "")
 SITE_IMAGE = CONFIG["site"].get("image", f"{SITE_URL}/assets/photo.jpg")
 SUBSTACK_URL = CONFIG["site"]["author"].get("substack", "https://substack.com")
 SUBSTACK_RSS = CONFIG["site"]["author"].get("substack_rss", f"{SUBSTACK_URL}/feed")
+SEARCH_LABEL = CONFIG["site"].get("search_label", "Search this site")
 LICENSE_LABEL = CONFIG["site"].get("copyright_license", "CC BY-NC-SA 4.0")
 LICENSE_URL = CONFIG["site"].get("copyright_license_url", "https://creativecommons.org/licenses/by-nc-sa/4.0/")
 
@@ -146,7 +147,7 @@ def render_topnav(here_page: str = "") -> str:
         f'  <a class="brand" href="index.html" title="Home" aria-label="Home">{html.escape(AUTHOR)}</a>\n'
         f'  <span class="navlinks">\n'
         f'{nav_links_str}\n'
-        f'    <button type="button" class="searchbtn" aria-label="Search this site" title="Search this site (⌘K)" data-search-open>\n'
+        f'    <button type="button" class="searchbtn" aria-label="{html.escape(SEARCH_LABEL, quote=True)}" data-tip="{html.escape(SEARCH_LABEL, quote=True)}" data-search-open>\n'
         f'      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor"\n'
         f'           stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg>\n'
         f'    </button>\n'
