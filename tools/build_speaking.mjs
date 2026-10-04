@@ -1,55 +1,76 @@
-// Generates speaking.html from data/appearances.yaml.
-//
-//   node tools/build_speaking.mjs
-//
-// speaking.html is output, not source. Edit the YAML, run this, commit both.
-// Podcasts appear once they have a url; talks always appear.
-
-import { readFileSync, writeFileSync } from 'node:fs'
-import { parse } from 'yaml'
+// Generates speaking.html from data/appearances.yaml and config.yaml with zero dependencies.
+import { readFileSync, writeFileSync } from 'node:fs';
 
 const esc = (s) =>
-  String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-const config = parse(readFileSync('config.yaml', 'utf8'))
-const AUTHOR = esc(config.site?.author?.name || 'Author')
-const SITE_TITLE = esc(config.site?.title || AUTHOR)
-const SITE_URL = config.site?.url || ''
-const SITE_IMAGE = esc(config.site?.image || `${SITE_URL}/assets/photo.jpg`)
-const LICENSE_LABEL = esc(config.site?.copyright_license || 'CC BY-NC-SA 4.0')
-const LICENSE_URL = esc(config.site?.copyright_license_url || 'https://creativecommons.org/licenses/by-nc-sa/4.0/')
-
-const entries = parse(readFileSync('data/appearances.yaml', 'utf8'))
-
-
-const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-const when = (d) => {
-  const [y, m, day] = String(d).split('-').map(Number)
-  return `${MONTHS[m - 1]} ${day}, ${y}`
+function parseSimpleYamlDict(text) {
+  const dict = {};
+  for (const line of text.split('\n')) {
+    const m = line.match(/^\s*(\w+):\s*[\"']?([^\"'\n]+)[\"']?/);
+    if (m) {
+      dict[m[1]] = m[2].trim();
+    }
+  }
+  return dict;
 }
 
-const newest = (a, b) => String(b.date).localeCompare(String(a.date))
+function parseYamlList(text) {
+  const blocks = text.split(/\n(?=- id:)/).filter(b => b.trim().startsWith('- id:'));
+  return blocks.map(block => {
+    const entry = {};
+    const lines = block.split('\n');
+    for (const line of lines) {
+      const m = line.match(/^\s*(?:-\s*)?(\w+):\s*(.+?)\s*(?:#.*)?$/);
+      if (m) {
+        let val = m[2].trim();
+        if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+          val = val.slice(1, -1);
+        }
+        entry[m[1]] = val;
+      }
+    }
+    return entry;
+  });
+}
 
-// A title links to its url when there is one, and sits plain when there isn't.
+const config = parseSimpleYamlDict(readFileSync('config.yaml', 'utf8'));
+const AUTHOR = esc(config.name || config.title || 'Author');
+const SITE_TITLE = esc(config.title || AUTHOR);
+const SITE_URL = config.url || '';
+const SITE_IMAGE = esc(config.image || `${SITE_URL}/assets/photo.jpg`);
+const LICENSE_LABEL = esc(config.copyright_license || 'CC BY-NC-SA 4.0');
+const LICENSE_URL = esc(config.copyright_license_url || 'https://creativecommons.org/licenses/by-nc-sa/4.0/');
+
+const entries = parseYamlList(readFileSync('data/appearances.yaml', 'utf8'));
+
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const when = (d) => {
+  const [y, m, day] = String(d).split('-').map(Number);
+  return `${MONTHS[m - 1]} ${day}, ${y}`;
+};
+
+const newest = (a, b) => String(b.date).localeCompare(String(a.date));
+
 const titleHtml = (e) =>
-  e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a>` : `<em>${esc(e.title)}</em>`
+  e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a>` : `<em>${esc(e.title)}</em>`;
 
 const row = (e, trailing = '') =>
   `    <li id="${esc(e.id)}"><span class="when">${when(e.date)}</span><span class="what">` +
   `<strong>${esc(e.org)}</strong>${e.location && e.location !== 'virtual' ? `, ${esc(e.location)}` : ''}` +
-  ` &mdash; ${titleHtml(e)}${trailing}</span></li>`
+  ` &mdash; ${titleHtml(e)}${trailing}</span></li>`;
 
-const list = (rows) => `<ul class="clean">\n${rows.join('\n')}\n  </ul>`
+const list = (rows) => `<ul class="clean">\n${rows.join('\n')}\n  </ul>`;
 
-const talks = entries.filter((e) => e.kind === 'talk').sort(newest)
-const pods = entries.filter((e) => e.kind === 'podcast' && e.url).sort(newest)
-const asGuest = pods.filter((e) => e.role !== 'guest host')
-const asHost = pods.filter((e) => e.role === 'guest host')
+const talks = entries.filter((e) => e.kind === 'talk').sort(newest);
+const pods = entries.filter((e) => e.kind === 'podcast' && e.url).sort(newest);
+const asGuest = pods.filter((e) => e.role !== 'guest host');
+const asHost = pods.filter((e) => e.role === 'guest host');
 
-const note = (e) => (e.role === 'co-host' ? ' <em>(co-host)</em>' : '')
-const hostNote = (e) => (e.counterpart ? ` <em>(interviewing ${esc(e.counterpart)})</em>` : '')
+const note = (e) => (e.role === 'co-host' ? ' <em>(co-host)</em>' : '');
+const hostNote = (e) => (e.counterpart ? ` <em>(interviewing ${esc(e.counterpart)})</em>` : '');
 
-const shows = new Set(pods.map((e) => e.org)).size
+const shows = new Set(pods.map((e) => e.org)).size;
 
 const html = `<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
@@ -101,7 +122,7 @@ const html = `<!DOCTYPE html>
 </div></section>
 <footer><div class="wrap"><span>&copy; 2025&ndash;2026 ${AUTHOR} &middot; <a href="${LICENSE_URL}" rel="license">${LICENSE_LABEL}</a> &middot; <a href="contact.html">Contact</a></span></div></footer>
 </body></html>
-`
+`;
 
-writeFileSync('speaking.html', html)
-console.log(`speaking.html: ${talks.length} talks, ${pods.length} episodes, ${shows} shows`)
+writeFileSync('speaking.html', html);
+console.log(`speaking.html: ${talks.length} talks, ${pods.length} episodes, ${shows} shows`);

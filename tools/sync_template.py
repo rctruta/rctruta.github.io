@@ -18,10 +18,15 @@ print("🔄 Syncing architecture and tools to static-site-template...")
 # Files to sync
 FILES_TO_SYNC = [
     "style.css",
+    "data/TAXONOMY.md",
     "tools/config_loader.py",
     "tools/build_nav.py",
+    "tools/build_tags.py",
+    "tools/build_writing.py",
+    "tools/build_speaking.mjs",
     "tools/build_search.py",
     "tools/check_private.py",
+    "tools/test_tools.py",
 ]
 
 for rel_path in FILES_TO_SYNC:
