@@ -8,12 +8,14 @@ something.
 
 | file | generated from | by |
 | --- | --- | --- |
+| `work.html` | `data/work.yaml` | `tools/build_work.py` |
+| `teaching.html` | `data/teaching.yaml` | `tools/build_teaching.py` |
 | `speaking.html` | `data/appearances.yaml` | `tools/build_speaking.mjs` |
 | `writing.html` | `data/writing.yaml` | `tools/build_writing.py` |
-| `tags.html`, and every tag row in `work.html` and `teaching.html` | `data/TAGS.yaml` + `data/writing.yaml` | `tools/build_tags.py` |
+| `tags.html` | `data/TAGS.yaml` + data files | `tools/build_tags.py` |
 | `assets/malloy-skills-tokens.svg` | numbers in the script | `tools/malloy_chart.py` |
-| the top nav on every page | the `NAV` list in the script | `tools/build_nav.py` |
-| `pagefind/` and the search box on every page | the published pages | `tools/build_search.py` |
+| the top nav on every page | `config.yaml` / script NAV | `tools/build_nav.py` |
+| `pagefind/` and search modal | the published pages | `tools/build_search.py` |
 
 Edit the data, run the tool, commit both. A hand edit to a generated file is
 erased by the next build without warning.

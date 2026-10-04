@@ -17,13 +17,24 @@ print("🔄 Syncing architecture and tools to static-site-template...")
 
 # Files to sync
 FILES_TO_SYNC = [
+    "build",
     "style.css",
+    "work.html",
+    "teaching.html",
     "data/TAXONOMY.md",
+    "data/TAGS.yaml",
+    "data/work.yaml",
+    "data/teaching.yaml",
+    "data/writing.yaml",
+    "data/appearances.yaml",
     "tools/config_loader.py",
     "tools/build_nav.py",
     "tools/build_tags.py",
+    "tools/build_work.py",
+    "tools/build_teaching.py",
     "tools/build_writing.py",
     "tools/build_speaking.mjs",
+    "tools/malloy_chart.py",
     "tools/build_search.py",
     "tools/check_private.py",
     "tools/test_tools.py",
@@ -34,7 +45,9 @@ for rel_path in FILES_TO_SYNC:
     dest = TEMPLATE_ROOT / rel_path
     if src.exists():
         dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(src, dest)
+        dest.write_bytes(src.read_bytes())
+        if src.stat().st_mode & 0o111:
+            dest.chmod(0o755)
         print(f"  ✓ Copied {rel_path}")
 
 # Run build script inside template repository

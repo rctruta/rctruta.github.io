@@ -134,7 +134,7 @@
 
 - id: stop-groupby
   title: "Stop Grouping by Everything"
-  url: https://ramonactruta.substack.com/p/stop-groupby-everything
+  url: https://ramonactruta.substack.com/p/stop-grouping-by-everything
   platform: Substack
   date: 2025-06-14
   argues: "The SQL anti-pattern killing your query performance."

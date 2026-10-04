@@ -138,6 +138,26 @@ class TestSitePipeline(unittest.TestCase):
             for pid in proj_ids:
                 self.assertIn(pid, self.projects, f"ID '{pid}' in {page_name} not registered in TAGS.yaml")
 
+    def test_work_yaml_integrity(self):
+        """Verify data/work.yaml exists and tags are in vocabulary."""
+        work_path = ROOT / "data" / "work.yaml"
+        self.assertTrue(work_path.exists(), "data/work.yaml must exist")
+        work_text = work_path.read_text()
+        for m in re.finditer(r"tags: \[(.*?)\]", work_text):
+            tags = [t.strip() for t in m.group(1).split(",") if t.strip()]
+            for t in tags:
+                self.assertIn(t, self.vocab, f"Work tag '{t}' not in vocabulary")
+
+    def test_teaching_yaml_integrity(self):
+        """Verify data/teaching.yaml exists and tags are in vocabulary."""
+        teaching_path = ROOT / "data" / "teaching.yaml"
+        self.assertTrue(teaching_path.exists(), "data/teaching.yaml must exist")
+        teaching_text = teaching_path.read_text()
+        for m in re.finditer(r"tags: \[(.*?)\]", teaching_text):
+            tags = [t.strip() for t in m.group(1).split(",") if t.strip()]
+            for t in tags:
+                self.assertIn(t, self.vocab, f"Teaching tag '{t}' not in vocabulary")
+
     def test_tags_html_list_structure_and_alphabetical_order(self):
         """Verify tags.html uses ordered lists (<ol class="tag-list">) for items."""
         if (ROOT / "tags.html").exists():

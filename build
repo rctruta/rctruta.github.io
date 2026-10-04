@@ -3,9 +3,8 @@
 #
 #     ./build
 #
-# Order matters. The tag index reads the writing data, so writing runs first.
-# Search indexes the finished pages, so it runs last — run it earlier and the
-# index describes the previous version of the site.
+# Order matters. Page generators run before tag index and navigation,
+# and search indexes the finished pages, so it runs last.
 #
 # Safe to run at any time. Every step is idempotent.
 
@@ -13,26 +12,37 @@ set -e
 cd "$(dirname "$0")"
 export PATH="/opt/homebrew/bin:$PATH"
 
-echo "1/7  unit tests    <- tools/test_tools.py"
+echo "1/9  unit tests    <- tools/test_tools.py"
 python3 tools/test_tools.py
 
-echo "2/7  speaking      <- data/appearances.yaml"
+echo "2/9  work          <- data/work.yaml"
+python3 tools/build_work.py
+
+echo "3/9  teaching      <- data/teaching.yaml"
+python3 tools/build_teaching.py
+
+echo "4/9  speaking      <- data/appearances.yaml"
 node tools/build_speaking.mjs
 
-echo "3/7  writing       <- data/writing.yaml"
+echo "5/9  writing       <- data/writing.yaml"
 python3 tools/build_writing.py
 
-echo "4/7  tag index     <- data/TAGS.yaml + data/writing.yaml"
+echo "6/9  tag index     <- data/TAGS.yaml + data/writing.yaml + data/work.yaml + data/teaching.yaml"
 python3 tools/build_tags.py
 
-echo "5/7  navigation    <- the NAV list in tools/build_nav.py"
+echo "7/9  navigation    <- the NAV list in config.yaml / tools/build_nav.py"
 python3 tools/build_nav.py
 
-echo "6/7  malloy chart  <- numbers in tools/malloy_chart.py"
+echo "8/9  malloy chart  <- numbers in tools/malloy_chart.py"
 python3 tools/malloy_chart.py
 
-echo "7/7  search        <- the finished pages"
+echo "9/9  search        <- the finished pages"
 python3 tools/build_search.py
+
+if [ -f "tools/sync_template.py" ]; then
+    echo "10/10 template sync <- tools/sync_template.py"
+    python3 tools/sync_template.py
+fi
 
 echo
 echo "Done. Review with: git diff --stat"

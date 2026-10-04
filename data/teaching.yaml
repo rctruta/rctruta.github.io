@@ -1,0 +1,188 @@
+# Teaching data and page sections for teaching.html
+
+philosophy:
+  lede: |
+    1,400+ students across 21 course offerings — databases, database system technology, software engineering, programming on the web. Led the department's migration from IBM DB2 to PostgreSQL: platform evaluation, rewriting every course material, retraining instructors, carrying students through a change none of them chose. Introduced XQuery into the curriculum from my own M.Sc. research, with assignments on real public datasets. Nominated for the U of T Scarborough Teaching Award.
+  quote:
+    text: "I started 'teaching' at an early age, when I was tutoring my sister and other kids in the neighborhood. I discovered at that early age that it is more important to guide someone through all the steps involved in solving a problem, rather than just show the final result."
+    cite: "from my statement of teaching philosophy"
+  principles: |
+    Nine principles follow from that, each with its evidence attached. The four that shape how I run a course: **teach the basics and connect the topics**, because new material is a house and the rooms have to connect; **teach how to think, not what to answer** — “whenever possible, I choose not to give just a final answer, but rather guide the students in discovering the answer themselves”; **theory as support for practice**, since a career needs the foundation a few hands-on books cannot give; and **improve constantly**, because “it is not only the students who are meant to learn.”
+
+    In practice that meant mechanisms rather than intentions: three no-penalty grace days per course in place of a 20%-per-day late penalty; a silent period in the final 48 hours before a deadline; electronic submission, because hand-written work is unfair to whoever marks it; and reminders of the practices students most often forget, written into the assignment rather than left as their problem.
+
+    Teaching assistants were managed deliberately: large individual tasks to few TAs rather than small identical tasks spread across all of them, which keeps marking uniform and removes bottlenecks; a single tutorial room so the most experienced TA delivers each topic; and a site maintained for the TAs with the organization, guidelines and their tasks. A consistent core asked to come back year after year, which meant students got TAs who already knew the material.
+
+leading:
+  id: academic-leadership
+  title: "Academic leadership & TA management"
+  activity: teaching
+  tags: [Team leadership, Teaching, Migration, PostgreSQL]
+  description: |
+    Teaching at this scale is a management job that happens to involve a classroom. I ran teams of up to ten teaching assistants per course, with the allocation, training and marking uniformity that implies. I supervised individual students through project and design courses at two universities — ECE496, CSC494, and graduation projects — which is one-to-one management rather than instruction. And I led the department's migration from IBM DB2 to PostgreSQL: not only the platform evaluation and the rewriting of materials, but retraining the instructors who had to deliver them and carrying several hundred students through a change none of them asked for.
+
+product:
+  id: course-product-design
+  title: "A course is a product — course operations & engineering"
+  activity: teaching
+  tags: [Team leadership, Teaching, Data quality, Human agency]
+  intro: "I ran each course the way you run something people depend on. The students were its users, the term was its release cycle, and every term shipped changes nobody had asked me for."
+  highlights:
+    - "Surveyed students and kept the data, rather than relying on impressions"
+    - "Logged every bottleneck while assisting a course, then fixed them once I was the one teaching it"
+    - "Replaced a 20%-per-day late penalty with three no-penalty grace days, and watched what changed"
+    - "Instituted fill-in lecture handouts, written before each lecture, so the class worked the problem with me"
+    - "Taught database pages, relational algebra and indexing with oversized Lego blocks, borrowed from my daughter"
+    - "Moved the platform from IBM DB2 to PostgreSQL — evaluation, materials, instructor retraining, rollout"
+    - "Built internal tooling for the teaching assistants: a site with their organization, guidelines and tasks"
+    - "Restructured marking allocation to remove bottlenecks and keep standards uniform"
+    - "Moved submission to electronic, and commissioned a custom-published textbook to cut student cost"
+    - "Added office hours, discussion groups and a silent period before deadlines"
+  outro: "None of that was in the job. It came from watching where the thing I had built was failing the people using it, and then changing it."
+
+testimonials:
+  while_students:
+    note: "From student emails. Quoted with first names only, or anonymously."
+    items:
+      - quote: "You have really touched my life… I enjoyed your database class mostly because it was you that taught it, and I always tell people that you were my mentor and motivated me to go to GHC, from where everything started happening for me… you have had a big role in my life."
+        cite: "a student, CSCC43 — later a computer vision researcher"
+      - quote: "I have spent almost 40 minutes ONLY to understand your solution… Eventually, I understood it. I write to thank you for having shown us the beauty of Relational Algebra. The query is indeed very smart. I am totally impressed. Well, please show us more and more issues like this… (Not on the exam, though.)"
+        cite: "a student, sent at 4:17 in the morning"
+      - quote: "Ramona was teaching us about database pages. Instead of just drawing the example on the board she used large lego blocks, that she joked about stealing from her daughter, to not only explain the topic but also to make it more fun."
+        cite: "a student, CSC343"
+      - quote: "Wow, a personal message from an instructor? That's quite unusual."
+        cite: "a student, after I wrote to thank him for helping others on the course forum"
+      - quote: "I still remember how you told me not to give up and keep the door open by applying for graduate schools. Thank you Ramona! All these won't come true without your encouragement."
+        cite: "a student, on getting into graduate school"
+      - quote: "I don't think many younger students could ever understand how difficult it is to do the job the way you do, and with tact and grace."
+        cite: "a student who organised a teaching award nomination"
+      - quote: "She made herself readily available in extra office hours — a number of times at some late or early hours according to the students need — which other instructors simply would never do."
+        cite: "a student, CSC343"
+    postscript: "At the end of one course, a group of around ten students wrote to the department unprompted to nominate me for a teaching award. One of them asked my permission first, in case I would rather they didn't."
+
+  years_later:
+    note: "Written publicly, under their own names, by students who took my courses and then went on to build things."
+    items:
+      - quote: "I took my most important undergrad database course with Ramona almost two decades ago, grateful for her kindness and patience in her instructional style. She was one of the most caring undergraduate Prof at UofT."
+        cite: "Mohammad Sadoghi — Professor and Chancellor's Fellow, UC Davis"
+      - quote: "I've learned many concepts from Ramona on software engineering, design patterns, databases — many of which I use to this day in my career as a software engineer, and am forever grateful to her… remarkably knowledgeable, yet very humble and down to earth."
+        cite: "Meisam Aliroteh — Principal Software Development Engineer, Salesforce"
+      - quote: "I still remember all those lessons that Ramona taught me in my software engineering classes. I remember them because I use those lessons on daily basis. She greatly tuned me up in fundamentals of my field — OOP, OOAD, relational database design, design patterns, refactoring strategies and many more."
+        cite: "Yousif Atique — Principal Software Engineer, ICE"
+      - quote: "She is very knowledgeable about engineering and database technology and has a knack for explaining complex concepts in ways that are practical and comprehensible. Her teaching methods were influential in my own data modeling and data architecture career."
+        cite: "Agatha Colangelo — Manager, Data ITG Architect, Canada Post"
+      - quote: "Her storytelling ability allows her to decompose complex domain knowledge into simpler terms allowing others to digest it… Ramona demonstrates the trials and skills of an agile leader and a change catalyst with a data-driven mindset."
+        cite: "Toni Lee — former student, on problem solving and value delivery"
+      - quote: "Extremely supportive, and very knowledgeable in her field. She can be a great asset to any team, both as a leader and as a hands on person that would take a scientific approach to solving problems and moving things forward."
+        cite: "Shayan Hamidi — Founder and CEO; supervised project course, later a company of his own"
+
+materials:
+  - id: xquery-assignment
+    title: "CSC343 Introduction to Databases, Assignment 3"
+    activity: course material
+    url: "assets/csc343-clinical-trials-xquery.pdf"
+    meta: "PDF, 6 pages"
+    tags: [Data modeling, Teaching, XQuery]
+    description: |
+      Students were given 10,000 XML records of real clinical trials from [clinicaltrials.gov](https://clinicaltrials.gov/), with the collection's DTD. Before writing a query they had to read that DTD and explore the registry's own search interface — ten of the hundred points, awarded to anyone who submitted anything, because the point was to make them look at the data. Then seven XQuery queries against a 114MB collection, each in its own file, each output in its own, run through Saxon.
+
+      Structure rules and content rules stated up front, so an answer was checkable rather than arguable. The XQuery came from my own M.Sc. research on structural and semantic query optimization; the data came from a government registry that was live while they worked on it.
+
+  - id: nf-handout
+    title: "3NF decomposition, worked live"
+    activity: course material
+    url: "assets/csc343-3nf-decomposition.pdf"
+    meta: "PDF, 4 pages"
+    tags: [Data modeling, Teaching]
+    description: |
+      These handouts were something I introduced, and nobody asked me to. Each one is deliberately empty: a relation, its functional dependencies, then every step of the decomposition printed with its algorithm above it and the answer left blank — closures, candidate keys, minimal cover, redundant attributes on the left-hand side, redundant dependencies, the decomposition itself.
+
+      I brought them to class and we worked the problem together, me at the blackboard and the students filling in their own copies. That is the difference between watching a result appear and arriving at one. It also meant writing every handout myself, before every lecture that used one.
+
+courses:
+  instructor_of_record:
+    - institution: "University of Toronto"
+      dept: "Computer Science"
+      courses:
+        - "Introduction to Databases"
+        - "Database System Technology"
+        - "Programming on the Web"
+        - "Software Engineering I"
+        - "Design Project — student supervisor"
+        - "Project Course in Computer Science — student supervisor"
+    - institution: "“Iuliu Hațieganu” University of Medicine and Pharmacy, Romania"
+      dept: "Biostatistics and Computer Science"
+      courses:
+        - "Design and Implementation of Medical Information Systems"
+
+  teaching_assistant:
+    - institution: "University of Toronto"
+      dept: "Computer Science"
+      courses:
+        - "Introduction to Databases"
+        - "Software Design"
+        - "Programming on the Web"
+        - "Data Management Systems"
+        - "Principles of Programming Languages"
+        - "File Structures and Data Management"
+    - institution: "“Iuliu Hațieganu” University of Medicine and Pharmacy, Romania"
+      dept: ""
+      courses:
+        - "Introduction to Biomedical Informatics and Biostatistics"
+        - "Design and Implementation of Medical Information Systems"
+    - institution: "“Babeș-Bolyai” University, Romania"
+      dept: "Computer Science"
+      courses:
+        - "Introduction to Computer Science"
+        - "Office Automation"
+        - "Graduation Project — student supervisor"
+
+education:
+  degrees:
+    - degree: "M.Sc. Computer Science"
+      institution: "University of Toronto"
+      year: "2004"
+      thesis: "Structural and Semantic Query Optimization in XQuery"
+      advisor: "Alberto O. Mendelzon"
+    - degree: "M.Sc. Computer Science"
+      institution: "“Babeș-Bolyai” University, Romania"
+      year: "1997"
+      thesis: "Multimedia Synchronization"
+    - degree: "B.Sc. Mathematics & Computer Science"
+      institution: "“Babeș-Bolyai” University"
+      year: "1996"
+
+  certificates:
+    - "Business Analyst Certificate — University of Waterloo, 2012"
+    - "Teaching Certificate — “Babeș-Bolyai” University: psychology, pedagogy, methodology, practicum"
+    - "Neo4j Certified Professional"
+    - "Applied Data Science: Leveraging AI for Effective Decision Making — MIT Professional Education, 2023"
+    - "Large Language Models — Databricks / edX, 2023"
+    - "Delivering a Polished Classroom Presentation — Office of Teaching Advancement, University of Toronto"
+
+  honours:
+    - "Nominee, University of Toronto Scarborough Teaching Award"
+    - "Recipient, Grace Hopper Celebration of Women in Computing Scholarship"
+    - "Recipient, International Recruitment Award, University of Toronto"
+    - "Recipient, “Babeș-Bolyai” University Honours Scholarship, Romania"
+
+service:
+  reviewing:
+    - "Reviewer, *Journal of Information Systems Education* (2008–2011)"
+    - "Reviewer, Data Warehousing and Knowledge Discovery (DaWaK)"
+    - "Peer reviewer, Computer and Mathematical Sciences, U of T Scarborough"
+    - "Notes editing, *Elements of Finite Model Theory*, Leonid Libkin (Springer)"
+
+  outreach:
+    - "Group leader, Gr8 Designs for Gr8 Girls, University of Toronto"
+    - "Mentoring female students in computer science, throughout my teaching"
+    - "Recipient, Grace Hopper Celebration of Women in Computing Scholarship"
+    - "Invited lecture, Computing Insights, University of Toronto"
+    note: |
+      Encouraging women in computing was not an add-on. Female enrolment in Canadian computer science and engineering programs is small, and students told me directly that having a female instructor mattered, and that they had felt threatened by male peers. That is a thing a teacher can do something about from inside a classroom.
+
+  affiliations:
+    - "Canadian Association of University Teachers"
+    - "Computer Science Teachers Association"
+    - "Society for Teaching and Learning in Higher Education"
+    - "ACM Special Interest Group on Management of Data"

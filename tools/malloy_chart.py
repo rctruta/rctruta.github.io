@@ -63,5 +63,6 @@ out.append(f'<rect x="{L+88}" y="{ly-9}" width="11" height="11" fill="{SKILL}"/>
 out.append('</svg>')
 
 p = pathlib.Path("assets/malloy-skills-tokens.svg")
+p.parent.mkdir(parents=True, exist_ok=True)
 p.write_text("\n".join(out))
 print("wrote", p, f"({len(groups)} runs x 2 cells)")
