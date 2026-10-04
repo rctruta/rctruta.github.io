@@ -31,32 +31,66 @@ SPEC = ROOT / "data" / "TAGS.yaml"
 
 
 def parse_tags_yaml(text):
-    """Minimal reader for this file's shape — no third-party dependency."""
-    vocab, projects, section, facet = {}, {}, None, None
+    """Parse facets metadata, kinds metadata, vocabulary terms, and project mappings."""
+    facets_meta = {}
+    kinds_meta = {}
+    vocab = {}
+    projects = {}
+    section = None
+    current_item = None
+    facet_name = None
+
     for raw in text.splitlines():
         if not raw.strip() or raw.lstrip().startswith("#"):
             continue
         indent = len(raw) - len(raw.lstrip())
         line = raw.strip()
+
         if indent == 0 and line.endswith(":"):
             section = line[:-1]
+            current_item = None
             continue
-        if section == "vocabulary":
+
+        if section == "facets":
             if indent == 2 and line.endswith(":"):
-                facet = line[:-1]
+                current_item = line[:-1]
+                facets_meta[current_item] = {"label": current_item.title(), "note": "", "order": 99}
+            elif indent == 4 and current_item and ":" in line:
+                k, v = [x.strip() for x in line.split(":", 1)]
+                v = v.strip('"\'')
+                if k == "order":
+                    v = int(v)
+                facets_meta[current_item][k] = v
+
+        elif section == "kinds":
+            if indent == 2 and line.endswith(":"):
+                current_item = line[:-1]
+                kinds_meta[current_item] = {"category": current_item.title(), "order": 99}
+            elif indent == 4 and current_item and ":" in line:
+                k, v = [x.strip() for x in line.split(":", 1)]
+                v = v.strip('"\'')
+                if k == "order":
+                    v = int(v)
+                kinds_meta[current_item][k] = v
+
+        elif section == "vocabulary":
+            if indent == 2 and line.endswith(":"):
+                facet_name = line[:-1]
                 continue
-            if indent == 4:
+            if indent == 4 and facet_name and ":" in line:
                 term = line.split(":", 1)[0].strip()
-                vocab[term] = facet
-        elif section == "projects" and indent == 2:
+                vocab[term] = facet_name
+
+        elif section == "projects" and indent == 2 and ":" in line:
             pid, rest = line.split(":", 1)
             projects[pid.strip()] = [
                 t.strip() for t in rest.strip().strip("[]").split(",") if t.strip()
             ]
-    return vocab, projects
+
+    return facets_meta, kinds_meta, vocab, projects
 
 
-vocab, projects = parse_tags_yaml(SPEC.read_text())
+facets_meta, kinds_meta, vocab, projects = parse_tags_yaml(SPEC.read_text())
 
 unknown = {t: p for p, ts in projects.items() for t in ts if t not in vocab}
 if unknown:
@@ -158,21 +192,22 @@ for tag, facet in vocab.items():
         facets[facet].append(tag)
 
 
-CATEGORY_MAP = {
-    "project": "Projects",
-    "article": "Writing",
-    "talk": "Speaking",
-    "podcast": "Speaking",
-    "teaching": "Teaching",
-    "course material": "Teaching",
-}
-CATEGORY_ORDER = ["Projects", "Writing", "Speaking", "Teaching"]
+# Build category order dynamically from kinds_meta
+category_order_map = {}
+for k, meta in kinds_meta.items():
+    cat = meta.get("category", k.title())
+    order = meta.get("order", 99)
+    if cat not in category_order_map or order < category_order_map[cat]:
+        category_order_map[cat] = order
+
+CATEGORY_ORDER = sorted(category_order_map.keys(), key=lambda c: category_order_map[c])
 
 
 def entries(items):
     groups = defaultdict(list)
     for pg, pid, title, kind in items:
-        cat = CATEGORY_MAP.get(kind, "Other")
+        cat_meta = kinds_meta.get(kind, {})
+        cat = cat_meta.get("category", kind.title())
         groups[cat].append((pg, pid, title, kind))
 
     out = []
@@ -186,7 +221,7 @@ def entries(items):
             out.append(
                 f'  <div class="tag-subgroup">\n'
                 f'    <div class="tag-subheading">{cat}</div>\n'
-                f'    <ul class="clean">\n{item_html}\n    </ul>\n'
+                f'    <ol class="tag-list">\n{item_html}\n    </ol>\n'
                 f'  </div>'
             )
     return "\n".join(out)
@@ -194,24 +229,19 @@ def entries(items):
 
 total = sum(len(v) for v in index.values())
 
-FACET_NOTE = {
-    "discipline": "What the work is about.",
-    "domain": "What the work is about.",
-    "practice": "How I work &mdash; with students, with teams, with a reader.",
-    "method": "How a claim was established, rather than what it was about.",
-    "technology": "What it was built with.",
-}
-ORDER = ["domain", "discipline", "practice", "method", "technology"]
-present = [f for f in ORDER if f in facets] + [f for f in facets if f not in ORDER]
+# Order facets dynamically from facets_meta
+facet_order_list = sorted(facets_meta.keys(), key=lambda f: facets_meta[f].get("order", 99))
+present = [f for f in facet_order_list if f in facets] + [f for f in facets if f not in facet_order_list]
 
 
-def by_weight(tag):
-    return (-len(index[tag]), tag.lower())
+def alphabetical_sort(tag):
+    """Alphabetical sorting A-Z for index scanning."""
+    return tag.lower()
 
 
 def facet_html(facet):
     out = []
-    for tag in sorted(facets[facet], key=by_weight):
+    for tag in sorted(facets[facet], key=alphabetical_sort):
         items = index[tag]
         out.append(
             f'  <h3 id="{slug(tag)}">{html.escape(tag)}'
@@ -226,15 +256,15 @@ def chiprow(facet):
     chips = "".join(
         f'<a class="chip" href="#{slug(tag)}">{html.escape(tag)}'
         f'<b>{len(index[tag])}</b></a>'
-        for tag in sorted(facets[facet], key=by_weight)
+        for tag in sorted(facets[facet], key=alphabetical_sort)
     )
     return f'  <div class="chiprow" id="terms-{facet}">{chips}</div>'
 
 
 sections = "\n".join(
     f"""<section><div class="wrap">
-  <h2 id="{f}">{f.title()}</h2>
-  <p class="lede">{FACET_NOTE.get(f, "")} {len(facets[f])} terms.</p>
+  <h2 id="{f}">{facets_meta.get(f, {}).get('label', f.title())}</h2>
+  <p class="lede">{facets_meta.get(f, {}).get('note', '')} {len(facets[f])} terms.</p>
 
 {chiprow(f)}
 
@@ -244,7 +274,8 @@ sections = "\n".join(
 </div></section>"""
     for f in present
 )
-subnav = "\n".join(f'  <a href="#{f}">{f.title()}</a>' for f in present)
+subnav = "\n".join(f'  <a href="#{f}">{facets_meta.get(f, {}).get("label", f.title())}</a>' for f in present)
+
 
 doc = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">

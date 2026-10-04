@@ -1,17 +1,41 @@
 # Controlled vocabulary for the tags on this site, and the tags each project carries.
-#
-# THE RULE: a tag must name something at least two pieces of work genuinely share,
-# or something a reader would filter on. Everything else is implementation detail
-# and belongs in the prose, where it already is.
-#
-# Decided 2026-09-29, collapsing 54 uncontrolled tags down to this list. Before
-# that, 47 of 54 tags appeared exactly once, so clicking one would have shown you
-# the page you were already on.
-#
-# tools/build_tags.py rewrites every tag row from this file and fails on any tag
-# not in `vocabulary`. Add the term here first, or the build stops.
+
+facets:
+  discipline:
+    label: "Discipline"
+    note: "What the work is about."
+    order: 1
+  method:
+    label: "Method"
+    note: "How a claim was established, rather than what it was about."
+    order: 2
+  technology:
+    label: "Technology"
+    note: "What it was built with."
+    order: 3
+
+kinds:
+  project:
+    category: "Projects"
+    order: 1
+  article:
+    category: "Writing"
+    order: 2
+  talk:
+    category: "Speaking"
+    order: 3
+  podcast:
+    category: "Speaking"
+    order: 3
+  teaching:
+    category: "Teaching"
+    order: 4
+  course material:
+    category: "Teaching"
+    order: 4
 
 vocabulary:
+
   discipline:
     Data modeling: Representing a domain faithfully, so the structure survives contact with the data.
     Entity resolution: Deciding whether two records describe the same thing, when nothing says so.

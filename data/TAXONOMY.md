@@ -16,12 +16,40 @@ If a prefix in a title tells you something a field already records, delete the
 prefix. This is the failure that makes a list of appearances look like three
 different lists.
 
-## kind
+## Content Kinds & Categories
+
+Every item across the site belongs to an explicit content `kind`, mapped to a top-level category on the Index page:
+
+| kind | Category | Description |
+| --- | --- | --- |
+| `project` | `Projects` | Software repositories, pipeline architectures, or datasets |
+| `article` | `Writing` | Published essays, research notes, or Substack posts |
+| `talk` | `Speaking` | Conference presentations, keynotes, or workshops |
+| `podcast` | `Speaking` | Podcast guest or host appearances |
+| `teaching` | `Teaching` | Course offerings or curriculum design |
+| `course material` | `Teaching` | Handouts, assignments, or worked code examples |
+
+## Index Facets & Lexicographical Ordering
+
+All tags in `data/TAGS.yaml` belong to controlled facets, declared in `facets:` and `kinds:`:
+
+1. **`discipline`**: What the work is about.
+2. **`method`**: How a claim was established, rather than what it was about.
+3. **`technology`**: What it was built with.
+
+### Alphabetical Indexing Rule
+Within each facet, tag terms are listed **alphabetically (A–Z)** so evaluators and readers can scan for terms predictably.
+
+### Numbered Citation Lists (`<ol>`)
+Items under each category in the index are rendered inside an ordered list (`<ol class="tag-list">`). This provides an explicit, numbered reference citation count (`1.`, `2.`, `3.`) for every category under a tag.
+
+## kind (Appearances)
 
 | value     | means                                        |
 | --------- | -------------------------------------------- |
 | `talk`    | she presented at an event                    |
 | `podcast` | an episode of a show, hers or someone else's |
+
 
 ## talk fields
 
