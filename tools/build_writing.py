@@ -1,146 +1,83 @@
 """Generate writing.html from data/writing.yaml.
 
     python3 tools/build_writing.py
-
-Newest first. The title is the link; platform and date sit beside it; the
-summary is the one line from the file; tags link into the index.
-
-Refuses to run on an unfilled [YOURS] placeholder, so a half-finished entry
-cannot reach the site.
 """
 import html
 import pathlib
-import re
-import sys
-from config_loader import load_config
+from model import load_taxonomy, load_articles
+from page import render_tag_chips, render_page_shell, AUTHOR, SUBSTACK_URL, SUBSTACK_RSS
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-CONFIG = load_config()
-SPEC = ROOT / "data" / "writing.yaml"
-
-AUTHOR = CONFIG["site"]["author"].get("name", "Author")
-SITE_TITLE = CONFIG["site"].get("title", AUTHOR)
-SITE_URL = CONFIG["site"].get("url", "")
-SITE_IMAGE = CONFIG["site"].get("image", f"{SITE_URL}/assets/photo.jpg")
-SUBSTACK_URL = CONFIG["site"]["author"].get("substack", "https://substack.com")
-SUBSTACK_RSS = CONFIG["site"]["author"].get("substack_rss", f"{SUBSTACK_URL}/feed")
-LICENSE_LABEL = CONFIG["site"].get("copyright_license", "CC BY-NC-SA 4.0")
-LICENSE_URL = CONFIG["site"].get("copyright_license_url", "https://creativecommons.org/licenses/by-nc-sa/4.0/")
-
-text = SPEC.read_text()
-if "[YOURS]" in text:
-    bad = re.findall(r"^  (\w+): \[YOURS\]", text, re.M)
-    sys.exit(f"writing.yaml still has {len(bad)} unfilled field(s): {', '.join(sorted(set(bad)))}")
 
 MONTHS = ["January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December"]
 
 
-def parse(block):
-    e = {}
-    for key in ("id", "title", "url", "platform", "date", "argues"):
-        m = re.search(rf"^\s*(?:-\s*)?{key}: (.+?)\s*(?:#.*)?$", block, re.M)
-        if m:
-            e[key] = m.group(1).strip().strip('"')
-    m = re.search(r"^  tags: \[(.*)\]\s*$", block, re.M)
-    e["tags"] = [t.strip() for t in m.group(1).split(",")] if m else []
-    return e
-
-
-entries = [parse(b) for b in re.split(r"\n(?=- id:)", text) if b.lstrip().startswith("- id:")]
-entries.sort(key=lambda e: e["date"], reverse=True)
-
-vocab = set(re.findall(r"^    ([A-Z][^:]*):", (ROOT / "data" / "TAGS.yaml").read_text(), re.M))
-unknown = {t for e in entries for t in e["tags"] if t not in vocab}
-if unknown:
-    sys.exit("tags not in data/TAGS.yaml: " + ", ".join(sorted(unknown)))
-
-
-def slug(tag):
-    return re.sub(r"[^a-z0-9]+", "-", tag.lower()).strip("-")
-
-
-def when(d):
+def when(d: str) -> str:
     y, m, _ = d.split("-")
     return f"{MONTHS[int(m) - 1]} {y}"
 
 
-def item(e):
-    tags = "".join(
-        f'<a class="tag" href="tags.html#{slug(t)}">{html.escape(t)}</a>' for t in e["tags"]
+vocab = load_taxonomy()
+articles = load_articles(vocab)
+
+
+def render_article_card(a) -> str:
+    tags_html = render_tag_chips(a.tags)
+    return (
+        f'  <div class="proj" id="{a.id}">\n'
+        f'    <h3><a href="{a.url}" target="_blank" rel="noopener">{html.escape(a.title)}</a>\n'
+        f'    <span class="meta">{html.escape(a.platform)} &middot; {when(a.date)}</span></h3>\n'
+        f'    <p>{html.escape(a.argues)}</p>\n'
+        f'    {tags_html}\n'
+        f'  </div>'
     )
-    return f"""  <div class="proj" id="{e['id']}">
-    <h3><a href="{e['url']}" target="_blank" rel="noopener">{html.escape(e['title'])}</a>
-    <span class="meta">{html.escape(e['platform'])} &middot; {when(e['date'])}</span></h3>
-    <p>{html.escape(e['argues'])}</p>
-    <div class="tags">{tags}</div>
-  </div>"""
 
 
-years = sorted({e["date"][:4] for e in entries}, reverse=True)
-body = []
+years = sorted({a.date[:4] for a in articles}, reverse=True)
+body_parts = [
+    f'  <p class="lede">{len(articles)} pieces. Each one makes a claim I would defend, and links to the work behind it where there is work behind it.</p>'
+]
+
 for y in years:
-    body.append(f'  <h2 id="y{y}">{y}</h2>')
-    body += [item(e) for e in entries if e["date"].startswith(y)]
-    body.append('  <p class="totop"><a href="#top">&uarr; Top</a></p>')
+    body_parts.append(f'  <h2 id="y{y}">{y}</h2>')
+    body_parts.extend(render_article_card(a) for a in articles if a.date.startswith(y))
+    body_parts.append('  <p class="totop"><a href="#top">&uarr; Top</a></p>')
 
-nav = "\n".join(f'  <a href="#y{y}">{y}</a>' for y in years)
+body_parts.append(
+    f'  <div class="contact-card" style="margin-top: 36px;">\n'
+    f'    <div>\n'
+    f'      <h3>Subscribe to my Substack</h3>\n'
+    f'      <p style="margin-top: 6px;">Read full essays and research notes on database performance, benchmarking, and AI evaluation on Substack.</p>\n'
+    f'    </div>\n'
+    f'    <div>\n'
+    f'      <a class="btn solid" href="{html.escape(SUBSTACK_URL)}" target="_blank" rel="noopener">Subscribe on Substack &rarr;</a>\n'
+    f'    </div>\n'
+    f'  </div>'
+)
 
-doc = f"""<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{html.escape(AUTHOR)} &mdash; Writing</title>
-<meta name="description" content="Essays on data modeling, AI evaluation, security and the people using these systems.">
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
-<meta property="og:site_name" content="{html.escape(SITE_TITLE)}">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Writing &mdash; {html.escape(AUTHOR)}">
-<meta property="og:description" content="Essays on data modeling, AI evaluation, security and the people using these systems. Each piece published with its repository.">
-<meta property="og:image" content="{html.escape(SITE_IMAGE)}">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Writing &mdash; {html.escape(AUTHOR)}">
-<meta name="twitter:description" content="Essays on data modeling, AI evaluation, security and the people using these systems. Each piece published with its repository.">
-<meta name="twitter:image" content="{html.escape(SITE_IMAGE)}">
-<link rel="alternate" type="application/rss+xml" title="{html.escape(AUTHOR)} &mdash; Substack Feed" href="{html.escape(SUBSTACK_RSS)}">
-<link rel="stylesheet" href="style.css"></head><body>
-<!-- Generated by tools/build_writing.py from data/writing.yaml. Do not edit by hand. -->
-<nav class="topnav"><div class="wrap">
-  <a class="brand" href="index.html">{html.escape(AUTHOR)}</a>
-  <span class="navlinks">
-    <a href="work.html">Work</a>
-    <a href="teaching.html">Teaching</a>
-    <a href="speaking.html">Speaking</a>
-    <a href="writing.html" class="here">Writing</a>
-    <a href="contact.html">Contact</a>
-  </span>
-</div></nav>
-<nav class="subnav" id="top"><div class="wrap">
-{nav}
-</div></nav>
+subnav_html = "\n".join(f'  <a href="#y{y}">{y}</a>' for y in years)
+body_html = (
+    f'<section><div class="wrap">\n'
+    f'{chr(10).join(body_parts)}\n'
+    f'</div></section>'
+)
 
-<section><div class="wrap">
-  <p class="lede">{len(entries)} pieces. Each one makes a claim I would defend, and links to
-  the work behind it where there is work behind it.</p>
+extra_head = f'\n<link rel="alternate" type="application/rss+xml" title="{html.escape(AUTHOR)} &mdash; Substack Feed" href="{html.escape(SUBSTACK_RSS)}">'
 
-{chr(10).join(body)}
+title = f"{AUTHOR} — Writing"
+description = "Essays on data modeling, AI evaluation, security and the people using these systems. Each piece published with its repository."
 
-  <div class="contact-card" style="margin-top: 36px;">
-    <div>
-      <h3>Subscribe to my Substack</h3>
-      <p style="margin-top: 6px;">Read full essays and research notes on database performance, benchmarking, and AI evaluation on Substack.</p>
-    </div>
-    <div>
-      <a class="btn solid" href="{html.escape(SUBSTACK_URL)}" target="_blank" rel="noopener">Subscribe on Substack &rarr;</a>
-    </div>
-  </div>
-</div></section>
+doc = render_page_shell(
+    title=title,
+    description=description,
+    here_page="writing",
+    subnav_html=subnav_html,
+    body_html=body_html,
+    generator_name="build_writing.py",
+    source_yaml="writing.yaml",
+    extra_head=extra_head
+)
 
-<footer><div class="wrap"><span>&copy; 2025&ndash;2026 {html.escape(AUTHOR)} &middot; <a href="{html.escape(LICENSE_URL)}" rel="license">{html.escape(LICENSE_LABEL)}</a> &middot; <a href="contact.html">Contact</a></span></div></footer>
-</body></html>
-"""
-
-(ROOT / "writing.html").write_text(doc)
-print(f"writing.html: {len(entries)} pieces, {years[-1]}-{years[0]}")
+(ROOT / "writing.html").write_text(doc, encoding="utf-8")
+print(f"writing.html: {len(articles)} pieces, {years[-1]}-{years[0]}")

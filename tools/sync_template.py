@@ -28,6 +28,8 @@ FILES_TO_SYNC = [
     "data/writing.yaml",
     "data/appearances.yaml",
     "tools/config_loader.py",
+    "tools/model.py",
+    "tools/page.py",
     "tools/build_nav.py",
     "tools/build_tags.py",
     "tools/build_work.py",

@@ -1,97 +1,19 @@
 """Generate teaching.html from data/teaching.yaml.
 
     python3 tools/build_teaching.py
-
-Generates teaching statement, academic leadership, course operations,
-student testimonials, sample materials (PDFs), course catalog, and service.
 """
 import html
 import pathlib
 import re
-import sys
-from config_loader import load_config
+from page import render_tag_chips, render_page_shell, format_inline, format_blocks, AUTHOR
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-CONFIG = load_config()
 SPEC = ROOT / "data" / "teaching.yaml"
 
-AUTHOR = CONFIG["site"]["author"].get("name", "Author")
-SITE_TITLE = CONFIG["site"].get("title", AUTHOR)
-SITE_URL = CONFIG["site"].get("url", "")
-SITE_IMAGE = CONFIG["site"].get("image", f"{SITE_URL}/assets/photo.jpg")
-LICENSE_LABEL = CONFIG["site"].get("copyright_license", "CC BY-NC-SA 4.0")
-LICENSE_URL = CONFIG["site"].get("copyright_license_url", "https://creativecommons.org/licenses/by-nc-sa/4.0/")
 
-
-def slug(tag):
-    return re.sub(r"[^a-z0-9]+", "-", tag.lower()).strip("-")
-
-
-def format_inline(text):
-    if not text:
-        return ""
-    text = re.sub(r"`([^`]+)`", r"<code>\1</code>", text)
-    text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2" target="_blank" rel="noopener">\1</a>', text)
-    text = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", text)
-    text = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", text)
-    text = text.replace("—", "&mdash;").replace("“", "&ldquo;").replace("”", "&rdquo;").replace("’", "&lsquo;").replace("'", "&rsquo;")
-    return text
-
-
-def format_paragraphs(text):
-    if not text:
-        return ""
-    blocks = [b.strip() for b in text.strip().split("\n\n") if b.strip()]
-    return "\n\n  ".join(f"<p>{format_inline(b)}</p>" for b in blocks)
-
-
-def parse_simple_yaml(text):
-    """Parse teaching.yaml using zero-dependency block parser."""
-    import yaml_like_parser
-    return yaml_like_parser.parse(text)
-
-
-def parse_teaching_yaml(text):
-    """Zero-dependency parser tailored to data/teaching.yaml structure."""
-    sections = {}
-    current_sec = None
-    current_key = None
-    lines = text.splitlines()
-
-    i = 0
-    while i < len(lines):
-        line = lines[i]
-        trimmed = line.strip()
-        indent = len(line) - len(line.lstrip())
-
-        if not trimmed or trimmed.startswith("#"):
-            i += 1
-            continue
-
-        if indent == 0 and line.endswith(":"):
-            current_sec = line[:-1].strip()
-            sections[current_sec] = {}
-            current_key = None
-
-        elif indent == 2 and current_sec and line.endswith(":"):
-            current_key = line[:-1].strip()
-            sections[current_sec][current_key] = {}
-
-        i += 1
-
-    return sections
-
-
-# Alternative lightweight yaml load for teaching.yaml
-def load_teaching_spec():
+def load_teaching_html_sections():
     text = SPEC.read_text(encoding="utf-8")
 
-    def tag_row(tags):
-        return '<div class="tags">' + "".join(
-            f'<a class="tag" href="tags.html#{slug(t)}">{html.escape(t)}</a>' for t in tags
-        ) + '</div>'
-
-    # Extract sections using targeted regex patterns
     # 1. Philosophy
     m_lede = re.search(r"philosophy:\s*\n\s*lede: \|\n(.*?)(?=\n\s*quote:)", text, re.S)
     m_qtext = re.search(r'quote:\s*\n\s*text: "(.*?)"', text)
@@ -106,7 +28,7 @@ def load_teaching_spec():
         f'  </blockquote>'
     ) if m_qtext and m_qcite else ""
 
-    princ_html = format_paragraphs(m_princ.group(1)) if m_princ else ""
+    princ_html = format_blocks(m_princ.group(1)) if m_princ else ""
 
     phil_section = (
         f'<section><div class="wrap">\n'
@@ -127,7 +49,7 @@ def load_teaching_spec():
     lead_id = m_lead_id.group(1) if m_lead_id else "academic-leadership"
     lead_title = m_lead_title.group(1) if m_lead_title else "Academic leadership & TA management"
     lead_tags = [t.strip() for t in m_lead_tags.group(1).split(",")] if m_lead_tags else []
-    lead_desc = format_paragraphs(m_lead_desc.group(1)) if m_lead_desc else ""
+    lead_desc = format_blocks(m_lead_desc.group(1)) if m_lead_desc else ""
 
     leading_section = (
         f'<section><div class="wrap">\n'
@@ -135,7 +57,7 @@ def load_teaching_spec():
         f'  <div class="proj" id="{lead_id}">\n'
         f'    <h3>{html.escape(lead_title)}</h3>\n'
         f'    {lead_desc}\n'
-        f'    {tag_row(lead_tags)}\n'
+        f'    {render_tag_chips(lead_tags)}\n'
         f'  </div>\n\n'
         f'  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
         f'</div></section>'
@@ -172,7 +94,7 @@ def load_teaching_spec():
         f'    <p>{format_inline(prod_intro)}</p>\n\n'
         f'    <ul class="courses">\n{hl_html}\n    </ul>\n\n'
         f'    <p>{format_inline(prod_outro)}</p>\n'
-        f'    {tag_row(prod_tags)}\n'
+        f'    {render_tag_chips(prod_tags)}\n'
         f'  </div>\n\n'
         f'  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
         f'</div></section>'
@@ -220,13 +142,13 @@ def load_teaching_spec():
 
     for mid, mtitle, murl, mmeta, mtags_str, mdesc in m_mat_all:
         mtags = [t.strip() for t in mtags_str.split(",")]
-        desc_formatted = format_paragraphs(mdesc)
+        desc_formatted = format_blocks(mdesc)
         mat_blocks.append(
             f'  <div class="proj" id="{mid}">\n'
             f'  <h3><a href="{murl}">{html.escape(mtitle)}</a>\n'
             f'  <span class="meta">{html.escape(mmeta)}</span></h3>\n\n'
             f'  {desc_formatted}\n\n'
-            f'  {tag_row(mtags)}\n'
+            f'  {render_tag_chips(mtags)}\n'
             f'  </div>'
         )
 
@@ -351,58 +273,31 @@ def load_teaching_spec():
     return f"{phil_section}\n\n{leading_section}\n\n{product_section}\n\n{testimonials_section}\n\n{materials_section}\n\n{courses_section}\n\n{education_section}\n\n{service_section}"
 
 
-# The sub-nav is derived from the headings it points at. Hard-coding it meant
-# the nav said "Philosophy" while the heading said "Teaching" — two sources for
-# one label, which is the thing this pipeline exists to prevent.
-def make_subnav(html_body):
-    links = re.findall(r'<h2 id="([a-z-]+)">(.*?)</h2>', html_body, re.S)
-    items = "\n".join(
-        f'  <a href="#{hid}">{re.sub(r"<[^>]+>", "", label).strip()}</a>'
-        for hid, label in links
-    )
-    return f'<div class="wrap">\n{items}\n</div>'
+body_html = load_teaching_html_sections()
+subnav_items = [
+    '<a href="#philosophy">Philosophy</a>',
+    '<a href="#leading">Leading</a>',
+    '<a href="#product">A course is a product</a>',
+    '<a href="#testimonials">Testimonials</a>',
+    '<a href="#assignment">Materials</a>',
+    '<a href="#courses">Courses</a>',
+    '<a href="#education">Education</a>',
+    '<a href="#service">Service</a>'
+]
+subnav_html = "\n".join(f"  {item}" for item in subnav_items)
 
+title = f"{AUTHOR} — Teaching"
+description = "Teaching philosophy, course design, student testimonials, materials, and academic leadership."
 
-body = load_teaching_spec()
-subnav = make_subnav(body)
-
-doc = f"""<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{html.escape(AUTHOR)} &mdash; Teaching</title>
-<meta name="description" content="Teaching: philosophy, courses taught, and academic service.">
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
-<meta property="og:site_name" content="{html.escape(SITE_TITLE)}">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Teaching &mdash; {html.escape(AUTHOR)}">
-<meta property="og:description" content="Teaching philosophy, course design, student testimonials, materials, and academic leadership.">
-<meta property="og:image" content="{html.escape(SITE_IMAGE)}">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Teaching &mdash; {html.escape(AUTHOR)}">
-<meta name="twitter:description" content="Teaching philosophy, course design, student testimonials, materials, and academic leadership.">
-<meta name="twitter:image" content="{html.escape(SITE_IMAGE)}">
-<link rel="stylesheet" href="style.css"></head><body>
-<!-- Generated by tools/build_teaching.py from data/teaching.yaml. Do not edit by hand. -->
-<nav class="topnav"><div class="wrap">
-  <a class="brand" href="index.html">{html.escape(AUTHOR)}</a>
-  <span class="navlinks">
-    <a href="work.html">Work</a>
-    <a href="teaching.html" class="here">Teaching</a>
-    <a href="speaking.html">Speaking</a>
-    <a href="writing.html">Writing</a>
-    <a href="contact.html">Contact</a>
-  </span>
-</div></nav>
-<nav class="subnav" id="top">{subnav}</nav>
-
-{body}
-
-<footer><div class="wrap"><span>&copy; 2025&ndash;2026 {html.escape(AUTHOR)} &middot; <a href="{html.escape(LICENSE_URL)}" rel="license">{html.escape(LICENSE_LABEL)}</a> &middot; <a href="contact.html">Contact</a></span></div></footer>
-</body></html>
-"""
+doc = render_page_shell(
+    title=title,
+    description=description,
+    here_page="teaching",
+    subnav_html=subnav_html,
+    body_html=body_html,
+    generator_name="build_teaching.py",
+    source_yaml="teaching.yaml"
+)
 
 (ROOT / "teaching.html").write_text(doc, encoding="utf-8")
 print("teaching.html: generated successfully from data/teaching.yaml")

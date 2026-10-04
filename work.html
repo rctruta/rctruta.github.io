@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ramona C. Truta &mdash; Work</title>
-<meta name="description" content="Independent researcher measuring how database and AI agent systems behave.">
+<title>Ramona C. Truta — Work</title>
+<meta name="description" content="Database benchmarking, AI security, agent evaluation, system integrity, and retrieval accuracy. Every claim with the experiment attached.">
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
 <meta property="og:site_name" content="Ramona C. Truta">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Work &mdash; Ramona C. Truta">
+<meta property="og:title" content="Ramona C. Truta — Work">
 <meta property="og:description" content="Database benchmarking, AI security, agent evaluation, system integrity, and retrieval accuracy. Every claim with the experiment attached.">
 <meta property="og:image" content="https://ramonactruta.com/assets/photo.jpg">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Work &mdash; Ramona C. Truta">
+<meta name="twitter:title" content="Ramona C. Truta — Work">
 <meta name="twitter:description" content="Database benchmarking, AI security, agent evaluation, system integrity, and retrieval accuracy. Every claim with the experiment attached.">
 <meta name="twitter:image" content="https://ramonactruta.com/assets/photo.jpg">
 <link rel="stylesheet" href="style.css"></head><body>
@@ -41,31 +41,29 @@
 </div></nav>
 
 <section><div class="wrap">
-  <h2 id="data-engineering">Data Modeling &amp; Data Engineering</h2>
+  <h2 id="data-engineering">Data modeling</h2>
   <p class="sub small cat-note">Data modeling is the throughline. Source systems into structures analysts and models can use — migration, entity resolution, record linkage, annotation quality control, and the SQL behaviour underneath it.</p>
   <div class="proj" id="guelph-migration">
     <h3>Legacy-to-PostgreSQL migration and record linkage — University of Guelph, 2011–2015</h3>
-
-    <p>Sole architect of the migration of a historical research database to PostgreSQL: the data model cut storage by 73%. The result was a production system with researchers as its direct clients — requirements gathering, stakeholder translation, and ongoing support were part of the job, not adjacent to it.</p>
+    <p>Sole architect of the migration of a historical research database to PostgreSQL: the data model cut storage by 73%. The result was a production system with researchers as its direct clients &mdash; requirements gathering, stakeholder translation, and ongoing support were part of the job, not adjacent to it.</p>
 
 <p>On top of it, probabilistic record linkage connecting WWI military service records to census data: 97% linkage across 450,000 records at 89% precision. Blocking and scoring were only half the problem; the harder half was validation, so I automated family re-creation to check links against household structure, which raised verification speed fourfold.</p>
 
 <p>Two properties of that work carry into anything with dirty source data: the ground truth is never handed to you, and a linkage rate means nothing without the precision beside it.</p>
 
-<p>The coding work was not a solo exercise. I led a team of twenty research assistants doing the manual verification, and built the monitoring that made their work checkable at the level of a single record — one line, in one file, among a great many. The scarce resource was their attention, so the system's job was to spend it only where a disagreement actually existed.</p>
+<p>The coding work was not a solo exercise. I led a team of twenty research assistants doing the manual verification, and built the monitoring that made their work checkable at the level of a single record &mdash; one line, in one file, among a great many. The scarce resource was their attention, so the system&rsquo;s job was to spend it only where a disagreement actually existed.</p>
 
     <div class="tags"><a class="tag" href="tags.html#data-modeling">Data modeling</a><a class="tag" href="tags.html#entity-resolution">Entity resolution</a><a class="tag" href="tags.html#data-quality">Data quality</a><a class="tag" href="tags.html#migration">Migration</a><a class="tag" href="tags.html#postgresql">PostgreSQL</a><a class="tag" href="tags.html#team-leadership">Team leadership</a></div>
   </div>
   <div class="proj" id="name-coding">
     <h3>Automating a hand-built name dictionary — first-name standardization across seven censuses</h3>
-
     <p>Historians had been coding first names by hand: each name assigned a three- to five-letter code standing for an equivalence class of spellings. It did not scale, and every new census arrived with a fresh tail of names nobody had seen. I automated it, starting from their 1871 dictionary as the seed.</p>
 
-<p>The equivalence relation was phonetic and orthographic together — double metaphone for blocking, then minimum Levenshtein distance within the block. A second variant added substring substitution, which is what made French spellings tractable. Two phases: generate candidate codes over a sample of 70,000 strings, then apply the replacement rules to whatever was left. Strings that survived both were reported as unassigned rather than forced.</p>
+<p>The equivalence relation was phonetic and orthographic together &mdash; double metaphone for blocking, then minimum Levenshtein distance within the block. A second variant added substring substitution, which is what made French spellings tractable. Two phases: generate candidate codes over a sample of 70,000 strings, then apply the replacement rules to whatever was left. Strings that survived both were reported as unassigned rather than forced.</p>
 
-<p>The finding that shaped the design: <strong>the expert dictionary contradicted itself.</strong> Two strings sharing a code were not always equivalent under any formal definition, and strings with different codes sometimes were. So instead of emitting one answer, the system emitted several candidates and let the experts choose — and some strings the experts themselves coded more than one way. When the ground truth disagrees with itself, widening the output is more honest than picking a winner.</p>
+<p>The finding that shaped the design: <strong>the expert dictionary contradicted itself.</strong> Two strings sharing a code were not always equivalent under any formal definition, and strings with different codes sometimes were. So instead of emitting one answer, the system emitted several candidates and let the experts choose &mdash; and some strings the experts themselves coded more than one way. When the ground truth disagrees with itself, widening the output is more honest than picking a winner.</p>
 
-<p>Every candidate carried an expert verdict, good or bad, which made the system measurable. The question I asked of it was whether the nearest candidate was also the right one, because that determines whether the expensive far candidates can be dropped: 96.5%, 92.0%, 89.3%, 88.6% across batches, down to 75.7% on the hardest. I checked the other direction too — whether <em>wrong</em> codes also sit at minimum distance — since a metric that scores well but cannot discriminate is worth nothing.</p>
+<p>Every candidate carried an expert verdict, good or bad, which made the system measurable. The question I asked of it was whether the nearest candidate was also the right one, because that determines whether the expensive far candidates can be dropped: 96.5%, 92.0%, 89.3%, 88.6% across batches, down to 75.7% on the hardest. I checked the other direction too &mdash; whether <em>wrong</em> codes also sit at minimum distance &mdash; since a metric that scores well but cannot discriminate is worth nothing.</p>
 
 <p>The coded names carried forward across the 1852, 1871, 1880, 1881, 1891, 1901 and 1911 censuses, with a full ingest pipeline per census: process, detect inconsistencies, apply coding, prepare for the model downstream.</p>
 
@@ -73,17 +71,15 @@
   </div>
   <div class="proj" id="age-modeling">
     <h3>Fitting the agreement function for record linkage — age difference across censuses</h3>
+    <p>Two records ten years apart rarely agree on age. To link them you need a function turning that disagreement into evidence: <code>ageDiff</code> mapping an age difference onto a weight between one and zero. I fitted five candidates &mdash; normalized by constant factors, by frequency percentage, and by a fast-increasing function &mdash; and chose between them on standard deviation against observed frequencies, across five independent datasets and 11,813 records.</p>
 
-    <p>Two records ten years apart rarely agree on age. To link them you need a function turning that disagreement into evidence: <code>ageDiff</code> mapping an age difference onto a weight between one and zero. I fitted five candidates — normalized by constant factors, by frequency percentage, and by a fast-increasing function — and chose between them on standard deviation against observed frequencies, across five independent datasets and 11,813 records.</p>
-
-<p>I also tested the received wisdom that women misreport age more often than men. Running the regression separately by gender, the difference was slight: both curves were the same function shifted by about a year. Not two models. One model and an offset — which is the result you only get by checking rather than assuming.</p>
+<p>I also tested the received wisdom that women misreport age more often than men. Running the regression separately by gender, the difference was slight: both curves were the same function shifted by about a year. Not two models. One model and an offset &mdash; which is the result you only get by checking rather than assuming.</p>
 
     <div class="tags"><a class="tag" href="tags.html#data-modeling">Data modeling</a><a class="tag" href="tags.html#entity-resolution">Entity resolution</a><a class="tag" href="tags.html#evaluation-sets">Evaluation sets</a><a class="tag" href="tags.html#data-quality">Data quality</a></div>
   </div>
   <div class="proj" id="police-gazette">
     <h3>Getting convict transport records out of OCR — Police Gazette</h3>
-
-    <p>Nineteenth-century Police Gazettes recording prisoners transported to Tasmania, held as OCR'd scans. The data the historians needed was in tables inside those documents, and OCR does not respect a table. I wrote the extraction design: fixed layouts for the two table types, one table per output file, a naming convention tying every file back to its source page, and a separate metadata table holding what is true of a whole file — its description, its row count, who extracted it, who checked it — recorded once instead of repeated on every row.</p>
+    <p>Nineteenth-century Police Gazettes recording prisoners transported to Tasmania, held as OCR&rsquo;d scans. The data the historians needed was in tables inside those documents, and OCR does not respect a table. I wrote the extraction design: fixed layouts for the two table types, one table per output file, a naming convention tying every file back to its source page, and a separate metadata table holding what is true of a whole file &mdash; its description, its row count, who extracted it, who checked it &mdash; recorded once instead of repeated on every row.</p>
 
 <p>They took that document to a funding body and were awarded <strong>$34,000</strong> to do the work. I had written it as a favour, and heard some months later.</p>
 
@@ -91,15 +87,13 @@
   </div>
   <div class="proj" id="db2-postgres">
     <h3>Departmental migration from IBM DB2 to PostgreSQL — University of Toronto</h3>
-
-    <p>Led the Computer Science department's move off DB2: platform evaluation, rewriting the course materials that depended on it, retraining instructors, and supporting students through the change. A migration whose hardest constraint was that several hundred people had to keep working through it.</p>
+    <p>Led the Computer Science department&rsquo;s move off DB2: platform evaluation, rewriting the course materials that depended on it, retraining instructors, and supporting students through the change. A migration whose hardest constraint was that several hundred people had to keep working through it.</p>
 
     <div class="tags"><a class="tag" href="tags.html#migration">Migration</a><a class="tag" href="tags.html#postgresql">PostgreSQL</a><a class="tag" href="tags.html#team-leadership">Team leadership</a><a class="tag" href="tags.html#teaching">Teaching</a></div>
   </div>
   <div class="proj" id="site-infrastructure">
     <h3>rctruta.github.io — contract-driven portfolio &amp; claim verification pipeline</h3>
-
-    <p>The repository powering this website is built as a data modeling project. Numbers that carry weight are registered in <code>FACTS.yaml</code> with their source and checked against it by a pre-commit hook, which also reports every unregistered number for review and blocks any claim on the banned list. A second hook refuses to commit personal contact details. Vocabulary is governed by <code>TAGS.yaml</code> and <code>TAXONOMY.md</code>: an unknown tag fails the build. Python and Node generators compile the writing list, the speaking list, the tag index, the navigation and the search index — so a page and the data behind it cannot disagree.</p>
+    <p>The repository powering this website is built as a data modeling project. Numbers that carry weight are registered in <code>FACTS.yaml</code> with their source and checked against it by a pre-commit hook, which also reports every unregistered number for review and blocks any claim on the banned list. A second hook refuses to commit personal contact details. Vocabulary is governed by <code>TAGS.yaml</code> and <code>TAXONOMY.md</code>: an unknown tag fails the build. Python and Node generators compile the writing list, the speaking list, the tag index, the navigation and the search index &mdash; so a page and the data behind it cannot disagree.</p>
 
     <div class="tags"><a class="tag" href="tags.html#data-modeling">Data modeling</a><a class="tag" href="tags.html#pre-commit-gates">Pre-commit gates</a><a class="tag" href="tags.html#python">Python</a><a class="tag" href="tags.html#data-contracts">Data contracts</a><a class="tag" href="tags.html#system-integrity">System integrity</a></div>
 
@@ -110,11 +104,10 @@
   <p class="totop"><a href="#top">&uarr; Top</a></p>
 </div></section>
 <section><div class="wrap">
-  <h2 id="benchmarking">Database &amp; Query Engine Benchmarking</h2>
+  <h2 id="benchmarking">Benchmarking</h2>
   <p class="sub small cat-note">Measuring engines and protocols under conditions stated well enough to reproduce. Every result ships with the experiment that produced it.</p>
   <div class="proj" id="sqlbenchdag">
     <h3>sqlbenchdag — a reproducible benchmarking laboratory</h3>
-
     <p>Every experiment is a capsule addressed by an 8-character SHA-256 fingerprint over its config, SQL, and every line of measurement-relevant Python. Change the method and the ID changes. Cold-cache execution, hard row-count assertions, and an integrity seal on every capsule. The four published Quack capsules additionally carry OpenTimestamps proofs anchored to Bitcoin.</p>
     <figure>
       <img src="assets/quack-vs-postgres.png" alt="DuckDB-over-Quack vs PostgreSQL, query duration by table size">
@@ -138,8 +131,7 @@
   </div>
   <div class="proj" id="sql-behaviour">
     <h3>SQL behaviour under measurement</h3>
-
-    <p>Findings from the laboratory that are about the database rather than the benchmark. Postgres index selectivity has a crossover: on cold cache a bitmap heap scan at 5% selectivity is slower than a sequential scan, so the index becomes a liability — EXPLAIN-confirmed, with the sequential scan winning outright past roughly 10%. Separately, on three-valued logic: the null-safe <code>IS NOT DISTINCT FROM</code> operator does not remove the quadratic cost of a join over nullable keys. It decides whether the query degrades or hangs. That is an optimizer cliff in Postgres, not something intrinsic to the semantics.</p>
+    <p>Findings from the laboratory that are about the database rather than the benchmark. Postgres index selectivity has a crossover: on cold cache a bitmap heap scan at 5% selectivity is slower than a sequential scan, so the index becomes a liability &mdash; EXPLAIN-confirmed, with the sequential scan winning outright past roughly 10%. Separately, on three-valued logic: the null-safe <code>IS NOT DISTINCT FROM</code> operator does not remove the quadratic cost of a join over nullable keys. It decides whether the query degrades or hangs. That is an optimizer cliff in Postgres, not something intrinsic to the semantics.</p>
 
     <div class="tags"><a class="tag" href="tags.html#benchmarking">Benchmarking</a><a class="tag" href="tags.html#cold-cache-measurement">Cold-cache measurement</a><a class="tag" href="tags.html#data-modeling">Data modeling</a><a class="tag" href="tags.html#postgresql">PostgreSQL</a><a class="tag" href="tags.html#duckdb">DuckDB</a><a class="tag" href="tags.html#sql">SQL</a></div>
 
@@ -149,7 +141,6 @@
   </div>
   <div class="proj" id="lakehouse-semantics">
     <h3>lakehouse-semantics — SQL correctness and engine divergence matrix</h3>
-
     <p>A suite of 23 correctness probes executed across DuckDB, DuckDB+Delta, PostgreSQL, and Databricks SQL. Rather than timing performance (which varies by serverless hardware allocation), these probes measure <strong>semantic determinism</strong>: integer division, NULL ordering in ASC scans, VARCHAR overflow behavior, and constraint enforcement paths.</p>
 
 <p>The key finding: Databricks SQL accepts inline <code>CHECK</code> constraints in <code>CREATE TABLE</code> without enforcing them, while the identical constraint added via <code>ALTER TABLE ADD CONSTRAINT</code> is strictly enforced and raises <code>DELTA_VIOLATE_CONSTRAINT_WITH_VALUES</code>. A query 20% slower costs money; a query that silently returns different rows across engines costs trust.</p>
@@ -163,24 +154,23 @@
   <p class="totop"><a href="#top">&uarr; Top</a></p>
 </div></section>
 <section><div class="wrap">
-  <h2 id="agent-evaluation">AI &amp; Agent Evaluation</h2>
+  <h2 id="agent-evaluation">AI evaluation</h2>
   <p class="sub small cat-note">Whether a model or an agent did what it claimed, and what a deployment will cost. Instrumenting systems and reading what they actually did, rather than asking them. Relates to OWASP LLM06 (excessive agency) and LLM09 (misinformation).</p>
   <div class="proj" id="harness-bench">
     <h3>harness-bench — measuring a deployment before it is a deployment</h3>
-
-    <p>I engineered <strong>harness-bench</strong> to evaluate agent deployments before they reach production. While skills and MCP servers are shipped widely, harness-bench parses tool surfaces, infers execution taxonomies, executes content-addressed YAML study contracts, traces every turn, and deterministically grades agent execution to report real token costs and failure modes — token cost per architecture, which guidance layers pay for themselves, which model tier suffices, and which states the harness is missing.</p>
+    <p>I engineered <strong>harness-bench</strong> to evaluate agent deployments before they reach production. While skills and MCP servers are shipped widely, harness-bench parses tool surfaces, infers execution taxonomies, executes content-addressed YAML study contracts, traces every turn, and deterministically grades agent execution to report real token costs and failure modes &mdash; token cost per architecture, which guidance layers pay for themselves, which model tier suffices, and which states the harness is missing.</p>
 
 <p>Four results it was built on, each measured rather than assumed:</p>
 
 <ul>
-<li><strong>Harness architecture dominates model choice.</strong> Decomposing a monolithic agent into specialists cut cost 20.7× at equal answer quality, and pulled five models across two vendors into a single 18–35K token band.</li><li><strong>Prompt guidance is the weakest lever.</strong> An AGENTS.md added roughly 50K tokens per run for no behavioral difference. Tool schemas and role prompts are what move frontier models.</li><li><strong>Words don't bind; gates do.</strong> Every prompt-level instruction was eventually ignored by some model. Every mechanical gate held.</li><li><strong>Uniform cross-model failure is a harness defect, not a model defect</strong> — running a model ladder inside one contract makes that signature identify itself.</li>
+<li><strong>Harness architecture dominates model choice.</strong> Decomposing a monolithic agent into specialists cut cost 20.7× at equal answer quality, and pulled five models across two vendors into a single 18–35K token band.</li><li><strong>Prompt guidance is the weakest lever.</strong> An AGENTS.md added roughly 50K tokens per run for no behavioral difference. Tool schemas and role prompts are what move frontier models.</li><li><strong>Words don&rsquo;t bind; gates do.</strong> Every prompt-level instruction was eventually ignored by some model. Every mechanical gate held.</li><li><strong>Uniform cross-model failure is a harness defect, not a model defect</strong> &mdash; running a model ladder inside one contract makes that signature identify itself.</li>
 </ul>
 
-<p><strong>Skills are a variable it measures, not a feature it assumes.</strong> A study contract declares its cells — baseline against skills-injected — and the same goals run through both, so the cost and behaviour of a skill layer is a measurement rather than a claim in a README. That is what produced the Malloy Publisher result below.</p>
+<p><strong>Skills are a variable it measures, not a feature it assumes.</strong> A study contract declares its cells &mdash; baseline against skills-injected &mdash; and the same goals run through both, so the cost and behaviour of a skill layer is a measurement rather than a claim in a README. That is what produced the Malloy Publisher result below.</p>
 
-<p>The states it checks for were not designed in advance. Refusal, suspend and resume, a librarian role, resource caps — each was discovered by cheap probe runs and only then given a name.</p>
+<p>The states it checks for were not designed in advance. Refusal, suspend and resume, a librarian role, resource caps &mdash; each was discovered by cheap probe runs and only then given a name.</p>
 
-<p>The engine is generalized from a working implementation rather than designed on paper: the sqlbenchdag adapter carries its own graders, roles and tool surface, and the two runners — monolith and state machine — are the pair whose comparison produced the 20.7× result above. A new target is a new adapter against the same runners.</p>
+<p>The engine is generalized from a working implementation rather than designed on paper: the sqlbenchdag adapter carries its own graders, roles and tool surface, and the two runners &mdash; monolith and state machine &mdash; are the pair whose comparison produced the 20.7× result above. A new target is a new adapter against the same runners.</p>
     <figure>
       <img src="assets/sbd-state-machine.png" alt="State machine: librarian specialist branching to answered, refused, or config builder; config builder to the poller, refused, or config_builder_failed; poller to the analyzer or poll_failed; analyzer to complete or analyzer_failed">
       <figcaption>The specialist state machine. A goal enters at the librarian, which can answer it from the existing catalog, refuse it as impossible, or send it on to build a fresh experiment. Every path ends in a named terminal state, including the failures — <code>refused</code>, <code>poll_failed</code>, <code>analyzer_failed</code> — so a run that goes wrong says where, rather than thrashing. Most of these states were discovered by probing, not designed up front.</figcaption>
@@ -194,16 +184,15 @@
   </div>
   <div class="proj" id="malloy-study">
     <h3>Do bundled agent skills actually reach the agent? — Malloy Publisher study</h3>
+    <p>The Malloy Publisher ships agent skills alongside its MCP server. Two questions: do those skills reach an autonomous agent at all, and what changes when they do. Eighteen runs &mdash; three goals × three models × baseline against skills-injected &mdash; with the full per-turn traces published and every table in the report derived from them by script. No number in it is hand-typed.</p>
 
-    <p>The Malloy Publisher ships agent skills alongside its MCP server. Two questions: do those skills reach an autonomous agent at all, and what changes when they do. Eighteen runs — three goals × three models × baseline against skills-injected — with the full per-turn traces published and every table in the report derived from them by script. No number in it is hand-typed.</p>
+<p><strong>Measured 15 July 2026</strong>, against <code>malloydata/publisher@ad6c09b</code>: the released image served four utility prompts rather than the twenty-eight skills then present on the project&rsquo;s main branch. The skills existed; an agent pulling the official image did not get them.</p>
 
-<p><strong>Measured 15 July 2026</strong>, against <code>malloydata/publisher@ad6c09b</code>: the released image served four utility prompts rather than the twenty-eight skills then present on the project's main branch. The skills existed; an agent pulling the official image did not get them.</p>
-
-<p><strong>Fixed upstream, beginning 20 July 2026.</strong> The project shipped the skills as their own package (<a href="https://github.com/malloydata/publisher/pull/899" target="_blank" rel="noopener">#899</a>), then bundled each skill as an MCP prompt (<a href="https://github.com/malloydata/publisher/pull/944" target="_blank" rel="noopener">#944</a>, 29 July), and by 2 September added a manifest with tests holding every delivery channel to it (<a href="https://github.com/malloydata/publisher/pull/1088" target="_blank" rel="noopener">#1088</a>). The server's own code now states the intent: hosts that only speak MCP receive the same guidance as hosts that read skill files directly. Skills on main today: 44.</p>
+<p><strong>Fixed upstream, beginning 20 July 2026.</strong> The project shipped the skills as their own package (<a href="https://github.com/malloydata/publisher/pull/899" target="_blank" rel="noopener">#899</a>), then bundled each skill as an MCP prompt (<a href="https://github.com/malloydata/publisher/pull/944" target="_blank" rel="noopener">#944</a>, 29 July), and by 2 September added a manifest with tests holding every delivery channel to it (<a href="https://github.com/malloydata/publisher/pull/1088" target="_blank" rel="noopener">#1088</a>). The server&rsquo;s own code now states the intent: hosts that only speak MCP receive the same guidance as hosts that read skill files directly. Skills on main today: 44.</p>
 
 <p class="sub small">Both dates are checkable. Nothing here claims one caused the other. Re-verified 29 September 2026.</p>
 
-<p>The second cuts both ways. Injecting the skills rescued the weaker models — one went from exhausting its turn budget after twenty turns, 123,191 tokens and seventeen query errors, to a correct answer in five turns, 31,658 tokens and one error. On the model that was already succeeding, the same skills raised token use roughly sixfold on that goal for the same correct answer. Guidance is not free, and it is worth most to whoever needs it most.</p>
+<p>The second cuts both ways. Injecting the skills rescued the weaker models &mdash; one went from exhausting its turn budget after twenty turns, 123,191 tokens and seventeen query errors, to a correct answer in five turns, 31,658 tokens and one error. On the model that was already succeeding, the same skills raised token use roughly sixfold on that goal for the same correct answer. Guidance is not free, and it is worth most to whoever needs it most.</p>
     <figure>
       <img src="assets/malloy-skills-tokens.svg" alt="Tokens per run, baseline versus skills injected, across three goals and three models">
       <figcaption>All 18 runs. Injecting the skills collapses the two models that were struggling — Haiku on the count goal from 123,191 tokens and an exhausted turn budget to 31,658 and a correct answer — and adds cost to Sonnet 5, which was already answering correctly. Derived from the per-turn traces in the study repository; n=1 per cell.</figcaption>
@@ -217,8 +206,7 @@
   </div>
   <div class="proj" id="agent-traces">
     <h3>Reading agent traces</h3>
-
-    <p>Per-turn tracing and deterministic grading of coding agents working against a commercial lakehouse platform. The traces surfaced three defects I reported upstream — including an error message that actively sends an agent in the wrong direction, suggesting <code>tanh</code> for a date function.</p>
+    <p>Per-turn tracing and deterministic grading of coding agents working against a commercial lakehouse platform. The traces surfaced three defects I reported upstream &mdash; including an error message that actively sends an agent in the wrong direction, suggesting <code>tanh</code> for a date function.</p>
 
     <div class="tags"><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a><a class="tag" href="tags.html#per-turn-tracing">Per-turn tracing</a><a class="tag" href="tags.html#deterministic-grading">Deterministic grading</a><a class="tag" href="tags.html#python">Python</a><a class="tag" href="tags.html#process-telemetry">Process telemetry</a></div>
 
@@ -231,7 +219,6 @@
   </div>
   <div class="proj" id="agent-telemetry">
     <h3>agent-telemetry — transcript-derived process metrology for coding agents</h3>
-
     <p>A local analytics package that parses raw JSONL session transcripts from coding agents (Claude Code) into un-opinionated process metrics: <code>tool_calls_per_turn</code>, <code>reads_before_first_edit</code>, <code>repeated_commands</code>, <code>error_rate</code>, <code>seconds_to_first_write</code>, and <code>edit_revisits</code>.</p>
 
 <p>Prose instructions (in <code>CLAUDE.md</code> or prompt guidance) are hypotheses about agent behavior. By comparing session telemetry before and after introducing a rule, <code>agent-telemetry</code> evaluates whether a prompt-level instruction actually shifted model behavior. If a rule does not move its metric, the rule does not bind.</p>
@@ -244,10 +231,9 @@
   </div>
   <div class="proj" id="rag-accuracy">
     <h3>A RAG system answering 17 of 20 questions its sources couldn&#x27;t support</h3>
-
     <p>I built a labelled evaluation set for a retrieval system I had written myself, and found it answering fluently, with citations, and with no error of any kind. Recalibrated the refusal threshold from 0.56 to 0.87 precision and validated out-of-sample. Confident output is not evidence; the failure mode to fear is the plausible one, not the obvious one.</p>
 
-<p>Runs entirely from a local directory — LanceDB for vector, full-text and hybrid search, sentence-transformers for embeddings, no hosted cluster and no API key. Ask a question, get an answer and a link to the timestamp where it's answered.</p>
+<p>Runs entirely from a local directory &mdash; LanceDB for vector, full-text and hybrid search, sentence-transformers for embeddings, no hosted cluster and no API key. Ask a question, get an answer and a link to the timestamp where it&rsquo;s answered.</p>
 
     <div class="tags"><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a><a class="tag" href="tags.html#evaluation-sets">Evaluation sets</a><a class="tag" href="tags.html#python">Python</a><a class="tag" href="tags.html#rag">RAG</a><a class="tag" href="tags.html#lancedb">LanceDB</a></div>
 
@@ -257,10 +243,9 @@
   </div>
   <div class="proj" id="music-recommender">
     <h3>Music recommendation system — MIT Professional Education capstone</h3>
+    <p>Top-10 song recommendation over the Million Song Dataset Taste Profile Subset: two million listening events, ten thousand songs. Four algorithm families compared &mdash; user-user and item-item collaborative filtering, SVD matrix factorization, co-clustering, and content-based &mdash; with grid-search cross-validation over each.</p>
 
-    <p>Top-10 song recommendation over the Million Song Dataset Taste Profile Subset: two million listening events, ten thousand songs. Four algorithm families compared — user-user and item-item collaborative filtering, SVD matrix factorization, co-clustering, and content-based — with grid-search cross-validation over each.</p>
-
-<p>Revisited in 2026, the interesting result is the evaluation rather than the models. Every one of the eight configurations reported Precision@10 of 1.0 while RMSE sat between 1.009 and 1.088, which cannot both be true of a working measurement. The relevance threshold was a play count of one, and the test set contains only songs a user already played — so every candidate counted as relevant and the metric reduced to k/k. Perfect scores produced by arithmetic, not by the recommenders.</p>
+<p>Revisited in 2026, the interesting result is the evaluation rather than the models. Every one of the eight configurations reported Precision@10 of 1.0 while RMSE sat between 1.009 and 1.088, which cannot both be true of a working measurement. The relevance threshold was a play count of one, and the test set contains only songs a user already played &mdash; so every candidate counted as relevant and the metric reduced to k/k. Perfect scores produced by arithmetic, not by the recommenders.</p>
 
     <div class="tags"><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a><a class="tag" href="tags.html#evaluation-sets">Evaluation sets</a><a class="tag" href="tags.html#python">Python</a></div>
 
@@ -271,12 +256,11 @@
   <p class="totop"><a href="#top">&uarr; Top</a></p>
 </div></section>
 <section><div class="wrap">
-  <h2 id="memory-security">AI Security</h2>
+  <h2 id="memory-security">AI security</h2>
   <p class="sub small cat-note">Attacks on what an agent reads, stores and later trusts — and the controls that hold against them. Maps to OWASP LLM01 (indirect prompt injection) and LLM04 (data poisoning).</p>
   <div class="proj" id="agent-memory">
     <h3>Semantic injection into agent memory</h3>
-
-    <p>A deterministic exploit against an open-source agent memory system: text that reads as ordinary content to a human, but that the extraction pipeline turns into a stored fact the agent later treats as its own knowledge. Disclosed responsibly. Separately, a forensic read of a coding agent's local state directory — what it writes to disk, in plaintext, without telling you.</p>
+    <p>A deterministic exploit against an open-source agent memory system: text that reads as ordinary content to a human, but that the extraction pipeline turns into a stored fact the agent later treats as its own knowledge. Disclosed responsibly. Separately, a forensic read of a coding agent&rsquo;s local state directory &mdash; what it writes to disk, in plaintext, without telling you.</p>
 
     <div class="tags"><a class="tag" href="tags.html#ai-security">AI security</a><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a></div>
 
@@ -289,7 +273,6 @@
   </div>
   <div class="proj" id="consensus-contagion">
     <h3>Consensus Contagion — status bias and the RLHF tax in agent routing</h3>
-
     <p>Based on my <strong>adversarial-judgement-research</strong> framework (16 content-addressed study contracts, 7 models, 110+ graded runs): I proved that generalized LLM orchestrators evaluate simulated social status over technical merit. Injecting a high-status persona into routing decisions causes agentic state to collapse into authority bias (the RLHF tax). Prompt-level instructions fail under pressure; mechanical gates hold.</p>
 
     <div class="tags"><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a><a class="tag" href="tags.html#deterministic-grading">Deterministic grading</a><a class="tag" href="tags.html#ablation-study">Ablation study</a><a class="tag" href="tags.html#rlhf">RLHF</a><a class="tag" href="tags.html#data-contracts">Data contracts</a><a class="tag" href="tags.html#ai-security">AI security</a><a class="tag" href="tags.html#python">Python</a></div>
@@ -298,8 +281,7 @@
   </div>
   <div class="proj" id="agent-tools">
     <h3>Tools and playbooks for collaborating with coding agents</h3>
-
-    <p><strong>ai-agent-utils</strong> — a bootstrap that starts a repository with gates already enforced, rather than rules written down and hoped for. Two families: git discipline, and claim integrity — every load-bearing number registered with a source and re-checked before commit, fabricated claims blocked by pattern, and a checkpoint that refuses to record a working state unless a proof command passes. Enforcement is git hooks and stdlib scripts, so it binds whichever agent is driving; the Claude and Cursor files only describe it. <strong>The Pedantic Medallion</strong> — community-curated playbooks for building shared understanding, from the framework of the same name.</p>
+    <p><strong>ai-agent-utils</strong> &mdash; a bootstrap that starts a repository with gates already enforced, rather than rules written down and hoped for. Two families: git discipline, and claim integrity &mdash; every load-bearing number registered with a source and re-checked before commit, fabricated claims blocked by pattern, and a checkpoint that refuses to record a working state unless a proof command passes. Enforcement is git hooks and stdlib scripts, so it binds whichever agent is driving; the Claude and Cursor files only describe it. <strong>The Pedantic Medallion</strong> &mdash; community-curated playbooks for building shared understanding, from the framework of the same name.</p>
 
     <div class="tags"><a class="tag" href="tags.html#ai-security">AI security</a><a class="tag" href="tags.html#deterministic-grading">Deterministic grading</a><a class="tag" href="tags.html#python">Python</a><a class="tag" href="tags.html#pre-commit-gates">Pre-commit gates</a><a class="tag" href="tags.html#system-integrity">System integrity</a></div>
 
