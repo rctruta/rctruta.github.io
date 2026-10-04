@@ -135,8 +135,10 @@ for name in PAGES:
             kind = "course material" if "assets/" in (heading.group(1) if heading else "") else "teaching"
         else:
             kind = "project"
+        m_date = re.search(r"20\d\d", body)
+        date_str = m_date.group(0) if m_date else "2026"
         for t in projects[pid]:
-            index[t].append((name, pid, title, kind))
+            index[t].append((name, pid, title, kind, date_str))
         body = re.sub(r'<div class="tags">.*?</div>', row(projects[pid]), body, flags=re.S)
         return f'<div class="proj" id="{pid}">{body}'
 
@@ -156,12 +158,12 @@ for block in re.split(r"\n(?=- id:)", wtext):
     def field(k):
         m = re.search(rf"^\s*(?:-\s*)?{k}: (.+?)\s*(?:#.*)?$", block, re.M)
         return m.group(1).strip().strip('"') if m else None
-    wid, title, tags_line = field("id"), field("title"), re.search(r"^  tags: \[(.*)\]\s*$", block, re.M)
+    wid, title, date_val, tags_line = field("id"), field("title"), field("date"), re.search(r"^  tags: \[(.*)\]\s*$", block, re.M)
     if not title or not tags_line:
         continue
     for tag in (x.strip() for x in tags_line.group(1).split(",")):
         if tag and tag in vocab:
-            index[tag].append(("writing.html", wid or "", title, "article"))
+            index[tag].append(("writing.html", wid or "", title, "article", date_val or "2026"))
 
 # speaking appearances live in appearances.yaml — index them from the source
 atext = (ROOT / "data" / "appearances.yaml").read_text()
@@ -171,14 +173,14 @@ for block in re.split(r"\n(?=- id:)", atext):
     def afield(k):
         m = re.search(rf"^\s*(?:-\s*)?{k}: (.+?)\s*(?:#.*)?$", block, re.M)
         return m.group(1).strip().strip("'\"") if m else None
-    aid, atitle, aorg, tags_line = afield("id"), afield("title"), afield("org"), re.search(r"^  tags: \[(.*)\]\s*$", block, re.M)
+    aid, atitle, aorg, adate, tags_line = afield("id"), afield("title"), afield("org"), afield("date"), re.search(r"^  tags: \[(.*)\]\s*$", block, re.M)
     akind = afield("kind") or "appearance"
     if not atitle or not tags_line:
         continue
     full_title = f"{aorg} — {atitle}" if aorg else atitle
     for tag in (x.strip() for x in tags_line.group(1).split(",")):
         if tag and tag in vocab:
-            index[tag].append(("speaking.html", aid or "", full_title, akind))
+            index[tag].append(("speaking.html", aid or "", full_title, akind, adate or "2026"))
 
 missing = sorted(seen - set(projects))
 if missing:
@@ -205,18 +207,19 @@ CATEGORY_ORDER = sorted(category_order_map.keys(), key=lambda c: category_order_
 
 def entries(items):
     groups = defaultdict(list)
-    for pg, pid, title, kind in items:
+    for pg, pid, title, kind, date_val in items:
         cat_meta = kinds_meta.get(kind, {})
         cat = cat_meta.get("category", kind.title())
-        groups[cat].append((pg, pid, title, kind))
+        groups[cat].append((pg, pid, title, kind, date_val))
 
     out = []
     for cat in CATEGORY_ORDER:
         if cat in groups:
-            group_items = sorted(groups[cat], key=lambda e: e[2].lower())
+            # Sort items chronologically newest to oldest
+            group_items = sorted(groups[cat], key=lambda e: (str(e[4]), e[2].lower()), reverse=True)
             item_html = "\n".join(
                 f'      <li><span class="what"><a href="{pg}#{pid}">{html.escape(title)}</a></span></li>'
-                for pg, pid, title, kind in group_items
+                for pg, pid, title, kind, date_val in group_items
             )
             out.append(
                 f'  <div class="tag-subgroup">\n'
@@ -225,6 +228,7 @@ def entries(items):
                 f'  </div>'
             )
     return "\n".join(out)
+
 
 
 total = sum(len(v) for v in index.values())
