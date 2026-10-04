@@ -5,11 +5,10 @@
 The nav was duplicated across six pages and three generators, and had already
 drifted. This is the only place it is defined. Run it after adding a page.
 
-It writes two things from the same config.yaml entry: the nav bar, and the
-one-line description that appears as the lede at the top of that page. The
-home page renders the same descriptions beside the links, so the summary a
-reader sees on the home page and the summary on the page itself cannot
-disagree.
+It writes three things from the same config.yaml entry: the nav link, the
+description that appears when the reader hovers that link, and the page's meta
+description. The home page renders the same descriptions beside the links, so
+what a reader is told about a page cannot depend on where they are told it.
 
 Generated pages (speaking, writing, tags) are rewritten by their own tools too,
 so this runs over whatever is on disk and their templates carry the same list —
@@ -23,18 +22,19 @@ from config_loader import load_config
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CONFIG = load_config()
 
-NAV = [(item["label"], item["href"]) for item in CONFIG["navigation"]]
+NAV = [(item["label"], item["href"], item["description"]) for item in CONFIG["navigation"]]
 PAGES = [item["href"] for item in CONFIG["navigation"]] + ["index.html"]
 BRAND = CONFIG["site"]["author"].get("name", CONFIG["site"].get("title", "Home"))
 
 
 def nav_html(current):
     links = "\n".join(
-        f'    <a href="{href}"{" class=\"here\"" if href == current else ""}>{label}</a>'
-        for label, href in NAV
+        f'    <a href="{href}"{" class=\"here\"" if href == current else ""}'
+        f' data-tip="{html.escape(tip, quote=True)}">{label}</a>'
+        for label, href, tip in NAV
     )
     return f"""<nav class="topnav"><div class="wrap">
-  <a class="brand" href="index.html">{BRAND}</a>
+  <a class="brand" href="index.html" title="Home" aria-label="Home">{BRAND}</a>
   <span class="navlinks">
 {links}
     <button type="button" class="searchbtn" aria-label="Search this site" title="Search this site (⌘K)" data-search-open>
@@ -44,14 +44,7 @@ def nav_html(current):
   </span>
 </div></nav>"""
 
-LEDES = {item["href"]: item["description"] for item in CONFIG["navigation"]}
-
-
-def lede_html(description):
-    return (f'<!-- lede:start -->\n'
-            f'<section class="pagelede"><div class="wrap">'
-            f'<p class="lede">{html.escape(description)}</p></div></section>\n'
-            f'<!-- lede:end -->')
+DESCRIPTIONS = {item["href"]: item["description"] for item in CONFIG["navigation"]}
 
 
 def write_descriptions(text, description):
@@ -68,14 +61,9 @@ def write_descriptions(text, description):
     return text
 
 
-def write_lede(text, description):
-    """Replace the lede block, or insert one after the sub-nav (else the nav)."""
-    block = lede_html(description)
-    if "<!-- lede:start -->" in text:
-        return re.sub(r"<!-- lede:start -->.*?<!-- lede:end -->", lambda _: block, text, count=1, flags=re.S)
-    anchor = re.search(r'<nav class="subnav".*?</nav>', text, re.S) or \
-             re.search(r'<nav class="topnav">.*?</nav>', text, re.S)
-    return text[:anchor.end()] + "\n" + block + text[anchor.end():]
+def drop_lede(text):
+    """Remove the lede block. The description is a hover on the nav link now."""
+    return re.sub(r"\n?<!-- lede:start -->.*?<!-- lede:end -->\n?", "\n", text, count=1, flags=re.S)
 
 
 changed = 0
@@ -88,11 +76,11 @@ for name in PAGES:
     new = re.sub(
         r'<nav class="topnav">.*?</nav>', nav_html(name), text, count=1, flags=re.S
     )
-    if name in LEDES:                      # index.html has no nav entry of its own
-        new = write_lede(new, LEDES[name])
-        new = write_descriptions(new, LEDES[name])
+    new = drop_lede(new)
+    if name in DESCRIPTIONS:                      # index.html has no nav entry of its own
+        new = write_descriptions(new, DESCRIPTIONS[name])
     if new != text:
         page.write_text(new)
         changed += 1
 
-print(f"nav + lede + descriptions written into {changed} of {len(PAGES)} pages, {len(NAV)} links")
+print(f"nav + hover + descriptions written into {changed} of {len(PAGES)} pages, {len(NAV)} links")

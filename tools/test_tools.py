@@ -132,7 +132,7 @@ class TestDescriptionsPropagate(unittest.TestCase):
     """A hand-written home page stops being true without telling anyone.
 
     Each page's one-line description is written once, in config.yaml. It is the
-    meta description, the lede at the top of that page, and the line beside the
+    meta description, the hover on that page's nav link, and the line beside the
     link on the home page. These assert the three are the same string.
     """
 
@@ -146,13 +146,20 @@ class TestDescriptionsPropagate(unittest.TestCase):
             if not page.exists():
                 continue
             text = page.read_text()
-            lede = re.search(r'<!-- lede:start -->.*?<p class="lede">(.*?)</p>', text, re.S)
-            self.assertIsNotNone(lede, f"{nav['href']} has no lede block")
-            self.assertEqual(html.unescape(lede.group(1)), nav["description"],
-                             f"{nav['href']} lede differs from config.yaml")
             meta = re.search(r'<meta name="description" content="(.*?)">', text)
             self.assertEqual(html.unescape(meta.group(1)), nav["description"],
                              f"{nav['href']} meta description differs from config.yaml")
+
+    def test_every_nav_link_carries_its_description_as_a_hover(self):
+        for nav in self.nav:
+            for name in [n["href"] for n in self.nav] + ["index.html"]:
+                page = ROOT / name
+                if not page.exists():
+                    continue
+                tip = re.search(rf'<a href="{re.escape(nav["href"])}"[^>]*data-tip="([^"]*)"', page.read_text())
+                self.assertIsNotNone(tip, f"{name}: nav link to {nav['href']} has no hover description")
+                self.assertEqual(html.unescape(tip.group(1)), nav["description"],
+                                 f"{name}: hover on {nav['href']} differs from config.yaml")
 
     def test_home_page_lists_every_nav_page_with_the_same_description(self):
         if not self.home:

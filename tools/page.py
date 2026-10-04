@@ -137,12 +137,13 @@ def render_topnav(here_page: str = "") -> str:
     nav_links = []
     for nav in CONFIG["navigation"]:
         is_here = ' class="here"' if nav["href"] == f"{here_page}.html" or (here_page == "tags" and nav["href"] == "tags.html") else ""
-        nav_links.append(f'    <a href="{nav["href"]}"{is_here}>{html.escape(nav["label"])}</a>')
+        tip = html.escape(nav["description"], quote=True)
+        nav_links.append(f'    <a href="{nav["href"]}"{is_here} data-tip="{tip}">{html.escape(nav["label"])}</a>')
 
     nav_links_str = "\n".join(nav_links)
     return (
         f'<nav class="topnav"><div class="wrap">\n'
-        f'  <a class="brand" href="index.html">{html.escape(AUTHOR)}</a>\n'
+        f'  <a class="brand" href="index.html" title="Home" aria-label="Home">{html.escape(AUTHOR)}</a>\n'
         f'  <span class="navlinks">\n'
         f'{nav_links_str}\n'
         f'    <button type="button" class="searchbtn" aria-label="Search this site" title="Search this site (⌘K)" data-search-open>\n'

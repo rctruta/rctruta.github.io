@@ -251,9 +251,28 @@ section h3 { font-size:20px; font-weight:600; color:var(--ink); letter-spacing:0
               text-transform:none; margin:30px 0 10px }
 .lede { color:var(--mid); margin:-4px 0 14px; font-size:16.5px }
 
-/* the one-line page description, written once in config.yaml */
-.pagelede { padding:26px 0 0; border-bottom:none }
-.pagelede .lede { margin:0; max-width:46em }
+/* What each page is, written once in config.yaml and shown on hover.
+   It was a line of prose at the top of every page; nobody reads those. */
+.navlinks a[data-tip] { position:relative }
+.navlinks a[data-tip]::after {
+  content: attr(data-tip);
+  position:absolute; top:calc(100% + 10px); left:50%; transform:translateX(-50%);
+  width:max-content; max-width:280px; padding:8px 11px;
+  background:var(--ink); color:#fff; font-size:13px; font-weight:400;
+  line-height:1.45; letter-spacing:0; text-transform:none; text-align:left;
+  border-radius:5px; box-shadow:0 4px 14px rgba(0,0,0,0.18);
+  opacity:0; visibility:hidden; transition:opacity .14s ease .25s, visibility 0s linear .39s;
+  pointer-events:none; z-index:50;
+}
+.navlinks a[data-tip]:hover::after, .navlinks a[data-tip]:focus-visible::after {
+  opacity:1; visibility:visible; transition-delay:.25s, 0s;
+}
+/* near the right edge there is no room to centre it */
+.navlinks a[data-tip]:nth-last-child(-n+3)::after { left:auto; right:0; transform:none }
+
+@media (max-width: 760px) {
+  .navlinks a[data-tip]::after { display:none }   /* no hover on a touch screen */
+}
 
 /* an acknowledgement someone else wrote */
 .praise {

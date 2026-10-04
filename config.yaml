@@ -22,7 +22,7 @@ site:
 navigation:
   - id: work
     label: "Work"
-    description: "Database benchmarking, AI security, agent evaluation, system integrity, and retrieval accuracy. Every claim with the experiment attached."
+    description: "Database benchmarking, AI security, agent evaluation, system integrity, and retrieval accuracy. Where the work is public, the experiment is attached."
     href: "work.html"
     enabled: true
   - id: teaching
@@ -37,7 +37,7 @@ navigation:
     enabled: true
   - id: writing
     label: "Writing"
-    description: "Essays on data modeling, AI evaluation, security and the people using these systems. Each piece published with its repository."
+    description: "Essays on data modeling, AI evaluation, security and the people using these systems. Each piece published with its repository when there is one."
     href: "writing.html"
     enabled: true
   - id: index
