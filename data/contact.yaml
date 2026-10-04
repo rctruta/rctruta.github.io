@@ -1,0 +1,51 @@
+# The contact page. It was the last hand-written page on the site, which meant
+# the Formspree endpoint lived here *and* in config.yaml with nothing keeping
+# them equal — rotate one and the live form posts to the old address silently.
+#
+# Links (form, calendar, Substack, GitHub, LinkedIn, ORCID) come from
+# config.yaml. Only the words are here.
+
+description: "Contact Ramona C. Truta — data modeling, data engineering, and evaluation of AI systems."
+
+lede: "Open to consulting, contracting, project scoping & development, speaking engagements, research advisory, and conversations that don't have a job attached."
+
+form:
+  heading: "Send a message"
+  intro: "Have a project proposal, speaking invitation, or technical inquiry? Send a note below and I will reply directly."
+  button: "Send Message"
+  topics:
+    - "Consulting & Contracting"
+    - "Project Scoping & Development"
+    - "AI Security & System Integrity"
+    - "Speaking Engagement"
+    - "General Inquiry"
+
+cards:
+  - heading: "Virtual Coffee Chat"
+    text: "Prefer to chat live? Book a 30-minute virtual coffee chat directly on my calendar."
+    button: "Book a 30-min Call"
+    link: calendly
+  - heading: "Subscribe to my Substack"
+    text: "Get research notes on database engineering, AI system integrity, and benchmark evaluations."
+    button: "Subscribe on Substack"
+    link: substack
+
+# Each service links into the Index, so a claim resolves to the work behind it.
+services:
+  - tag: "AI security"
+    label: "AI Security & System Integrity"
+    note: "red-teaming and exploit research on agent memory, vision encoders, and routing nodes"
+  - tag: "Benchmarking"
+    label: "Benchmarking"
+    note: "databases and query engines, with the experiment published alongside the result"
+    continues: true
+  - tag: "AI evaluation"
+    label: "AI and agent evaluation"
+    note: "what a deployment will cost, and where it will fail"
+  - tag: "Teaching"
+    label: "Teaching"
+    note: "and technical enablement"
+    continues: true
+  - tag: "Data modeling"
+    label: "Data modeling"
+    note: "source systems into structures analysts and models can use"

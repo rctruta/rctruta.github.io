@@ -25,7 +25,8 @@ def load_config():
 
     # Extract author details
     config["site"]["author"] = {}
-    for key in ("name", "contact_form", "substack", "substack_rss", "github"):
+    for key in ("name", "contact_form", "substack", "substack_rss", "github",
+                "linkedin", "orcid", "orcid_id", "calendly"):
         m = re.search(rf"^\s*{key}:\s*[\"']?([^\"'\n]+)[\"']?", text, re.M)
         if m:
             config["site"]["author"][key] = m.group(1).strip()

@@ -14,6 +14,10 @@ site:
     substack: "https://ramonactruta.substack.com"
     substack_rss: "https://ramonactruta.substack.com/feed"
     github: "https://github.com/rctruta"
+    linkedin: "https://linkedin.com/in/ramonactruta"
+    orcid: "https://orcid.org/0009-0008-4886-7777"
+    orcid_id: "0009-0008-4886-7777"
+    calendly: "https://calendly.com/ramonactruta/30min"
 
 navigation:
   - id: work

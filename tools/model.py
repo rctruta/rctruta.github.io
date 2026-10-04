@@ -435,3 +435,72 @@ def load_service() -> Service:
                    outreach_note=" ".join(l.strip() for l in note.group(1).splitlines()) if note else "",
                    volunteering=_str_list(block, "volunteering"),
                    affiliations=_str_list(block, "affiliations"))
+
+
+# --- contact page -----------------------------------------------------------
+# Every outbound address on the contact page (form endpoint, calendar,
+# Substack) lives in config.yaml. `link` here names the config key; a key that
+# is missing or empty raises at build time rather than rendering a dead button.
+
+class ContactForm(BaseModel):
+    heading: str
+    intro: str
+    button: str
+    topics: List[str] = Field(default_factory=list)
+
+
+class ContactCard(BaseModel):
+    heading: str
+    text: str
+    button: str
+    link: str                 # key under site.author in config.yaml
+
+
+class ServiceOffer(BaseModel):   # what she offers; not the academic `Service` above
+    tag: str                  # must be a term in data/TAGS.yaml
+    label: str
+    note: str = ""
+    continues: bool = False   # True: the note finishes the sentence, no dash
+
+
+class ContactPage(BaseModel):
+    description: str          # the meta description; the lede is too long for it
+    lede: str
+    form: ContactForm
+    cards: List[ContactCard] = Field(default_factory=list)
+    services: List[ServiceOffer] = Field(default_factory=list)
+
+
+def load_contact(vocab: TagVocabulary) -> ContactPage:
+    text = (ROOT / "data" / "contact.yaml").read_text()
+
+    def scalar(block: str, key: str, default=None):
+        m = re.search(rf'^\s*(?:- )?{key}:\s*"(.*)"\s*$', block, re.M)
+        if m:
+            return m.group(1)
+        m = re.search(rf"^\s*(?:- )?{key}:\s*(\S.*?)\s*$", block, re.M)
+        return m.group(1) if m else default
+
+    form_block = _block(text, "form")
+    form = ContactForm(heading=scalar(form_block, "heading"),
+                       intro=scalar(form_block, "intro"),
+                       button=scalar(form_block, "button"),
+                       topics=_str_list(form_block, "topics"))
+
+    cards = [ContactCard(heading=scalar(c, "heading"), text=scalar(c, "text"),
+                         button=scalar(c, "button"), link=scalar(c, "link"))
+             for c in re.split(r"\n(?=  - )", _block(text, "cards")) if "heading:" in c]
+
+    services = []
+    for s in re.split(r"\n(?=  - )", _block(text, "services")):
+        if "tag:" not in s:
+            continue
+        tag = scalar(s, "tag")
+        vocab.validate_tag(tag, context="data/contact.yaml services")
+        services.append(ServiceOffer(tag=tag, label=scalar(s, "label"),
+                                note=scalar(s, "note", ""),
+                                continues=scalar(s, "continues", "false") == "true"))
+
+    return ContactPage(description=scalar(text, "description"),
+                       lede=scalar(text, "lede"), form=form,
+                       cards=cards, services=services)
