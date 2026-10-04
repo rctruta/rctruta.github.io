@@ -99,9 +99,9 @@ projects:
   consensus-contagion: [AI evaluation, Deterministic grading, Ablation study, RLHF, Data contracts, AI security, Python]
   music-recommender: [AI evaluation, Evaluation sets, Python]
   rag-accuracy: [AI evaluation, Evaluation sets, Python, RAG, LanceDB]
-  agent-tools: [AI security, Deterministic grading, Python, Pre-commit gates]
+  agent-tools: [AI security, Deterministic grading, Python, Pre-commit gates, System integrity]
   agent-telemetry: [AI evaluation, Process telemetry, Deterministic grading, Python]
-  site-infrastructure: [Data modeling, Pre-commit gates, Python, Data contracts]
+  site-infrastructure: [Data modeling, Pre-commit gates, Python, Data contracts, System integrity]
 
   # teaching sections and artifacts
   academic-leadership: [Team leadership, Teaching, Migration, PostgreSQL]

@@ -2,6 +2,7 @@
 sections:
   - id: data-engineering
     title: "Data Modeling & Data Engineering"
+    nav: "Data modeling"
     summary: "Data modeling is the throughline. Source systems into structures analysts and models can use — migration, entity resolution, record linkage, annotation quality control, and the SQL behaviour underneath it."
     items:
       - id: guelph-migration
@@ -16,7 +17,6 @@ sections:
           Two properties of that work carry into anything with dirty source data: the ground truth is never handed to you, and a linkage rate means nothing without the precision beside it.
 
           The coding work was not a solo exercise. I led a team of twenty research assistants doing the manual verification, and built the monitoring that made their work checkable at the level of a single record — one line, in one file, among a great many. The scarce resource was their attention, so the system's job was to spend it only where a disagreement actually existed.
-
       - id: name-coding
         title: "Automating a hand-built name dictionary — first-name standardization across seven censuses"
         activity: built
@@ -31,7 +31,6 @@ sections:
           Every candidate carried an expert verdict, good or bad, which made the system measurable. The question I asked of it was whether the nearest candidate was also the right one, because that determines whether the expensive far candidates can be dropped: 96.5%, 92.0%, 89.3%, 88.6% across batches, down to 75.7% on the hardest. I checked the other direction too — whether *wrong* codes also sit at minimum distance — since a metric that scores well but cannot discriminate is worth nothing.
 
           The coded names carried forward across the 1852, 1871, 1880, 1881, 1891, 1901 and 1911 censuses, with a full ingest pipeline per census: process, detect inconsistencies, apply coding, prepare for the model downstream.
-
       - id: age-modeling
         title: "Fitting the agreement function for record linkage — age difference across censuses"
         activity: research
@@ -40,7 +39,6 @@ sections:
           Two records ten years apart rarely agree on age. To link them you need a function turning that disagreement into evidence: `ageDiff` mapping an age difference onto a weight between one and zero. I fitted five candidates — normalized by constant factors, by frequency percentage, and by a fast-increasing function — and chose between them on standard deviation against observed frequencies, across five independent datasets and 11,813 records.
 
           I also tested the received wisdom that women misreport age more often than men. Running the regression separately by gender, the difference was slight: both curves were the same function shifted by about a year. Not two models. One model and an offset — which is the result you only get by checking rather than assuming.
-
       - id: police-gazette
         title: "Getting convict transport records out of OCR — Police Gazette"
         activity: built
@@ -49,17 +47,26 @@ sections:
           Nineteenth-century Police Gazettes recording prisoners transported to Tasmania, held as OCR'd scans. The data the historians needed was in tables inside those documents, and OCR does not respect a table. I wrote the extraction design: fixed layouts for the two table types, one table per output file, a naming convention tying every file back to its source page, and a separate metadata table holding what is true of a whole file — its description, its row count, who extracted it, who checked it — recorded once instead of repeated on every row.
 
           They took that document to a funding body and were awarded **$34,000** to do the work. I had written it as a favour, and heard some months later.
-
       - id: db2-postgres
         title: "Departmental migration from IBM DB2 to PostgreSQL — University of Toronto"
         activity: built
         tags: [Migration, PostgreSQL, Team leadership, Teaching]
         description: |
           Led the Computer Science department's move off DB2: platform evaluation, rewriting the course materials that depended on it, retraining instructors, and supporting students through the change. A migration whose hardest constraint was that several hundred people had to keep working through it.
+      - id: site-infrastructure
+        title: "rctruta.github.io — contract-driven portfolio & claim verification pipeline"
+        activity: built
+        tags: [Data modeling, Pre-commit gates, Python, Data contracts, System integrity]
+        description: |
+          The repository powering this website is built as a data modeling project. Numbers that carry weight are registered in `FACTS.yaml` with their source and checked against it by a pre-commit hook, which also reports every unregistered number for review and blocks any claim on the banned list. A second hook refuses to commit personal contact details. Vocabulary is governed by `TAGS.yaml` and `TAXONOMY.md`: an unknown tag fails the build. Python and Node generators compile the writing list, the speaking list, the tag index, the navigation and the search index — so a page and the data behind it cannot disagree.
+        links:
+          - text: "rctruta.github.io"
+            url: "https://github.com/rctruta/rctruta.github.io"
 
   - id: benchmarking
     title: "Database & Query Engine Benchmarking"
-    summary: "Measuring engines and protocols under controlled, cold-cache conditions. Every result ships with the experiment that produced it."
+    nav: "Benchmarking"
+    summary: "Measuring engines and protocols under conditions stated well enough to reproduce. Every result ships with the experiment that produced it."
     items:
       - id: sqlbenchdag
         title: "sqlbenchdag — a reproducible benchmarking laboratory"
@@ -88,7 +95,6 @@ sections:
           - label: "MCP server published to the official registry"
             text: "— v0.1.2, 10 tools, active since 2026-08-10. Install with <code>uvx sqlbenchdag</code>."
             url: "https://mcpverzeichnis.com/en/server/io-github-rctruta-sqlbenchdag"
-
       - id: sql-behaviour
         title: "SQL behaviour under measurement"
         activity: research
@@ -98,7 +104,6 @@ sections:
         links:
           - text: "The Pizza Logic You Didn't Know You Kneaded"
             url: "https://ramonactruta.substack.com/p/the-pizza-logic-you-didnt-know-you"
-
       - id: lakehouse-semantics
         title: "lakehouse-semantics — SQL correctness and engine divergence matrix"
         activity: built
@@ -111,27 +116,10 @@ sections:
           - text: "lakehouse-semantics"
             url: "https://github.com/rctruta/lakehouse-semantics"
 
-  - id: memory-security
-    title: "Agent Memory Security"
-    summary: "Attacks on what an agent stores and later treats as its own knowledge. Maps to OWASP LLM01 (indirect prompt injection) and LLM04 (data poisoning)."
-    items:
-      - id: agent-memory
-        title: "Semantic injection into agent memory"
-        activity: research
-        tags: [AI security, AI evaluation]
-        description: |
-          A deterministic exploit against an open-source agent memory system: text that reads as ordinary content to a human, but that the extraction pipeline turns into a stored fact the agent later treats as its own knowledge. Disclosed responsibly. Separately, a forensic read of a coding agent's local state directory — what it writes to disk, in plaintext, without telling you.
-        links:
-          - text: "The Blueberry Muffin Exploit"
-            url: "https://ramonactruta.substack.com/p/the-blueberry-muffin-exploit-semantic"
-          - text: "Inside ~/.claude/"
-            url: "https://ramonactruta.substack.com/p/inside-claude-structure-is-not-security"
-        notes:
-          - text: "Authorised researcher, Anthropic Cyber Verification Program."
-
   - id: agent-evaluation
-    title: "Agent Evaluation & Reliability"
-    summary: "Instrumenting agents and reading what they actually did, rather than asking them. Relates to OWASP LLM06 (excessive agency)."
+    title: "AI & Agent Evaluation"
+    nav: "AI evaluation"
+    summary: "Whether a model or an agent did what it claimed, and what a deployment will cost. Instrumenting systems and reading what they actually did, rather than asking them. Relates to OWASP LLM06 (excessive agency) and LLM09 (misinformation)."
     items:
       - id: harness-bench
         title: "harness-bench — measuring a deployment before it is a deployment"
@@ -159,7 +147,6 @@ sections:
         links:
           - text: "harness-bench"
             url: "https://github.com/rctruta/harness-bench"
-
       - id: malloy-study
         title: "Do bundled agent skills actually reach the agent? — Malloy Publisher study"
         activity: research
@@ -181,7 +168,6 @@ sections:
         links:
           - text: "Study & all 18 traces"
             url: "https://github.com/rctruta/malloy-publisher-agent-study"
-
       - id: agent-traces
         title: "Reading agent traces"
         activity: research
@@ -197,20 +183,17 @@ sections:
             url: "https://github.com/BauplanLabs/bauplan/issues/370"
           - text: "#371"
             url: "https://github.com/BauplanLabs/bauplan/issues/371"
-
-      - id: consensus-contagion
-        title: "Consensus Contagion — status bias and the RLHF tax in agent routing"
-        activity: research
-        tags: [AI evaluation, Deterministic grading, Ablation study, RLHF, Data contracts, AI security, Python]
+      - id: agent-telemetry
+        title: "agent-telemetry — transcript-derived process metrology for coding agents"
+        activity: built
+        tags: [AI evaluation, Process telemetry, Deterministic grading, Python]
         description: |
-          Based on my **adversarial-judgement-research** framework (16 content-addressed study contracts, 7 models, 110+ graded runs): I proved that generalized LLM orchestrators evaluate simulated social status over technical merit. Injecting a high-status persona into routing decisions causes agentic state to collapse into authority bias (the RLHF tax). Prompt-level instructions fail under pressure; mechanical gates hold.
-        notes:
-          - text: "Presented at the Canadian Women in Cybersecurity Conference, Toronto, May 2026."
+          A local analytics package that parses raw JSONL session transcripts from coding agents (Claude Code) into un-opinionated process metrics: `tool_calls_per_turn`, `reads_before_first_edit`, `repeated_commands`, `error_rate`, `seconds_to_first_write`, and `edit_revisits`.
 
-  - id: retrieval-integrity
-    title: "Retrieval Integrity"
-    summary: "Whether a retrieval system can support the answers it gives. Maps to OWASP LLM09 (misinformation)."
-    items:
+          Prose instructions (in `CLAUDE.md` or prompt guidance) are hypotheses about agent behavior. By comparing session telemetry before and after introducing a rule, `agent-telemetry` evaluates whether a prompt-level instruction actually shifted model behavior. If a rule does not move its metric, the rule does not bind.
+        links:
+          - text: "agent-telemetry"
+            url: "https://github.com/rctruta/agent-telemetry"
       - id: rag-accuracy
         title: "A RAG system answering 17 of 20 questions its sources couldn't support"
         activity: built
@@ -222,7 +205,6 @@ sections:
         links:
           - text: "podcast-rag"
             url: "https://github.com/rctruta/podcast-rag"
-
       - id: music-recommender
         title: "Music recommendation system — MIT Professional Education capstone"
         activity: research
@@ -235,10 +217,32 @@ sections:
           - text: "music_recommendation_system"
             url: "https://github.com/rctruta/music_recommendation_system"
 
-  - id: system-integrity
-    title: "System Integrity & Agentic Infrastructure"
-    summary: "Applying database determinism to probabilistic AI systems, runtime contracts, and agentic infrastructure."
+  - id: memory-security
+    title: "AI Security"
+    nav: "AI security"
+    summary: "Attacks on what an agent reads, stores and later trusts — and the controls that hold against them. Maps to OWASP LLM01 (indirect prompt injection) and LLM04 (data poisoning)."
     items:
+      - id: agent-memory
+        title: "Semantic injection into agent memory"
+        activity: research
+        tags: [AI security, AI evaluation]
+        description: |
+          A deterministic exploit against an open-source agent memory system: text that reads as ordinary content to a human, but that the extraction pipeline turns into a stored fact the agent later treats as its own knowledge. Disclosed responsibly. Separately, a forensic read of a coding agent's local state directory — what it writes to disk, in plaintext, without telling you.
+        links:
+          - text: "The Blueberry Muffin Exploit"
+            url: "https://ramonactruta.substack.com/p/the-blueberry-muffin-exploit-semantic"
+          - text: "Inside ~/.claude/"
+            url: "https://ramonactruta.substack.com/p/inside-claude-structure-is-not-security"
+        notes:
+          - text: "Authorised researcher, Anthropic Cyber Verification Program."
+      - id: consensus-contagion
+        title: "Consensus Contagion — status bias and the RLHF tax in agent routing"
+        activity: research
+        tags: [AI evaluation, Deterministic grading, Ablation study, RLHF, Data contracts, AI security, Python]
+        description: |
+          Based on my **adversarial-judgement-research** framework (16 content-addressed study contracts, 7 models, 110+ graded runs): I proved that generalized LLM orchestrators evaluate simulated social status over technical merit. Injecting a high-status persona into routing decisions causes agentic state to collapse into authority bias (the RLHF tax). Prompt-level instructions fail under pressure; mechanical gates hold.
+        notes:
+          - text: "Presented at the Canadian Women in Cybersecurity Conference, Toronto, May 2026."
       - id: agent-tools
         title: "Tools and playbooks for collaborating with coding agents"
         activity: built
@@ -252,29 +256,3 @@ sections:
             url: "https://github.com/rctruta/awesome-pedantic-medallion"
           - text: "A README is a Set of Falsifiable Claims"
             url: "https://ramonactruta.substack.com/p/a-readme-is-a-set-of-falsifiable"
-
-      - id: site-infrastructure
-        title: "rctruta.github.io — contract-driven portfolio & claim verification pipeline"
-        activity: built
-        tags: [Data modeling, Pre-commit gates, Python, Data contracts, System integrity]
-        description: |
-          The repository powering this website is built as a data modeling project. Numbers that carry weight are registered in `FACTS.yaml` with their source and checked against it by a pre-commit hook, which also reports every unregistered number for review and blocks any claim on the banned list. A second hook refuses to commit personal contact details. Vocabulary is governed by `TAGS.yaml` and `TAXONOMY.md`: an unknown tag fails the build. Python and Node generators compile the writing list, the speaking list, the tag index, the navigation and the search index — so a page and the data behind it cannot disagree.
-        links:
-          - text: "rctruta.github.io"
-            url: "https://github.com/rctruta/rctruta.github.io"
-
-  - id: tooling
-    title: "Enforcement Tooling"
-    summary: "Engineering that came out of the research: gates that hold when instructions don't."
-    items:
-      - id: agent-telemetry
-        title: "agent-telemetry — transcript-derived process metrology for coding agents"
-        activity: built
-        tags: [AI evaluation, Process telemetry, Deterministic grading, Python]
-        description: |
-          A local analytics package that parses raw JSONL session transcripts from coding agents (Claude Code) into un-opinionated process metrics: `tool_calls_per_turn`, `reads_before_first_edit`, `repeated_commands`, `error_rate`, `seconds_to_first_write`, and `edit_revisits`.
-
-          Prose instructions (in `CLAUDE.md` or prompt guidance) are hypotheses about agent behavior. By comparing session telemetry before and after introducing a rule, `agent-telemetry` evaluates whether a prompt-level instruction actually shifted model behavior. If a rule does not move its metric, the rule does not bind.
-        links:
-          - text: "agent-telemetry"
-            url: "https://github.com/rctruta/agent-telemetry"

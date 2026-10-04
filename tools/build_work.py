@@ -81,7 +81,7 @@ def parse_work_yaml(text):
             continue
 
         if raw_indent == 2 and trimmed.startswith("- id:"):
-            current_sec = {"id": trimmed.split(":", 1)[1].strip(), "title": "", "summary": "", "items": []}
+            current_sec = {"id": trimmed.split(":", 1)[1].strip(), "title": "", "summary": "", "nav": "", "items": []}
             sections.append(current_sec)
             current_item = None
             in_figures = in_links = in_notes = False
@@ -91,6 +91,8 @@ def parse_work_yaml(text):
                 current_sec["title"] = trimmed.split(":", 1)[1].strip().strip('"')
             elif trimmed.startswith("summary:"):
                 current_sec["summary"] = trimmed.split(":", 1)[1].strip().strip('"')
+            elif trimmed.startswith("nav:"):
+                current_sec["nav"] = trimmed.split(":", 1)[1].strip().strip('"')
 
         elif raw_indent == 6 and trimmed.startswith("- id:"):
             current_item = {
@@ -189,7 +191,10 @@ subnav_links = []
 sections_html = []
 
 for sec in sections:
-    subnav_links.append(f'  <a href="#{sec["id"]}">{html.escape(sec["title"].split("&")[0].strip())}</a>')
+    # the nav label is declared, not guessed. Chopping the title at "&" turned
+    # "AI & Agent Evaluation" into "AI".
+    label = sec.get("nav") or sec["title"]
+    subnav_links.append(f'  <a href="#{sec["id"]}">{html.escape(label)}</a>')
     items_html = []
     for item in sec["items"]:
         tags_html = "".join(

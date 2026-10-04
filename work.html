@@ -34,13 +34,10 @@
   </span>
 </div></nav>
 <nav class="subnav" id="top"><div class="wrap">
-  <a href="#data-engineering">Data Modeling</a>
-  <a href="#benchmarking">Database</a>
-  <a href="#memory-security">Agent Memory Security</a>
-  <a href="#agent-evaluation">Agent Evaluation</a>
-  <a href="#retrieval-integrity">Retrieval Integrity</a>
-  <a href="#system-integrity">System Integrity</a>
-  <a href="#tooling">Enforcement Tooling</a>
+  <a href="#data-engineering">Data modeling</a>
+  <a href="#benchmarking">Benchmarking</a>
+  <a href="#agent-evaluation">AI evaluation</a>
+  <a href="#memory-security">AI security</a>
 </div></nav>
 
 <section><div class="wrap">
@@ -99,11 +96,22 @@
 
     <div class="tags"><a class="tag" href="tags.html#migration">Migration</a><a class="tag" href="tags.html#postgresql">PostgreSQL</a><a class="tag" href="tags.html#team-leadership">Team leadership</a><a class="tag" href="tags.html#teaching">Teaching</a></div>
   </div>
+  <div class="proj" id="site-infrastructure">
+    <h3>rctruta.github.io — contract-driven portfolio &amp; claim verification pipeline</h3>
+
+    <p>The repository powering this website is built as a data modeling project. Numbers that carry weight are registered in <code>FACTS.yaml</code> with their source and checked against it by a pre-commit hook, which also reports every unregistered number for review and blocks any claim on the banned list. A second hook refuses to commit personal contact details. Vocabulary is governed by <code>TAGS.yaml</code> and <code>TAXONOMY.md</code>: an unknown tag fails the build. Python and Node generators compile the writing list, the speaking list, the tag index, the navigation and the search index — so a page and the data behind it cannot disagree.</p>
+
+    <div class="tags"><a class="tag" href="tags.html#data-modeling">Data modeling</a><a class="tag" href="tags.html#pre-commit-gates">Pre-commit gates</a><a class="tag" href="tags.html#python">Python</a><a class="tag" href="tags.html#data-contracts">Data contracts</a><a class="tag" href="tags.html#system-integrity">System integrity</a></div>
+
+    <div class="links">
+      <a href="https://github.com/rctruta/rctruta.github.io" target="_blank" rel="noopener">rctruta.github.io</a>
+    </div>
+  </div>
   <p class="totop"><a href="#top">&uarr; Top</a></p>
 </div></section>
 <section><div class="wrap">
   <h2 id="benchmarking">Database &amp; Query Engine Benchmarking</h2>
-  <p class="sub small cat-note">Measuring engines and protocols under controlled, cold-cache conditions. Every result ships with the experiment that produced it.</p>
+  <p class="sub small cat-note">Measuring engines and protocols under conditions stated well enough to reproduce. Every result ships with the experiment that produced it.</p>
   <div class="proj" id="sqlbenchdag">
     <h3>sqlbenchdag — a reproducible benchmarking laboratory</h3>
 
@@ -155,27 +163,8 @@
   <p class="totop"><a href="#top">&uarr; Top</a></p>
 </div></section>
 <section><div class="wrap">
-  <h2 id="memory-security">Agent Memory Security</h2>
-  <p class="sub small cat-note">Attacks on what an agent stores and later treats as its own knowledge. Maps to OWASP LLM01 (indirect prompt injection) and LLM04 (data poisoning).</p>
-  <div class="proj" id="agent-memory">
-    <h3>Semantic injection into agent memory</h3>
-
-    <p>A deterministic exploit against an open-source agent memory system: text that reads as ordinary content to a human, but that the extraction pipeline turns into a stored fact the agent later treats as its own knowledge. Disclosed responsibly. Separately, a forensic read of a coding agent's local state directory — what it writes to disk, in plaintext, without telling you.</p>
-
-    <div class="tags"><a class="tag" href="tags.html#ai-security">AI security</a><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a></div>
-
-    <div class="links">
-      <a href="https://ramonactruta.substack.com/p/the-blueberry-muffin-exploit-semantic" target="_blank" rel="noopener">The Blueberry Muffin Exploit</a>
-      <a href="https://ramonactruta.substack.com/p/inside-claude-structure-is-not-security" target="_blank" rel="noopener">Inside ~/.claude/</a>
-    </div>
-
-    <div class="note">Authorised researcher, Anthropic Cyber Verification Program.</div>
-  </div>
-  <p class="totop"><a href="#top">&uarr; Top</a></p>
-</div></section>
-<section><div class="wrap">
-  <h2 id="agent-evaluation">Agent Evaluation &amp; Reliability</h2>
-  <p class="sub small cat-note">Instrumenting agents and reading what they actually did, rather than asking them. Relates to OWASP LLM06 (excessive agency).</p>
+  <h2 id="agent-evaluation">AI &amp; Agent Evaluation</h2>
+  <p class="sub small cat-note">Whether a model or an agent did what it claimed, and what a deployment will cost. Instrumenting systems and reading what they actually did, rather than asking them. Relates to OWASP LLM06 (excessive agency) and LLM09 (misinformation).</p>
   <div class="proj" id="harness-bench">
     <h3>harness-bench — measuring a deployment before it is a deployment</h3>
 
@@ -240,20 +229,19 @@
       <a href="https://github.com/BauplanLabs/bauplan/issues/371" target="_blank" rel="noopener">#371</a>
     </div>
   </div>
-  <div class="proj" id="consensus-contagion">
-    <h3>Consensus Contagion — status bias and the RLHF tax in agent routing</h3>
+  <div class="proj" id="agent-telemetry">
+    <h3>agent-telemetry — transcript-derived process metrology for coding agents</h3>
 
-    <p>Based on my <strong>adversarial-judgement-research</strong> framework (16 content-addressed study contracts, 7 models, 110+ graded runs): I proved that generalized LLM orchestrators evaluate simulated social status over technical merit. Injecting a high-status persona into routing decisions causes agentic state to collapse into authority bias (the RLHF tax). Prompt-level instructions fail under pressure; mechanical gates hold.</p>
+    <p>A local analytics package that parses raw JSONL session transcripts from coding agents (Claude Code) into un-opinionated process metrics: <code>tool_calls_per_turn</code>, <code>reads_before_first_edit</code>, <code>repeated_commands</code>, <code>error_rate</code>, <code>seconds_to_first_write</code>, and <code>edit_revisits</code>.</p>
 
-    <div class="tags"><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a><a class="tag" href="tags.html#deterministic-grading">Deterministic grading</a><a class="tag" href="tags.html#ablation-study">Ablation study</a><a class="tag" href="tags.html#rlhf">RLHF</a><a class="tag" href="tags.html#data-contracts">Data contracts</a><a class="tag" href="tags.html#ai-security">AI security</a><a class="tag" href="tags.html#python">Python</a></div>
+<p>Prose instructions (in <code>CLAUDE.md</code> or prompt guidance) are hypotheses about agent behavior. By comparing session telemetry before and after introducing a rule, <code>agent-telemetry</code> evaluates whether a prompt-level instruction actually shifted model behavior. If a rule does not move its metric, the rule does not bind.</p>
 
-    <div class="note">Presented at the Canadian Women in Cybersecurity Conference, Toronto, May 2026.</div>
+    <div class="tags"><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a><a class="tag" href="tags.html#process-telemetry">Process telemetry</a><a class="tag" href="tags.html#deterministic-grading">Deterministic grading</a><a class="tag" href="tags.html#python">Python</a></div>
+
+    <div class="links">
+      <a href="https://github.com/rctruta/agent-telemetry" target="_blank" rel="noopener">agent-telemetry</a>
+    </div>
   </div>
-  <p class="totop"><a href="#top">&uarr; Top</a></p>
-</div></section>
-<section><div class="wrap">
-  <h2 id="retrieval-integrity">Retrieval Integrity</h2>
-  <p class="sub small cat-note">Whether a retrieval system can support the answers it gives. Maps to OWASP LLM09 (misinformation).</p>
   <div class="proj" id="rag-accuracy">
     <h3>A RAG system answering 17 of 20 questions its sources couldn&#x27;t support</h3>
 
@@ -283,48 +271,42 @@
   <p class="totop"><a href="#top">&uarr; Top</a></p>
 </div></section>
 <section><div class="wrap">
-  <h2 id="system-integrity">System Integrity &amp; Agentic Infrastructure</h2>
-  <p class="sub small cat-note">Applying database determinism to probabilistic AI systems, runtime contracts, and agentic infrastructure.</p>
+  <h2 id="memory-security">AI Security</h2>
+  <p class="sub small cat-note">Attacks on what an agent reads, stores and later trusts — and the controls that hold against them. Maps to OWASP LLM01 (indirect prompt injection) and LLM04 (data poisoning).</p>
+  <div class="proj" id="agent-memory">
+    <h3>Semantic injection into agent memory</h3>
+
+    <p>A deterministic exploit against an open-source agent memory system: text that reads as ordinary content to a human, but that the extraction pipeline turns into a stored fact the agent later treats as its own knowledge. Disclosed responsibly. Separately, a forensic read of a coding agent's local state directory — what it writes to disk, in plaintext, without telling you.</p>
+
+    <div class="tags"><a class="tag" href="tags.html#ai-security">AI security</a><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a></div>
+
+    <div class="links">
+      <a href="https://ramonactruta.substack.com/p/the-blueberry-muffin-exploit-semantic" target="_blank" rel="noopener">The Blueberry Muffin Exploit</a>
+      <a href="https://ramonactruta.substack.com/p/inside-claude-structure-is-not-security" target="_blank" rel="noopener">Inside ~/.claude/</a>
+    </div>
+
+    <div class="note">Authorised researcher, Anthropic Cyber Verification Program.</div>
+  </div>
+  <div class="proj" id="consensus-contagion">
+    <h3>Consensus Contagion — status bias and the RLHF tax in agent routing</h3>
+
+    <p>Based on my <strong>adversarial-judgement-research</strong> framework (16 content-addressed study contracts, 7 models, 110+ graded runs): I proved that generalized LLM orchestrators evaluate simulated social status over technical merit. Injecting a high-status persona into routing decisions causes agentic state to collapse into authority bias (the RLHF tax). Prompt-level instructions fail under pressure; mechanical gates hold.</p>
+
+    <div class="tags"><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a><a class="tag" href="tags.html#deterministic-grading">Deterministic grading</a><a class="tag" href="tags.html#ablation-study">Ablation study</a><a class="tag" href="tags.html#rlhf">RLHF</a><a class="tag" href="tags.html#data-contracts">Data contracts</a><a class="tag" href="tags.html#ai-security">AI security</a><a class="tag" href="tags.html#python">Python</a></div>
+
+    <div class="note">Presented at the Canadian Women in Cybersecurity Conference, Toronto, May 2026.</div>
+  </div>
   <div class="proj" id="agent-tools">
     <h3>Tools and playbooks for collaborating with coding agents</h3>
 
     <p><strong>ai-agent-utils</strong> — a bootstrap that starts a repository with gates already enforced, rather than rules written down and hoped for. Two families: git discipline, and claim integrity — every load-bearing number registered with a source and re-checked before commit, fabricated claims blocked by pattern, and a checkpoint that refuses to record a working state unless a proof command passes. Enforcement is git hooks and stdlib scripts, so it binds whichever agent is driving; the Claude and Cursor files only describe it. <strong>The Pedantic Medallion</strong> — community-curated playbooks for building shared understanding, from the framework of the same name.</p>
 
-    <div class="tags"><a class="tag" href="tags.html#ai-security">AI security</a><a class="tag" href="tags.html#deterministic-grading">Deterministic grading</a><a class="tag" href="tags.html#python">Python</a><a class="tag" href="tags.html#pre-commit-gates">Pre-commit gates</a></div>
+    <div class="tags"><a class="tag" href="tags.html#ai-security">AI security</a><a class="tag" href="tags.html#deterministic-grading">Deterministic grading</a><a class="tag" href="tags.html#python">Python</a><a class="tag" href="tags.html#pre-commit-gates">Pre-commit gates</a><a class="tag" href="tags.html#system-integrity">System integrity</a></div>
 
     <div class="links">
       <a href="https://github.com/rctruta/ai-agent-utils" target="_blank" rel="noopener">ai-agent-utils</a>
       <a href="https://github.com/rctruta/awesome-pedantic-medallion" target="_blank" rel="noopener">awesome-pedantic-medallion</a>
       <a href="https://ramonactruta.substack.com/p/a-readme-is-a-set-of-falsifiable" target="_blank" rel="noopener">A README is a Set of Falsifiable Claims</a>
-    </div>
-  </div>
-  <div class="proj" id="site-infrastructure">
-    <h3>rctruta.github.io — contract-driven portfolio &amp; claim verification pipeline</h3>
-
-    <p>The repository powering this website is built as a data modeling project. Numbers that carry weight are registered in <code>FACTS.yaml</code> with their source and checked against it by a pre-commit hook, which also reports every unregistered number for review and blocks any claim on the banned list. A second hook refuses to commit personal contact details. Vocabulary is governed by <code>TAGS.yaml</code> and <code>TAXONOMY.md</code>: an unknown tag fails the build. Python and Node generators compile the writing list, the speaking list, the tag index, the navigation and the search index — so a page and the data behind it cannot disagree.</p>
-
-    <div class="tags"><a class="tag" href="tags.html#data-modeling">Data modeling</a><a class="tag" href="tags.html#pre-commit-gates">Pre-commit gates</a><a class="tag" href="tags.html#python">Python</a><a class="tag" href="tags.html#data-contracts">Data contracts</a></div>
-
-    <div class="links">
-      <a href="https://github.com/rctruta/rctruta.github.io" target="_blank" rel="noopener">rctruta.github.io</a>
-    </div>
-  </div>
-  <p class="totop"><a href="#top">&uarr; Top</a></p>
-</div></section>
-<section><div class="wrap">
-  <h2 id="tooling">Enforcement Tooling</h2>
-  <p class="sub small cat-note">Engineering that came out of the research: gates that hold when instructions don&#x27;t.</p>
-  <div class="proj" id="agent-telemetry">
-    <h3>agent-telemetry — transcript-derived process metrology for coding agents</h3>
-
-    <p>A local analytics package that parses raw JSONL session transcripts from coding agents (Claude Code) into un-opinionated process metrics: <code>tool_calls_per_turn</code>, <code>reads_before_first_edit</code>, <code>repeated_commands</code>, <code>error_rate</code>, <code>seconds_to_first_write</code>, and <code>edit_revisits</code>.</p>
-
-<p>Prose instructions (in <code>CLAUDE.md</code> or prompt guidance) are hypotheses about agent behavior. By comparing session telemetry before and after introducing a rule, <code>agent-telemetry</code> evaluates whether a prompt-level instruction actually shifted model behavior. If a rule does not move its metric, the rule does not bind.</p>
-
-    <div class="tags"><a class="tag" href="tags.html#ai-evaluation">AI evaluation</a><a class="tag" href="tags.html#process-telemetry">Process telemetry</a><a class="tag" href="tags.html#deterministic-grading">Deterministic grading</a><a class="tag" href="tags.html#python">Python</a></div>
-
-    <div class="links">
-      <a href="https://github.com/rctruta/agent-telemetry" target="_blank" rel="noopener">agent-telemetry</a>
     </div>
   </div>
   <p class="totop"><a href="#top">&uarr; Top</a></p>
