@@ -9,6 +9,13 @@ if ! "$PY" "$ROOT/tools/check_private.py"; then
   exit 1
 fi
 
+# The pages must match the data they were generated from. These assert on the
+# built HTML, so they belong here rather than only in ./build.
+if ! "$PY" "$ROOT/tools/test_tools.py" >/dev/null; then
+  "$PY" "$ROOT/tools/test_tools.py" || true
+  echo "  -> A page disagrees with its data. Run ./build." >&2; exit 1
+fi
+
 # Claims gate: numbers on the site must match their registered source.
 CLAIMS="$HOME/claude-docs-allowed/Resume/.claims"
 [ -x "$CLAIMS/verify.py" ] || exit 0

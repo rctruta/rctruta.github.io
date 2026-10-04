@@ -464,8 +464,6 @@ class ServiceOffer(BaseModel):   # what she offers; not the academic `Service` a
 
 
 class ContactPage(BaseModel):
-    description: str          # the meta description; the lede is too long for it
-    lede: str
     form: ContactForm
     cards: List[ContactCard] = Field(default_factory=list)
     services: List[ServiceOffer] = Field(default_factory=list)
@@ -501,6 +499,57 @@ def load_contact(vocab: TagVocabulary) -> ContactPage:
                                 note=scalar(s, "note", ""),
                                 continues=scalar(s, "continues", "false") == "true"))
 
-    return ContactPage(description=scalar(text, "description"),
-                       lede=scalar(text, "lede"), form=form,
-                       cards=cards, services=services)
+    return ContactPage(form=form, cards=cards, services=services)
+
+
+# --- home page --------------------------------------------------------------
+
+class Praise(BaseModel):
+    quote: str
+    author: str
+    author_url: str
+    source: str
+    work: str
+    work_url: str
+
+
+class HomePage(BaseModel):
+    description: str
+    bio: str
+    portrait_alt: str
+    praise: Praise
+    testimonials_link: str
+    google_site_verification: str
+    job_title: str
+
+
+def load_home() -> HomePage:
+    text = (ROOT / "data" / "home.yaml").read_text()
+
+    def scalar(block: str, key: str):
+        m = re.search(rf'^\s*{key}:\s*"(.*)"\s*$', block, re.M)
+        return m.group(1) if m else None
+
+    bio = re.search(r"^bio: \|\n((?:  .*\n?)+)", text, re.M)
+    praise_block = _block(text, "praise")
+
+    return HomePage(
+        description=scalar(text, "description"),
+        bio=" ".join(l.strip() for l in bio.group(1).splitlines() if l.strip()) if bio else "",
+        portrait_alt=scalar(text, "portrait_alt"),
+        praise=Praise(quote=scalar(praise_block, "quote"),
+                      author=scalar(praise_block, "author"),
+                      author_url=scalar(praise_block, "author_url"),
+                      source=scalar(praise_block, "source"),
+                      work=scalar(praise_block, "work"),
+                      work_url=scalar(praise_block, "work_url")),
+        testimonials_link=scalar(text, "testimonials_link"),
+        google_site_verification=scalar(text, "google_site_verification"),
+        job_title=scalar(text, "job_title"),
+    )
+
+
+def count_testimonials() -> int:
+    """How many testimonials teaching.html actually shows, counted from the data."""
+    text = (ROOT / "data" / "teaching.yaml").read_text()
+    return len(re.findall(r"^\s+- quote:", _block(text, "testimonials"), re.M))

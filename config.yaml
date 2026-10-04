@@ -22,26 +22,32 @@ site:
 navigation:
   - id: work
     label: "Work"
+    description: "Database benchmarking, AI security, agent evaluation, system integrity, and retrieval accuracy. Every claim with the experiment attached."
     href: "work.html"
     enabled: true
   - id: teaching
     label: "Teaching"
+    description: "Teaching philosophy, course design, student testimonials, materials, and academic leadership."
     href: "teaching.html"
     enabled: true
   - id: speaking
     label: "Speaking"
+    description: "Conference talks and podcast appearances, as guest and as guest host."
     href: "speaking.html"
     enabled: true
   - id: writing
     label: "Writing"
+    description: "Essays on data modeling, AI evaluation, security and the people using these systems. Each piece published with its repository."
     href: "writing.html"
     enabled: true
   - id: index
     label: "Index"
+    description: "Every tag used on this site, and all the work it points to."
     href: "tags.html"
     enabled: true
   - id: contact
     label: "Contact"
+    description: "Open to consulting, contracting, project scoping & development, speaking engagements, research advisory, and conversations that don't have a job attached."
     href: "contact.html"
     enabled: true
 

@@ -37,17 +37,31 @@ def load_config():
         if m:
             config["features"][key] = (m.group(1).lower() == "true")
 
-    # Extract navigation list
-    nav_blocks = re.findall(
-        r"-\s*id:\s*(\w+)\s*\n\s*label:\s*[\"']?([^\"'\n]+)[\"']?\s*\n\s*href:\s*[\"']?([^\"'\n]+)[\"']?\s*\n\s*enabled:\s*(true|false)",
-        text
-    )
-    for nav_id, label, href, enabled in nav_blocks:
-        if enabled.lower() == "true":
+    # Extract navigation list. Each entry carries the one-line description that
+    # becomes the page's meta description, the lede at the top of that page, and
+    # the line beside it on the home page — so the three cannot drift apart.
+    # A missing field raises; a silently dropped nav entry is how a page
+    # disappears from the site without anyone noticing.
+    nav_text = re.search(r"^navigation:\n(.*?)(?=^\w)", text, re.M | re.S)
+    nav_text = nav_text.group(1) if nav_text else ""
+    for entry in re.split(r"\n(?=  - id:)", nav_text):
+        if "- id:" not in entry:
+            continue
+        fields = {}
+        for key in ("id", "label", "description", "href", "enabled"):
+            m = re.search(rf"^\s*(?:- )?{key}:\s*[\"']?(.*?)[\"']?\s*$", entry, re.M)
+            if m is None:
+                nav_id = re.search(r"- id:\s*(\w+)", entry)
+                raise ValueError(
+                    f"config.yaml navigation entry '{nav_id.group(1) if nav_id else entry.strip()[:40]}' "
+                    f"is missing '{key}'")
+            fields[key] = m.group(1)
+        if fields["enabled"].lower() == "true":
             config["navigation"].append({
-                "id": nav_id,
-                "label": label,
-                "href": href,
+                "id": fields["id"],
+                "label": fields["label"],
+                "description": fields["description"],
+                "href": fields["href"],
                 "enabled": True
             })
 

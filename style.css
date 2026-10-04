@@ -251,6 +251,10 @@ section h3 { font-size:20px; font-weight:600; color:var(--ink); letter-spacing:0
               text-transform:none; margin:30px 0 10px }
 .lede { color:var(--mid); margin:-4px 0 14px; font-size:16.5px }
 
+/* the one-line page description, written once in config.yaml */
+.pagelede { padding:26px 0 0; border-bottom:none }
+.pagelede .lede { margin:0; max-width:46em }
+
 /* an acknowledgement someone else wrote */
 .praise {
   background: var(--accent-soft);

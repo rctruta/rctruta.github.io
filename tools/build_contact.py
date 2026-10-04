@@ -56,8 +56,6 @@ services_html = "\n".join(
 body_html = f"""<section><div class="wrap">
   <h2>Contact</h2>
 
-  <p class="lede">{html.escape(contact.lede)}</p>
-
   <div class="contact-grid">
     <div class="form-col">
       <div class="contact-card">
@@ -114,7 +112,6 @@ body_html = f"""<section><div class="wrap">
 
 doc = render_page_shell(
     title=f"{AUTHOR} — Contact",
-    description=contact.description,
     here_page="contact",
     subnav_html="",
     body_html=body_html,

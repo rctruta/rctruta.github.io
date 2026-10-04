@@ -33,7 +33,7 @@ def load_teaching_html_sections():
 
     phil_section = (
         f'<section><div class="wrap">\n'
-        f'  <h2 id="philosophy">Teaching</h2>\n\n'
+        f'  <h2 id="philosophy">Teaching philosophy</h2>\n\n'
         f'  {lede_html}\n\n'
         f'{quote_html}\n\n'
         f'  {princ_html}\n\n'
@@ -269,11 +269,9 @@ subnav_html = "\n".join(
 )
 
 title = f"{AUTHOR} — Teaching"
-description = "Teaching philosophy, course design, student testimonials, materials, and academic leadership."
 
 doc = render_page_shell(
     title=title,
-    description=description,
     here_page="teaching",
     subnav_html=subnav_html,
     body_html=body_html,

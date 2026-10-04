@@ -29,10 +29,13 @@ def format_inline(text: str) -> str:
     if not text:
         return ""
     text = re.sub(r"`([^`]+)`", r"<code>\1</code>", text)
-    text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2" target="_blank" rel="noopener">\1</a>', text)
+    # Only a link that leaves the site opens in a new tab.
+    text = re.sub(r"\[([^\]]+)\]\((https?://[^)]+)\)", r'<a href="\2" target="_blank" rel="noopener">\1</a>', text)
+    text = re.sub(r"\[([^\]]+)\]\((?!https?://)([^)]+)\)", r'<a href="\2">\1</a>', text)
     text = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", text)
     text = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", text)
-    text = text.replace("—", "&mdash;").replace("“", "&ldquo;").replace("”", "&rdquo;").replace("’", "&lsquo;").replace("'", "&rsquo;")
+    text = (text.replace("—", "&mdash;").replace("“", "&ldquo;").replace("”", "&rdquo;")
+                .replace("‘", "&lsquo;").replace("’", "&rsquo;").replace("'", "&rsquo;"))
     return text
 
 
@@ -115,6 +118,20 @@ def render_project_card(item: ProjectItem) -> str:
     )
 
 
+def nav_description(here_page: str) -> str:
+    """The one-line description config.yaml gives this page.
+
+    It is written once, in config.yaml, and used three times: the meta
+    description, the lede at the top of the page, and the line beside the page
+    on the home page. A page not listed in the navigation has no description,
+    and that is a build failure rather than a blank lede.
+    """
+    for nav in CONFIG["navigation"]:
+        if nav["href"] == f"{here_page}.html":
+            return nav["description"]
+    raise KeyError(f"no navigation entry in config.yaml for '{here_page}.html'")
+
+
 def render_topnav(here_page: str = "") -> str:
     """Render top navigation bar based on config.yaml."""
     nav_links = []
@@ -139,15 +156,27 @@ def render_topnav(here_page: str = "") -> str:
 
 def render_page_shell(
     title: str,
-    description: str,
     here_page: str,
     subnav_html: str,
     body_html: str,
     generator_name: str,
     source_yaml: str,
+    description: Optional[str] = None,
     extra_head: str = ""
 ) -> str:
-    """Render complete HTML page document shell."""
+    """Render complete HTML page document shell.
+
+    `description` is only for a page with no navigation entry of its own (the
+    home page). A page in the nav takes its description from config.yaml, so
+    there is no second place for it to be written.
+    """
+    in_nav = any(n["href"] == f"{here_page}.html" for n in CONFIG["navigation"])
+    if in_nav:
+        if description is not None:
+            raise ValueError(f"{here_page}.html is in the navigation; its description belongs in config.yaml")
+        description = nav_description(here_page)
+    elif description is None:
+        raise ValueError(f"{here_page}.html has no navigation entry, so it needs an explicit description")
     topnav = render_topnav(here_page)
     subnav_block = f'<nav class="subnav" id="top"><div class="wrap">\n{subnav_html}\n</div></nav>' if subnav_html else ""
 

@@ -1,0 +1,33 @@
+# The home page. Only the words are here.
+#
+# Everything else on index.html is derived, because a hand-written home page
+# stops being true without telling anyone: the link list and its descriptions
+# come from config.yaml, the social links from config.yaml, the disciplines in
+# the structured data from the section titles in work.yaml, and the count of
+# testimonials from teaching.yaml.
+
+description: "Independent researcher measuring how database and AI agent systems behave."
+
+# Markdown links. A link to another page on this site stays in the same tab.
+bio: |
+  Hi, I'm Ramona, an Independent Researcher, Solutions Architect and [Educator](teaching.html). I bring over 20 years of rigorous [database engineering](work.html#data-engineering) experience to the world of AI; my current focus is on [System Integrity](tags.html#system-integrity)—applying the strict determinism of data engineering to the probabilistic nature of [AI Agents](work.html#agent-evaluation). More to the point, I build [instruments that measure](work.html#benchmarking) whether database and AI agents do, and then [publish the experiment alongside the result](writing.html). In that way, you can [reproduce it](https://github.com/rctruta/sql-benchmarks-dagster) or show me where I'm wrong.
+
+portrait_alt: "Ramona C. Truta"
+
+# Someone else's words about the work, quoted with the source attached.
+praise:
+  quote: "Ramona Truta is a true powerhouse behind this book. Her reviews were remarkably insightful and accurate. I even created an AI reviewer named ‘Ramona’ to assist with the editing process, though even the AI fell short—because Ramona Truta is truly a one-of-a-kind genius and inspiration."
+  author: "Joe Reis"
+  author_url: "https://www.linkedin.com/in/josephreis/"
+  source: "acknowledgements"
+  work: "Mixed Model Arts"
+  work_url: "https://www.amazon.com/Mixed-Model-Arts-Book-Cross-Disciplinary-ebook/dp/B0HLHKVKGY"
+
+# The count comes from data/teaching.yaml, so it cannot go stale.
+testimonials_link: "testimonials from students, engineers and faculty"
+
+# Verification token for Google Search Console. Not a secret; it is public in
+# the page source by design.
+google_site_verification: "8588ZYaFgT2ic6Kd_lzVDzthAJbSs46iDN_cd0h7c8I"
+
+job_title: "Independent Researcher & Solutions Architect"

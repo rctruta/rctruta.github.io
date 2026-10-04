@@ -2,6 +2,7 @@
 
     python3 tools/test_tools.py
 """
+import html
 import pathlib
 import re
 import unittest
@@ -125,6 +126,49 @@ class TestNavigationIntegrity(unittest.TestCase):
                 if not tgt.exists() or f'id="{anchor}"' not in tgt.read_text():
                     broken.append(f"{name} -> {target}#{anchor}")
         self.assertEqual([], sorted(set(broken)), "broken internal anchors")
+
+
+class TestDescriptionsPropagate(unittest.TestCase):
+    """A hand-written home page stops being true without telling anyone.
+
+    Each page's one-line description is written once, in config.yaml. It is the
+    meta description, the lede at the top of that page, and the line beside the
+    link on the home page. These assert the three are the same string.
+    """
+
+    def setUp(self):
+        self.nav = load_config()["navigation"]
+        self.home = (ROOT / "index.html").read_text() if (ROOT / "index.html").exists() else ""
+
+    def test_each_page_shows_its_configured_description(self):
+        for nav in self.nav:
+            page = ROOT / nav["href"]
+            if not page.exists():
+                continue
+            text = page.read_text()
+            lede = re.search(r'<!-- lede:start -->.*?<p class="lede">(.*?)</p>', text, re.S)
+            self.assertIsNotNone(lede, f"{nav['href']} has no lede block")
+            self.assertEqual(html.unescape(lede.group(1)), nav["description"],
+                             f"{nav['href']} lede differs from config.yaml")
+            meta = re.search(r'<meta name="description" content="(.*?)">', text)
+            self.assertEqual(html.unescape(meta.group(1)), nav["description"],
+                             f"{nav['href']} meta description differs from config.yaml")
+
+    def test_home_page_lists_every_nav_page_with_the_same_description(self):
+        if not self.home:
+            self.skipTest("index.html not built")
+        for nav in self.nav:
+            self.assertIn(html.escape(nav["description"], quote=False).replace("'", "&#x27;"), self.home,
+                          f"index.html does not carry the description for {nav['href']}")
+
+    def test_home_page_testimonial_count_matches_the_data(self):
+        if not self.home:
+            self.skipTest("index.html not built")
+        from model import count_testimonials
+        shown = re.search(r'href="teaching\.html#testimonials">(\d+) ', self.home)
+        self.assertIsNotNone(shown, "index.html does not state a testimonial count")
+        self.assertEqual(count_testimonials(), int(shown.group(1)),
+                         "index.html states a testimonial count data/teaching.yaml does not support")
 
 
 class TestContactAddresses(unittest.TestCase):

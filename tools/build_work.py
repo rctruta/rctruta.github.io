@@ -32,11 +32,9 @@ subnav_html = "\n".join(subnav_links)
 body_html = "\n".join(sections_html)
 
 title = f"{AUTHOR} — Work"
-description = "Database benchmarking, AI security, agent evaluation, system integrity, and retrieval accuracy. Every claim with the experiment attached."
 
 doc = render_page_shell(
     title=title,
-    description=description,
     here_page="work",
     subnav_html=subnav_html,
     body_html=body_html,

@@ -3,11 +3,7 @@
 # them equal — rotate one and the live form posts to the old address silently.
 #
 # Links (form, calendar, Substack, GitHub, LinkedIn, ORCID) come from
-# config.yaml. Only the words are here.
-
-description: "Contact Ramona C. Truta — data modeling, data engineering, and evaluation of AI systems."
-
-lede: "Open to consulting, contracting, project scoping & development, speaking engagements, research advisory, and conversations that don't have a job attached."
+# config.yaml, as does the page lede. Only the words below are here.
 
 form:
   heading: "Send a message"

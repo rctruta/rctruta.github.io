@@ -66,11 +66,9 @@ body_html = (
 extra_head = f'\n<link rel="alternate" type="application/rss+xml" title="{html.escape(AUTHOR)} &mdash; Substack Feed" href="{html.escape(SUBSTACK_RSS)}">'
 
 title = f"{AUTHOR} — Writing"
-description = "Essays on data modeling, AI evaluation, security and the people using these systems. Each piece published with its repository."
 
 doc = render_page_shell(
     title=title,
-    description=description,
     here_page="writing",
     subnav_html=subnav_html,
     body_html=body_html,

@@ -153,11 +153,9 @@ body_html = (
 )
 
 title = f"{AUTHOR} — Index"
-description = "Every tag used on this site, and all the work it points to."
 
 doc = render_page_shell(
     title=title,
-    description=description,
     here_page="tags",
     subnav_html=subnav_html,
     body_html=body_html,
