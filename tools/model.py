@@ -527,7 +527,6 @@ class Praise(BaseModel):
 class HomePage(BaseModel):
     description: str
     bio: str
-    site_note: str
     portrait_alt: str
     praise: Praise
     testimonials_link: str
@@ -548,7 +547,6 @@ def load_home() -> HomePage:
     return HomePage(
         description=scalar(text, "description"),
         bio=" ".join(l.strip() for l in bio.group(1).splitlines() if l.strip()) if bio else "",
-        site_note=scalar(text, "site_note"),
         portrait_alt=scalar(text, "portrait_alt"),
         praise=Praise(quote=scalar(praise_block, "quote"),
                       author=scalar(praise_block, "author"),

@@ -33,10 +33,7 @@ vocab = load_taxonomy()
 sections = load_work_sections(vocab)
 home = load_home()
 
-# Ramona put the site_note back on the GitHub profile by hand after the first
-# generated version dropped it. The generator emits it here now, so her choice
-# survives regeneration instead of being overwritten by it.
-bio_markdown = as_markdown(home.bio) + " " + home.site_note
+bio_markdown = as_markdown(home.bio)
 
 profile_yaml = (ROOT / "data" / "github_profile.yaml").read_text()
 FEATURED_REPO = re.search(r'^featured_repo: "(.*)"', profile_yaml, re.M).group(1)
