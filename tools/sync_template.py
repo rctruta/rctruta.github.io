@@ -21,7 +21,8 @@ print("🔄 Syncing architecture and tools to static-site-template...")
 # with her appearances, articles and teaching page and have to delete them. The
 # template carries its own example data.
 FILES_TO_SYNC = [
-    "build",
+    # "build" is not synced: the template has no GitHub profile repo to write to
+
     "style.css",
     "data/TAXONOMY.md",
     "tools/config_loader.py",

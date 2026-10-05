@@ -167,6 +167,7 @@ sections:
             url: "https://github.com/rctruta/malloy-publisher-agent-study"
       - id: agent-traces
         title: "Reading agent traces"
+        summary: "Per-turn agent traces against a commercial lakehouse platform. Surfaced three defects I reported upstream — #369, #370, #371 — including an error message that actively sends an agent in the wrong direction."
         activity: research
         tags: [AI evaluation, Per-turn tracing, Deterministic grading, Python, Process telemetry]
         description: |
@@ -193,6 +194,7 @@ sections:
             url: "https://github.com/rctruta/agent-telemetry"
       - id: rag-accuracy
         title: "A RAG system answering 17 of 20 questions its sources couldn't support"
+        summary: "Ask a question about a podcast, get an answer and a link to the exact second someone said it. LanceDB, local-first, no cluster and no API key. Built a labelled eval set and found it answering 17 of 20 questions its sources couldn't support; recalibrated precision 0.56 → 0.87."
         activity: built
         tags: [AI evaluation, Evaluation sets, Python, RAG, LanceDB]
         description: |
@@ -241,6 +243,7 @@ sections:
           - text: "Presented at the Canadian Women in Cybersecurity Conference, Toronto, May 2026."
       - id: agent-tools
         title: "Tools and playbooks for collaborating with coding agents"
+        summary: "Boilerplate and security guidelines for collaborating safely with autonomous coding agents, with the gates already enforced rather than written down and hoped for."
         activity: built
         tags: [AI security, Deterministic grading, Python, Pre-commit gates]
         description: |

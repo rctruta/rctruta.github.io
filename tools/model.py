@@ -51,6 +51,7 @@ class Note(BaseModel):
 class ProjectItem(BaseModel):
     id: str
     title: str
+    summary: str = ""   # one line, for the GitHub profile; falls back to nothing
     activity: str = "built"
     tags: List[str] = Field(default_factory=list)
     description: str = ""
@@ -196,6 +197,7 @@ def load_work_sections(vocab: TagVocabulary) -> List[WorkSection]:
             current_item = {
                 "id": trimmed.split(":", 1)[1].strip(),
                 "title": "",
+                "summary": "",
                 "activity": "built",
                 "tags": [],
                 "description": "",
@@ -211,6 +213,8 @@ def load_work_sections(vocab: TagVocabulary) -> List[WorkSection]:
         elif raw_indent == 8 and current_item:
             if trimmed.startswith("title:"):
                 current_item["title"] = trimmed.split(":", 1)[1].strip().strip('"')
+            elif trimmed.startswith("summary:"):
+                current_item["summary"] = trimmed.split(":", 1)[1].strip().strip('"')
             elif trimmed.startswith("activity:"):
                 current_item["activity"] = trimmed.split(":", 1)[1].strip().strip('"')
             elif trimmed.startswith("tags:"):
@@ -516,6 +520,7 @@ class Praise(BaseModel):
 class HomePage(BaseModel):
     description: str
     bio: str
+    site_note: str
     portrait_alt: str
     praise: Praise
     testimonials_link: str
@@ -536,6 +541,7 @@ def load_home() -> HomePage:
     return HomePage(
         description=scalar(text, "description"),
         bio=" ".join(l.strip() for l in bio.group(1).splitlines() if l.strip()) if bio else "",
+        site_note=scalar(text, "site_note"),
         portrait_alt=scalar(text, "portrait_alt"),
         praise=Praise(quote=scalar(praise_block, "quote"),
                       author=scalar(praise_block, "author"),

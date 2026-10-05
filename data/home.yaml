@@ -20,7 +20,11 @@ description: "Independent researcher measuring how database and AI agent systems
 # canonical name appears on hover, so a reader who hovers "database
 # engineering" is told the section is called "Data modeling".
 bio: |
-  Hi, I'm Ramona, an Independent Researcher, Solutions Architect and [Educator](teaching.html). I bring over 20 years of rigorous [database engineering](work:data-engineering) experience to the world of AI; my current focus is on [System Integrity](work.html)—applying the strict determinism of data engineering to the probabilistic nature of [AI Agents](work:agent-evaluation). More to the point, I build [instruments that measure](work:benchmarking) whether database and AI agents do, and then [publish the experiment alongside the result](writing.html). In that way, you can [reproduce it](https://github.com/rctruta/sql-benchmarks-dagster) or show me where I'm wrong. This site is built the same way: generated from data, and the build fails on an unknown tag, a broken anchor, or an unregistered number.
+  Hi, I'm Ramona, an Independent Researcher, Solutions Architect and [Educator](teaching.html). I bring over 20 years of rigorous [database engineering](work:data-engineering) experience to the world of AI; my current focus is on [System Integrity](work.html)—applying the strict determinism of data engineering to the probabilistic nature of [AI Agents](work:agent-evaluation). More to the point, I build [instruments that measure](work:benchmarking) whether database and AI agents do, and then [publish the experiment alongside the result](writing.html). In that way, you can [reproduce it](https://github.com/rctruta/sql-benchmarks-dagster) or show me where I'm wrong.
+
+# Shown only on the home page, where "this site" has something to point at.
+# The bio above travels: GitHub, LinkedIn, Substack, the resume.
+site_note: "This site is built the same way: generated from data, and the build fails on an unknown tag, a broken anchor, or an unregistered number."
 
 portrait_alt: "Ramona C. Truta"
 

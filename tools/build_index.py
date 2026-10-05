@@ -84,7 +84,7 @@ praise_html = (
 
 body_html = f"""<header id="top"><div class="wrap"><div class="hero"><div class="hero-text">
   <h1>{html.escape(AUTHOR)}</h1>
-  <p class="sub">{bio_as_html(home.bio)}</p>
+  <p class="sub">{bio_as_html(home.bio)} {format_inline(home.site_note)}</p>
   </div><div class="portrait-col"><img class="portrait" src="assets/photo.jpg" alt="{html.escape(home.portrait_alt)}">
   <div class="social">
 {social_html}
