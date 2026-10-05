@@ -263,10 +263,14 @@ sections:
           gemma2 on my own machine. Running the same scenarios locally is what makes the sweep
           affordable to replicate rather than a one-off purchase.
 
-          Findings are held for disclosure: the study names specific models and versions, and a
-          vendor-identifying result belongs with its vendor before it belongs on a website.
+          The engine, the study contracts and every trace are public. My own working notes are
+          not: those are research in progress, and they are the only thing held back.
+        summary: "A deterministic matrix engine for adversarial audit of multi-agent pipelines: temperature 0, replication, status and thinking-budget sweeps, rule-based grading. 416 traces across frontier and local models."
+        links:
+          - text: "ai-security-testbed"
+            url: "https://github.com/rctruta/ai-security-testbed"
         notes:
-          - text: "Repository private while the findings are prepared for disclosure."
+          - text: "Measurements are dated: they describe the model versions named in each study contract, at the time each study ran. Model behaviour changes; an undated claim about a model ages into a false one."
       - id: agent-tools
         title: "Tools and playbooks for collaborating with coding agents"
         summary: "Boilerplate and security guidelines for collaborating safely with autonomous coding agents, with the gates already enforced rather than written down and hoped for."
