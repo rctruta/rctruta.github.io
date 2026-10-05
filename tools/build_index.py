@@ -10,10 +10,12 @@ testimonials from teaching.yaml.
 """
 import html
 import json
+import re
 import pathlib
 from config_loader import load_config
 from model import load_taxonomy, load_work_sections, load_home, count_testimonials
 from page import render_page_shell, format_inline, AUTHOR, SITE_URL, SITE_IMAGE
+from bio import as_html as bio_as_html
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CONFIG = load_config()
@@ -32,8 +34,11 @@ ICONS = {
 MAIL_ICON = '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/>'
 CAL_ICON = '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>'
 
+vocab = load_taxonomy()
 home = load_home()
-sections = load_work_sections(load_taxonomy())
+sections = load_work_sections(vocab)
+
+
 
 
 def address(key: str) -> str:
@@ -79,7 +84,7 @@ praise_html = (
 
 body_html = f"""<header id="top"><div class="wrap"><div class="hero"><div class="hero-text">
   <h1>{html.escape(AUTHOR)}</h1>
-  <p class="sub">{format_inline(home.bio)}</p>
+  <p class="sub">{bio_as_html(home.bio)}</p>
   </div><div class="portrait-col"><img class="portrait" src="assets/photo.jpg" alt="{html.escape(home.portrait_alt)}">
   <div class="social">
 {social_html}

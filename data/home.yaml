@@ -9,8 +9,18 @@
 description: "Independent researcher measuring how database and AI agent systems behave."
 
 # Markdown links. A link to another page on this site stays in the same tab.
+#
+# Two link targets are resolved and checked against the data, so the bio cannot
+# name something the site does not have:
+#
+#   [any words](tag:System integrity)   -> a term in data/TAGS.yaml
+#   [any words](work:benchmarking)      -> a section in data/work.yaml
+#
+# An unknown term or section fails the build. The link text stays yours — the
+# canonical name appears on hover, so a reader who hovers "database
+# engineering" is told the section is called "Data modeling".
 bio: |
-  Hi, I'm Ramona, an Independent Researcher, Solutions Architect and [Educator](teaching.html). I bring over 20 years of rigorous [database engineering](work.html#data-engineering) experience to the world of AI; my current focus is on [System Integrity](tags.html#system-integrity)—applying the strict determinism of data engineering to the probabilistic nature of [AI Agents](work.html#agent-evaluation). More to the point, I build [instruments that measure](work.html#benchmarking) whether database and AI agents do, and then [publish the experiment alongside the result](writing.html). In that way, you can [reproduce it](https://github.com/rctruta/sql-benchmarks-dagster) or show me where I'm wrong.
+  Hi, I'm Ramona, an Independent Researcher, Solutions Architect and [Educator](teaching.html). I bring over 20 years of rigorous [database engineering](work:data-engineering) experience to the world of AI; my current focus is on [System Integrity](tag:System integrity)—applying the strict determinism of data engineering to the probabilistic nature of [AI Agents](work:agent-evaluation). More to the point, I build [instruments that measure](work:benchmarking) whether database and AI agents do, and then [publish the experiment alongside the result](writing.html). In that way, you can [reproduce it](https://github.com/rctruta/sql-benchmarks-dagster) or show me where I'm wrong. This site is built the same way: generated from data, and the build fails on an unknown tag, a broken anchor, or an unregistered number.
 
 portrait_alt: "Ramona C. Truta"
 
