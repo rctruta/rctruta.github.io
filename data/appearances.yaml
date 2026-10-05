@@ -3,7 +3,7 @@
 # This file is the source of truth. The website renders it; podcast-clips reads
 # it as a corpus manifest. Nothing else should keep a second copy.
 #
-# Vocabulary is fixed — see TAXONOMY.md. The build fails on anything else.
+# Vocabulary is fixed — see APPLICATION-RULES.md. The build fails on anything else.
 # `title` is the name of the thing and nothing else: role, format and venue
 # are fields, never prefixes.
 #

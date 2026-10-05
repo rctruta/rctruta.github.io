@@ -14,7 +14,11 @@ def load_config():
     config = {
         "site": {},
         "navigation": [],
-        "features": {}
+        "features": {},
+        "data": {
+            "controlled_vocabulary": "TAGS.yaml",
+            "application_rules": "APPLICATION-RULES.md"
+        }
     }
 
     # Extract site metadata
@@ -36,6 +40,13 @@ def load_config():
         m = re.search(rf"^\s*{key}:\s*(true|false)", text, re.M)
         if m:
             config["features"][key] = (m.group(1).lower() == "true")
+
+    # Extract data files configuration
+    for key in ("controlled_vocabulary", "application_rules"):
+        m = re.search(rf"^\s*{key}:\s*[\"']?([^\"'\n]+)[\"']?", text, re.M)
+        if m:
+            config["data"][key] = m.group(1).strip()
+
 
     # Extract navigation list. Each entry carries the one-line description that
     # becomes the page's meta description, the lede at the top of that page, and

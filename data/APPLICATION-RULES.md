@@ -1,9 +1,11 @@
-# Appearance taxonomy
+# Application Rules & Metadata Authority Control
 
-The exact words. Every entry in `appearances.yaml` uses these and only these.
-The build fails on anything else, so the vocabulary cannot drift.
+`data/TAGS.yaml` is the **Faceted Controlled Vocabulary** for this site. This document specifies how its terms, authority controls, entity names, and indexing rules are applied across all content records.
 
-## The rule that prevents most inconsistency
+The build fails on anything outside the controlled vocabulary or authority records, ensuring data cannot drift across updates.
+
+## Authority Control Rules
+
 
 **`title` is the name of the thing, and nothing else.** Not the role, not the
 format, not the venue. Those are fields.

@@ -4,7 +4,12 @@ import re
 from typing import Dict, List, Optional
 from pydantic import BaseModel, Field
 
+from config_loader import load_config
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+CONFIG = load_config()
+VOCAB_FILENAME = CONFIG.get("data", {}).get("controlled_vocabulary", "TAGS.yaml")
+RULES_FILENAME = CONFIG.get("data", {}).get("application_rules", "APPLICATION-RULES.md")
 
 
 class FacetMeta(BaseModel):
@@ -102,8 +107,8 @@ class Appearance(BaseModel):
 
 
 def load_taxonomy() -> TagVocabulary:
-    """Load data/TAGS.yaml into TagVocabulary model."""
-    spec_path = ROOT / "data" / "TAGS.yaml"
+    """Load controlled vocabulary into TagVocabulary model."""
+    spec_path = ROOT / "data" / VOCAB_FILENAME
     text = spec_path.read_text(encoding="utf-8")
 
     facets_meta = {}

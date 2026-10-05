@@ -30,7 +30,7 @@ index that describes the previous version of the site.
 
 ## Vocabulary is controlled, and the build enforces it
 
-- **Appearances** — `data/TAXONOMY.md` fixes the exact words for `role`,
+- **Appearances** — `data/APPLICATION-RULES.md` fixes the exact words for `role`,
   `format`, `eventType`, and the spelling of every `org`. The Astro branch
   validates `appearances.yaml` against a schema; the build fails on anything
   outside the vocabulary.

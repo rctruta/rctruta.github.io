@@ -32,7 +32,7 @@ FILES_TO_SYNC = [
     "templates/speaking.html",
     "templates/contact.html",
     "templates/tags.html",
-    "data/TAXONOMY.md",
+    "data/APPLICATION-RULES.md",
     "tools/config_loader.py",
     "tools/model.py",
     "tools/page.py",

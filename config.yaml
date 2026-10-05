@@ -56,3 +56,8 @@ features:
   pagefind_search: true
   privacy_checker: true
   taxonomy_checker: true
+
+data:
+  controlled_vocabulary: "TAGS.yaml"
+  application_rules: "APPLICATION-RULES.md"
+
