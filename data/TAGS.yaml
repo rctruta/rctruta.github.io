@@ -46,6 +46,7 @@ vocabulary:
     Data modeling: Representing a domain faithfully, so the structure survives contact with the data.
     Entity resolution: Deciding whether two records describe the same thing, when nothing says so.
     Data quality: Finding what is wrong in source data, and proving it is wrong.
+    Metadata architecture: Structures that describe other data — catalogs, authority files, controlled vocabularies — so a fact about a source is recorded once and can be checked.
     Benchmarking: Measuring a system under conditions stated well enough to reproduce.
     AI evaluation: Deciding whether a model or agent actually did what it claimed.
     AI security: Attacks on what an agent reads, stores, and later trusts.

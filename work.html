@@ -103,6 +103,8 @@
       
       <a class="tag" href="tags.html#data-modeling">Data modeling</a>
       
+      <a class="tag" href="tags.html#metadata-architecture">Metadata architecture</a>
+      
       <a class="tag" href="tags.html#entity-resolution">Entity resolution</a>
       
       <a class="tag" href="tags.html#evaluation-sets">Evaluation sets</a>
@@ -145,15 +147,25 @@
     <p>Nineteenth-century Police Gazettes recording prisoners transported to Tasmania, held as OCR&rsquo;d scans. The data the historians needed was in tables inside those documents, and OCR does not respect a table. I wrote the extraction design: fixed layouts for the two table types, one table per output file, a naming convention tying every file back to its source page, and a separate metadata table holding what is true of a whole file &mdash; its description, its row count, who extracted it, who checked it &mdash; recorded once instead of repeated on every row.</p>
 
 <p>They took that document to a funding body and were awarded <strong>$34,000</strong> to do the work. I had written it as a favour, and heard some months later.</p>
+
+<p>Reading it back in 2026: the metatable is a metadata catalog, the filename scheme is a canonical identifier carrying lineage, and <code>ExtractedBy</code> / <code>CheckedBy</code> / <code>RowCount</code> are a provenance trail. I had none of those words in 2011. What it is not, and I will not claim it was, is master data management &mdash; there is no survivorship rule anywhere in it, because nothing in that pipeline ever had to reconcile two conflicting records of the same person.</p>
     
 
     <div class="tags">
       
       <a class="tag" href="tags.html#data-modeling">Data modeling</a>
       
+      <a class="tag" href="tags.html#metadata-architecture">Metadata architecture</a>
+      
       <a class="tag" href="tags.html#data-quality">Data quality</a>
       
       <a class="tag" href="tags.html#evaluation-sets">Evaluation sets</a>
+      
+    </div>
+    
+    <div class="links">
+      
+      <a href="assets/police-gazette-transcripts-2011.pdf" target="_blank" rel="noopener">The 2011 design document (PDF)</a>
       
     </div>
     
@@ -188,6 +200,8 @@
     <div class="tags">
       
       <a class="tag" href="tags.html#data-modeling">Data modeling</a>
+      
+      <a class="tag" href="tags.html#metadata-architecture">Metadata architecture</a>
       
       <a class="tag" href="tags.html#pre-commit-gates">Pre-commit gates</a>
       
