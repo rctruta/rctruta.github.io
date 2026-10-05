@@ -33,9 +33,10 @@ as_guest = [e for e in podcasts if e.role != "guest host"]
 subnav_html = "\n".join([
     '  <a href="#talks">Talks</a>',
     '  <a href="#podcasts">Podcasts</a>',
-    '  <a href="#guest-host">As guest host</a>',
-    '  <a href="#as-guest">As guest</a>',
 ])
+# "As guest host" and "As guest" are subdivisions of Podcasts, not peers of it.
+# They stay as headings with their anchors, so a deep link still resolves, but
+# a flat sub-nav of four made two levels look like one.
 
 doc = render_template(
     template_name="speaking.html",

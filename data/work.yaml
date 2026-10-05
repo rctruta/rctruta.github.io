@@ -239,8 +239,13 @@ sections:
         tags: [AI evaluation, Deterministic grading, Ablation study, RLHF, Data contracts, AI security, Python]
         description: |
           Based on my **adversarial-judgement-research** framework (14 study contracts, 205 graded runs across 10 models from 4 vendors, with a successor testbed extending the matrix to local models): I proved that generalized LLM orchestrators evaluate simulated social status over technical merit. Injecting a high-status persona into routing decisions causes agentic state to collapse into authority bias (the RLHF tax). Prompt-level instructions fail under pressure; mechanical gates hold.
+        summary: "Metatracing engine and execution traces for structural failure modes in multi-agent LLM consensus pipelines: status bias, persona bleed, frame break, axiomatic refusal, consensus contagion, semantic camouflage."
+        links:
+          - text: "adversarial-judgement-research"
+            url: "https://github.com/rctruta/adversarial-judgement-research"
         notes:
           - text: "Presented at the Canadian Women in Cybersecurity Conference, Toronto, May 2026."
+          - text: "Experiments varying a protected attribute are held back, with their findings: a single name pair cannot separate a name-specific effect from a systematic one. The published README says so rather than leaving a gap."
       - id: agent-tools
         title: "Tools and playbooks for collaborating with coding agents"
         summary: "Boilerplate and security guidelines for collaborating safely with autonomous coding agents, with the gates already enforced rather than written down and hoped for."
