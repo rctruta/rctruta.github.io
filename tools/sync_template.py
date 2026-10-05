@@ -27,6 +27,7 @@ FILES_TO_SYNC = [
     "tools/config_loader.py",
     "tools/model.py",
     "tools/page.py",
+    "tools/bio.py",
     "tools/build_nav.py",
     "tools/build_tags.py",
     "tools/build_work.py",
