@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section><div class="wrap">
+  <h2>Contact</h2>
+
+  <div class="contact-grid">
+    <div class="form-col">
+      <div class="contact-card">
+        <div>
+          <h3 id="form">{{ contact.form.heading }}</h3>
+          <p class="subtext" style="margin-top: 6px; margin-bottom: 16px;">{{ contact.form.intro }}</p>
+
+          <form class="contact-form" action="{{ site.author.contact_form }}" method="POST">
+            <div class="field-row">
+              <div class="field">
+                <label for="name">Your Name <span class="req">*</span></label>
+                <input type="text" id="name" name="name" placeholder="Ada Lovelace" required>
+              </div>
+              <div class="field">
+                <label for="email">Your Email <span class="req">*</span></label>
+                <input type="email" id="email" name="email" placeholder="ada@example.com" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="topic">What is this regarding?</label>
+              <select id="topic" name="topic">
+                {% for t in contact.form.topics %}
+                <option value="{{ t }}"{% if loop.first %} selected{% endif %}>{{ t }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="message">Message <span class="req">*</span></label>
+              <textarea id="message" name="message" rows="4" placeholder="Tell me a bit about what you are working on..." required></textarea>
+            </div>
+
+            <div style="margin-top: 4px;">
+              <button type="submit" class="btn solid btn-large">{{ contact.form.button }} &rarr;</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-col">
+      {% for c in contact.cards %}
+      <div class="contact-card">
+        <div>
+          <h3>{{ c.heading }}</h3>
+          <p style="margin-top: 6px;">{{ c.text }}</p>
+        </div>
+        <div>
+          <a class="btn solid" href="{{ site.author[c.link] }}" target="_blank" rel="noopener">{{ c.button }} &rarr;</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="contact-card" style="margin-top: 32px;">
+    <h3>What I do</h3>
+    <ul class="courses" style="margin-top: 8px;">
+      {% for s in contact.services %}
+      <li><a href="tags.html#{{ s.tag|slug }}">{{ s.label }}</a>{% if not s.continues %} &mdash;{% endif %} {{ s.note }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <p style="margin-top: 24px;"><a href="teaching.html#education">Education and credentials &rarr;</a> &middot; <a href="{{ site.author.orcid }}" target="_blank" rel="noopener">ORCID {{ site.author.orcid_id }} &nearr;</a></p>
+</div></section>
+{% endblock %}
+

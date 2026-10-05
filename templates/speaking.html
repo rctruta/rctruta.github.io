@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{#
+  Talks, then podcasts split by role. The guest-host section is not decoration:
+  it is work of a different kind, and the people interviewed are credited by
+  name. A rewrite dropped the split, the five credits and Ramona's line
+  introducing them, and all sixteen tests still passed — which is why
+  TestNothingVanishes exists in tools/test_tools.py.
+
+  It also carried the lede "Every talk presented with its slides or recording."
+  Measured: 0 of 8 talks have a slidesUrl, videoUrl or transcriptUrl. Removed.
+#}
+
+{% macro row(item, trailing='') -%}
+    <li id="{{ item.id }}"><span class="when">{{ item.date|when }}</span><span class="what"><strong>{{ item.org }}</strong>{% if item.location and item.location != 'virtual' %}, {{ item.location }}{% endif %} &mdash; {% if item.url %}<a href="{{ item.url }}" target="_blank" rel="noopener">{{ item.title }}</a>{% else %}<em>{{ item.title }}</em>{% endif %}{{ trailing }}</span></li>
+{%- endmacro %}
+
+{% block content %}
+<section id="talks"><div class="wrap"><h2>Talks</h2>
+  <ul class="clean">
+{%- for item in talks %}
+{{ row(item) }}
+{%- endfor %}
+  </ul>
+  <p class="totop"><a href="#top">&uarr; Top</a></p>
+</div></section>
+
+<section id="podcasts"><div class="wrap"><h2>Podcasts</h2>
+  <p class="lede">{{ podcasts|length }} episodes across {{ shows|length }} shows.</p>
+
+  <h3 id="guest-host">As guest host</h3>
+  <p class="lede">{{ guest_host_note }}</p>
+  <ul class="clean">
+{%- for item in as_host %}
+{{ row(item, ' <em>(interviewing ' ~ item.counterpart ~ ')</em>' if item.counterpart else '') }}
+{%- endfor %}
+  </ul>
+
+  <h3 id="as-guest">As guest</h3>
+  <ul class="clean">
+{%- for item in as_guest %}
+{{ row(item, ' <em>(co-host)</em>' if item.role == 'co-host' else '') }}
+{%- endfor %}
+  </ul>
+  <p class="totop"><a href="#top">&uarr; Top</a></p>
+</div></section>
+{% endblock %}

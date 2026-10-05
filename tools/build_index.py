@@ -14,7 +14,7 @@ import re
 import pathlib
 from config_loader import load_config
 from model import load_taxonomy, load_work_sections, load_home, count_testimonials
-from page import render_page_shell, format_inline, AUTHOR, SITE_URL, SITE_IMAGE
+from page import render_template, format_inline, AUTHOR, SITE_URL, SITE_IMAGE
 from bio import as_html as bio_as_html
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -37,8 +37,6 @@ CAL_ICON = '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 
 vocab = load_taxonomy()
 home = load_home()
 sections = load_work_sections(vocab)
-
-
 
 
 def address(key: str) -> str:
@@ -64,42 +62,6 @@ social.append(
 )
 social_html = "\n".join(social)
 
-# One line per navigation entry, carrying the same description that page shows
-# as its own lede.
-links_html = "\n".join(
-    f'    <li><span class="what"><a href="{nav["href"]}"><strong>{html.escape(nav["label"])}</strong></a> '
-    f'&mdash; {html.escape(nav["description"])}</span></li>'
-    for nav in CONFIG["navigation"]
-)
-
-p = home.praise
-praise_html = (
-    f'  <blockquote class="praise">\n'
-    f'    <p>&ldquo;{format_inline(p.quote)}&rdquo;</p>\n'
-    f'    <cite><a href="{p.author_url}" target="_blank" rel="noopener">{html.escape(p.author)}</a>, '
-    f'{html.escape(p.source)} &mdash; <em><a href="{p.work_url}" target="_blank" rel="noopener">'
-    f'{html.escape(p.work)}</a></em></cite>\n'
-    f'  </blockquote>'
-)
-
-body_html = f"""<header id="top"><div class="wrap"><div class="hero"><div class="hero-text">
-  <h1>{html.escape(AUTHOR)}</h1>
-  <p class="sub">{bio_as_html(home.bio)} {format_inline(home.site_note)}</p>
-  </div><div class="portrait-col"><img class="portrait" src="assets/photo.jpg" alt="{html.escape(home.portrait_alt)}">
-  <div class="social">
-{social_html}
-  </div>
-</div></div></div></header>
-
-<section><div class="wrap">
-{praise_html}
-  <p class="subtext" style="margin-top: -18px; margin-bottom: 30px; font-size: 15px;"><a href="teaching.html#testimonials">{count_testimonials()} {html.escape(home.testimonials_link)} &rarr;</a></p>
-
-  <ul class="clean">
-{links_html}
-  </ul>
-</div></section>"""
-
 structured_data = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -118,17 +80,21 @@ extra_head = (
     f'\n<script type="application/ld+json">\n{json.dumps(structured_data, indent=2)}\n</script>'
 )
 
-doc = render_page_shell(
+doc = render_template(
+    template_name="index.html",
     title=AUTHOR,
     here_page="index",
     description=home.description,
-    subnav_html="",
-    body_html=body_html,
     generator_name="build_index.py",
     source_yaml="home.yaml",
     extra_head=extra_head,
+    home=home,
+    bio_html=bio_as_html(home.bio),
+    social_html=social_html,
+    testimonial_count=count_testimonials()
 )
 
 (ROOT / "index.html").write_text(doc, encoding="utf-8")
 print(f"index.html: {len(CONFIG['navigation'])} links, {count_testimonials()} testimonials, "
       f"{len(sections)} disciplines in structured data.")
+

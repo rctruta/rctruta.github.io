@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for sec in sections %}
+<section><div class="wrap">
+  <h2 id="{{ sec.id }}">{{ sec.title }}</h2>
+  <p class="sub small cat-note">{{ sec.summary }}</p>
+  {% for item in sec.items %}
+  <div class="proj" id="{{ item.id }}">
+    <h3>{% if item.url %}<a href="{{ item.url }}">{{ item.title }}</a>{% if item.meta %} <span class="meta">{{ item.meta }}</span>{% endif %}{% else %}{{ item.title }}{% endif %}</h3>
+    {% if item.description %}{{ item.description|format_blocks|safe }}{% endif %}
+    {% if item.figures %}
+      {% for fig in item.figures %}
+    <figure>
+      <img src="{{ fig.src }}" alt="{{ fig.alt }}">
+      <figcaption>{{ fig.caption|safe }}</figcaption>
+    </figure>
+      {% endfor %}
+    {% endif %}
+
+    <div class="tags">
+      {% for t in item.tags %}
+      <a class="tag" href="tags.html#{{ t|slug }}">{{ t }}</a>
+      {% endfor %}
+    </div>
+    {% if item.links %}
+    <div class="links">
+      {% for lnk in item.links %}
+      <a href="{{ lnk.url }}" target="_blank" rel="noopener">{{ lnk.text }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% if item.notes %}
+      {% for nt in item.notes %}
+        {% if nt.label and nt.url %}
+    <div class="note"><strong><a href="{{ nt.url }}" target="_blank" rel="noopener">{{ nt.label }}</a></strong> {{ nt.text|safe if nt.text else "" }}</div>
+        {% elif nt.text %}
+    <div class="note">{{ nt.text|format_inline|safe }}</div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </div>
+  {% endfor %}
+  <p class="totop"><a href="#top">&uarr; Top</a></p>
+</div></section>
+{% endfor %}
+{% endblock %}

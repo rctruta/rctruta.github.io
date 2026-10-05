@@ -199,6 +199,60 @@ class TestContactAddresses(unittest.TestCase):
         self.assertGreater(len(contact.services), 0, "data/contact.yaml must list services")
 
 
+class TestNothingVanishes(unittest.TestCase):
+    """Every record in the data must appear on its page.
+
+    A template rewrite dropped the guest-host section, the five interview
+    credits and a line of Ramona's prose, and all sixteen tests passed: they
+    checked navigation, anchors and descriptions, and nothing checked that the
+    content survived. A page can lose a whole section and still be well-formed.
+    """
+
+    def setUp(self):
+        self.vocab = load_taxonomy()
+
+    def read(self, name):
+        page = ROOT / name
+        if not page.exists():
+            self.skipTest(f"{name} not built")
+        return page.read_text()
+
+    def test_every_appearance_reaches_the_speaking_page(self):
+        from model import load_appearances
+        page = self.read("speaking.html")
+        for a in load_appearances(self.vocab):
+            visible = a.kind == "talk" or bool(a.url)   # visibility is derived
+            if visible:
+                self.assertIn(f'id="{a.id}"', page, f"speaking.html is missing {a.id}")
+            if a.counterpart:
+                self.assertIn(a.counterpart, page,
+                              f"speaking.html does not credit {a.counterpart}")
+
+    def test_every_project_reaches_the_work_page(self):
+        from model import load_work_sections
+        page = self.read("work.html")
+        for sec in load_work_sections(self.vocab):
+            self.assertIn(f'id="{sec.id}"', page, f"work.html is missing section {sec.id}")
+            for item in sec.items:
+                self.assertIn(f'id="{item.id}"', page, f"work.html is missing {item.id}")
+
+    def test_every_article_reaches_the_writing_page(self):
+        from model import load_articles
+        page = self.read("writing.html")
+        for a in load_articles(self.vocab):
+            self.assertIn(a.url, page, f"writing.html is missing {a.id}")
+
+    def test_prose_kept_in_the_data_reaches_its_page(self):
+        """A line written in a data file is there to be rendered."""
+        import html as _html
+        note = re.search(r'^guest_host_note: "(.*)"\s*$',
+                         (ROOT / "data" / "appearances.yaml").read_text(), re.M)
+        self.assertIsNotNone(note, "appearances.yaml lost guest_host_note")
+        page = self.read("speaking.html")
+        self.assertIn(_html.escape(note.group(1), quote=False).replace("'", "&#x27;"), page,
+                      "speaking.html does not render guest_host_note")
+
+
 if __name__ == "__main__":
     unittest.main()
 

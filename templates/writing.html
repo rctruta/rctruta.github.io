@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section><div class="wrap">
+  <p class="lede">{{ articles|length }} pieces. Each one makes a claim I would defend, and links to the work behind it where there is work behind it.</p>
+
+  {% for y in years %}
+  <h2 id="y{{ y }}">{{ y }}</h2>
+  {% for a in articles %}
+    {% if a.date.startswith(y) %}
+  <div class="proj" id="{{ a.id }}">
+    <h3><a href="{{ a.url }}" target="_blank" rel="noopener">{{ a.title }}</a>
+    <span class="meta">{{ a.platform }} &middot; {{ a.date|when }}</span></h3>
+    <p>{{ a.argues }}</p>
+    <div class="tags">
+      {% for t in a.tags %}
+      <a class="tag" href="tags.html#{{ t|slug }}">{{ t }}</a>
+      {% endfor %}
+    </div>
+  </div>
+    {% endif %}
+  {% endfor %}
+  <p class="totop"><a href="#top">&uarr; Top</a></p>
+  {% endfor %}
+
+  <div class="contact-card" style="margin-top: 36px;">
+    <div>
+      <h3>Subscribe to my Substack</h3>
+      <p style="margin-top: 6px;">Read full essays and research notes on database performance, benchmarking, and AI evaluation on Substack.</p>
+    </div>
+    <div>
+      <a class="btn solid" href="{{ site.author.substack }}" target="_blank" rel="noopener">Subscribe on Substack &rarr;</a>
+    </div>
+  </div>
+</div></section>
+{% endblock %}

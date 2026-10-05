@@ -1,47 +1,28 @@
-"""Generate work.html from data/work.yaml.
+"""Generate work.html from data/work.yaml using Jinja2 templates.
 
     python3 tools/build_work.py
 """
 import html
 import pathlib
 from model import load_taxonomy, load_work_sections
-from page import render_project_card, render_page_shell, AUTHOR
+from page import render_template, AUTHOR
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 vocab = load_taxonomy()
 sections = load_work_sections(vocab)
 
-subnav_links = []
-sections_html = []
-
-for sec in sections:
-    subnav_links.append(
-        f'  <a href="#{sec.id}" data-tip="{html.escape(sec.summary, quote=True)}">'
-        f'{html.escape(sec.title.split("&")[0].strip())}</a>')
-    cards_html = "\n".join(render_project_card(item) for item in sec.items)
-
-    sections_html.append(
-        f'<section><div class="wrap">\n'
-        f'  <h2 id="{sec.id}">{html.escape(sec.title)}</h2>\n'
-        f'  <p class="sub small cat-note">{html.escape(sec.summary)}</p>\n'
-        f'{cards_html}\n'
-        f'  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
-        f'</div></section>'
-    )
-
+subnav_links = [f'  <a href="#{sec.id}">{html.escape(sec.title.split("&")[0].strip())}</a>' for sec in sections]
 subnav_html = "\n".join(subnav_links)
-body_html = "\n".join(sections_html)
 
-title = f"{AUTHOR} — Work"
-
-doc = render_page_shell(
-    title=title,
+doc = render_template(
+    template_name="work.html",
+    title=f"{AUTHOR} — Work",
     here_page="work",
-    subnav_html=subnav_html,
-    body_html=body_html,
     generator_name="build_work.py",
-    source_yaml="work.yaml"
+    source_yaml="work.yaml",
+    subnav_html=subnav_html,
+    sections=sections
 )
 
 (ROOT / "work.html").write_text(doc, encoding="utf-8")

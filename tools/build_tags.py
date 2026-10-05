@@ -1,4 +1,4 @@
-"""Generate tags.html from data/TAGS.yaml and all content models.
+"""Generate tags.html from data/TAGS.yaml and all content models using Jinja2 templates.
 
     python3 tools/build_tags.py
 """
@@ -6,8 +6,8 @@ import html
 import pathlib
 import re
 from collections import defaultdict
-from model import load_taxonomy, load_work_sections, load_articles, load_appearances, ProjectItem
-from page import render_page_shell, slug, AUTHOR
+from model import load_taxonomy, load_work_sections, load_articles, load_appearances
+from page import render_template, slug, AUTHOR
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
@@ -34,7 +34,6 @@ if teaching_yaml_path.exists():
         m_id = re.search(r"id:\s*([\w-]+)", block)
         m_title = re.search(r'title:\s*"(.*?)"', block)
         m_tags = re.search(r"tags:\s*\[(.*?)\]", block)
-        m_act = re.search(r"activity:\s*([\w\s-]+)", block)
         if m_id and m_title and m_tags:
             pid = m_id.group(1)
             title = m_title.group(1)
@@ -143,33 +142,21 @@ sections = "\n".join(
     for f in present
 )
 
-# each facet already explains itself in TAGS.yaml; that note is the hover
-subnav_html = "\n".join(
-    f'  <a href="#{f}"'
-    f'{f' data-tip="{html.escape(facets_meta[f].note, quote=True)}"' if f in facets_meta and facets_meta[f].note else ""}'
-    f'>{facets_meta[f].label if f in facets_meta else f.title()}</a>'
-    for f in present
-)
+subnav_html = "\n".join(f'  <a href="#{f}">{facets_meta.get(f, None).label if f in facets_meta else f.title()}</a>' for f in present)
 
-body_html = (
-    f'<section><div class="wrap">\n'
-    f'  <p class="lede">{len(index)} terms, {total} links to the work carrying them. The number on a term is how many pieces of work it points to.</p>\n'
-    f'</div></section>\n\n'
-    f'{sections}'
-)
-
-title = f"{AUTHOR} — Index"
-
-doc = render_page_shell(
-    title=title,
+doc = render_template(
+    template_name="tags.html",
+    title=f"{AUTHOR} — Index",
     here_page="tags",
-    subnav_html=subnav_html,
-    body_html=body_html,
     generator_name="build_tags.py",
-    source_yaml="TAGS.yaml"
+    source_yaml="TAGS.yaml",
+    subnav_html=subnav_html,
+    index_len=len(index),
+    total_links=total,
+    sections_html=sections
 )
 
 (ROOT / "tags.html").write_text(doc, encoding="utf-8")
-print(f"tags.html: {len(index)} tags across {sum(len(v) for v in index.values())} links")
+print(f"tags.html: {len(index)} tags across {total} links")
 for facet in present:
     print(f"  {facet:12} {len(facets[facet])} tags")

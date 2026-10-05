@@ -24,6 +24,14 @@ FILES_TO_SYNC = [
     # "build" is not synced: the template has no GitHub profile repo to write to
 
     "style.css",
+    "templates/base.html",
+    "templates/index.html",
+    "templates/work.html",
+    "templates/teaching.html",
+    "templates/writing.html",
+    "templates/speaking.html",
+    "templates/contact.html",
+    "templates/tags.html",
     "data/TAXONOMY.md",
     "tools/config_loader.py",
     "tools/model.py",

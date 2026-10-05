@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header id="top"><div class="wrap"><div class="hero"><div class="hero-text">
+  <h1>{{ site.author.name }}</h1>
+  <p class="sub">{{ bio_html|safe }} {{ home.site_note|format_inline|safe }}</p>
+  </div><div class="portrait-col"><img class="portrait" src="assets/photo.jpg" alt="{{ home.portrait_alt }}">
+  <div class="social">
+{{ social_html|safe }}
+  </div>
+</div></div></div></header>
+
+<section><div class="wrap">
+  <blockquote class="praise">
+    <p>&ldquo;{{ home.praise.quote|format_inline|safe }}&rdquo;</p>
+    <cite><a href="{{ home.praise.author_url }}" target="_blank" rel="noopener">{{ home.praise.author }}</a>, {{ home.praise.source }} &mdash; <em><a href="{{ home.praise.work_url }}" target="_blank" rel="noopener">{{ home.praise.work }}</a></em></cite>
+  </blockquote>
+  <p class="subtext" style="margin-top: -18px; margin-bottom: 30px; font-size: 15px;"><a href="teaching.html#testimonials">{{ testimonial_count }} {{ home.testimonials_link }} &rarr;</a></p>
+
+  <ul class="clean">
+    {% for nav in config.navigation %}
+    <li><span class="what"><a href="{{ nav.href }}"><strong>{{ nav.label }}</strong></a> &mdash; {{ nav.description }}</span></li>
+    {% endfor %}
+  </ul>
+</div></section>
+{% endblock %}
