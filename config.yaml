@@ -52,12 +52,9 @@ navigation:
     href: "contact.html"
     enabled: true
 
-features:
-  pagefind_search: true
-  privacy_checker: true
-  taxonomy_checker: true
-
 data:
+  # The controlled vocabulary every tag is validated against. Required: there is
+  # no fallback filename, so removing this line fails the build rather than
+  # quietly building against a file nobody chose.
   controlled_vocabulary: "TAGS.yaml"
-  application_rules: "APPLICATION-RULES.md"
 

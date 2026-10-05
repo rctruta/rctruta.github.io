@@ -8,8 +8,7 @@ from config_loader import load_config
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CONFIG = load_config()
-VOCAB_FILENAME = CONFIG.get("data", {}).get("controlled_vocabulary", "TAGS.yaml")
-RULES_FILENAME = CONFIG.get("data", {}).get("application_rules", "APPLICATION-RULES.md")
+VOCAB_FILENAME = CONFIG["data"]["controlled_vocabulary"]
 
 
 class FacetMeta(BaseModel):
@@ -20,6 +19,7 @@ class FacetMeta(BaseModel):
 
 class KindMeta(BaseModel):
     category: str
+    note: str = ""      # the scope note: what belongs under this kind
     order: int = 99
 
 

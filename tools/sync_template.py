@@ -44,6 +44,7 @@ FILES_TO_SYNC = [
     "tools/build_writing.py",
     "tools/build_contact.py",
     "tools/build_index.py",
+    "tools/build_rules_doc.py",
     "tools/build_speaking.py",
     "tools/malloy_chart.py",
     "tools/build_search.py",

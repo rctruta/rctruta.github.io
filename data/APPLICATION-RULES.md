@@ -22,14 +22,18 @@ different lists.
 
 Every item across the site belongs to an explicit content `kind`, mapped to a top-level category on the Index page:
 
+<!-- kinds:start -->
+<!-- generated from TAGS.yaml by tools/build_rules_doc.py; edit the vocabulary -->
+
 | kind | Category | Description |
 | --- | --- | --- |
 | `project` | `Projects` | Software repositories, pipeline architectures, or datasets |
 | `article` | `Writing` | Published essays, research notes, or Substack posts |
-| `talk` | `Speaking` | Conference presentations, keynotes, or workshops |
 | `podcast` | `Speaking` | Podcast guest or host appearances |
-| `teaching` | `Teaching` | Course offerings or curriculum design |
+| `talk` | `Speaking` | Conference presentations, keynotes, or workshops |
 | `course material` | `Teaching` | Handouts, assignments, or worked code examples |
+| `teaching` | `Teaching` | Course offerings or curriculum design |
+<!-- kinds:end -->
 
 ## Index Facets & Lexicographical Ordering
 

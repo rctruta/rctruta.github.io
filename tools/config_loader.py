@@ -14,11 +14,7 @@ def load_config():
     config = {
         "site": {},
         "navigation": [],
-        "features": {},
-        "data": {
-            "controlled_vocabulary": "TAGS.yaml",
-            "application_rules": "APPLICATION-RULES.md"
-        }
+        "data": {}
     }
 
     # Extract site metadata
@@ -35,18 +31,13 @@ def load_config():
         if m:
             config["site"]["author"][key] = m.group(1).strip()
 
-    # Extract feature flags
-    for key in ("pagefind_search", "privacy_checker", "taxonomy_checker"):
-        m = re.search(rf"^\s*{key}:\s*(true|false)", text, re.M)
-        if m:
-            config["features"][key] = (m.group(1).lower() == "true")
-
-    # Extract data files configuration
-    for key in ("controlled_vocabulary", "application_rules"):
-        m = re.search(rf"^\s*{key}:\s*[\"']?([^\"'\n]+)[\"']?", text, re.M)
-        if m:
-            config["data"][key] = m.group(1).strip()
-
+    # The controlled vocabulary's filename. No default: a fallback here would
+    # mean deleting the data block from config.yaml still builds, silently,
+    # against a filename nobody chose.
+    m = re.search(r"^\s*controlled_vocabulary:\s*[\"']?([^\"'\n]+)[\"']?", text, re.M)
+    if not m:
+        raise ValueError("config.yaml is missing data.controlled_vocabulary")
+    config["data"]["controlled_vocabulary"] = m.group(1).strip()
 
     # Extract navigation list. Each entry carries the one-line description that
     # becomes the page's meta description, the lede at the top of that page, and

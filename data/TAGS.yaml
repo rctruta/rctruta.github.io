@@ -17,21 +17,27 @@ facets:
 kinds:
   project:
     category: "Projects"
+    note: "Software repositories, pipeline architectures, or datasets"
     order: 1
   article:
     category: "Writing"
+    note: "Published essays, research notes, or Substack posts"
     order: 2
   talk:
     category: "Speaking"
+    note: "Conference presentations, keynotes, or workshops"
     order: 3
   podcast:
     category: "Speaking"
+    note: "Podcast guest or host appearances"
     order: 3
   teaching:
     category: "Teaching"
+    note: "Course offerings or curriculum design"
     order: 4
   course material:
     category: "Teaching"
+    note: "Handouts, assignments, or worked code examples"
     order: 4
 
 vocabulary:

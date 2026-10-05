@@ -290,6 +290,25 @@ class TestOneBio(unittest.TestCase):
                               f"{name} is missing the end of the bio")
 
 
+class TestDocsMatchTheVocabulary(unittest.TestCase):
+    """The document that says how the vocabulary is applied must not contradict it.
+
+    The kinds table was typed into APPLICATION-RULES.md and also declared in
+    TAGS.yaml. They agreed by luck; nothing checked them.
+    """
+
+    def test_kinds_table_matches_the_controlled_vocabulary(self):
+        doc = ROOT / "data" / "APPLICATION-RULES.md"
+        if not doc.exists():
+            self.skipTest("APPLICATION-RULES.md not present")
+        text = doc.read_text()
+        kinds = load_taxonomy().kinds
+        in_doc = dict(re.findall(r"^\| `([^`]+)` \| `([^`]+)` \|", text, re.M))
+        self.assertEqual({k: m.category for k, m in kinds.items()}, in_doc,
+                         "the kinds table disagrees with the controlled vocabulary; "
+                         "run python3 tools/build_rules_doc.py")
+
+
 if __name__ == "__main__":
     unittest.main()
 
