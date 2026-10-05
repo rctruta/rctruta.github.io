@@ -246,6 +246,27 @@ sections:
         notes:
           - text: "Presented at the Canadian Women in Cybersecurity Conference, Toronto, May 2026."
           - text: "Experiments varying a protected attribute are held back, with their findings: a single name pair cannot separate a name-specific effect from a systematic one. The published README says so rather than leaving a gap."
+      - id: security-testbed
+        title: "AI security testbed — semantic privilege escalation under adversarial audit"
+        activity: research
+        tags: [AI security, AI evaluation, Deterministic grading, Ablation study, Content addressing, Python]
+        description: |
+          The successor to **adversarial-judgement-research**, built to test one premise: that
+          wrapping a model in a system prompt does not make a multi-agent pipeline secure, because
+          the control plane and the data plane are both just text. A transformer has no role-based
+          access control, so an instruction and a social authority payload arrive the same way.
+
+          A deterministic matrix engine runs a 2x2 factorial at temperature 0 with replication,
+          sweeping model, adversary status and thinking budget, and grades every run by rule. The
+          corpus is 416 traces across frontier and local models — GPT-4.1, Gemini 3.1 Pro, Claude
+          Opus 4.6, Cohere Command-R, Groq, HuggingFace, and Ollama running llama3, mistral and
+          gemma2 on my own machine. Running the same scenarios locally is what makes the sweep
+          affordable to replicate rather than a one-off purchase.
+
+          Findings are held for disclosure: the study names specific models and versions, and a
+          vendor-identifying result belongs with its vendor before it belongs on a website.
+        notes:
+          - text: "Repository private while the findings are prepared for disclosure."
       - id: agent-tools
         title: "Tools and playbooks for collaborating with coding agents"
         summary: "Boilerplate and security guidelines for collaborating safely with autonomous coding agents, with the gates already enforced rather than written down and hoped for."

@@ -635,6 +635,49 @@
     
   </div>
   
+  <div class="proj" id="security-testbed">
+    <h3>AI security testbed — semantic privilege escalation under adversarial audit</h3>
+    <p>The successor to <strong>adversarial-judgement-research</strong>, built to test one premise: that
+wrapping a model in a system prompt does not make a multi-agent pipeline secure, because
+the control plane and the data plane are both just text. A transformer has no role-based
+access control, so an instruction and a social authority payload arrive the same way.</p>
+
+<p>A deterministic matrix engine runs a 2x2 factorial at temperature 0 with replication,
+sweeping model, adversary status and thinking budget, and grades every run by rule. The
+corpus is 416 traces across frontier and local models &mdash; GPT-4.1, Gemini 3.1 Pro, Claude
+Opus 4.6, Cohere Command-R, Groq, HuggingFace, and Ollama running llama3, mistral and
+gemma2 on my own machine. Running the same scenarios locally is what makes the sweep
+affordable to replicate rather than a one-off purchase.</p>
+
+<p>Findings are held for disclosure: the study names specific models and versions, and a
+vendor-identifying result belongs with its vendor before it belongs on a website.</p>
+    
+
+    <div class="tags">
+      
+      <a class="tag" href="tags.html#ai-security">AI security</a>
+      
+      <a class="tag" href="tags.html#ai-evaluation">AI evaluation</a>
+      
+      <a class="tag" href="tags.html#deterministic-grading">Deterministic grading</a>
+      
+      <a class="tag" href="tags.html#ablation-study">Ablation study</a>
+      
+      <a class="tag" href="tags.html#content-addressing">Content addressing</a>
+      
+      <a class="tag" href="tags.html#python">Python</a>
+      
+    </div>
+    
+    
+      
+        
+    <div class="note">Repository private while the findings are prepared for disclosure.</div>
+        
+      
+    
+  </div>
+  
   <div class="proj" id="agent-tools">
     <h3>Tools and playbooks for collaborating with coding agents</h3>
     <p><strong>ai-agent-utils</strong> &mdash; a bootstrap that starts a repository with gates already enforced, rather than rules written down and hoped for. Two families: git discipline, and claim integrity &mdash; every load-bearing number registered with a source and re-checked before commit, fabricated claims blocked by pattern, and a checkpoint that refuses to record a working state unless a proof command passes. Enforcement is git hooks and stdlib scripts, so it binds whichever agent is driving; the Claude and Cursor files only describe it. <strong>The Pedantic Medallion</strong> &mdash; community-curated playbooks for building shared understanding, from the framework of the same name.</p>
