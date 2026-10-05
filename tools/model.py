@@ -93,6 +93,9 @@ class Appearance(BaseModel):
     tags: List[str] = Field(default_factory=list)
     eventType: str = ""
     location: str = ""
+    url: Optional[str] = None          # the published episode or talk page
+    counterpart: Optional[str] = None  # who she interviewed, when guest host
+    note: Optional[str] = None
     slidesUrl: Optional[str] = None
     videoUrl: Optional[str] = None
     transcriptUrl: Optional[str] = None
@@ -348,6 +351,9 @@ def load_appearances(vocab: TagVocabulary) -> List[Appearance]:
         role = field("role") or ""
         eventType = field("eventType") or ""
         location = field("location") or ""
+        url = field("url")
+        counterpart = field("counterpart")
+        note = field("note")
         slidesUrl = field("slidesUrl")
         videoUrl = field("videoUrl")
         transcriptUrl = field("transcriptUrl")
@@ -362,6 +368,7 @@ def load_appearances(vocab: TagVocabulary) -> List[Appearance]:
             appearances.append(Appearance(
                 id=aid, title=title, org=org, date=date, kind=kind, format=format_val,
                 role=role, tags=tags, eventType=eventType, location=location,
+                url=url, counterpart=counterpart, note=note,
                 slidesUrl=slidesUrl, videoUrl=videoUrl, transcriptUrl=transcriptUrl
             ))
 

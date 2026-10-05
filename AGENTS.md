@@ -10,7 +10,7 @@ something.
 | --- | --- | --- |
 | `work.html` | `data/work.yaml` | `tools/build_work.py` |
 | `teaching.html` | `data/teaching.yaml` | `tools/build_teaching.py` |
-| `speaking.html` | `data/appearances.yaml` | `tools/build_speaking.mjs` |
+| `speaking.html` | `data/appearances.yaml` | `tools/build_speaking.py` |
 | `writing.html` | `data/writing.yaml` | `tools/build_writing.py` |
 | `tags.html` | `data/TAGS.yaml` + data files | `tools/build_tags.py` |
 | `assets/malloy-skills-tokens.svg` | numbers in the script | `tools/malloy_chart.py` |

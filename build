@@ -19,7 +19,7 @@ echo "2/11 teaching      <- data/teaching.yaml"
 python3 tools/build_teaching.py
 
 echo "3/11 speaking      <- data/appearances.yaml"
-node tools/build_speaking.mjs
+python3 tools/build_speaking.py
 
 echo "4/11 writing       <- data/writing.yaml"
 python3 tools/build_writing.py

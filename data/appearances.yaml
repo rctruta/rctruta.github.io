@@ -10,7 +10,11 @@
 # Nothing here records "is it out yet" — that is derived, so it cannot go stale:
 #   talk     always rendered; upcoming vs past comes from `date`
 #   podcast  rendered once it has a `url`; no url = recorded, not published
-# To publish an episode, paste its link. There is no second step.# ---------------------------------------------------------------- talks -----
+# To publish an episode, paste its link. There is no second step.# A line of hers that introduces the guest-host list, kept here rather than in
+# the generator.
+guest_host_note: "One of the biggest joys in my life is showing up for my friends. Celebrating them."
+
+# ---------------------------------------------------------------- talks -----
 
 - id: nodes-2026
   kind: talk
