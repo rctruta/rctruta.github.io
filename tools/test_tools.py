@@ -203,9 +203,10 @@ class TestNothingVanishes(unittest.TestCase):
     """Every record in the data must appear on its page.
 
     A template rewrite dropped the guest-host section, the five interview
-    credits and a line of Ramona's prose, and all sixteen tests passed: they
-    checked navigation, anchors and descriptions, and nothing checked that the
-    content survived. A page can lose a whole section and still be well-formed.
+    credits and a line of prose kept in the data, and all sixteen tests passed:
+    they checked navigation, anchors and descriptions, and nothing checked that
+    the content survived. A page can lose a whole section and still be
+    well-formed.
     """
 
     def setUp(self):
@@ -257,8 +258,8 @@ class TestOneBio(unittest.TestCase):
     """The bio is one string. Every rendering of it says the same words.
 
     It was split into a travelling `bio` and a home-page-only `site_note`, on
-    the reasoning that "this site" has no referent off the website. Ramona
-    wanted the sentence everywhere, so `tools/bio.py` — which she runs to get
+    the reasoning that "this site" has no referent off the website. The
+    sentence belongs everywhere, so `tools/bio.py` — the command that produces
     text for LinkedIn and the resume — quietly returned a shorter bio than the
     website and GitHub were showing. Three renderings, two of them agreeing.
     """

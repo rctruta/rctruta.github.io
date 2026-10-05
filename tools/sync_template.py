@@ -17,7 +17,7 @@ print("🔄 Syncing architecture and tools to static-site-template...")
 
 # Files to sync
 # Architecture only. Data and generated pages are deliberately absent: syncing
-# them republishes Ramona's career into the template, so every clone would start
+# them republishes this site's content into the template, so every clone would start
 # with her appearances, articles and teaching page and have to delete them. The
 # template carries its own example data.
 FILES_TO_SYNC = [

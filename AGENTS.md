@@ -103,7 +103,7 @@ Name the nodes, not the edge.
 
 ## Writing
 
-The prose is Ramona's. An agent supplies numbers, verification, structure and
+The prose is the author's. An agent supplies numbers, verification, structure and
 mechanics. Quotations from private correspondence are anonymous; public
 recommendations written under someone's own name keep that name.
 

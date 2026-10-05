@@ -2,8 +2,8 @@
 
     python3 tools/build_prep_sheet.py
 
-Writes ~/Projects/Interview/Prep/PREP.md. Not part of the website: it is for
-Ramona, it is not in the repository, and it is not published.
+Writes ~/Projects/Interview/Prep/PREP.md. Not part of the website: it is not
+in the repository and it is not published.
 
 Everything here is derived. Nothing is a suggested answer, because a suggested
 answer is a script and a script is what falls apart under a follow-up question.

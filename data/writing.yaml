@@ -1,12 +1,10 @@
-# Everything Ramona has written that makes an argument she would defend.
+# Every piece here makes an argument worth defending.
 #
 # tools/build_writing.py generates writing.html from this file, newest first,
 # and build_tags.py reads it so articles appear in the tag index beside projects.
 #
-# `argues` is her own subtitle wherever the subtitle states the claim — those are
-# her words, taken from the published piece, not a summary written for her.
-# Lines marked CHECK are drawn from the body because the subtitle did not carry
-# the argument; those need her eye.
+# `argues` is the published subtitle wherever the subtitle states the claim,
+# taken verbatim from the piece rather than summarised.
 #
 # Tags must exist in data/TAGS.yaml or the build fails.
 # Platform is recorded, not filtered on: a LinkedIn post that makes a claim is
@@ -25,7 +23,7 @@
   url: https://ramonactruta.substack.com/p/measuring-quack-duckdbs-new-client
   platform: Substack
   date: 2026-06-22
-  argues: "Pushdown holds a bounded ~2x overhead and beats PostgreSQL on analytical aggregations; attach mode does not scale, and cannot join at all."  # CHECK
+  argues: "Pushdown holds a bounded ~2x overhead and beats PostgreSQL on analytical aggregations; attach mode does not scale, and cannot join at all."
   tags: [Benchmarking, Cold-cache measurement, DuckDB, PostgreSQL]
 
 - id: the-job-that-wasnt

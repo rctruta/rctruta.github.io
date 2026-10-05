@@ -17,7 +17,7 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
-# Addresses Ramona has decided to publish. Nothing else may appear.
+# Addresses chosen for publication. Nothing else may appear.
 ALLOWED = {
     # "ramona@ramonactruta.com",   # uncomment when the domain mailbox exists
 }
@@ -28,7 +28,7 @@ PATTERNS = [
 ]
 
 # files that legitimately carry contact details, and vendored output that is
-# not Ramona's data — pagefind/ is generated and carries its translators' credits
+# generated output — pagefind/ carries its translators' credits
 SKIP_FILES = {"AGENTS.md", "tools/check_private.py"}
 SKIP_DIRS = ("pagefind/", "node_modules/")
 
