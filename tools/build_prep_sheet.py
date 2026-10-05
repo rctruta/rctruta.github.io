@@ -155,6 +155,27 @@ def main():
             L.append(f"<sub>`{item.id}` · {', '.join(item.tags)}</sub>\n")
         L.append("---\n")
 
+    L.append("## If someone checks the site's security grade\n")
+    L.append("""SSL Labs gives https://ramonactruta.com a **B**. So does
+`rctruta.github.io` — measured on the same 8 endpoints, 4 IPv4 and 4 IPv6. It
+is GitHub Pages' TLS termination, not anything in the repository, and no change
+to the site, the DNS or the domain settings moves it.
+
+The cap is one thing: `forwardSecrecy: 1`, meaning some of SSL Labs' simulated
+browsers negotiate a cipher suite without forward secrecy. GitHub still offers
+one for old clients.
+
+What the same scan found: **TLS 1.2 and 1.3 only** — no TLS 1.0 or 1.1 — and
+not vulnerable to BEAST, POODLE, Heartbleed, FREAK or Logjam, with no RC4.
+
+The answer, if asked: that is GitHub Pages' TLS configuration, and `github.io`
+scores identically. Checking and knowing why is the better answer; an A would
+only mean a host where you control the cipher list.
+
+The certificate renews itself. GitHub Pages issues and renews Let's Encrypt
+certificates automatically while the DNS stays pointed at GitHub and the domain
+stays verified — both true. Nothing to do in November.\n""")
+
     L.append("## Talks, in case they ask what you have said in public\n")
     for t in talks:
         where = f", {t.location}" if t.location else ""
