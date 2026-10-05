@@ -53,8 +53,8 @@ def blurb(item) -> str:
     as "no error of any kind", which is the opposite of what the study found —
     so an item can carry its own summary and these do.
     """
-    if item.summary:
-        return item.summary
+    if item.blurb:
+        return item.blurb
     text = " ".join(item.description.strip().split())
     # a description that opens by repeating the repository name in bold
     text = re.sub(r"^\*\*[^*]+\*\* — ", "", text)
@@ -138,6 +138,6 @@ else:
     shown = sum(len(re.findall(r"^\| \[", b, re.M)) for b in project_blocks)
     print(f"{OUT}: {shown} repositories, {len(articles)} articles, {len(talks)} talks.")
     bare = [i.id for s_ in sections for i in s_.items
-            if repo_url(i) and not i.summary and repo_url(i).rstrip("/") != FEATURED_REPO.rstrip("/")]
+            if repo_url(i) and not i.blurb and repo_url(i).rstrip("/") != FEATURED_REPO.rstrip("/")]
     if bare:
-        print("  no summary, using the first sentence: " + ", ".join(bare))
+        print("  no blurb, using the first sentence: " + ", ".join(bare))

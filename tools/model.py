@@ -56,7 +56,7 @@ class Note(BaseModel):
 class ProjectItem(BaseModel):
     id: str
     title: str
-    summary: str = ""   # one line, for the GitHub profile; falls back to nothing
+    blurb: str = ""     # one line for the GitHub profile, where the full description does not fit
     activity: str = "built"
     tags: List[str] = Field(default_factory=list)
     description: str = ""
@@ -205,7 +205,7 @@ def load_work_sections(vocab: TagVocabulary) -> List[WorkSection]:
             current_item = {
                 "id": trimmed.split(":", 1)[1].strip(),
                 "title": "",
-                "summary": "",
+                "blurb": "",
                 "activity": "built",
                 "tags": [],
                 "description": "",
@@ -221,8 +221,8 @@ def load_work_sections(vocab: TagVocabulary) -> List[WorkSection]:
         elif raw_indent == 8 and current_item:
             if trimmed.startswith("title:"):
                 current_item["title"] = trimmed.split(":", 1)[1].strip().strip('"')
-            elif trimmed.startswith("summary:"):
-                current_item["summary"] = trimmed.split(":", 1)[1].strip().strip('"')
+            elif trimmed.startswith("blurb:"):
+                current_item["blurb"] = trimmed.split(":", 1)[1].strip().strip('"')
             elif trimmed.startswith("activity:"):
                 current_item["activity"] = trimmed.split(":", 1)[1].strip().strip('"')
             elif trimmed.startswith("tags:"):

@@ -167,7 +167,7 @@ sections:
             url: "https://github.com/rctruta/malloy-publisher-agent-study"
       - id: agent-traces
         title: "Reading agent traces"
-        summary: "Per-turn agent traces against a commercial lakehouse platform. Surfaced three defects I reported upstream — #369, #370, #371 — including an error message that actively sends an agent in the wrong direction."
+        blurb: "Per-turn agent traces against a commercial lakehouse platform. Surfaced three defects I reported upstream — #369, #370, #371 — including an error message that actively sends an agent in the wrong direction."
         activity: research
         tags: [AI evaluation, Per-turn tracing, Deterministic grading, Python, Process telemetry]
         description: |
@@ -194,7 +194,7 @@ sections:
             url: "https://github.com/rctruta/agent-telemetry"
       - id: rag-accuracy
         title: "A RAG system answering 17 of 20 questions its sources couldn't support"
-        summary: "Ask a question about a podcast, get an answer and a link to the exact second someone said it. LanceDB, local-first, no cluster and no API key. Built a labelled eval set and found it answering 17 of 20 questions its sources couldn't support; recalibrated precision 0.56 → 0.87."
+        blurb: "Ask a question about a podcast, get an answer and a link to the exact second someone said it. LanceDB, local-first, no cluster and no API key. Built a labelled eval set and found it answering 17 of 20 questions its sources couldn't support; recalibrated precision 0.56 → 0.87."
         activity: built
         tags: [AI evaluation, Evaluation sets, Python, RAG, LanceDB]
         description: |
@@ -239,7 +239,7 @@ sections:
         tags: [AI evaluation, Deterministic grading, Ablation study, RLHF, Data contracts, AI security, Python]
         description: |
           Based on my **adversarial-judgement-research** framework (14 study contracts, 205 graded runs across 10 models from 4 vendors, with a successor testbed extending the matrix to local models): I proved that generalized LLM orchestrators evaluate simulated social status over technical merit. Injecting a high-status persona into routing decisions causes agentic state to collapse into authority bias (the RLHF tax). Prompt-level instructions fail under pressure; mechanical gates hold.
-        summary: "Metatracing engine and execution traces for structural failure modes in multi-agent LLM consensus pipelines: status bias, persona bleed, frame break, axiomatic refusal, consensus contagion, semantic camouflage."
+        blurb: "Metatracing engine and execution traces for structural failure modes in multi-agent LLM consensus pipelines: status bias, persona bleed, frame break, axiomatic refusal, consensus contagion, semantic camouflage."
         links:
           - text: "adversarial-judgement-research"
             url: "https://github.com/rctruta/adversarial-judgement-research"
@@ -265,7 +265,7 @@ sections:
 
           The engine, the study contracts and every trace are public. My own working notes are
           not: those are research in progress, and they are the only thing held back.
-        summary: "A deterministic matrix engine for adversarial audit of multi-agent pipelines: temperature 0, replication, status and thinking-budget sweeps, rule-based grading. 416 traces across frontier and local models."
+        blurb: "A deterministic matrix engine for adversarial audit of multi-agent pipelines: temperature 0, replication, status and thinking-budget sweeps, rule-based grading. 416 traces across frontier and local models."
         links:
           - text: "ai-security-testbed"
             url: "https://github.com/rctruta/ai-security-testbed"
@@ -273,7 +273,7 @@ sections:
           - text: "Measurements are dated: they describe the model versions named in each study contract, at the time each study ran. Model behaviour changes; an undated claim about a model ages into a false one."
       - id: agent-tools
         title: "Tools and playbooks for collaborating with coding agents"
-        summary: "Boilerplate and security guidelines for collaborating safely with autonomous coding agents, with the gates already enforced rather than written down and hoped for."
+        blurb: "Boilerplate and security guidelines for collaborating safely with autonomous coding agents, with the gates already enforced rather than written down and hoped for."
         activity: built
         tags: [AI security, Deterministic grading, Python, Pre-commit gates]
         description: |

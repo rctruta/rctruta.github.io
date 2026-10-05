@@ -122,8 +122,8 @@ def main():
         for item in sec.items:
             text = " ".join((item.description or "").split())
             L.append(f"### {item.title}\n")
-            if item.summary:
-                L.append(f"**In one line.** {item.summary}\n")
+            if item.blurb:
+                L.append(f"**In one line.** {item.blurb}\n")
             else:
                 first = re.split(r"(?<=[.!?]) ", text)[0] if text else ""
                 L.append(f"**In one line.** {first}\n")
