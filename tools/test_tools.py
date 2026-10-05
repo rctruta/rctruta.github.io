@@ -165,7 +165,7 @@ class TestDescriptionsPropagate(unittest.TestCase):
         if not self.home:
             self.skipTest("index.html not built")
         for nav in self.nav:
-            self.assertIn(html.escape(nav["description"], quote=False).replace("'", "&#x27;"), self.home,
+            self.assertIn(html.unescape(nav["description"]), html.unescape(self.home),
                           f"index.html does not carry the description for {nav['href']}")
 
     def test_home_page_testimonial_count_matches_the_data(self):

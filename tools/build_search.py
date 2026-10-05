@@ -22,7 +22,7 @@ PAGES = [
 ]
 
 SNIPPET = """<!-- search:start -->
-<div class="searchmodal" id="searchmodal" hidden>
+<div class="searchmodal" id="searchmodal" hidden data-pagefind-ignore>
   <div class="searchmodal__panel" role="dialog" aria-modal="true" aria-label="Search this site">
     <button type="button" class="searchmodal__close" aria-label="Close search" data-search-close>&times;</button>
     <div id="search"></div>
@@ -51,8 +51,14 @@ SNIPPET = """<!-- search:start -->
         }
       });
     }
+    const saved = sessionStorage.getItem('pagefind_query');
     const input = modal.querySelector('input');
-    if (input) { input.focus(); input.select(); }
+    if (input) {
+      if (saved && !input.value) {
+        ui.triggerSearch(saved);
+      }
+      input.focus();
+    }
   };
 
   const close = () => {
@@ -63,8 +69,19 @@ SNIPPET = """<!-- search:start -->
   document.querySelectorAll('[data-search-open]').forEach(b => b.addEventListener('click', open));
   document.querySelectorAll('[data-search-close]').forEach(b => b.addEventListener('click', close));
 
-  // clicking the backdrop closes; clicking inside the panel does not
-  modal.addEventListener('click', e => { if (e.target === modal) close(); });
+  modal.addEventListener('input', e => {
+    if (e.target && e.target.tagName === 'INPUT') {
+      sessionStorage.setItem('pagefind_query', e.target.value);
+    }
+  });
+
+  modal.addEventListener('click', e => {
+    if (e.target === modal) close();
+    const link = e.target.closest('a');
+    if (link && link.getAttribute('href')) {
+      close();
+    }
+  });
 
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && !modal.hidden) close();
