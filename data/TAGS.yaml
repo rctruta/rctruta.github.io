@@ -49,7 +49,6 @@ vocabulary:
     Human agency: What people give up to a system, and what it costs them.
     Storytelling: An analogy from lived experience carrying a technical idea, so the reader arrives at the mechanism through something they already know.
     RLHF: Measuring how RLHF alignment and status bias shift agent decision routing under pressure.
-    System integrity: Applying database determinism to probabilistic AI systems, runtime contracts, and agentic infrastructure.
 
   method:
     Deterministic grading: Scoring outcomes by rule, not by judgement, so a result can be re-derived.

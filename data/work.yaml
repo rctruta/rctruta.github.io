@@ -55,7 +55,7 @@ sections:
       - id: site-infrastructure
         title: "rctruta.github.io — contract-driven portfolio & claim verification pipeline"
         activity: built
-        tags: [Data modeling, Pre-commit gates, Python, Data contracts, System integrity]
+        tags: [Data modeling, Pre-commit gates, Python, Data contracts]
         description: |
           The repository powering this website is built as a data modeling project. Numbers that carry weight are registered in `FACTS.yaml` with their source and checked against it by a pre-commit hook, which also reports every unregistered number for review and blocks any claim on the banned list. A second hook refuses to commit personal contact details. Vocabulary is governed by `TAGS.yaml` and `TAXONOMY.md`: an unknown tag fails the build. Python and Node generators compile the writing list, the speaking list, the tag index, the navigation and the search index — so a page and the data behind it cannot disagree.
         links:
@@ -242,7 +242,7 @@ sections:
       - id: agent-tools
         title: "Tools and playbooks for collaborating with coding agents"
         activity: built
-        tags: [AI security, Deterministic grading, Python, Pre-commit gates, System integrity]
+        tags: [AI security, Deterministic grading, Python, Pre-commit gates]
         description: |
           **ai-agent-utils** — a bootstrap that starts a repository with gates already enforced, rather than rules written down and hoped for. Two families: git discipline, and claim integrity — every load-bearing number registered with a source and re-checked before commit, fabricated claims blocked by pattern, and a checkpoint that refuses to record a working state unless a proof command passes. Enforcement is git hooks and stdlib scripts, so it binds whichever agent is driving; the Claude and Cursor files only describe it. **The Pedantic Medallion** — community-curated playbooks for building shared understanding, from the framework of the same name.
         links:
