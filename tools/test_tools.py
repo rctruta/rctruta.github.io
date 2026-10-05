@@ -229,6 +229,22 @@ class TestNothingVanishes(unittest.TestCase):
                 self.assertIn(a.counterpart, page,
                               f"speaking.html does not credit {a.counterpart}")
 
+    def test_no_escaped_markup_reaches_a_page(self):
+        """Tags printed as text instead of rendered.
+
+        Jinja autoescapes a variable, so HTML built in Python and passed into a
+        template arrives as visible &lt;em&gt;. It reached the live speaking page.
+        """
+        for name in ("index.html", "work.html", "teaching.html", "speaking.html",
+                     "writing.html", "tags.html", "contact.html"):
+            page = ROOT / name
+            if not page.exists():
+                continue
+            for bad in ("&lt;em&gt;", "&lt;strong&gt;", "&lt;a href", "&lt;code&gt;", "&lt;br"):
+                self.assertNotIn(bad, page.read_text(),
+                                 f"{name} prints {bad} as text instead of rendering it")
+
+
     def test_every_project_reaches_the_work_page(self):
         from model import load_work_sections
         page = self.read("work.html")

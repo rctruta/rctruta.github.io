@@ -11,8 +11,8 @@
   Measured: 0 of 8 talks have a slidesUrl, videoUrl or transcriptUrl. Removed.
 #}
 
-{% macro row(item, trailing='') -%}
-    <li id="{{ item.id }}"><span class="when">{{ item.date|when }}</span><span class="what"><strong>{{ item.org }}</strong>{% if item.location and item.location != 'virtual' %}, {{ item.location }}{% endif %} &mdash; {% if item.url %}<a href="{{ item.url }}" target="_blank" rel="noopener">{{ item.title }}</a>{% else %}<em>{{ item.title }}</em>{% endif %}{{ trailing }}</span></li>
+{% macro row(item, note='') -%}
+    <li id="{{ item.id }}"><span class="when">{{ item.date|when }}</span><span class="what"><strong>{{ item.org }}</strong>{% if item.location and item.location != 'virtual' %}, {{ item.location }}{% endif %} &mdash; {% if item.url %}<a href="{{ item.url }}" target="_blank" rel="noopener">{{ item.title }}</a>{% else %}<em>{{ item.title }}</em>{% endif %}{% if note %} <em>({{ note }})</em>{% endif %}</span></li>
 {%- endmacro %}
 
 {% block content %}
@@ -32,14 +32,14 @@
   <p class="lede">{{ guest_host_note }}</p>
   <ul class="clean">
 {%- for item in as_host %}
-{{ row(item, ' <em>(interviewing ' ~ item.counterpart ~ ')</em>' if item.counterpart else '') }}
+{{ row(item, 'interviewing ' ~ item.counterpart if item.counterpart else '') }}
 {%- endfor %}
   </ul>
 
   <h3 id="as-guest">As guest</h3>
   <ul class="clean">
 {%- for item in as_guest %}
-{{ row(item, ' <em>(co-host)</em>' if item.role == 'co-host' else '') }}
+{{ row(item, 'co-host' if item.role == 'co-host' else '') }}
 {%- endfor %}
   </ul>
   <p class="totop"><a href="#top">&uarr; Top</a></p>
