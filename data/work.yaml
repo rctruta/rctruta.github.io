@@ -47,7 +47,7 @@ sections:
 
           They took that document to a funding body and were awarded **$34,000** to do the work. I had written it as a favour, and heard some months later.
 
-          Reading it back in 2026: the metatable is a metadata catalog, the filename scheme is a canonical identifier carrying lineage, and `ExtractedBy` / `CheckedBy` / `RowCount` are a provenance trail. I had none of those words in 2011. What it is not, and I will not claim it was, is master data management — there is no survivorship rule anywhere in it, because nothing in that pipeline ever had to reconcile two conflicting records of the same person.
+          Reading it back in 2026: the metatable is a metadata catalog, the filename scheme is a canonical identifier carrying lineage, and `ExtractedBy` / `CheckedBy` / `RowCount` are a provenance trail. I had none of those words in 2011.
         links:
           - text: "The 2011 design document (PDF)"
             url: "assets/police-gazette-transcripts-2011.pdf"
