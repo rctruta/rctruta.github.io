@@ -35,10 +35,15 @@ home = load_home()
 
 bio_markdown = as_markdown(home.bio)
 
-profile_yaml = (ROOT / "data" / "github_profile.yaml").read_text()
-FEATURED_REPO = re.search(r'^featured_repo: "(.*)"', profile_yaml, re.M).group(1)
-featured = re.search(r"^featured: \|\n((?:  .*\n|\n)*)", profile_yaml, re.M)
-featured = "\n".join(l[2:] for l in featured.group(1).splitlines()).strip() if featured else ""
+# The curated block lives in the profile repository, next to the README it
+# belongs to, rather than in this site's data directory. It is a pitch, not a
+# record, so it is written by hand; its numbers are registered in FACTS.yaml.
+FEATURED_FILE = OUT.parent / "FEATURED.md"
+if not FEATURED_FILE.exists():
+    raise FileNotFoundError(f"{FEATURED_FILE} is missing; the README cannot be built without it")
+_featured_src = FEATURED_FILE.read_text()
+FEATURED_REPO = re.search(r"featured-repo: (\S+)", _featured_src).group(1)
+featured = re.sub(r"<!--.*?-->\n*", "", _featured_src, flags=re.S).strip()
 
 
 def blurb(item) -> str:
