@@ -46,7 +46,7 @@
 
 <section><div class="wrap">
   <h2 id="data-engineering">Data modeling</h2>
-  <p class="sub small cat-note">Data modeling is the throughline. Source systems into structures analysts and models can use — migration, entity resolution, record linkage, annotation quality control, and the SQL behaviour underneath it.</p>
+  <p class="sub small cat-note">Data modeling is the throughline. Source systems into structures analysts and models can use &mdash; migration, entity resolution, record linkage, annotation quality control, and the SQL behaviour underneath it.</p>
   
   <div class="proj" id="guelph-migration">
     <h3>Legacy-to-PostgreSQL migration and record linkage — University of Guelph, 2011–2015</h3>
@@ -342,7 +342,7 @@
 
 <section><div class="wrap">
   <h2 id="agent-evaluation">AI evaluation</h2>
-  <p class="sub small cat-note">Whether a model or an agent did what it claimed, and what a deployment will cost. Instrumenting systems and reading what they actually did, rather than asking them. Relates to OWASP LLM06 (excessive agency) and LLM09 (misinformation).</p>
+  <p class="sub small cat-note">Whether a model or an agent did what it claimed, and what a deployment will cost. Instrumenting systems and reading what they actually did, rather than asking them. Relates to <a href="https://genai.owasp.org/llmrisk/llm06-excessive-agency/" target="_blank" rel="noopener">OWASP LLM06 (excessive agency)</a> and <a href="https://genai.owasp.org/llmrisk/llm09-misinformation/" target="_blank" rel="noopener">OWASP LLM09 (misinformation)</a>.</p>
   
   <div class="proj" id="harness-bench">
     <h3>harness-bench — measuring a deployment before it is a deployment</h3>
@@ -561,7 +561,7 @@
 
 <section><div class="wrap">
   <h2 id="memory-security">AI security</h2>
-  <p class="sub small cat-note">Attacks on what an agent reads, stores and later trusts — and the controls that hold against them. Maps to OWASP LLM01 (indirect prompt injection) and LLM04 (data poisoning).</p>
+  <p class="sub small cat-note">Attacks on what an agent reads, stores and later trusts &mdash; and the controls that hold against them. Maps to <a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/" target="_blank" rel="noopener">OWASP LLM01 (indirect prompt injection)</a> and <a href="https://genai.owasp.org/llmrisk/llm04-data-and-model-poisoning/" target="_blank" rel="noopener">OWASP LLM04 (data poisoning)</a>.</p>
   
   <div class="proj" id="agent-memory">
     <h3>Semantic injection into agent memory</h3>
@@ -737,6 +737,7 @@ vendor-identifying result belongs with its vendor before it belongs on a website
         showSubResults: true,
         showImages: false,
         pageSize: 8,
+        highlightParam: "highlight",
         translations: {
           placeholder: 'Search this site',
           zero_results: 'Nothing found for [SEARCH_TERM]'

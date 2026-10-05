@@ -4,7 +4,7 @@
 {% for sec in sections %}
 <section><div class="wrap">
   <h2 id="{{ sec.id }}">{{ sec.title }}</h2>
-  <p class="sub small cat-note">{{ sec.summary }}</p>
+  <p class="sub small cat-note">{{ sec.summary|format_inline|safe }}</p>
   {% for item in sec.items %}
   <div class="proj" id="{{ item.id }}">
     <h3>{% if item.url %}<a href="{{ item.url }}">{{ item.title }}</a>{% if item.meta %} <span class="meta">{{ item.meta }}</span>{% endif %}{% else %}{{ item.title }}{% endif %}</h3>

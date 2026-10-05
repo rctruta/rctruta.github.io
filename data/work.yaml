@@ -116,7 +116,7 @@ sections:
 
   - id: agent-evaluation
     title: "AI evaluation"
-    summary: "Whether a model or an agent did what it claimed, and what a deployment will cost. Instrumenting systems and reading what they actually did, rather than asking them. Relates to OWASP LLM06 (excessive agency) and LLM09 (misinformation)."
+    summary: "Whether a model or an agent did what it claimed, and what a deployment will cost. Instrumenting systems and reading what they actually did, rather than asking them. Relates to [OWASP LLM06 (excessive agency)](https://genai.owasp.org/llmrisk/llm06-excessive-agency/) and [OWASP LLM09 (misinformation)](https://genai.owasp.org/llmrisk/llm09-misinformation/)."
     items:
       - id: harness-bench
         title: "harness-bench — measuring a deployment before it is a deployment"
@@ -218,7 +218,7 @@ sections:
 
   - id: memory-security
     title: "AI security"
-    summary: "Attacks on what an agent reads, stores and later trusts — and the controls that hold against them. Maps to OWASP LLM01 (indirect prompt injection) and LLM04 (data poisoning)."
+    summary: "Attacks on what an agent reads, stores and later trusts — and the controls that hold against them. Maps to [OWASP LLM01 (indirect prompt injection)](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) and [OWASP LLM04 (data poisoning)](https://genai.owasp.org/llmrisk/llm04-data-and-model-poisoning/)."
     items:
       - id: agent-memory
         title: "Semantic injection into agent memory"

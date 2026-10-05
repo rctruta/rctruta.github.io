@@ -44,6 +44,7 @@ SNIPPET = """<!-- search:start -->
         showSubResults: true,
         showImages: false,
         pageSize: 8,
+        highlightParam: "highlight",
         translations: {
           placeholder: 'Search this site',
           zero_results: 'Nothing found for [SEARCH_TERM]'
