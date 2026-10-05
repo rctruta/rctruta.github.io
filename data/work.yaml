@@ -238,7 +238,7 @@ sections:
         activity: research
         tags: [AI evaluation, Deterministic grading, Ablation study, RLHF, Data contracts, AI security, Python]
         description: |
-          Based on my **adversarial-judgement-research** framework (16 content-addressed study contracts, 7 models, 110+ graded runs): I proved that generalized LLM orchestrators evaluate simulated social status over technical merit. Injecting a high-status persona into routing decisions causes agentic state to collapse into authority bias (the RLHF tax). Prompt-level instructions fail under pressure; mechanical gates hold.
+          Based on my **adversarial-judgement-research** framework (14 study contracts, 205 graded runs across 10 models from 4 vendors, with a successor testbed extending the matrix to local models): I proved that generalized LLM orchestrators evaluate simulated social status over technical merit. Injecting a high-status persona into routing decisions causes agentic state to collapse into authority bias (the RLHF tax). Prompt-level instructions fail under pressure; mechanical gates hold.
         notes:
           - text: "Presented at the Canadian Women in Cybersecurity Conference, Toronto, May 2026."
       - id: agent-tools
