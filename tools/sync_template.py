@@ -48,6 +48,8 @@ FILES_TO_SYNC = [
     "tools/build_speaking.py",
     "tools/malloy_chart.py",
     "tools/lakehouse_chart.py",
+    "tools/rag_chart.py",
+    "tools/harness_chart.py",
     "tools/build_search.py",
     "tools/check_private.py",
     "tools/test_tools.py",

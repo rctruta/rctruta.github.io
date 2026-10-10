@@ -42,8 +42,10 @@ python3 tools/build_tags.py
 echo "10/13 navigation    <- the NAV list in config.yaml / tools/build_nav.py"
 python3 tools/build_nav.py
 
-echo "11/13 figures      <- numbers in tools/lakehouse_chart.py and tools/malloy_chart.py"
+echo "11/13 figures      <- numbers transcribed in tools/*_chart.py from each study"
 python3 tools/lakehouse_chart.py
+python3 tools/rag_chart.py
+python3 tools/harness_chart.py
 python3 tools/malloy_chart.py
 
 echo "12/13 search       <- the finished pages"

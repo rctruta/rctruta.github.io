@@ -395,6 +395,11 @@
       <figcaption>The specialist state machine. A goal enters at the librarian, which can answer it from the existing catalog, refuse it as impossible, or send it on to build a fresh experiment. Every path ends in a named terminal state, including the failures — <code>refused</code>, <code>poll_failed</code>, <code>analyzer_failed</code> — so a run that goes wrong says where, rather than thrashing. Most of these states were discovered by probing, not designed up front.</figcaption>
     </figure>
       
+    <figure>
+      <img src="assets/harness-gating-cost.svg" alt="Token totals per model for three goals run against a bare MCP surface and the same surface behind mechanical gates">
+      <figcaption>Three goals against the MotherDuck MCP surface, run bare and then behind mechanical gates. All twelve runs graded PASS in both arms, so the question is what gating costs &mdash; and the answer depends on the model. GPT-4o-mini spent 56% more tokens getting there; Claude Sonnet 5 spent 8% fewer. The cheap model pays for the guardrail.</figcaption>
+    </figure>
+      
     
 
     <div class="tags">
@@ -534,6 +539,13 @@
     <p>I built a labelled evaluation set for a retrieval system I had written myself, and found it answering fluently, with citations, and with no error of any kind. Recalibrated the refusal threshold from 0.56 to 0.87 precision and validated out-of-sample. Confident output is not evidence; the failure mode to fear is the plausible one, not the obvious one.</p>
 
 <p>Runs entirely from a local directory &mdash; LanceDB for vector, full-text and hybrid search, sentence-transformers for embeddings, no hosted cluster and no API key. Ask a question, get an answer and a link to the timestamp where it&rsquo;s answered.</p>
+    
+      
+    <figure>
+      <img src="assets/rag-calibration.svg" alt="Left: retrieval precision before and after the refusal threshold moved. Right: F-beta of three candidate signals, with the bi-encoder cosine highest">
+      <figcaption>Left: moving the refusal threshold from 0.25 to 0.541 took precision from 0.564 to 0.870, with recall at 0.909 across 42 questions over 7,377 chunks. Right: the signal was chosen by trying three &mdash; a plain bi-encoder cosine beat both a cross-encoder and the two combined, and cross-validated at 0.83. The cheaper signal won, which is why it is worth measuring rather than assuming.</figcaption>
+    </figure>
+      
     
 
     <div class="tags">
