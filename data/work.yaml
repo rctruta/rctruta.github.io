@@ -115,6 +115,10 @@ sections:
           A suite of 23 correctness probes executed across DuckDB, DuckDB+Delta, PostgreSQL, and Databricks SQL. Rather than timing performance (which varies by serverless hardware allocation), these probes measure **semantic determinism**: integer division, NULL ordering in ASC scans, VARCHAR overflow behavior, and constraint enforcement paths.
 
           The key finding: Databricks SQL accepts inline `CHECK` constraints in `CREATE TABLE` without enforcing them, while the identical constraint added via `ALTER TABLE ADD CONSTRAINT` is strictly enforced and raises `DELTA_VIOLATE_CONSTRAINT_WITH_VALUES`. A query 20% slower costs money; a query that silently returns different rows across engines costs trust.
+        figures:
+          - src: "assets/lakehouse-semantics-probes.svg"
+            alt: "Seven SQL semantics probes run on DuckDB, PostgreSQL and Databricks SQL, with the engine that disagrees with the other two marked on each row"
+            caption: "Seven of the 23 probes. The marked cell on each row is the engine that disagrees with the other two &mdash; DuckDB on three, Databricks on three, PostgreSQL on one. Strictness reverses by probe: Databricks raises on <code>1/0</code> where DuckDB returns <code>inf</code>, and accepts a duplicate <code>PRIMARY KEY</code> where the others reject it. That last one is <a href=\"https://docs.databricks.com/aws/en/tables/constraints\">documented behaviour</a>, not a discovery &mdash; PK, FK and UNIQUE are informational there. <code>duckdb+delta</code> matched <code>duckdb</code> on all 23, which is the control arm that makes the Databricks column readable."
         links:
           - text: "lakehouse-semantics"
             url: "https://github.com/rctruta/lakehouse-semantics"

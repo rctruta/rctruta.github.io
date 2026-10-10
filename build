@@ -12,40 +12,41 @@ set -e
 cd "$(dirname "$0")"
 export PATH="/opt/homebrew/bin:$PATH"
 
-echo "1/12 work          <- data/work.yaml"
+echo "1/13 work          <- data/work.yaml"
 python3 tools/build_work.py
 
-echo "2/12 teaching      <- data/teaching.yaml"
+echo "2/13 teaching      <- data/teaching.yaml"
 python3 tools/build_teaching.py
 
-echo "3/12 speaking      <- data/appearances.yaml"
+echo "3/13 speaking      <- data/appearances.yaml"
 python3 tools/build_speaking.py
 
-echo "4/12 writing       <- data/writing.yaml"
+echo "4/13 writing       <- data/writing.yaml"
 python3 tools/build_writing.py
 
-echo "5/12 contact       <- data/contact.yaml + config.yaml"
+echo "5/13 contact       <- data/contact.yaml + config.yaml"
 python3 tools/build_contact.py
 
-echo "6/12 home          <- data/home.yaml + config.yaml + work.yaml + teaching.yaml"
+echo "6/13 home          <- data/home.yaml + config.yaml + work.yaml + teaching.yaml"
 python3 tools/build_index.py
 
-echo "7/12 github readme <- the same data, projected for ~/Projects/rctruta"
+echo "7/13 github readme <- the same data, projected for ~/Projects/rctruta"
 python3 tools/build_github_readme.py
 
-echo "8/12 rules doc     <- the kinds table, from the controlled vocabulary"
+echo "8/13 rules doc     <- the kinds table, from the controlled vocabulary"
 python3 tools/build_rules_doc.py
 
-echo "9/12 tag index     <- data/TAGS.yaml + data/writing.yaml + data/work.yaml + data/teaching.yaml"
+echo "9/13 tag index     <- data/TAGS.yaml + data/writing.yaml + data/work.yaml + data/teaching.yaml"
 python3 tools/build_tags.py
 
-echo "10/12 navigation    <- the NAV list in config.yaml / tools/build_nav.py"
+echo "10/13 navigation    <- the NAV list in config.yaml / tools/build_nav.py"
 python3 tools/build_nav.py
 
-echo "11/12 malloy chart  <- numbers in tools/malloy_chart.py"
+echo "11/13 figures      <- numbers in tools/lakehouse_chart.py and tools/malloy_chart.py"
+python3 tools/lakehouse_chart.py
 python3 tools/malloy_chart.py
 
-echo "11/12 search       <- the finished pages"
+echo "12/13 search       <- the finished pages"
 python3 tools/build_search.py
 
 if [ -f "tools/sync_template.py" ]; then

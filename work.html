@@ -335,6 +335,13 @@
 
 <p>The key finding: Databricks SQL accepts inline <code>CHECK</code> constraints in <code>CREATE TABLE</code> without enforcing them, while the identical constraint added via <code>ALTER TABLE ADD CONSTRAINT</code> is strictly enforced and raises <code>DELTA_VIOLATE_CONSTRAINT_WITH_VALUES</code>. A query 20% slower costs money; a query that silently returns different rows across engines costs trust.</p>
     
+      
+    <figure>
+      <img src="assets/lakehouse-semantics-probes.svg" alt="Seven SQL semantics probes run on DuckDB, PostgreSQL and Databricks SQL, with the engine that disagrees with the other two marked on each row">
+      <figcaption>Seven of the 23 probes. The marked cell on each row is the engine that disagrees with the other two &mdash; DuckDB on three, Databricks on three, PostgreSQL on one. Strictness reverses by probe: Databricks raises on <code>1/0</code> where DuckDB returns <code>inf</code>, and accepts a duplicate <code>PRIMARY KEY</code> where the others reject it. That last one is <a href=\"https://docs.databricks.com/aws/en/tables/constraints\">documented behaviour</a>, not a discovery &mdash; PK, FK and UNIQUE are informational there. <code>duckdb+delta</code> matched <code>duckdb</code> on all 23, which is the control arm that makes the Databricks column readable.</figcaption>
+    </figure>
+      
+    
 
     <div class="tags">
       
