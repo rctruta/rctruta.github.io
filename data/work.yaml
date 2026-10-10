@@ -45,7 +45,7 @@ sections:
         description: |
           Nineteenth-century Police Gazettes recording prisoners transported to Tasmania, held as OCR'd scans. The data the historians needed was in tables inside those documents, and OCR does not respect a table. I wrote the extraction design: fixed layouts for the two table types, one table per output file, a naming convention tying every file back to its source page, and a separate metadata table holding what is true of a whole file — its description, its row count, who extracted it, who checked it — recorded once instead of repeated on every row.
 
-          They took that document to a funding body and were awarded **$34,000** to do the work. I had written it as a favour, and heard some months later.
+          My proposal secured the grant to carry out the work: one table per file, so extraction and checking could run independently and be verified in small units, and a metatable recording each file's facts once — including who extracted it, who checked it, and the row count.
 
           Reading it back in 2026: the metatable is a metadata catalog, the filename scheme is a canonical identifier carrying lineage, and `ExtractedBy` / `CheckedBy` / `RowCount` are a provenance trail. I had none of those words in 2011.
         links:
