@@ -7,4 +7,4 @@ static-site-template/
 __pycache__/
 
 
-.gates/
+.gates/ledger.jsonl

@@ -16,6 +16,16 @@ if ! "$PY" "$ROOT/tools/test_tools.py" >/dev/null; then
   echo "  -> A page disagrees with its data. Run ./build." >&2; exit 1
 fi
 
+# Gates from ai-agent-utils. GATES.md there records why each exists and what
+# incident produced it. The claim and privacy gates above predate that system
+# and stay where they are; these are the two it added.
+if [ -d "$ROOT/.gates" ]; then
+  "$PY" "$ROOT/.gates/no_local_paths.py" --check || {
+    echo "  -> A tracked file carries this machine's absolute path." >&2; exit 1; }
+  "$PY" "$ROOT/.gates/no_hardcoding.py" --check || {
+    echo "  -> Code restates a value data/ already holds." >&2; exit 1; }
+fi
+
 # Claims gate: numbers on the site must match their registered source.
 CLAIMS="$HOME/claude-docs-allowed/Resume/.claims"
 [ -x "$CLAIMS/verify.py" ] || exit 0
