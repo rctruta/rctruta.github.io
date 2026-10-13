@@ -5,6 +5,7 @@
 import html
 import pathlib
 import re
+from model import load_education, load_service
 from page import render_template, format_inline, format_blocks, render_tag_chips, AUTHOR
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -205,69 +206,51 @@ def load_teaching_html_sections():
         f'</div></section>'
     )
 
-    # 7. Education & Credentials
+    # 7 and 8. Education and Service, rendered from data/teaching.yaml.
+    # These were hardcoded HTML here, which is why the certificates carried
+    # years the data file does not have: the data said what to show and the
+    # generator ignored it. load_education and load_service existed in model.py
+    # and were called by nothing.
+    edu, svc = load_education(), load_service()
+
+    def degree_line(d):
+        s = f'<strong>{html.escape(d.degree)}</strong> &mdash; {html.escape(d.institution)}'
+        if d.thesis:
+            title = f'<em>{html.escape(d.thesis)}</em>'
+            if d.url:
+                title = f'<a href="{d.url}">{title}</a>'
+            s += f'. Thesis: {title}'
+            if d.advisor:
+                s += f', supervised by {html.escape(d.advisor)}'
+            if d.isbn:
+                s += f' <span class="meta">ISBN {html.escape(d.isbn)}</span>'
+        return s
+
+    def ul(items, render=html.escape):
+        return ('  <ul class="courses">\n'
+                + "".join(f'    <li>{render(i)}</li>\n' for i in items)
+                + '  </ul>\n\n')
+
     education_section = (
-        f'<section><div class="wrap">\n'
-        f'  <h2 id="education">Education &amp; credentials</h2>\n\n'
-        f'  <h3>Degrees</h3>\n'
-        f'  <ul class="courses">\n'
-        f'    <li><strong>M.Sc. Computer Science</strong> &mdash; University of Toronto, 2004. Thesis:\n'
-        f'    <em>Structural and Semantic Query Optimization in XQuery</em>, supervised by Alberto O. Mendelzon</li>\n'
-        f'    <li><strong>M.Sc. Computer Science</strong> &mdash; &ldquo;Babeș-Bolyai&rdquo; University, Romania, 1997.\n'
-        f'    Thesis: <em>Multimedia Synchronization</em></li>\n'
-        f'    <li><strong>B.Sc. Mathematics &amp; Computer Science</strong> &mdash; &ldquo;Babeș-Bolyai&rdquo; University, 1996</li>\n'
-        f'  </ul>\n\n'
-        f'  <h3>Certificates</h3>\n'
-        f'  <ul class="courses">\n'
-        f'    <li>Business Analyst Certificate &mdash; University of Waterloo, 2012</li>\n'
-        f'    <li>Teaching Certificate &mdash; &ldquo;Babeș-Bolyai&rdquo; University: psychology, pedagogy, methodology, practicum</li>\n'
-        f'    <li>Neo4j Certified Professional</li>\n'
-        f'    <li>Applied Data Science: Leveraging AI for Effective Decision Making &mdash; MIT Professional Education, 2023</li>\n'
-        f'    <li>Large Language Models &mdash; Databricks / edX, 2023</li>\n'
-        f'    <li>Delivering a Polished Classroom Presentation &mdash; Office of Teaching Advancement, University of Toronto</li>\n'
-        f'  </ul>\n\n'
-        f'  <h3>Honours</h3>\n'
-        f'  <ul class="courses">\n'
-        f'    <li>Nominee, University of Toronto Scarborough Teaching Award</li>\n'
-        f'    <li>Recipient, Grace Hopper Celebration of Women in Computing Scholarship</li>\n'
-        f'    <li>Recipient, International Recruitment Award, University of Toronto</li>\n'
-        f'    <li>Recipient, &ldquo;Babeș-Bolyai&rdquo; University Honours Scholarship, Romania</li>\n'
-        f'  </ul>\n\n'
-        f'  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
-        f'</div></section>'
+        '<section><div class="wrap">\n'
+        '  <h2 id="education">Education &amp; credentials</h2>\n\n'
+        '  <h3>Degrees</h3>\n' + ul(edu.degrees, degree_line)
+        + '  <h3>Certificates</h3>\n' + ul(edu.certificates, format_inline)
+        + '  <h3>Honours</h3>\n' + ul(edu.honours, format_inline)
+        + '  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
+        '</div></section>'
     )
 
-    # 8. Service
     service_section = (
-        f'<section><div class="wrap">\n'
-        f'  <h2 id="service">Service</h2>\n\n'
-        f'  <h3>Reviewing and editorial</h3>\n'
-        f'  <ul class="courses">\n'
-        f'    <li>Reviewer, <em>Journal of Information Systems Education</em> (2008&ndash;2011)</li>\n'
-        f'    <li>Reviewer, Data Warehousing and Knowledge Discovery (DaWaK)</li>\n'
-        f'    <li>Peer reviewer, Computer and Mathematical Sciences, U of T Scarborough</li>\n'
-        f'    <li>Notes editing, <em>Elements of Finite Model Theory</em>, Leonid Libkin (Springer)</li>\n'
-        f'  </ul>\n\n'
-        f'  <h3>Outreach and mentoring</h3>\n'
-        f'  <ul class="courses">\n'
-        f'    <li>Group leader, Gr8 Designs for Gr8 Girls, University of Toronto</li>\n'
-        f'    <li>Mentoring female students in computer science, throughout my teaching</li>\n'
-        f'    <li>Recipient, Grace Hopper Celebration of Women in Computing Scholarship</li>\n'
-        f'    <li>Invited lecture, Computing Insights, University of Toronto</li>\n'
-        f'  </ul>\n\n'
-        f'  <p>Encouraging women in computing was not an add-on. Female enrolment in Canadian computer\n'
-        f'  science and engineering programs is small, and students told me directly that having a\n'
-        f'  female instructor mattered, and that they had felt threatened by male peers. That is a\n'
-        f'  thing a teacher can do something about from inside a classroom.</p>\n\n'
-        f'  <h3>Professional affiliations</h3>\n'
-        f'  <ul class="courses">\n'
-        f'    <li>Canadian Association of University Teachers</li>\n'
-        f'    <li>Computer Science Teachers Association</li>\n'
-        f'    <li>Society for Teaching and Learning in Higher Education</li>\n'
-        f'    <li>ACM Special Interest Group on Management of Data</li>\n'
-        f'  </ul>\n\n'
-        f'  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
-        f'</div></section>'
+        '<section><div class="wrap">\n'
+        '  <h2 id="service">Service</h2>\n\n'
+        '  <h3>Reviewing and editorial</h3>\n' + ul(svc.reviewing, format_inline)
+        + '  <h3>Outreach</h3>\n' + ul(svc.outreach, format_inline)
+        + (f'  <p class="sub small">{format_inline(svc.outreach_note)}</p>\n\n' if svc.outreach_note else "")
+        + (('  <h3>Volunteering</h3>\n' + ul(svc.volunteering, format_inline)) if svc.volunteering else "")
+        + '  <h3>Affiliations</h3>\n' + ul(svc.affiliations, format_inline)
+        + '  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
+        '</div></section>'
     )
 
     return f"{phil_section}\n\n{leading_section}\n\n{product_section}\n\n{testimonials_section}\n\n{materials_section}\n\n{courses_section}\n\n{education_section}\n\n{service_section}"
