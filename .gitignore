@@ -7,3 +7,4 @@ static-site-template/
 __pycache__/
 
 
+.gates/

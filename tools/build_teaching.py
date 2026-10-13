@@ -5,7 +5,7 @@
 import html
 import pathlib
 import re
-from model import load_education, load_service
+from model import load_education, load_service, load_courses, load_testimonial_notes
 from page import render_template, format_inline, format_blocks, render_tag_chips, AUTHOR
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -48,7 +48,9 @@ def load_teaching_html_sections():
     m_lead_desc = re.search(r"leading:.*?description: \|\n(.*?)(?=\n\nproduct:|\nproduct:)", text, re.S)
 
     lead_id = m_lead_id.group(1) if m_lead_id else "academic-leadership"
-    lead_title = m_lead_title.group(1) if m_lead_title else "Academic leadership & TA management"
+    if not m_lead_title:
+        raise ValueError("data/teaching.yaml: leading.title is missing")
+    lead_title = m_lead_title.group(1)
     lead_tags = [t.strip() for t in m_lead_tags.group(1).split(",")] if m_lead_tags else []
     lead_desc = format_blocks(m_lead_desc.group(1)) if m_lead_desc else ""
 
@@ -73,7 +75,9 @@ def load_teaching_html_sections():
     m_prod_hl = re.search(r"highlights:\s*\n(.*?)(?=\n\s*outro:)", text, re.S)
 
     prod_id = m_prod_id.group(1) if m_prod_id else "course-product-design"
-    prod_title = m_prod_title.group(1) if m_prod_title else "A course is a product — course operations & engineering"
+    if not m_prod_title:
+        raise ValueError("data/teaching.yaml: product.title is missing")
+    prod_title = m_prod_title.group(1)
     prod_tags = [t.strip() for t in m_prod_tags.group(1).split(",")] if m_prod_tags else []
     prod_intro = m_prod_intro.group(1) if m_prod_intro else ""
     prod_outro = m_prod_outro.group(1) if m_prod_outro else ""
@@ -121,17 +125,17 @@ def load_teaching_html_sections():
         for q, c in m_test_years
     )
 
-    postscript = "At the end of one course, a group of around ten students wrote to the department unprompted to nominate me for a teaching award. One of them asked my permission first, in case I would rather they didn't."
+    notes = load_testimonial_notes()
 
     testimonials_section = (
         f'<section><div class="wrap">\n'
         f'  <h2 id="testimonials">Student testimonials</h2>\n\n'
         f'  <h3>While they were students</h3>\n\n'
-        f'  <p>From student emails. Quoted with first names only, or anonymously.</p>\n\n'
+        f'  <p>{format_inline(notes["while_students"])}</p>\n\n'
         f'{while_html}\n\n'
-        f'  <p>{postscript}</p>\n\n'
+        f'  <p>{format_inline(notes["postscript"])}</p>\n\n'
         f'  <h3>Years later</h3>\n\n'
-        f'  <p>Written publicly, under their own names, by students who took my courses and then went on to build things.</p>\n\n'
+        f'  <p>{format_inline(notes["years_later"])}</p>\n\n'
         f'{years_html}\n\n'
         f'  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
         f'</div></section>'
@@ -161,49 +165,25 @@ def load_teaching_html_sections():
         f'</div></section>'
     )
 
-    # 6. Courses
+    # 6. Courses, rendered from data/teaching.yaml. Fourteen course titles
+    # were literal HTML here while the same titles sat in the data file.
+    courses = load_courses()
+
+    def course_group(g):
+        dept = f' <span class="dept">&mdash; {html.escape(g.dept)}</span>' if g.dept else ""
+        items = "".join(f'    <li>{format_inline(c)}</li>\n' for c in g.courses)
+        return (f'  <p class="inst">{format_inline(g.institution)}{dept}</p>\n'
+                f'  <ul class="courses">\n{items}  </ul>\n\n')
+
     courses_section = (
-        f'<section><div class="wrap">\n'
-        f'  <h2 id="courses">Courses</h2>\n\n'
-        f'  <p class="role">Instructor of record</p>\n\n'
-        f'  <p class="inst">University of Toronto <span class="dept">&mdash; Computer Science</span></p>\n'
-        f'  <ul class="courses">\n'
-        f'    <li>Introduction to Databases</li>\n'
-        f'    <li>Database System Technology</li>\n'
-        f'    <li>Programming on the Web</li>\n'
-        f'    <li>Software Engineering I</li>\n'
-        f'    <li>Design Project &mdash; student supervisor</li>\n'
-        f'    <li>Project Course in Computer Science &mdash; student supervisor</li>\n'
-        f'  </ul>\n\n'
-        f'  <p class="inst">&ldquo;Iuliu Hațieganu&rdquo; University of Medicine and Pharmacy, Romania\n'
-        f'  <span class="dept">&mdash; Biostatistics and Computer Science</span></p>\n'
-        f'  <ul class="courses">\n'
-        f'    <li>Design and Implementation of Medical Information Systems</li>\n'
-        f'  </ul>\n\n'
-        f'  <p class="role">Teaching assistant</p>\n\n'
-        f'  <p class="inst">University of Toronto <span class="dept">&mdash; Computer Science</span></p>\n'
-        f'  <ul class="courses">\n'
-        f'    <li>Introduction to Databases</li>\n'
-        f'    <li>Software Design</li>\n'
-        f'    <li>Programming on the Web</li>\n'
-        f'    <li>Data Management Systems</li>\n'
-        f'    <li>Principles of Programming Languages</li>\n'
-        f'    <li>File Structures and Data Management</li>\n'
-        f'  </ul>\n\n'
-        f'  <p class="inst">&ldquo;Iuliu Hațieganu&rdquo; University of Medicine and Pharmacy, Romania</p>\n'
-        f'  <ul class="courses">\n'
-        f'    <li>Introduction to Biomedical Informatics and Biostatistics</li>\n'
-        f'    <li>Design and Implementation of Medical Information Systems</li>\n'
-        f'  </ul>\n\n'
-        f'  <p class="inst">&ldquo;Babeș-Bolyai&rdquo; University, Romania\n'
-        f'  <span class="dept">&mdash; Computer Science</span></p>\n'
-        f'  <ul class="courses">\n'
-        f'    <li>Introduction to Computer Science</li>\n'
-        f'    <li>Office Automation</li>\n'
-        f'    <li>Graduation Project &mdash; student supervisor</li>\n'
-        f'  </ul>\n\n'
-        f'  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
-        f'</div></section>'
+        '<section><div class="wrap">\n'
+        '  <h2 id="courses">Courses</h2>\n\n'
+        '  <p class="role">Instructor of record</p>\n\n'
+        + "".join(course_group(g) for g in courses.instructor_of_record)
+        + '  <p class="role">Teaching assistant</p>\n\n'
+        + "".join(course_group(g) for g in courses.teaching_assistant)
+        + '  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
+        '</div></section>'
     )
 
     # 7 and 8. Education and Service, rendered from data/teaching.yaml.

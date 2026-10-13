@@ -569,3 +569,65 @@ def count_testimonials() -> int:
     """How many testimonials teaching.html actually shows, counted from the data."""
     text = (ROOT / "data" / "teaching.yaml").read_text()
     return len(re.findall(r"^\s+- quote:", _block(text, "testimonials"), re.M))
+
+
+# --- teaching: courses and testimonial notes ---------------------------------
+# These were rendered as literal HTML inside build_teaching.py while the same
+# values sat in teaching.yaml. Fourteen course titles, three group notes.
+
+class CourseGroup(BaseModel):
+    institution: str
+    dept: str = ""
+    courses: List[str] = Field(default_factory=list)
+
+
+class Courses(BaseModel):
+    instructor_of_record: List[CourseGroup] = Field(default_factory=list)
+    teaching_assistant: List[CourseGroup] = Field(default_factory=list)
+
+
+def load_courses() -> Courses:
+    text = (ROOT / "data" / "teaching.yaml").read_text()
+    block = _block(text, "courses")
+
+    def groups(role: str) -> List[CourseGroup]:
+        m = re.search(rf"^  {role}:\n((?:    .*\n|\n)*)", block, re.M)
+        if not m:
+            return []
+        out = []
+        for chunk in re.split(r"\n(?=    - institution:)", m.group(1)):
+            inst = re.search(r'institution: "(.*?)"', chunk)
+            if not inst:
+                continue
+            dept = re.search(r'dept: "(.*?)"', chunk)
+            out.append(CourseGroup(
+                institution=inst.group(1),
+                dept=dept.group(1) if dept else "",
+                courses=[c.strip().strip('"') for c in
+                         re.findall(r'^\s+- "(.*)"\s*$', chunk, re.M)],
+            ))
+        return out
+
+    return Courses(instructor_of_record=groups("instructor_of_record"),
+                   teaching_assistant=groups("teaching_assistant"))
+
+
+def load_testimonial_notes() -> Dict[str, str]:
+    """The lines introducing each testimonial group, and the postscript.
+
+    Keys: while_students, years_later, postscript. A missing one raises rather
+    than falling back to a literal, which is how the hardcoded copies survived.
+    """
+    text = (ROOT / "data" / "teaching.yaml").read_text()
+    block = _block(text, "testimonials")
+    out = {}
+    for group in ("while_students", "years_later"):
+        m = re.search(rf'^  {group}:\n\s+note: "(.*?)"\s*$', block, re.M)
+        if not m:
+            raise ValueError(f"data/teaching.yaml: testimonials.{group}.note is missing")
+        out[group] = m.group(1)
+    m = re.search(r'^\s+postscript: "(.*?)"\s*$', block, re.M)
+    if not m:
+        raise ValueError("data/teaching.yaml: testimonials postscript is missing")
+    out["postscript"] = m.group(1)
+    return out
