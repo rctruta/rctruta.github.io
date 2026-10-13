@@ -3,9 +3,13 @@
 Run by .githooks/pre-commit. Exits non-zero if a staged file contains a
 personal email address, a phone number, or a street address.
 
-Why this exists: on 2026-09-30 an agent put ramona.truta@gmail.com on the
+Why this exists: on 2026-09-30 an agent put a personal Gmail address on the
 public contact page without being asked, and it was live for about fifteen
 minutes. A rule written in AGENTS.md did not prevent it. This does.
+
+This file is in SKIP_FILES, so the gate does not scan itself — which is why
+the address it was written about sat here, in a public repository, for two
+weeks. An address belongs in ALLOWED or nowhere.
 
 To publish a contact address deliberately, add it to ALLOWED below. That edit
 is the decision, and it is visible in the diff.
@@ -19,7 +23,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Addresses chosen for publication. Nothing else may appear.
 ALLOWED = {
-    # "ramona@ramonactruta.com",   # uncomment when the domain mailbox exists
+    # "you@yourdomain.com",   # uncomment when the mailbox exists
 }
 
 PATTERNS = [

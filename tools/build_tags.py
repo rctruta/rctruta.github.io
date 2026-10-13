@@ -52,6 +52,12 @@ for a in articles:
 # 4. Index Appearances
 appearances = load_appearances(vocab_model)
 for app in appearances:
+    # Visibility is derived the same way speaking.html derives it: a talk always
+    # renders, a podcast only once it has a url. Indexing one that does not
+    # render produces a link to an anchor that is not on the page — latent here
+    # until the first episode is recorded but not yet published.
+    if app.kind == "podcast" and not app.url:
+        continue
     full_title = f"{app.org} — {app.title}" if app.org else app.title
     for t in app.tags:
         index[t].append(("speaking.html", app.id, full_title, app.kind, app.date))

@@ -20,6 +20,10 @@ print("🔄 Syncing architecture and tools to static-site-template...")
 # them republishes this site's content into the template, so every clone would start
 # with her appearances, articles and teaching page and have to delete them. The
 # template carries its own example data.
+# Figure generators and the GitHub profile writer are deliberately NOT synced:
+# each carries numbers transcribed from one of her studies, and the profile
+# writer has her own repository path hardcoded in it. The template gets the
+# architecture, never the content.
 FILES_TO_SYNC = [
     # "build" is not synced: the template has no GitHub profile repo to write to
 
@@ -46,10 +50,6 @@ FILES_TO_SYNC = [
     "tools/build_index.py",
     "tools/build_rules_doc.py",
     "tools/build_speaking.py",
-    "tools/malloy_chart.py",
-    "tools/lakehouse_chart.py",
-    "tools/rag_chart.py",
-    "tools/harness_chart.py",
     "tools/build_search.py",
     "tools/check_private.py",
     "tools/test_tools.py",
