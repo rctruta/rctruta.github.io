@@ -85,4 +85,31 @@ vocabulary:
     # Steganography:
     # Vision security:
 
+# The synonym ring (Z39.19 "UF", used-for). An entry term is a label someone
+# else uses for work indexed here under a different name — a reader searching,
+# or a keyword filter screening a resume. It is never a descriptor: nothing is
+# tagged with it and it carries no count.
+#
+# The rule for adding one: the term on the left must already have the work. An
+# entry term makes existing work findable; it never claims new work. Two words
+# deliberately absent, because the evidence is not here — "threat modeling"
+# (no attack trees, no STRIDE) and "cloud security" (none).
+
+synonyms:
+  AI security: [red teaming, AI red teaming, adversarial testing, prompt injection, responsible disclosure, vulnerability research]
+  AI evaluation: [model evaluation, agent evaluation, LLM evaluation, LLM-as-judge]
+  Pre-commit gates: [security automation, policy as code, guardrails, shift-left]
+  Per-turn tracing: [execution tracing, agent traces]
+  Process telemetry: [observability, behavioural metrics]
+  Evaluation sets: [ground truth, labelled data, test sets]
+  Deterministic grading: [rule-based scoring, automated grading]
+  Entity resolution: [record linkage, deduplication, fuzzy matching]
+  Data quality: [data validation, data profiling]
+  Data modeling: [schema design, normalization, dimensional modeling]
+  Metadata architecture: [authority control, master data management, taxonomy, data catalog]
+  Benchmarking: [performance testing, performance engineering]
+  Migration: [replatforming, platform migration]
+  Team leadership: [technical leadership, mentoring]
+  Data contracts: [schema enforcement, data validation contracts]
+
 

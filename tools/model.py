@@ -26,14 +26,27 @@ class KindMeta(BaseModel):
 class TagVocabulary(BaseModel):
     facets: Dict[str, FacetMeta] = Field(default_factory=dict)
     kinds: Dict[str, KindMeta] = Field(default_factory=dict)
-    vocabulary: Dict[str, str] = Field(default_factory=dict)
+    vocabulary: Dict[str, str] = Field(default_factory=dict)   # term -> facet
+    notes: Dict[str, str] = Field(default_factory=dict)         # term -> scope note
+    # The synonym ring (Z39.19 UF, "used for"): labels a reader or a keyword
+    # filter might arrive with, pointing at the one term that is preferred here.
+    # An entry term is deliberately NOT a descriptor — nothing is ever tagged
+    # with it, and it carries no count of its own.
+    synonyms: Dict[str, List[str]] = Field(default_factory=dict)  # term -> entry terms
 
     def validate_tag(self, tag: str, context: str = ""):
         if tag not in self.vocabulary:
-            msg = f"Tag '{tag}' not in controlled vocabulary data/TAGS.yaml"
+            msg = f"Tag '{tag}' not in controlled vocabulary data/{VOCAB_FILENAME}"
+            if tag in self.entry_terms():
+                msg += (f" — it is an entry term for "
+                        f"'{self.entry_terms()[tag]}'. Tag with that instead.")
             if context:
                 msg += f" (on {context})"
             raise ValueError(msg)
+
+    def entry_terms(self) -> Dict[str, str]:
+        """entry term -> the descriptor it points to."""
+        return {syn: term for term, syns in self.synonyms.items() for syn in syns}
 
 
 class Figure(BaseModel):
@@ -114,6 +127,8 @@ def load_taxonomy() -> TagVocabulary:
     facets_meta = {}
     kinds_meta = {}
     vocab = {}
+    notes = {}
+    synonyms = {}
 
     section = None
     current_item = None
@@ -157,13 +172,42 @@ def load_taxonomy() -> TagVocabulary:
                 facet_name = line[:-1]
                 continue
             if indent == 4 and facet_name and ":" in line:
-                term = line.split(":", 1)[0].strip()
+                term, note = [x.strip() for x in line.split(":", 1)]
                 vocab[term] = facet_name
+                if note:
+                    notes[term] = note.strip('"\'')
+
+        elif section == "synonyms":
+            if indent == 2 and ":" in line:
+                term, raw_syns = [x.strip() for x in line.split(":", 1)]
+                syns = [s.strip().strip('"\'') for s in
+                        raw_syns.strip().lstrip("[").rstrip("]").split(",")]
+                synonyms[term] = [s for s in syns if s]
+
+    # A ring that points at a term nobody uses, or that collides with a real
+    # descriptor, is worse than no ring: it sends a reader somewhere empty.
+    seen = {}
+    for term, syns in synonyms.items():
+        if term not in vocab:
+            raise ValueError(
+                f"data/{VOCAB_FILENAME}: synonyms list '{term}', which is not a "
+                f"term in the vocabulary. An entry term must point at a descriptor.")
+        for syn in syns:
+            if syn in vocab:
+                raise ValueError(
+                    f"data/{VOCAB_FILENAME}: '{syn}' is both a descriptor and an "
+                    f"entry term for '{term}'. It must be one or the other.")
+            if syn in seen:
+                raise ValueError(
+                    f"data/{VOCAB_FILENAME}: entry term '{syn}' points at both "
+                    f"'{seen[syn]}' and '{term}'. One entry term, one descriptor.")
+            seen[syn] = term
 
     facets_obj = {k: FacetMeta(**v) for k, v in facets_meta.items()}
     kinds_obj = {k: KindMeta(**v) for k, v in kinds_meta.items()}
 
-    return TagVocabulary(facets=facets_obj, kinds=kinds_obj, vocabulary=vocab)
+    return TagVocabulary(facets=facets_obj, kinds=kinds_obj, vocabulary=vocab,
+                         notes=notes, synonyms=synonyms)
 
 
 def load_work_sections(vocab: TagVocabulary) -> List[WorkSection]:

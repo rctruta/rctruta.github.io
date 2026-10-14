@@ -323,6 +323,11 @@ a.tag:hover { color:var(--green); border-color:var(--green); text-decoration:non
 /* the artifact's title is its link; its metadata sits beside it, visible on every device */
 h3 .meta { font-size:14px; font-weight:400; color:var(--soft); margin-left:9px;
            white-space:nowrap }
+/* the scope note says what a term covers; the entry terms say what else the
+   same work gets called, so a reader arriving with another field's word lands
+   on the right term instead of an empty search */
+.scope-note { font-size:14.5px; color:var(--mid); margin:4px 0 0; max-width:62ch }
+.entry-terms { font-size:13.5px; color:var(--soft); margin:3px 0 10px; max-width:62ch }
 
 
 /* search: a button in the nav, a dialog over the page */

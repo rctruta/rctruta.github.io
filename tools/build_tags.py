@@ -116,9 +116,19 @@ def facet_html(facet):
     out = []
     for tag in sorted(facets[facet], key=alphabetical_sort):
         items = index[tag]
+        # The scope note says what the term covers; the entry terms say what
+        # else the same work gets called. Both are written in TAGS.yaml and both
+        # belong on the page — a definition nobody can read is not a definition,
+        # and an entry term only does its job once it is indexed.
+        note = vocab_model.notes.get(tag, "")
+        note_html = f'  <p class="scope-note">{html.escape(note)}</p>\n' if note else ""
+        syns = vocab_model.synonyms.get(tag, [])
+        syn_html = (f'  <p class="entry-terms">Also called '
+                    f'{html.escape(", ".join(syns))}.</p>\n') if syns else ""
         out.append(
             f'  <h3 id="{slug(tag)}">{html.escape(tag)}'
             f' <span class="tag-count">{len(items)}</span></h3>\n'
+            f'{note_html}{syn_html}'
             f'{entries(items)}\n'
             f'  <p class="toterms"><a href="#terms-{facet}">&uarr; Terms</a></p>'
         )
