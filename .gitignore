@@ -8,3 +8,8 @@ __pycache__/
 
 
 .gates/ledger.jsonl
+
+# Scratch directory & private resume artifacts
+scratch/
+.chrome_temp/
+*.pdf

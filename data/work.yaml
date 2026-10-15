@@ -27,7 +27,9 @@ sections:
 
           The finding that shaped the design: **the expert dictionary contradicted itself.** Two strings sharing a code were not always equivalent under any formal definition, and strings with different codes sometimes were. So instead of emitting one answer, the system emitted several candidates and let the experts choose — and some strings the experts themselves coded more than one way. When the ground truth disagrees with itself, widening the output is more honest than picking a winner.
 
-          Every candidate carried an expert verdict, good or bad, which made the system measurable. The question I asked of it was whether the nearest candidate was also the right one, because that determines whether the expensive far candidates can be dropped: 96.5%, 92.0%, 89.3%, 88.6% across batches, down to 75.7% on the hardest. I checked the other direction too — whether *wrong* codes also sit at minimum distance — since a metric that scores well but cannot discriminate is worth nothing.
+          Every candidate carried a verdict, good or bad, which made the system measurable. Twenty research assistants did that checking — each code looked at independently by two people, with disagreements adjudicated rather than averaged. **237,203 codes were checked by hand out of a corpus of 1,367,022 strings: 90.96% of them good, 95.29% setting aside a class of special cases.** I checked the other direction too — whether *wrong* codes also sit at minimum distance — since a metric that scores well but cannot discriminate is worth nothing.
+
+          The 17% that needed a person is the number I would defend the design on. Across 63 batches the median was 92.5%, and the spread ran from 97.2% down to 34.0% on one small batch — which is why the aggregate is the honest figure and a range is not.
 
           The coded names carried forward across the 1852, 1871, 1880, 1881, 1891, 1901 and 1911 censuses, with a full ingest pipeline per census: process, detect inconsistencies, apply coding, prepare for the model downstream.
       - id: age-modeling
