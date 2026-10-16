@@ -10,6 +10,20 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 CONFIG = load_config()
 VOCAB_FILENAME = CONFIG["data"]["controlled_vocabulary"]
 
+# Employment history lives OUTSIDE this repository, which is public.
+#
+# It was briefly committed here on 2026-10-15 and should never have been: it
+# carries a contract role deliberately absent from the portfolio, and notes
+# about which dates are still unconfirmed. check_private.py did not catch it
+# because that gate looks for email addresses and phone numbers, and this is
+# neither — it is private by subject, not by pattern.
+#
+# The website has never needed employment rows: it is organised by project
+# (work.yaml) and by teaching artifact (teaching.yaml). Only the résumé needs
+# titles and dates, so the file belongs beside the résumés.
+EMPLOYMENT_PATH = (pathlib.Path.home() / "claude-docs-allowed" / "Resume"
+                   / "employment.yaml")
+
 
 class FacetMeta(BaseModel):
     label: str
@@ -81,6 +95,25 @@ class ProjectItem(BaseModel):
     source_page: str = "work.html"
     kind: str = "project"
     date_val: str = "2026"
+
+    @property
+    def one_line(self) -> str:
+        """The item's own one-liner, else its first sentence.
+
+        Truncating to a first sentence inverted a finding once — podcast-rag
+        read as "no error of any kind", which is the opposite of what the study
+        found — so an item can carry its own summary and these do.
+
+        Lives on the model because the GitHub profile and the master résumé
+        both need it, and two copies of this rule would drift the way every
+        other duplicated value in this repository has.
+        """
+        if self.blurb:
+            return self.blurb
+        text = " ".join(self.description.strip().split())
+        # a description that opens by repeating the repository name in bold
+        text = re.sub(r"^\*\*[^*]+\*\* — ", "", text)
+        return re.split(r"(?<=[.!?]) ", text)[0]
 
 
 class WorkSection(BaseModel):
@@ -628,6 +661,81 @@ class CourseGroup(BaseModel):
 class Courses(BaseModel):
     instructor_of_record: List[CourseGroup] = Field(default_factory=list)
     teaching_assistant: List[CourseGroup] = Field(default_factory=list)
+
+
+class Role(BaseModel):
+    """One employment row. It carries dates and a title, never the work."""
+    role: str
+    org: str = ""
+    start: str
+    end: str
+    source: str = "self"
+    note: str = ""
+    work_ids: List[str] = Field(default_factory=list)
+
+    @property
+    def dates(self) -> str:
+        return f"{self.start} - {self.end}"
+
+    @property
+    def needs_input(self) -> bool:
+        return "[YOURS" in self.start or "[YOURS" in self.end
+
+
+class Employment(BaseModel):
+    tagline: str = ""
+    roles: List[Role] = Field(default_factory=list)
+
+
+def load_employment(work_ids: Optional[set] = None) -> Employment:
+    """Employment history. Every work_id must exist in work.yaml.
+
+    A dangling id is a hard failure rather than a silently dropped bullet: the
+    point of referencing work.yaml is that the résumé cannot describe work the
+    site does not, and a reference that resolves to nothing breaks that.
+    """
+    path = EMPLOYMENT_PATH
+    text = path.read_text(encoding="utf-8")
+
+    tag = re.search(r'^\s{2}tagline:\s*"(.*)"\s*$', text, re.M)
+
+    roles = []
+    block = _block(text, "roles")
+    for chunk in re.split(r"\n(?=  - role:)", block):
+        if "- role:" not in chunk:
+            continue
+        def field(name, default=None):
+            m = re.search(rf'^\s+-?\s*{name}:\s*"(.*?)"\s*$', chunk, re.M)
+            if m:
+                return m.group(1)
+            m = re.search(rf'^\s+-?\s*{name}:\s*(\S.*?)\s*$', chunk, re.M)
+            return m.group(1) if m else default
+
+        for required in ("role", "start", "end"):
+            if field(required) is None:
+                raise ValueError(
+                    f"data/employment.yaml: a role is missing '{required}'")
+
+        ids_raw = re.search(r"work_ids:\s*\[([^\]]*)\]", chunk, re.S)
+        ids = [i.strip() for i in ids_raw.group(1).split(",")] if ids_raw else []
+        ids = [i for i in ids if i]
+
+        if work_ids is not None:
+            unknown = [i for i in ids if i not in work_ids]
+            if unknown:
+                raise ValueError(
+                    f"data/employment.yaml: role '{field('role')}' references "
+                    f"work ids not in data/work.yaml: {unknown}")
+
+        roles.append(Role(role=field("role"), org=field("org", "") or "",
+                          start=field("start"), end=field("end"),
+                          source=field("source", "self") or "self",
+                          note=field("note", "") or "", work_ids=ids))
+
+    if not roles:
+        raise ValueError("data/employment.yaml: no roles found")
+
+    return Employment(tagline=tag.group(1) if tag else "", roles=roles)
 
 
 def load_courses() -> Courses:

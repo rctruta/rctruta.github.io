@@ -131,6 +131,7 @@ sections:
     items:
       - id: harness-bench
         title: "harness-bench — measuring a deployment before it is a deployment"
+        blurb: "Parses an agent's tool surface, runs content-addressed study contracts against it, traces every turn and grades deterministically — 16 studies, 7 models, 110+ graded runs."
         activity: built
         tags: [AI evaluation, Deterministic grading, Per-turn tracing, Content addressing, MCP, Python, Data contracts, Pre-commit gates]
         description: |

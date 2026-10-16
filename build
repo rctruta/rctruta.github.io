@@ -33,6 +33,9 @@ python3 tools/build_index.py
 echo "7/13 github readme <- the same data, projected for ~/Projects/rctruta"
 python3 tools/build_github_readme.py
 
+echo "     master resume <- employment.yaml (private) + work.yaml + teaching.yaml"
+python3 tools/build_resume.py
+
 echo "8/13 rules doc     <- the kinds table, from the controlled vocabulary"
 python3 tools/build_rules_doc.py
 

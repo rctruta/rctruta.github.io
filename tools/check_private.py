@@ -37,9 +37,51 @@ SKIP_FILES = {"AGENTS.md", "tools/check_private.py"}
 SKIP_DIRS = ("pagefind/", "node_modules/")
 
 staged = subprocess.run(
-    ["git", "diff", "--cached", "--name-only", "--diff-filter=ACM"],
+    # ACMR, not ACM. A file that enters this repository as a RENAME has status
+    # R and was never scanned — found 2026-10-15 while proving the marker check
+    # below, when `git mv` of a private file into data/ passed clean. Anything
+    # arriving by rename is as new to this repository as an addition.
+    ["git", "diff", "--cached", "--name-only", "--diff-filter=ACMR"],
     capture_output=True, text=True, cwd=ROOT,
 ).stdout.split()
+
+# Private by subject, not by pattern.
+#
+# On 2026-10-15 data/employment.yaml was created in this public repository and
+# committed. It held no email and no phone, so the patterns above passed it
+# clean — but it carried a contract role deliberately kept off the portfolio
+# and notes on which employment dates were still unconfirmed. The gate could
+# not see the problem because the problem was the subject of the file.
+#
+# So a file may declare itself private in its first lines, and this refuses to
+# commit it. A declaration a human writes and a gate reads, rather than a
+# header nobody checks.
+PRIVATE_MARKER = re.compile(
+    r"\bPRIVATE:\s*do not commit\b|\bnever enter the public repository\b"
+    r"|\bmust never enter the public repo", re.I)
+
+declared = []
+for name in staged:
+    path = ROOT / name
+    if not path.exists() or not path.is_file():
+        continue
+    if name in SKIP_FILES:
+        continue
+    try:
+        head = path.read_text(errors="ignore")[:800]
+    except Exception:
+        continue
+    if PRIVATE_MARKER.search(head):
+        declared.append(name)
+
+if declared:
+    print("These staged files declare themselves private:\n", file=sys.stderr)
+    for n in declared:
+        print(f"  {n}", file=sys.stderr)
+    print("\nThis repository is public. Move the file outside it and read it "
+          "by absolute path, the way tools/model.py reads employment.yaml.",
+          file=sys.stderr)
+    sys.exit(1)
 
 found = []
 for name in staged:

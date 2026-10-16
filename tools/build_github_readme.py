@@ -47,18 +47,8 @@ featured = re.sub(r"<!--.*?-->\n*", "", _featured_src, flags=re.S).strip()
 
 
 def blurb(item) -> str:
-    """The item's own one-liner, else its first sentence.
-
-    Truncating to a first sentence inverted a finding once — podcast-rag read
-    as "no error of any kind", which is the opposite of what the study found —
-    so an item can carry its own summary and these do.
-    """
-    if item.blurb:
-        return item.blurb
-    text = " ".join(item.description.strip().split())
-    # a description that opens by repeating the repository name in bold
-    text = re.sub(r"^\*\*[^*]+\*\* — ", "", text)
-    return re.split(r"(?<=[.!?]) ", text)[0]
+    """Moved onto ProjectItem so the master résumé shares one definition."""
+    return item.one_line
 
 
 def repo_url(item):

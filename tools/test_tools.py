@@ -325,6 +325,63 @@ class TestDocsMatchTheVocabulary(unittest.TestCase):
                          "run python3 tools/build_rules_doc.py")
 
 
+class TestMasterResume(unittest.TestCase):
+    """The résumé is generated, so it must not be able to invent anything.
+
+    Every number corrected in work.yaml used to stop at the website; the
+    résumés were hand-written elsewhere. On 2026-10-15 a figure on three of
+    them turned out to come from a 2013 proof of concept.
+    """
+
+    def setUp(self):
+        # The master résumé is not part of the static-site-template: it writes
+        # into a private directory and reads an employment file a starter has
+        # no reason to carry. Absent data means not installed, not broken.
+        # The master résumé is not part of static-site-template: its generator
+        # is not synced there, and employment.yaml is a private file outside
+        # this repository. Gate on the generator, not on the data file — the
+        # data file lives at an absolute home path and so is visible from the
+        # template too, where it would be validated against the wrong work.yaml.
+        if not (ROOT / "tools" / "build_resume.py").exists():
+            self.skipTest("build_resume.py not installed (template build)")
+        from model import load_employment
+        self.vocab = load_taxonomy()
+        self.items = {i.id: i for s in load_work_sections(self.vocab)
+                      for i in s.items}
+        self.emp = load_employment(set(self.items))
+
+    def test_every_work_reference_resolves(self):
+        """load_employment raises on a dangling id; prove it actually does."""
+        from model import load_employment
+        with self.assertRaises(ValueError):
+            load_employment({"only-this-one-exists"})
+
+    def test_no_role_prints_as_a_bare_heading(self):
+        for r in self.emp.roles:
+            self.assertTrue(r.note or r.work_ids,
+                            f"role '{r.role}' has neither a note nor work_ids")
+
+    def test_employment_never_restates_the_work(self):
+        """Dates and titles here; what was done in work.yaml. Never both."""
+        notes = " ".join(r.note for r in self.emp.roles).lower()
+        for item in self.items.values():
+            first = " ".join(item.one_line.split()[:9]).lower()
+            if len(first) > 30:
+                self.assertNotIn(first, notes,
+                                 f"employment.yaml restates work.yaml item "
+                                 f"'{item.id}' — reference it by id instead")
+
+    def test_no_third_person_about_her_in_resume_copy(self):
+        """A note prints verbatim into her résumé, so it is her voice."""
+        banned = (" she ", " her ", " hers ", "ramona's")
+        for r in self.emp.roles:
+            low = f" {r.note.lower()} "
+            for b in banned:
+                self.assertNotIn(b, low,
+                                 f"role '{r.role}' note is written about her in "
+                                 f"the third person; put caveats in a YAML comment")
+
+
 class TestVocabularyReachesThePage(unittest.TestCase):
     """A definition nobody can read is not a definition.
 
