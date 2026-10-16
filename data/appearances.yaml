@@ -25,15 +25,6 @@ guest_host_note: "One of the biggest joys in my life is showing up for my friend
   location: virtual
   tags: [AI security, Knowledge graphs]
 
-- id: data-in-the-d-2026
-  kind: talk
-  date: 2026-10-16
-  title: Measure What Matters
-  org: Data in the D
-  eventType: talk
-  location: Detroit
-  tags: [Benchmarking]
-
 - id: cywic-2026
   kind: talk
   date: 2026-05-26

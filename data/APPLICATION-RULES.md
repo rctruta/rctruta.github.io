@@ -117,18 +117,23 @@ you watch it now. A YouTube URL containing `/live/` was a live stream.
 These are the exact strings. A show renamed here is a show that splits into two
 in every count that groups by `org`.
 
-- `AI Tinkerers Toronto`
+<!-- orgs:start -->
+<!-- generated from data/appearances.yaml by tools/build_rules_doc.py; add an appearance, not a name -->
+
 - `Agile Data Podcast`
+- `AI Tinkerers Toronto`
+- `AI Tinkerers Waterloo`
 - `Canadian Women in Cybersecurity`
 - `Christopher Gambill`
 - `Data Engineering & ML Summit`
 - `Data Podcast for Nerds!`
-- `Data in the D`
+- `Joe Reis`
 - `LEIT Data Podcast`
 - `Neo4j NODES`
 - `Super Data Show`
 - `The Data Engineering Channel`
 - `The Data Intelligence Platform`
+<!-- orgs:end -->
 
 ## canonical URLs
 
