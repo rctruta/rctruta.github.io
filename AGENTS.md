@@ -81,7 +81,7 @@ commit putting an email address, phone number or street address into a file
 bound for the public site. To publish one deliberately, add it to `ALLOWED` in
 that file — the edit is the decision and it shows in the diff.
 
-This exists because on 2026-09-30 an agent published her personal Gmail address
+This exists because on 2026-09-30 an agent published my personal Gmail address
 on the contact page unasked, and a rule written in this document did not stop
 it. Words do not bind; gates do.
 

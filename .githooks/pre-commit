@@ -9,6 +9,13 @@ if ! "$PY" "$ROOT/tools/check_private.py"; then
   exit 1
 fi
 
+# These are her files and they are written in her voice. The rule was given
+# more than once in prose and violated anyway -- eleven times in one public
+# document. Prose binds nobody.
+if ! "$PY" "$ROOT/tools/check_voice.py" --check; then
+  echo "  -> A source file writes about her in the third person." >&2; exit 1
+fi
+
 # The pages must match the data they were generated from. These assert on the
 # built HTML, so they belong here rather than only in ./build.
 if ! "$PY" "$ROOT/tools/test_tools.py" >/dev/null; then

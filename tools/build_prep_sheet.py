@@ -7,7 +7,7 @@ in the repository and it is not published.
 
 Everything here is derived. Nothing is a suggested answer, because a suggested
 answer is a script and a script is what falls apart under a follow-up question.
-What it gives her per project is:
+What it gives per project is:
 
   the claim        what the site says, in one line
   the evidence     the links a reader can follow, and the registered facts
@@ -30,8 +30,8 @@ OUT = pathlib.Path.home() / "Projects" / "Interview" / "Prep" / "PREP.md"
 FACTS = pathlib.Path.home() / "claude-docs-allowed" / "Resume" / ".claims" / "FACTS.yaml"
 
 # Model names carry version numbers that are not claims: GPT-4.1, Gemini 3.1
-# Pro, Claude Opus 4.6. Blanked before scanning, or the sheet tells her to
-# justify the "4.1" in GPT-4.1.
+# Pro, Claude Opus 4.6. Blanked before scanning, or the sheet asks for a
+# justification of the "4.1" in GPT-4.1.
 MODEL_NAMES = re.compile(
     r"\b(?:GPT|Claude|Gemini|Llama|Mistral|Opus|Sonnet|Haiku|Command|DuckDB|"
     r"PostgreSQL|Python|gemma)[\w.-]*\s?[\d.]*\b", re.I)

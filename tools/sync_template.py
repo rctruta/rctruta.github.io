@@ -18,11 +18,11 @@ print("🔄 Syncing architecture and tools to static-site-template...")
 # Files to sync
 # Architecture only. Data and generated pages are deliberately absent: syncing
 # them republishes this site's content into the template, so every clone would start
-# with her appearances, articles and teaching page and have to delete them. The
+# with my appearances, articles and teaching page and have to delete them. The
 # template carries its own example data.
 # Figure generators and the GitHub profile writer are deliberately NOT synced:
-# each carries numbers transcribed from one of her studies, and the profile
-# writer has her own repository path hardcoded in it. The template gets the
+# each carries numbers transcribed from one of my studies, and the profile
+# writer has this repository's path hardcoded in it. The template gets the
 # architecture, never the content.
 FILES_TO_SYNC = [
     # "build" is not synced: the template has no GitHub profile repo to write to

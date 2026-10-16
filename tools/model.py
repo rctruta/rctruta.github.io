@@ -145,7 +145,7 @@ class Appearance(BaseModel):
     eventType: str = ""
     location: str = ""
     url: Optional[str] = None          # the published episode or talk page
-    counterpart: Optional[str] = None  # who she interviewed, when guest host
+    counterpart: Optional[str] = None  # who I interviewed, when guest host
     note: Optional[str] = None
     slidesUrl: Optional[str] = None
     videoUrl: Optional[str] = None
@@ -549,7 +549,7 @@ class ContactCard(BaseModel):
     link: str                 # key under site.author in config.yaml
 
 
-class ServiceOffer(BaseModel):   # what she offers; not the academic `Service` above
+class ServiceOffer(BaseModel):   # what I offer; not the academic `Service` above
     tag: str                  # must be a term in data/TAGS.yaml
     label: str
     note: str = ""

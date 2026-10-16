@@ -60,6 +60,9 @@ if [ -f "tools/sync_template.py" ]; then
 fi
 
 echo
+echo "voice          <- data/ and tools/, written in her voice not about her"
+python3 tools/check_voice.py --check
+
 echo "unit tests     <- tools/test_tools.py, over the pages just generated"
 python3 tools/test_tools.py
 

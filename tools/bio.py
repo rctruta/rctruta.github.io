@@ -14,7 +14,7 @@ Now the bio names a term or a section:
     [any words](tag:System integrity)   -> a term in data/TAGS.yaml
     [any words](work:benchmarking)      -> a section in data/work.yaml
 
-An unknown term or section fails the build. The link text stays hers; the
+An unknown term or section fails the build. The link text is mine; the
 canonical name is what the link resolves to.
 """
 import html

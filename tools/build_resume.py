@@ -15,7 +15,7 @@ concept, and fixing it meant editing three files by hand. This closes that.
 What is generated and what is not:
 
   generated   every role, every date, every project line, education, honours
-  hers        the tagline in employment.yaml, and the five role variants
+  mine        the tagline in employment.yaml, and the five role variants
 
 The five role variants (DEVREL, ENGINEER, ENABLEMENT, DATASCIENCE, CURRENT)
 stay hand-curated. Choosing what to emphasise for a role is editorial

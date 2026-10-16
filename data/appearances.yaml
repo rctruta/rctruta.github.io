@@ -10,8 +10,10 @@
 # Nothing here records "is it out yet" — that is derived, so it cannot go stale:
 #   talk     always rendered; upcoming vs past comes from `date`
 #   podcast  rendered once it has a `url`; no url = recorded, not published
-# To publish an episode, paste its link. There is no second step.# A line of hers that introduces the guest-host list, kept here rather than in
-# the generator.
+# To publish an episode, paste its link. There is no second step.
+
+# The line that introduces the guest-host list, kept here rather than in the
+# generator.
 guest_host_note: "One of the biggest joys in my life is showing up for my friends. Celebrating them."
 
 # ---------------------------------------------------------------- talks -----
@@ -94,8 +96,8 @@ guest_host_note: "One of the biggest joys in my life is showing up for my friend
   url: https://www.youtube.com/watch?v=zBJuD_EIJi4
   note: >-
     Second recording; the first take's audio was unusable. Joe agreed to switch
-    seats and be interviewed about Mixed Model Arts. Billed on his side as her
-    guesting, but she asked the questions.
+    seats and be interviewed about Mixed Model Arts. Billed on his side as me
+    guesting, but I asked the questions.
   tags: [Data modeling]
 
 - id: super-data-show-2026-03
@@ -139,7 +141,7 @@ guest_host_note: "One of the biggest joys in my life is showing up for my friend
   url: https://www.youtube.com/watch?v=BeAIXeSagPY
   note: >-
     Published as "Highlights from my Third Year" on Monika's own channel; the
-    "my" is hers, so the title here names the host instead.
+    "my" is Monika's, so the title here names the host instead.
   tags: [Teaching]
 
 - id: dip-live-ole-2025
@@ -151,7 +153,7 @@ guest_host_note: "One of the biggest joys in my life is showing up for my friend
   format: live
   url: https://dataintelligenceplatform.substack.com/p/live-with-ole-olesen-bagneux-and
   note: >-
-    The show is a standing Friday live between Actian team members; she joined
+    The show is a standing Friday live between Actian team members; I joined
     when a regular was away. Just the two of them, a candid conversation rather
     than an interview — his book came up among much else.
   tags: [Data modeling]

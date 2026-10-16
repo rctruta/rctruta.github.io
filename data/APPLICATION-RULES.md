@@ -53,8 +53,8 @@ Items under each category in the index are rendered inside an ordered list (`<ol
 
 | value     | means                                        |
 | --------- | -------------------------------------------- |
-| `talk`    | she presented at an event                    |
-| `podcast` | an episode of a show, hers or someone else's |
+| `talk`    | I presented at an event                      |
+| `podcast` | an episode of a show, mine or someone else's |
 
 
 ## talk fields
@@ -63,7 +63,7 @@ Items under each category in the index are rendered inside an ordered list (`<ol
 
 | value      | means                                                       |
 | ---------- | ----------------------------------------------------------- |
-| `talk`     | she presented. Slides, demo, or both — all still a talk.     |
+| `talk`     | I presented. Slides, demo, or both — all still a talk.       |
 | `keynote`  | the named keynote slot                                       |
 | `panel`    | multi-person discussion, no single presenter                 |
 | `workshop` | hands-on, participants do the work                           |
@@ -75,31 +75,31 @@ that matters for a given talk.
 
 ## podcast fields
 
-**`role`** — which chair she was in.
+**`role`** — which chair I was in.
 
 | value        | means                                                         |
 | ------------ | ------------------------------------------------------------- |
-| `guest`      | she answered the questions                                     |
-| `guest host` | she asked the questions, on someone else's show                |
-| `co-host`    | she shared the chair for an episode                            |
+| `guest`      | I answered the questions                                       |
+| `guest host` | I asked the questions, on someone else's show                  |
+| `co-host`    | I shared the chair for an episode                              |
 | `panelist`   | several voices, no single interviewer                          |
 
 **"Itinerant podcaster"** is a practice, not a chair, so it is a tag —
 `itinerant-podcaster` — and never a `role`.
 
-The role says which seat she was in. The tag says why she was there: turning up
+The role says which seat I was in. The tag says why I was there: turning up
 on a friend's own show to interview them about something they have done, on the
 principle that people who spend their time celebrating others deserve to be
 celebrated on their own show. Every itinerant-podcaster episode is also
 `role: guest host`; not every `guest host` episode earns the tag.
 
-Being a tag is what lets her decide episode by episode. A role value would
-decide for her.
+Being a tag is what lets me decide episode by episode. A role value would
+decide for me.
 
 **`format`** — `live` or `recorded`. Determined by how it was captured, not how
 you watch it now. A YouTube URL containing `/live/` was a live stream.
 
-**`counterpart`** — who she interviewed. Only when `role` is `guest host`.
+**`counterpart`** — who I interviewed. Only when `role` is `guest host`.
 
 ## shared fields
 
