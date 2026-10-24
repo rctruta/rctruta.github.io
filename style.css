@@ -1,0 +1,424 @@
+:root {
+  --ink:#14161a; --mid:#4a5058; --soft:#6b7280; --line:#e3e6ea;
+  --bg:#ffffff; --panel:#f7f8fa; --accent:#1c5d99; --accent-soft:#eaf2f9;
+  --green:#34C759; --green-soft:#e8f8ed;
+}
+html { scroll-behavior: smooth }
+* { box-sizing:border-box; margin:0; padding:0 }
+body {
+  font:17.5px/1.68 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  color:var(--ink); background:var(--bg); -webkit-font-smoothing:antialiased;
+}
+.wrap { max-width:920px; margin:0 auto; padding:0 28px }
+a { color:var(--accent); text-decoration:none }
+a:hover { text-decoration:underline }
+
+header { padding:78px 0 52px; border-bottom:1px solid var(--line) }
+.hero { display:flex; gap:38px; align-items:flex-start }
+.hero-text { flex:1; min-width:0 }
+.portrait {
+  width:168px; height:168px; border-radius:50%; object-fit:cover;
+  flex-shrink:0; border:1px solid var(--line);
+}
+h1 { font-size:15px; letter-spacing:2.2px; text-transform:uppercase;
+     color:var(--soft); font-weight:600; margin-bottom:26px }
+.thesis { font-size:40px; line-height:1.2; font-weight:600;
+          letter-spacing:-0.9px; max-width:17em }
+.sub { font-size:19.5px; color:var(--mid); margin-top:22px; max-width:38em }
+.sub.small { font-size:17px; color:var(--soft) }
+
+.cta { margin-top:32px; display:flex; gap:14px; flex-wrap:wrap }
+.btn { display:inline-block; padding:11px 20px; border-radius:6px;
+       font-size:15px; font-weight:500 }
+.btn.solid { background:var(--ink); color:#fff }
+.btn.solid:hover { background:#2c3038; text-decoration:none }
+.btn.ghost { border:1px solid var(--line); color:var(--ink) }
+.btn.ghost:hover { border-color:var(--soft); text-decoration:none }
+
+section { padding:56px 0; border-bottom:1px solid var(--line) }
+h2 { font-size:22px; letter-spacing:1.1px; text-transform:uppercase;
+     color:var(--green); font-weight:600; margin-bottom:30px }
+
+.metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:26px }
+.metric .n { font-size:33px; font-weight:600; letter-spacing:-0.8px }
+.metric .l { font-size:15px; color:var(--mid); margin-top:5px; line-height:1.45 }
+
+.proj { margin-bottom:52px }
+.proj:last-child { margin-bottom:0 }
+.proj h3 { font-size:25px; font-weight:600; letter-spacing:-0.3px; margin-bottom:6px }
+.proj .kicker { font-size:13.5px; letter-spacing:1.3px; text-transform:uppercase;
+                color:var(--accent); font-weight:600; margin-bottom:9px }
+.proj p { color:var(--mid); margin-bottom:13px; max-width:46em }
+
+.tags { display:flex; gap:7px; flex-wrap:wrap; margin:13px 0 }
+.tag { font-size:12.5px; padding:3px 9px; background:var(--panel);
+       border:1px solid var(--line); border-radius:4px; color:var(--mid) }
+.links { font-size:15.5px; display:flex; gap:16px; flex-wrap:wrap; margin-top:11px }
+
+figure { margin:20px 0 6px }
+figure img { width:100%; border:1px solid var(--line); border-radius:7px; display:block }
+figcaption { font-size:14px; color:var(--soft); margin-top:8px; line-height:1.5 }
+
+.note { background:#f0f6fb; border:1px solid #d4e5f5; border-left:4px solid var(--accent);
+        padding:13px 17px; border-radius:6px; font-size:14.5px;
+        color:var(--ink); margin-top:15px }
+
+/* Recognition is not a caveat. `.note` is the blue box for "what this entry
+   does not claim"; rendering "someone else selected this" in the same box made
+   the two indistinguishable. Green, because --green already means verified
+   here, and the source link is mandatory in the schema. */
+.recognition { background:var(--green-soft); border:1px solid #bfe6cc;
+               border-left:4px solid var(--green); padding:13px 17px;
+               border-radius:6px; font-size:14.5px; color:var(--ink);
+               margin-top:15px }
+.recognition-who { font-weight:600 }
+.recognition-date { color:var(--soft); font-size:13px; margin-left:6px }
+.recognition a { border-bottom:1px solid #bfe6cc }
+
+ul.clean { list-style:none }
+ul.clean li { padding:11px 0; border-bottom:1px solid var(--line);
+              display:flex; gap:16px; flex-wrap:wrap; align-items:baseline }
+ul.clean li:last-child { border-bottom:none }
+.when { font-size:14px; color:var(--soft); min-width:118px }
+.what { flex:1; min-width:250px }
+.what em { color:var(--mid); font-style:normal }
+
+footer { padding:52px 0 70px }
+.qrs { display:flex; gap:34px; flex-wrap:wrap; margin-top:26px }
+.qrs div { text-align:center }
+.qrs img { width:96px; height:96px; display:block; border:1px solid var(--line);
+           border-radius:5px; padding:5px; background:#fff }
+.qrs span { font-size:12.5px; color:var(--soft); display:block; margin-top:7px }
+
+@media (max-width:720px) {
+  .hero { flex-direction:column-reverse; gap:24px }
+  .portrait { width:118px; height:118px }
+}
+@media (max-width:640px) {
+  .thesis { font-size:29px }
+  header { padding:52px 0 40px }
+  .wrap { padding:0 20px }
+}
+
+/* jump navigation */
+.jump { display:flex; flex-wrap:wrap; gap:7px 16px; margin-top:18px; font-size:15px; }
+.jump a { color:#4a5058; text-decoration:none; border-bottom:1px solid #e3e6ea; padding-bottom:1px; }
+.jump a:hover { color:#1c5d99; border-bottom-color:#1c5d99; }
+html { scroll-behavior: smooth; }
+
+/* back to top */
+.totop { display:inline-block; margin-top:14px; font-size:13.5px; color:var(--soft);
+         text-decoration:none; border-bottom:1px solid var(--line); }
+.totop:hover { color:var(--green); border-bottom-color:var(--green); text-decoration:none; }
+.jump a:hover { color:var(--green); border-bottom-color:var(--green); }
+
+/* top navigation (multi-page) */
+.topnav { border-bottom:1px solid var(--line); background:var(--bg);
+          position:sticky; top:0; z-index:20; }
+.topnav .wrap { display:flex; align-items:baseline; justify-content:space-between;
+                gap:24px; padding-top:16px; padding-bottom:16px; }
+.topnav .brand { font-weight:600; font-size:16px; color:var(--ink);
+                 letter-spacing:0.2px; text-decoration:none; }
+.topnav .brand:hover { color:var(--green); text-decoration:none; }
+.navlinks { display:flex; gap:22px; flex-wrap:wrap; }
+.navlinks a { font-size:15px; color:var(--mid); text-decoration:none;
+              padding-bottom:2px; border-bottom:2px solid transparent; }
+.navlinks a:hover { color:var(--green); text-decoration:none; }
+.navlinks a.here { color:var(--green); border-bottom-color:var(--green); font-weight:600; }
+.topnav + header { padding-top:44px; }
+@media (max-width:640px) {
+  .topnav .wrap { flex-direction:column; align-items:flex-start; gap:10px; }
+  .navlinks { gap:16px; }
+}
+
+/* footer pinned to the bottom on short pages */
+html, body { height:100%; }
+body { display:flex; flex-direction:column; min-height:100vh; }
+body > footer { margin-top:auto; }
+footer { border-top:1px solid var(--line); padding:18px 0; font-size:13.5px;
+         color:var(--soft); }
+footer .wrap { display:flex; justify-content:flex-start; align-items:center;
+               gap:16px; flex-wrap:wrap; }
+footer a { color:var(--soft); text-decoration:none; border-bottom:1px solid var(--line); }
+footer a:hover { color:var(--green); border-bottom-color:var(--green); text-decoration:none; }
+
+/* ---------- contact page layout & cards ---------- */
+.contact-grid { display:grid; grid-template-columns:1fr 310px; gap:24px; align-items:stretch; margin-top:32px }
+@media (max-width:768px) { .contact-grid { grid-template-columns:1fr; gap:20px } }
+
+.form-col { display:flex; flex-direction:column }
+.form-col .contact-card { height:100%; justify-content:space-between }
+
+.sidebar-col { display:flex; flex-direction:column; gap:20px; height:100% }
+.sidebar-col .contact-card { flex:1; justify-content:space-between }
+
+.contact-card {
+  padding:24px; background:#f0f6fb; border:1px solid #d4e5f5;
+  border-radius:8px; display:flex; flex-direction:column; gap:16px;
+}
+.contact-card h3 { font-size:19px; font-weight:600; color:var(--ink); margin:0 }
+.contact-card p.subtext { color:var(--mid); font-size:14.5px; margin-bottom:0 }
+
+.contact-form { display:flex; flex-direction:column; gap:16px }
+.contact-form .field-row { display:grid; grid-template-columns:1fr 1fr; gap:16px }
+@media (max-width:540px) { .contact-form .field-row { grid-template-columns:1fr } }
+
+.contact-form .field { display:flex; flex-direction:column; gap:6px }
+.contact-form label { font-size:14px; font-weight:600; color:var(--ink) }
+.contact-form label .req { color:var(--accent); font-weight:400 }
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  padding:11px 14px; border:1px solid #cbdceb; border-radius:6px;
+  background:#fff; color:var(--ink); outline:none;
+  transition:border-color 0.15s, box-shadow 0.15s;
+}
+.contact-form select { cursor:pointer; appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%3C4a5058' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 14px center; padding-right:36px;
+}
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  border-color:var(--accent); box-shadow:0 0 0 3px rgba(28,93,153,0.15);
+}
+
+.btn-large { padding:12px 24px; font-size:15px; border:none; cursor:pointer }
+
+.sub-form { display:flex; flex-direction:column; gap:10px; margin-top:6px }
+.sub-form input {
+  padding:10px 12px; font-size:14px; border:1px solid #cbdceb;
+  border-radius:6px; background:#fff; color:var(--ink); outline:none;
+}
+.sub-form input:focus { border-color:var(--accent) }
+.sub-form button { border:none; cursor:pointer; font-size:14px; padding:10px 16px }
+
+/* --- home: fit on one screen, no scroll --- */
+.portrait-col { display:flex; flex-direction:column; align-items:center; gap:12px; flex-shrink:0; }
+.social { display:flex; gap:16px; }
+.social a { color:var(--soft); line-height:0; border:none; }
+.social a:hover { color:var(--green); }
+
+/* name: distinct display face */
+h1 { font-family:Georgia,"Iowan Old Style","Times New Roman",serif;
+     font-size:34px; letter-spacing:-0.5px; text-transform:none;
+     font-weight:600; color:var(--ink); margin-bottom:14px; }
+
+/* tighten the hero so the page fits without scrolling */
+.topnav + header { padding-top:30px; }
+header { padding:30px 0 34px; }
+header .sub { font-size:17px; line-height:1.6; margin-top:0; max-width:40em; }
+
+/* ---------- phones ---------- */
+@media (max-width: 560px) {
+  .wrap { padding: 0 18px; }
+
+  /* list rows: stack the date above the content instead of forcing a 368px row */
+  ul.clean li { flex-direction: column; gap: 2px; }
+  .when { min-width: 0; }
+  .what { min-width: 0; }
+
+  /* QR codes wrap instead of overflowing */
+  .qrs { flex-wrap: wrap; gap: 18px; justify-content: flex-start; }
+  .qrs img { width: 78px; height: 78px; }
+
+  /* nothing may exceed the viewport */
+  img, figure img, svg, pre, table { max-width: 100%; height: auto; }
+  pre, code { overflow-x: auto; word-break: break-word; }
+
+  /* type: slightly smaller, still comfortable */
+  body { font-size: 16.5px; }
+  h1 { font-size: 27px; }
+  h2 { font-size: 15px; }
+  .proj h3 { font-size: 20px; line-height: 1.3; }
+  header .sub { font-size: 16px; }
+
+  /* hero stacks, portrait first */
+  .hero { flex-direction: column-reverse; align-items: flex-start; gap: 18px; }
+  .portrait-col { align-items: flex-start; }
+  .portrait { width: 104px; height: 104px; }
+
+  /* long identifiers and URLs must not push the page wide */
+  .links, .ev, .note { word-break: break-word; }
+  .tags { gap: 5px; }
+
+  header { padding: 22px 0 26px; }
+  section { padding: 30px 0; }
+  footer .wrap { flex-direction: column; align-items: flex-start; gap: 6px; }
+}
+.cat-note { margin:-18px 0 20px; max-width:44em; }
+/* bio links: present but not shouty */
+header .sub a { color:var(--ink); text-decoration:none;
+                border-bottom:1px solid var(--green); padding-bottom:1px; }
+header .sub a:hover { color:var(--green); }
+
+/* sub-navigation within a section page */
+.subnav { border-bottom:1px solid var(--line); padding:10px 0; font-size:14px }
+.subnav .wrap { display:flex; gap:20px }
+.subnav a { color:var(--soft); text-decoration:none }
+.subnav a:hover { color:var(--green) }
+section h3 { font-size:20px; font-weight:600; color:var(--ink); letter-spacing:0.3px;
+              text-transform:none; margin:30px 0 10px }
+.lede { color:var(--mid); margin:-4px 0 14px; font-size:16.5px }
+
+/* What each page is, written once in config.yaml and shown on hover.
+   It was a line of prose at the top of every page; nobody reads those. */
+.navlinks [data-tip], .subnav [data-tip] { position:relative }
+.navlinks [data-tip]::after, .subnav [data-tip]::after {
+  content: attr(data-tip);
+  position:absolute; top:calc(100% + 10px); left:50%; transform:translateX(-50%);
+  width:max-content; max-width:280px; padding:8px 11px;
+  background:var(--ink); color:#fff; font-size:13px; font-weight:400;
+  line-height:1.45; letter-spacing:0; text-transform:none; text-align:left;
+  border-radius:5px; box-shadow:0 4px 14px rgba(0,0,0,0.18);
+  opacity:0; visibility:hidden; transition:opacity .14s ease .25s, visibility 0s linear .39s;
+  pointer-events:none; z-index:50;
+}
+.navlinks [data-tip]:hover::after, .navlinks [data-tip]:focus-visible::after,
+.subnav [data-tip]:hover::after, .subnav [data-tip]:focus-visible::after {
+  opacity:1; visibility:visible; transition-delay:.25s, 0s;
+}
+/* near the right edge there is no room to centre it */
+.navlinks [data-tip]:nth-last-child(-n+3)::after { left:auto; right:0; transform:none }
+.subnav [data-tip]::after { max-width:340px; top:calc(100% + 8px) }
+.subnav a[data-tip]:first-child::after { left:0; transform:none }
+
+@media (max-width: 760px) {
+  .navlinks [data-tip]::after, .subnav [data-tip]::after { display:none }   /* no hover on a touch screen */
+}
+
+/* an acknowledgement someone else wrote */
+/* Joe Reis's words are recognition, not a caveat. This box had an
+   --accent-soft (blue) background with a green edge, so on the front page it
+   read as the same kind of thing as the blue "what this does not claim" note.
+   Green matches .recognition, which is what it is. */
+.praise {
+  background: var(--green-soft);
+  border: 1px solid #bfe6cc;
+  border-left: 4px solid var(--green);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  margin: 0 0 26px;
+}
+.praise p { margin:0; font-size:16px; line-height:1.6; color:var(--ink) }
+.praise cite { display:block; margin-top:10px; font-style:normal; font-size:13.5px;
+               color:var(--mid); font-weight:500 }
+.subnav .wrap { flex-wrap: wrap; row-gap: 6px; }
+.totop { margin: 18px 0 0; font-size: 13px; }
+.totop a { color: var(--soft); text-decoration: none; }
+.totop a:hover { color: var(--green); }
+
+/* the role held — a level above the institution */
+.role { font-size:19px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase;
+        color:var(--ink); margin:30px 0 4px; padding-bottom:5px;
+        border-bottom:1px solid var(--line) }
+.role:first-of-type { margin-top:18px }
+
+/* institution heading above a course list */
+.inst { font-size:17.5px; font-weight:600; color:var(--ink); margin:22px 0 7px;
+        line-height:1.35 }
+.inst .dept { font-weight:400; color:var(--mid) }
+
+/* compact multi-column lists, pencil-marked */
+ul.courses { list-style:none; margin:0; padding:0; columns:2; column-gap:38px }
+ul.courses li { break-inside:avoid; padding:3px 0 3px 22px; font-size:17px;
+                line-height:1.45; text-indent:-22px }
+ul.courses li::before { content:"\270E"; color:var(--green); font-size:14px;
+                        display:inline-block; width:22px; text-indent:0 }
+@media (max-width:620px) { ul.courses { columns:1 } }
+
+/* the top bar is sticky and 63px tall, so anything jumped to must stop below it */
+[id] { scroll-margin-top: 76px; }
+
+/* tag index */
+a.tag { color:var(--mid); text-decoration:none }
+a.tag:hover { color:var(--green); border-color:var(--green); text-decoration:none }
+.tag-count { font-size:12.5px; font-weight:400; color:var(--soft); margin-left:6px;
+             border:1px solid var(--line); border-radius:9px; padding:1px 7px }
+/* the artifact's title is its link; its metadata sits beside it, visible on every device */
+h3 .meta { font-size:14px; font-weight:400; color:var(--soft); margin-left:9px;
+           white-space:nowrap }
+/* the scope note says what a term covers; the entry terms say what else the
+   same work gets called, so a reader arriving with another field's word lands
+   on the right term instead of an empty search */
+.scope-note { font-size:14.5px; color:var(--mid); margin:4px 0 0; max-width:62ch }
+.entry-terms { font-size:13.5px; color:var(--soft); margin:3px 0 10px; max-width:62ch }
+
+
+/* search: a button in the nav, a dialog over the page */
+.searchbtn { background:none; border:0; padding:2px 0 0; cursor:pointer; color:var(--mid);
+             display:inline-flex; align-items:center }
+.searchbtn:hover { color:var(--green) }
+
+.searchmodal { position:fixed; inset:0; z-index:60; background:rgba(20,22,26,0.45);
+               display:flex; justify-content:center; align-items:flex-start;
+               padding:9vh 20px 20px; overflow-y:auto }
+.searchmodal[hidden] { display:none }
+.searchmodal__panel { position:relative; background:var(--bg); width:100%; max-width:660px;
+                      border-radius:10px; padding:26px 26px 14px;
+                      box-shadow:0 18px 60px rgba(0,0,0,0.28) }
+.searchmodal__close { position:absolute; top:8px; right:14px; background:none; border:0;
+                      font-size:26px; line-height:1; color:var(--soft); cursor:pointer; padding:4px }
+.searchmodal__close:hover { color:var(--ink) }
+
+:root {
+  --pagefind-ui-scale:0.8;
+  --pagefind-ui-primary:var(--ink);
+  --pagefind-ui-text:var(--ink);
+  --pagefind-ui-background:var(--bg);
+  --pagefind-ui-border:var(--line);
+  --pagefind-ui-tag:var(--panel);
+  --pagefind-ui-border-width:1px;
+  --pagefind-ui-border-radius:6px;
+  --pagefind-ui-font:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+.pagefind-ui__result-title a { color:var(--accent) }
+.pagefind-ui__result-title a:hover { color:var(--green) }
+.pagefind-ui__result-excerpt mark { background:var(--green-soft); color:var(--ink) }
+
+/* index overview: every term as a chip, so the page is navigable without scrolling it */
+.chipgroup { font-size:13px; letter-spacing:1px; text-transform:uppercase; color:var(--soft);
+             margin:22px 0 8px }
+.chipgroup a { color:var(--soft); text-decoration:none }
+.chipgroup a:hover { color:var(--green) }
+.chiprow { display:flex; flex-wrap:wrap; gap:7px 8px }
+.chip { font-size:14px; padding:4px 11px; border:1px solid var(--line); border-radius:14px;
+        color:var(--mid); text-decoration:none; white-space:nowrap }
+.chip:hover { border-color:var(--green); color:var(--green); text-decoration:none }
+.chip b { font-weight:600; color:var(--soft); margin-left:6px; font-size:12.5px }
+.chip:hover b { color:var(--green) }
+/* what kind of thing an index entry points at */
+.kind { font-size:12.5px; color:var(--soft); margin-left:10px; white-space:nowrap }
+.tag-subgroup { margin-top:18px; margin-bottom:22px }
+.tag-subheading { font-size:14px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase;
+                  color:var(--ink); margin:18px 0 10px 0; border-bottom:1.5px solid var(--line); padding-bottom:5px }
+/* back to this facet's own terms, from anywhere inside it */
+.toterms { margin:10px 0 0; font-size:13px }
+.toterms a { color:var(--soft); text-decoration:none }
+.toterms a:hover { color:var(--green) }
+
+/* contact form */
+.contact-form { max-width:560px; margin-top:20px; display:flex; flex-direction:column; gap:16px }
+.contact-form .field { display:flex; flex-direction:column; gap:6px }
+.contact-form label { font-size:14.5px; font-weight:600; color:var(--ink) }
+.contact-form input, .contact-form textarea {
+  font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  padding:10px 14px; border:1px solid var(--line); border-radius:6px;
+  background:var(--bg); color:var(--ink); outline:none; transition:border-color 0.15s;
+}
+.contact-form input:focus, .contact-form textarea:focus { border-color:var(--accent) }
+
+/* mcprush-style card served by the recognising party. Bounded so a
+   third-party image cannot set the width of her page. */
+.recognition-badge { display: block; margin: 0.6rem 0 0.2rem; }
+.recognition-badge img { max-width: 380px; width: 100%; height: auto; border-radius: 6px; }
+
+/* Front-page recognition list. Heading matches the section rhythm of the
+   rest of the page rather than shouting. */
+h2.found { font-size:17px; font-weight:700; letter-spacing:0.3px; color:var(--ink);
+           margin:34px 0 4px }
+.recognition-list .recognition { margin-top:12px }
+
+.recognition-list .recognition .recognition-badge { margin:0 0 8px }

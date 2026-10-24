@@ -1,0 +1,156 @@
+# Application Rules & Metadata Authority Control
+
+`data/TAGS.yaml` is the **Faceted Controlled Vocabulary** for this site. This document specifies how its terms, authority controls, entity names, and indexing rules are applied across all content records.
+
+The build fails on anything outside the controlled vocabulary or authority records, ensuring data cannot drift across updates.
+
+## Authority Control Rules
+
+
+**`title` is the name of the thing, and nothing else.** Not the role, not the
+format, not the venue. Those are fields.
+
+    WRONG   title: 'Podcast Guest: Data, Misaligned; Bad Data Ruins AI'
+    RIGHT   title: 'Data, Misaligned; Bad Data Ruins AI'
+            role: guest
+
+If a prefix in a title tells you something a field already records, delete the
+prefix. This is the failure that makes a list of appearances look like three
+different lists.
+
+## Content Kinds & Categories
+
+Every item across the site belongs to an explicit content `kind`, mapped to a top-level category on the Index page:
+
+<!-- kinds:start -->
+<!-- generated from TAGS.yaml by tools/build_rules_doc.py; edit the vocabulary -->
+
+| kind | Category | Description |
+| --- | --- | --- |
+| `project` | `Projects` | Software repositories, pipeline architectures, or datasets |
+| `article` | `Writing` | Published essays, research notes, or Substack posts |
+| `podcast` | `Speaking` | Podcast guest or host appearances |
+| `talk` | `Speaking` | Conference presentations, keynotes, or workshops |
+| `course material` | `Teaching` | Handouts, assignments, or worked code examples |
+| `teaching` | `Teaching` | Course offerings or curriculum design |
+<!-- kinds:end -->
+
+## Index Facets & Lexicographical Ordering
+
+All tags in `data/TAGS.yaml` belong to controlled facets, declared in `facets:` and `kinds:`:
+
+1. **`discipline`**: What the work is about.
+2. **`method`**: How a claim was established, rather than what it was about.
+3. **`technology`**: What it was built with.
+
+### Alphabetical Indexing Rule
+Within each facet, tag terms are listed **alphabetically (A–Z)** so evaluators and readers can scan for terms predictably.
+
+### Numbered Citation Lists (`<ol>`)
+Items under each category in the index are rendered inside an ordered list (`<ol class="tag-list">`). This provides an explicit, numbered reference citation count (`1.`, `2.`, `3.`) for every category under a tag.
+
+## kind (Appearances)
+
+| value     | means                                        |
+| --------- | -------------------------------------------- |
+| `talk`    | I presented at an event                      |
+| `podcast` | an episode of a show, mine or someone else's |
+
+
+## talk fields
+
+**`eventType`** — the shape of the slot, not the content.
+
+| value      | means                                                       |
+| ---------- | ----------------------------------------------------------- |
+| `talk`     | I presented. Slides, demo, or both — all still a talk.       |
+| `keynote`  | the named keynote slot                                       |
+| `panel`    | multi-person discussion, no single presenter                 |
+| `workshop` | hands-on, participants do the work                           |
+
+A demo is not an event type. A talk with a demo is a `talk`; tag it `demo` if
+that matters for a given talk.
+
+**`location`** — city, or `virtual`. Not the venue name; that is `org`.
+
+## podcast fields
+
+**`role`** — which chair I was in.
+
+| value        | means                                                         |
+| ------------ | ------------------------------------------------------------- |
+| `guest`      | I answered the questions                                       |
+| `guest host` | I asked the questions, on someone else's show                  |
+| `co-host`    | I shared the chair for an episode                              |
+| `panelist`   | several voices, no single interviewer                          |
+
+**"Itinerant podcaster"** is a practice, not a chair, so it is a tag —
+`itinerant-podcaster` — and never a `role`.
+
+The role says which seat I was in. The tag says why I was there: turning up
+on a friend's own show to interview them about something they have done, on the
+principle that people who spend their time celebrating others deserve to be
+celebrated on their own show. Every itinerant-podcaster episode is also
+`role: guest host`; not every `guest host` episode earns the tag.
+
+Being a tag is what lets me decide episode by episode. A role value would
+decide for me.
+
+**`format`** — `live` or `recorded`. Determined by how it was captured, not how
+you watch it now. A YouTube URL containing `/live/` was a live stream.
+
+**`counterpart`** — who I interviewed. Only when `role` is `guest host`.
+
+## shared fields
+
+| field    | notes                                                          |
+| -------- | -------------------------------------------------------------- |
+| `id`     | kebab-case, unique, stable. Never renamed once published.        |
+| `date`   | `YYYY-MM-DD`. Release date for podcasts, event date for talks.   |
+| `org`    | the show or event, spelled one way everywhere. See below.        |
+| `url`    | canonical link. One per episode — see canonical URLs.            |
+| `note`   | anything true that no field holds.                               |
+| `tags`   | lowercase, kebab-case, reused across entries.                    |
+
+## org names — spelled one way
+
+These are the exact strings. A show renamed here is a show that splits into two
+in every count that groups by `org`.
+
+<!-- orgs:start -->
+<!-- generated from data/appearances.yaml by tools/build_rules_doc.py; add an appearance, not a name -->
+
+- `Agile Data Podcast`
+- `AI Tinkerers Toronto`
+- `AI Tinkerers Waterloo`
+- `Canadian Women in Cybersecurity`
+- `Christopher Gambill`
+- `Data Engineering & ML Summit`
+- `Data Podcast for Nerds!`
+- `Joe Reis`
+- `LEIT Data Podcast`
+- `Neo4j NODES`
+- `Super Data Show`
+- `The Data Engineering Channel`
+- `The Data Intelligence Platform`
+<!-- orgs:end -->
+
+## canonical URLs
+
+One link per episode, in one form:
+
+- YouTube video: `https://www.youtube.com/watch?v=ID` — no `&t=`, no `youtu.be`
+- YouTube live: `https://www.youtube.com/live/ID`
+- anything else: the publisher's own permalink
+
+The same video written two ways is the same duplicate problem as the same show
+spelled two ways.
+
+## visibility — derived, never stored
+
+There is no status field to keep current.
+
+- **talks** always render; upcoming versus past comes from `date`
+- **podcasts** render once they have a `url`
+
+To publish an episode, paste its link. That is the whole workflow.

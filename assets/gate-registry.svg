@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 493" width="760" height="493" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<rect width="760" height="493" fill="#fff"/>
+<text x="16" y="26" font-size="15" font-weight="600" fill="#1f2937">Every gate exists because something went wrong once</text>
+<text x="16" y="46" font-size="12" fill="#6b7280">parsed from GATES.md, version 2 &#183; 2026-10-16</text>
+<text x="16" y="62" font-size="11" font-weight="600" fill="#C2410C">THE INCIDENT</text>
+<text x="386" y="62" font-size="11" font-weight="600" fill="#0F6E56">WHAT NOW REFUSES IT</text>
+<rect x="16" y="66" width="318" height="65" rx="5" fill="#FAECE7" stroke="#C2410C" stroke-width="0.5"/>
+<rect x="386" y="66" width="358" height="65" rx="5" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<path d="M342 98.5 L376 98.5" stroke="#6b7280" stroke-width="1" fill="none"/>
+<path d="M370 94.5 L376 98.5 L370 102.5" stroke="#6b7280" stroke-width="1" fill="none"/>
+<text x="26" y="82" font-size="11.5" fill="#1f2937">numbers in a résumé and on a site drifted from</text>
+<text x="26" y="97" font-size="11.5" fill="#1f2937">the repositories that produced them</text>
+<text x="396" y="82" font-size="11.5" font-weight="600" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" fill="#0F6E56">verify.py</text>
+<text x="396" y="97" font-size="11.5" fill="#1f2937">refuses a registered fact whose source</text>
+<text x="396" y="112" font-size="11.5" fill="#1f2937">no longer supports it</text>
+<rect x="16" y="145" width="318" height="65" rx="5" fill="#FAECE7" stroke="#C2410C" stroke-width="0.5"/>
+<rect x="386" y="145" width="358" height="65" rx="5" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<path d="M342 177.5 L376 177.5" stroke="#6b7280" stroke-width="1" fill="none"/>
+<path d="M370 173.5 L376 177.5 L370 181.5" stroke="#6b7280" stroke-width="1" fill="none"/>
+<text x="26" y="161" font-size="11.5" fill="#1f2937">a fabricated run count reached a live job</text>
+<text x="26" y="176" font-size="11.5" fill="#1f2937">application</text>
+<text x="396" y="161" font-size="11.5" font-weight="600" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" fill="#0F6E56">scan.py</text>
+<text x="396" y="176" font-size="11.5" fill="#1f2937">refuses a banned claim; reports numbers</text>
+<text x="396" y="191" font-size="11.5" fill="#1f2937">registered nowhere</text>
+<rect x="16" y="224" width="318" height="95" rx="5" fill="#FAECE7" stroke="#C2410C" stroke-width="0.5"/>
+<rect x="386" y="224" width="358" height="95" rx="5" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<path d="M342 271.5 L376 271.5" stroke="#6b7280" stroke-width="1" fill="none"/>
+<path d="M370 267.5 L376 271.5 L370 275.5" stroke="#6b7280" stroke-width="1" fill="none"/>
+<text x="26" y="240" font-size="11.5" fill="#1f2937">a generator rendered certificates as literal</text>
+<text x="26" y="255" font-size="11.5" fill="#1f2937">HTML while the same certificates sat in the</text>
+<text x="26" y="270" font-size="11.5" fill="#1f2937">YAML it was meant to read; the data was</text>
+<text x="26" y="285" font-size="11.5" fill="#1f2937">edited, the page kept showing the old copy</text>
+<text x="26" y="300" font-size="11.5" fill="#1f2937">with the years still in it</text>
+<text x="396" y="240" font-size="11.5" font-weight="600" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" fill="#0F6E56">no_hardcoding.py   &#183; 2026-10-13</text>
+<text x="396" y="255" font-size="11.5" fill="#1f2937">refuses code restating a value its data</text>
+<text x="396" y="270" font-size="11.5" fill="#1f2937">file already holds</text>
+<rect x="16" y="333" width="318" height="65" rx="5" fill="#FAECE7" stroke="#C2410C" stroke-width="0.5"/>
+<rect x="386" y="333" width="358" height="65" rx="5" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<path d="M342 365.5 L376 365.5" stroke="#6b7280" stroke-width="1" fill="none"/>
+<path d="M370 361.5 L376 365.5 L370 369.5" stroke="#6b7280" stroke-width="1" fill="none"/>
+<text x="26" y="349" font-size="11.5" fill="#1f2937">a generator was shared into a template with</text>
+<text x="26" y="364" font-size="11.5" fill="#1f2937">another repository&#x27;s home path hardcoded in it</text>
+<text x="396" y="349" font-size="11.5" font-weight="600" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" fill="#0F6E56">no_local_paths.py   &#183; 2026-10-13</text>
+<text x="396" y="364" font-size="11.5" fill="#1f2937">refuses a tracked file carrying one</text>
+<text x="396" y="379" font-size="11.5" fill="#1f2937">machine&#x27;s absolute path</text>
+<rect x="16" y="412" width="318" height="65" rx="5" fill="#FAECE7" stroke="#C2410C" stroke-width="0.5"/>
+<rect x="386" y="412" width="358" height="65" rx="5" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<path d="M342 444.5 L376 444.5" stroke="#6b7280" stroke-width="1" fill="none"/>
+<path d="M370 440.5 L376 444.5 L370 448.5" stroke="#6b7280" stroke-width="1" fill="none"/>
+<text x="26" y="428" font-size="11.5" fill="#1f2937">a working configuration was changed, the</text>
+<text x="26" y="443" font-size="11.5" fill="#1f2937">change made it worse, and nothing recorded</text>
+<text x="26" y="458" font-size="11.5" fill="#1f2937">what working had looked like</text>
+<text x="396" y="428" font-size="11.5" font-weight="600" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" fill="#0F6E56">checkpoint.sh</text>
+<text x="396" y="443" font-size="11.5" fill="#1f2937">refuses saving a &quot;known-good&quot; state</text>
+<text x="396" y="458" font-size="11.5" fill="#1f2937">whose proof does not pass</text>
+</svg>

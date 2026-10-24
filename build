@@ -1,0 +1,55 @@
+#!/bin/sh
+# Rebuild everything the data drives, in dependency order.
+#
+#     ./build
+#
+# Safe to run at any time. Every step is idempotent.
+
+set -e
+cd "$(dirname "$0")"
+export PATH="/opt/homebrew/bin:$PATH"
+
+echo "1/10 work          <- data/work.yaml"
+python3 tools/build_work.py
+
+echo "2/10 teaching      <- data/teaching.yaml"
+python3 tools/build_teaching.py
+
+echo "3/10 speaking      <- data/appearances.yaml"
+python3 tools/build_speaking.py
+
+echo "4/10 writing       <- data/writing.yaml"
+python3 tools/build_writing.py
+
+echo "5/10 contact       <- data/contact.yaml + config.yaml"
+python3 tools/build_contact.py
+
+echo "6/10 home          <- data/home.yaml + config.yaml"
+python3 tools/build_index.py
+
+echo "7/10 rules doc     <- data/TAGS.yaml + data/appearances.yaml"
+python3 tools/build_rules_doc.py
+
+echo "8/10 tag index     <- data/TAGS.yaml + content data"
+python3 tools/build_tags.py
+
+echo "9/10 navigation    <- config.yaml / tools/build_nav.py"
+python3 tools/build_nav.py
+
+echo "10/10 search       <- generated HTML pages"
+python3 tools/build_search.py
+
+echo
+echo "declared checks   <- .pre-commit-config.yaml"
+if command -v pre-commit >/dev/null 2>&1; then
+  pre-commit run --all-files
+else
+  echo "  -> pre-commit is not installed. Run: pip install pre-commit" >&2
+  exit 3
+fi
+
+echo "unit tests        <- tests/"
+python3 -m unittest discover -s tests -t .
+
+echo
+echo "Build complete. Review changes with: git status"

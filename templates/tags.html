@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section><div class="wrap">
+  <p class="lede">{{ index_len }} terms, {{ total_links }} links to the work carrying them. The number on a term is how many pieces of work it points to.</p>
+</div></section>
+
+{{ sections_html|safe }}
+{% endblock %}

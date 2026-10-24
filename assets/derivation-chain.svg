@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 318" width="760" height="318" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<rect width="760" height="318" fill="#fff"/>
+<text x="58.0" y="18" font-size="13" font-weight="600" fill="#0F6E56">Every step derived</text>
+<rect x="58.0" y="34" width="176" height="54" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.6"/>
+<text x="146.0" y="56" font-size="13" font-weight="600" text-anchor="middle" fill="#1f2937">Source</text>
+<text x="146.0" y="73" font-size="11" text-anchor="middle" fill="#6b7280">the run, the repository</text>
+<path d="M241.0 61.0 L283.0 61.0" stroke="#0F6E56" stroke-width="1.4" fill="none"/>
+<path d="M277.0 56.5 L283.0 61.0 L277.0 65.5" stroke="#0F6E56" stroke-width="1.4" fill="none"/>
+<text x="262.0" y="52.0" font-size="10.5" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" fill="#0F6E56">derives</text>
+<rect x="292.0" y="34" width="176" height="54" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.6"/>
+<text x="380.0" y="56" font-size="13" font-weight="600" text-anchor="middle" fill="#1f2937">Data</text>
+<text x="380.0" y="73" font-size="11" text-anchor="middle" fill="#6b7280">yaml, facts registry</text>
+<path d="M475.0 61.0 L517.0 61.0" stroke="#0F6E56" stroke-width="1.4" fill="none"/>
+<path d="M511.0 56.5 L517.0 61.0 L511.0 65.5" stroke="#0F6E56" stroke-width="1.4" fill="none"/>
+<text x="496.0" y="52.0" font-size="10.5" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" fill="#0F6E56">derives</text>
+<rect x="526.0" y="34" width="176" height="54" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.6"/>
+<text x="614.0" y="56" font-size="13" font-weight="600" text-anchor="middle" fill="#1f2937">Claim</text>
+<text x="614.0" y="73" font-size="11" text-anchor="middle" fill="#6b7280">page, résumé, post</text>
+<path d="M146.0 96 L146.0 110 L614.0 110 L614.0 96" stroke="#0F6E56" stroke-width="1" fill="none"/>
+<text x="380.0" y="129" font-size="11.5" text-anchor="middle" fill="#0F6E56">Derivation is transitive: the claim is checkable against the source, without checking the middle.</text>
+<path d="M58.0 154 L702.0 154" stroke="#e6e6e6" stroke-width="1"/>
+<text x="58.0" y="182" font-size="13" font-weight="600" fill="#C2410C">One copy, and nothing announces it</text>
+<rect x="58.0" y="198" width="176" height="54" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.6"/>
+<text x="146.0" y="220" font-size="13" font-weight="600" text-anchor="middle" fill="#1f2937">Source</text>
+<text x="146.0" y="237" font-size="11" text-anchor="middle" fill="#6b7280">the run, the repository</text>
+<path d="M241.0 225.0 L283.0 225.0" stroke="#0F6E56" stroke-width="1.4" fill="none"/>
+<path d="M277.0 220.5 L283.0 225.0 L277.0 229.5" stroke="#0F6E56" stroke-width="1.4" fill="none"/>
+<text x="262.0" y="216.0" font-size="10.5" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" fill="#0F6E56">derives</text>
+<rect x="292.0" y="198" width="176" height="54" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.6"/>
+<text x="380.0" y="220" font-size="13" font-weight="600" text-anchor="middle" fill="#1f2937">Data</text>
+<text x="380.0" y="237" font-size="11" text-anchor="middle" fill="#6b7280">yaml, facts registry</text>
+<path d="M475.0 225.0 L517.0 225.0" stroke="#C2410C" stroke-width="1.4" fill="none" stroke-dasharray="5 4"/>
+<path d="M511.0 220.5 L517.0 225.0 L511.0 229.5" stroke="#C2410C" stroke-width="1.4" fill="none"/>
+<text x="496.0" y="216.0" font-size="10.5" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" fill="#C2410C">copies</text>
+<rect x="526.0" y="198" width="176" height="54" rx="6" fill="#FAECE7" stroke="#C2410C" stroke-width="0.6"/>
+<text x="614.0" y="220" font-size="13" font-weight="600" text-anchor="middle" fill="#1f2937">Claim</text>
+<text x="614.0" y="237" font-size="11" text-anchor="middle" fill="#6b7280">page, résumé, post</text>
+<text x="58.0" y="278" font-size="11.5" fill="#C2410C">The claim no longer traces to the source. Edit the data and the copy keeps its old value &#8212; no error, no warning.</text>
+</svg>

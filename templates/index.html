@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header id="top"><div class="wrap"><div class="hero"><div class="hero-text">
+  <h1>{{ site.author.name }}</h1>
+  <p class="sub">{{ bio_html|safe }} {{ home.site_note|format_inline|safe }}</p>
+  </div><div class="portrait-col"><img class="portrait" src="assets/photo.jpg" alt="{{ home.portrait_alt }}">
+  <div class="social">
+{{ social_html|safe }}
+  </div>
+</div></div></div></header>
+
+<section><div class="wrap">
+  <blockquote class="praise">
+    <p>&ldquo;{{ home.praise.quote|format_inline|safe }}&rdquo;</p>
+    <cite><a href="{{ home.praise.author_url }}" target="_blank" rel="noopener">{{ home.praise.author }}</a>, {{ home.praise.source }} &mdash; <em><a href="{{ home.praise.work_url }}" target="_blank" rel="noopener">{{ home.praise.work }}</a></em></cite>
+  </blockquote>
+  <p class="subtext" style="margin-top: -18px; margin-bottom: 30px; font-size: 15px;"><a href="teaching.html#testimonials">{{ testimonial_count }} {{ home.testimonials_link }} &rarr;</a></p>
+
+  {# Chosen by someone else. Derived from the same work.yaml recognition
+     blocks work.html renders, but NOT the same text: the first version
+     printed `what` and `terms` here as well and was a verbatim copy of the
+     work page, which adds nothing. The badge already states the claim, so
+     this is the badge, who said it, and a link to the work. The sentences
+     stay on work.html, next to the thing they are about. #}
+  {% if recognitions %}
+  <h2 class="found">Found and chosen by others</h2>
+  <div class="recognition-list">
+    {% for e in recognitions %}
+    <div class="recognition">
+      {% if e.r.badge %}
+      <a class="recognition-badge" href="{{ e.r.url }}" target="_blank" rel="noopener"><img src="{{ e.r.badge }}" alt="{{ e.r.badge_alt or e.r.who }}" loading="lazy" width="380" height="200"></a>
+      {% endif %}
+      <span class="recognition-who">{{ e.r.who }}</span>
+      <span class="recognition-date">{{ e.r.date }}</span>
+      on <a href="work.html#{{ e.item.id }}">{{ e.item.title }}</a>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <ul class="clean">
+    {% for nav in config.navigation %}
+    <li><span class="what"><a href="{{ nav.href }}"><strong>{{ nav.label }}</strong></a> &mdash; {{ nav.description }}</span></li>
+    {% endfor %}
+  </ul>
+</div></section>
+{% endblock %}

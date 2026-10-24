@@ -1,0 +1,22 @@
+# Dependencies and builds
+node_modules/
+dist/
+.astro/
+__pycache__/
+*.pyc
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Caches and local files
+.pytest_cache/
+.ruff_cache/
+*.log
+*.zip
+*.pdf
+scratch/
+.chrome_temp/
+static-site-template/

@@ -1,0 +1,401 @@
+# Work projects and sections for work.html
+#
+# Two fields are easy to confuse, and they render differently on purpose:
+#
+#   notes        a caveat. What this entry is NOT claiming, a limit, a date.
+#                Blue box.
+#   recognition  someone ELSE chose this work. Green box. Requires who, what,
+#                date (YYYY-MM-DD) and an absolute url; `terms` is optional,
+#                for licence or attribution conditions.
+#
+# Recognition with no date and no source link is the shape a claim takes when
+# it inflates quietly, so the model requires all four rather than trusting
+# whoever is editing. A credit written into `notes:` renders inside the
+# disclaimer box and reads as a disclaimer -- tools/test_tools.py refuses it.
+sections:
+  - id: data-engineering
+    title: "Data modeling"
+    summary: "Data modeling is the throughline. Source systems into structures analysts and models can use — migration, entity resolution, record linkage, annotation quality control, and the SQL behaviour underneath it."
+    items:
+      - id: guelph-migration
+        title: "Legacy-to-PostgreSQL migration and record linkage — University of Guelph, 2011–2015"
+        activity: built
+        tags: [Data modeling, Entity resolution, Data quality, Migration, PostgreSQL, Team leadership]
+        description: |
+          Sole architect of the migration of a historical research database to PostgreSQL: the data model cut storage by 73%. The result was a production system with researchers as its direct clients — requirements gathering, stakeholder translation, and ongoing support were part of the job, not adjacent to it.
+
+          On top of it, probabilistic record linkage connecting WWI military service records to census data: 97% linkage across 450,000 records at 89% precision. Blocking and scoring were only half the problem; the harder half was validation, so I automated family re-creation to check links against household structure, which raised verification speed fourfold.
+
+          Two properties of that work carry into anything with dirty source data: the ground truth is never handed to you, and a linkage rate means nothing without the precision beside it.
+
+          The coding work was not a solo exercise. I led a team of twenty research assistants doing the manual verification, and built the monitoring that made their work checkable at the level of a single record — one line, in one file, among a great many. The scarce resource was their attention, so the system's job was to spend it only where a disagreement actually existed.
+      - id: name-coding
+        title: "Automating a hand-built name dictionary — first-name standardization across seven censuses"
+        activity: built
+        tags: [Data modeling, Metadata architecture, Entity resolution, Evaluation sets, Data quality, PostgreSQL, Python]
+        description: |
+          Historians had been coding first names by hand: each name assigned a three- to five-letter code standing for an equivalence class of spellings. It did not scale, and every new census arrived with a fresh tail of names nobody had seen. I automated it, starting from their 1871 dictionary as the seed.
+
+          The equivalence relation was phonetic and orthographic together — double metaphone for blocking, then minimum Levenshtein distance within the block. A second variant added substring substitution, which is what made French spellings tractable. Two phases: generate candidate codes over a sample of 70,000 strings, then apply the replacement rules to whatever was left. Strings that survived both were reported as unassigned rather than forced.
+
+          The finding that shaped the design: **the expert dictionary contradicted itself.** Two strings sharing a code were not always equivalent under any formal definition, and strings with different codes sometimes were. So instead of emitting one answer, the system emitted several candidates and let the experts choose — and some strings the experts themselves coded more than one way. When the ground truth disagrees with itself, widening the output is more honest than picking a winner.
+
+          Every candidate carried a verdict, good or bad, which made the system measurable. Twenty research assistants did that checking — each code looked at independently by two people, with disagreements adjudicated rather than averaged. **237,203 codes were checked by hand out of a corpus of 1,367,022 strings: 90.96% of them good, 95.29% setting aside a class of special cases.** I checked the other direction too — whether *wrong* codes also sit at minimum distance — since a metric that scores well but cannot discriminate is worth nothing.
+
+          The 17% that needed a person is the number I would defend the design on. Across 63 batches the median was 92.5%, and the spread ran from 97.2% down to 34.0% on one small batch — which is why the aggregate is the honest figure and a range is not.
+
+          The coded names carried forward across the 1852, 1871, 1880, 1881, 1891, 1901 and 1911 censuses, with a full ingest pipeline per census: process, detect inconsistencies, apply coding, prepare for the model downstream.
+      - id: age-modeling
+        title: "Fitting the agreement function for record linkage — age difference across censuses"
+        resume: "[YOURS: draft — Record linkage, age agreement: Fitted and compared five candidate functions turning census age differences into linkage evidence, across five datasets and 11,813 records. Tested the assumption that women misreport age more than men: the gap was a shift of about a year, not a separate model.]"
+        activity: research
+        tags: [Data modeling, Entity resolution, Evaluation sets, Data quality]
+        description: |
+          Two records ten years apart rarely agree on age. To link them you need a function turning that disagreement into evidence: `ageDiff` mapping an age difference onto a weight between one and zero. I fitted five candidates — normalized by constant factors, by frequency percentage, and by a fast-increasing function — and chose between them on standard deviation against observed frequencies, across five independent datasets and 11,813 records.
+
+          I also tested the received wisdom that women misreport age more often than men. Running the regression separately by gender, the difference was slight: both curves were the same function shifted by about a year. Not two models. One model and an offset — which is the result you only get by checking rather than assuming.
+      - id: police-gazette
+        title: "Getting convict transport records out of OCR — Police Gazette"
+        activity: built
+        tags: [Data modeling, Metadata architecture, Data quality, Evaluation sets]
+        description: |
+          Nineteenth-century Police Gazettes recording prisoners transported to Tasmania, held as OCR'd scans. The data the historians needed was in tables inside those documents, and OCR does not respect a table. I wrote the extraction design: fixed layouts for the two table types, one table per output file, a naming convention tying every file back to its source page, and a separate metadata table holding what is true of a whole file — its description, its row count, who extracted it, who checked it — recorded once instead of repeated on every row.
+
+          My proposal secured the grant to carry out the work: one table per file, so extraction and checking could run independently and be verified in small units, and a metatable recording each file's facts once — including who extracted it, who checked it, and the row count.
+
+          Reading it back in 2026: the metatable is a metadata catalog, the filename scheme is a canonical identifier carrying lineage, and `ExtractedBy` / `CheckedBy` / `RowCount` are a provenance trail. I had none of those words in 2011.
+        links:
+          - text: "The 2011 design document (PDF)"
+            url: "assets/police-gazette-transcripts-2011.pdf"
+      - id: db2-postgres
+        title: "Departmental migration from IBM DB2 to PostgreSQL — University of Toronto"
+        activity: built
+        tags: [Migration, PostgreSQL, Team leadership, Teaching]
+        description: |
+          Led the Computer Science department's move off DB2: platform evaluation, rewriting the course materials that depended on it, retraining instructors, and supporting students through the change. A migration whose hardest constraint was that several hundred people had to keep working through it.
+      - id: site-infrastructure
+        title: "rctruta.github.io — contract-driven portfolio & claim verification pipeline"
+        resume: "[YOURS: draft — ramonactruta.com: Built my portfolio site as a data model. Every page is generated from YAML; a pre-commit hook checks key numbers against registered sources, and a controlled tag vocabulary fails the build on unknown terms.]"
+        activity: built
+        tags: [Data modeling, Metadata architecture, Pre-commit gates, Python, Data contracts]
+        description: |
+          The repository powering this website is built as a data modeling project. Numbers that carry weight are registered in `FACTS.yaml` with their source and checked against it by a pre-commit hook, which also reports every unregistered number for review and blocks any claim on the banned list. A second hook refuses to commit personal contact details. Vocabulary is governed by `TAGS.yaml` and `APPLICATION-RULES.md`: an unknown tag fails the build. Python and Node generators compile the writing list, the speaking list, the tag index, the navigation and the search index — so a page and the data behind it cannot disagree.
+        links:
+          - text: "rctruta.github.io"
+            url: "https://github.com/rctruta/rctruta.github.io"
+
+  - id: benchmarking
+    title: "Benchmarking"
+    summary: "Measuring engines and protocols under conditions stated well enough to reproduce. Every result ships with the experiment that produced it."
+    items:
+      - id: sqlbenchdag
+        title: "sqlbenchdag — a reproducible benchmarking laboratory"
+        activity: built
+        tags: [Benchmarking, Content addressing, Cold-cache measurement, Dagster, DuckDB, PostgreSQL, Polars, Arrow / ADBC, Python, MCP, SQL, Data contracts, Pre-commit gates, PyPI]
+        description: |
+          Every experiment is a capsule addressed by an 8-character SHA-256 fingerprint over its config, SQL, and every line of measurement-relevant Python. Change the method and the ID changes. Cold-cache execution, hard row-count assertions, and an integrity seal on every capsule. The four published Quack capsules additionally carry OpenTimestamps proofs anchored to Bitcoin.
+        figures:
+          - src: "assets/quack-vs-postgres.png"
+            alt: "DuckDB-over-Quack vs PostgreSQL, query duration by table size"
+            caption: "Capsule <code>902d1277</code> — DuckDB-over-Quack (pushdown) against PostgreSQL: 4.4× at 100K rows, 6.1× at 1M, 13.2× at 10M. Bands are replication min–max, cold cache, arm64, 8 cores, DuckDB 1.5.3. Caveat disclosed in the config: PostgreSQL pays a macOS Docker-VM tax on this bench."
+          - src: "assets/quack-execution-modes.png"
+            alt: "Quack attach mode vs pushdown vs in-process DuckDB"
+            caption: "Capsule <code>b8e2bfaf</code> — attach-mode overhead grows with scan size (2.6× at 100K → 9.5× at 10M); pushdown stays flat at ~2×. Attach mode streams table data client-side; pushdown ships only results. The residual 2× traced to reduced server-side parallelism, not transport (capsule <code>25b0e134</code>)."
+        links:
+          - text: "sql-benchmarks-dagster"
+            url: "https://github.com/rctruta/sql-benchmarks-dagster"
+          - text: "pip install sqlbenchdag"
+            url: "https://pypi.org/project/sqlbenchdag/"
+          - text: "Write-up"
+            url: "https://ramonactruta.substack.com/p/measuring-quack-duckdbs-new-client"
+        notes:
+          - label: "Published Python package on PyPI"
+            text: "— reproducible benchmarking laboratory. Install with <code>pip install sqlbenchdag</code>."
+            url: "https://pypi.org/project/sqlbenchdag/"
+          - label: "MCP server in the official Model Context Protocol registry"
+            text: "— v0.1.2, 10 tools, active since 2026-08-10. Run it with <code>uvx --from sqlbenchdag sqlbench-mcp</code>: the package name is not the command, and <code>uvx sqlbenchdag</code> exits 1."
+            url: "https://registry.modelcontextprotocol.io/v0/servers?search=sqlbenchdag"
+          - label: "One command, cold, with nothing else running"
+            text: "— the published server reads the committed capsules directly, so it needs no REST API, no config and no key. A scheduled CI job installs it from PyPI on a clean machine weekly and fails if the handshake or any tool description breaks."
+            url: "https://github.com/rctruta/sql-benchmarks-dagster/blob/main/.github/workflows/published_mcp.yml"
+        recognition:
+          - who: "mcprush"
+            what: "found the MCP server in the official registry, scanned the published artifact and graded it: security A, 94/100, on v0.1.3"
+            date: "2026-10-20"
+            url: "https://mcprush.com/rctruta/sql-benchmarks-lab-mcp"
+            terms: "Their scan of a snapshot, under their own methodology. Not a certification."
+            badge: "https://mcprush.com/badge/sql-benchmarks-lab-mcp/card.svg"
+            badge_alt: "mcprush listing for SQL Benchmarks Lab MCP server: security A, trust score 94 out of 100"
+      - id: sql-behaviour
+        title: "SQL behaviour under measurement"
+        resume: "[YOURS: draft — SQL behaviour under measurement: Measured Postgres on cold cache and confirmed with EXPLAIN that a bitmap heap scan at 5% selectivity is slower than a sequential scan. Showed that IS NOT DISTINCT FROM does not remove the quadratic cost of joins on nullable keys. Written up on Substack.]"
+        activity: research
+        tags: [Benchmarking, Cold-cache measurement, Data modeling, PostgreSQL, DuckDB, SQL]
+        description: |
+          Findings from the laboratory that are about the database rather than the benchmark. Postgres index selectivity has a crossover: on cold cache a bitmap heap scan at 5% selectivity is slower than a sequential scan, so the index becomes a liability — EXPLAIN-confirmed, with the sequential scan winning outright past roughly 10%. Separately, on three-valued logic: the null-safe `IS NOT DISTINCT FROM` operator does not remove the quadratic cost of a join over nullable keys. It decides whether the query degrades or hangs. That is an optimizer cliff in Postgres, not something intrinsic to the semantics.
+        links:
+          - text: "The Pizza Logic You Didn't Know You Kneaded"
+            url: "https://ramonactruta.substack.com/p/the-pizza-logic-you-didnt-know-you"
+      - id: result-transport
+        title: "What the connectivity layer costs — ADBC, connectorx and psycopg out of PostgreSQL"
+        blurb: "On primitive columns the row path is level with Arrow; on jsonb at 10M rows it is 6.9× slower, because it builds a Python object per value."
+        activity: research
+        tags: [Benchmarking, Cold-cache measurement, Content addressing, Arrow / ADBC, PostgreSQL, Python, SQL]
+        description: |
+          One question, asked properly: when a client pulls a large result out of PostgreSQL, what does the **transport** cost, separately from the query? Same server, same SQL, trivial `SELECT *` so execution does not dominate — only the client varies: psycopg fetching rows, ADBC over Arrow, connectorx over Arrow. Timed from execute to the result fully materialised in memory.
+
+          **The answer is not "Arrow is faster."** On primitive columns the two paths are level and at 100K rows psycopg is marginally ahead (0.88×). What changes the picture is column type. On `jsonb` at 10 million rows psycopg takes 143 seconds against ADBC's 20.8 — **6.9×** — and on a mixed nested column 165 seconds against 29.9. The row path does not scale because it materialises a Python object per value; Arrow stays linear. The penalty widens with size exactly where that cost lives: jsonb goes 2.70× at 100K, 3.42× at 1M, 6.88× at 10M, while primitives sit at 1.22× throughout.
+
+          The two Arrow clients are close but not interchangeable: ADBC wins `jsonb` at 10M (20.8s vs 35.0s), connectorx wins `int[]` (11.4s vs 12.2s). I shared the results with Ian Cook at Voltron Data, whose Arrow work prompted the question.
+        figures:
+          - src: "assets/transport-row-path-collapse.svg"
+            alt: "Row-path penalty by column type at 100K, 1M and 10M rows: primitives stay near 1x while jsonb reaches 6.88x"
+            caption: "Capsule <code>af6ba593</code>, generated from the capsule's own CSV. psycopg divided by the faster Arrow client. Replication 3, cold cache, Darwin arm64, 16 GB, <code>sqlbenchdag@9105c38</code>."
+        notes:
+          - text: "Exploratory tier, not in the verified published set: two capsules on one machine, replication 3. It is a shape, not a benchmark result to quote against someone else's hardware — compare the ratios, not the seconds."
+          - text: "A day's work, and it leaned on the laboratory already being there. The value is that the harness made a proper cold-cache, sealed, content-addressed run cheap enough to do in an afternoon."
+          - text: "Says nothing about Arrow IPC or Flight as protocols, nor about ADBC drivers in general — one alpha Quack driver was measured separately and is not this result."
+        links:
+          - text: "capsule af6ba593"
+            url: "https://github.com/rctruta/sql-benchmarks-dagster/tree/main/sql_benchmarks/experiments/results/af6ba593"
+          - text: "the experiment config"
+            url: "https://github.com/rctruta/sql-benchmarks-dagster/blob/main/sql_benchmarks/experiments/queue/transport_adbc_scale.yaml"
+      - id: lakehouse-semantics
+        title: "lakehouse-semantics — SQL correctness and engine divergence matrix"
+        activity: built
+        tags: [Benchmarking, PostgreSQL, DuckDB, SQL, Python]
+        description: |
+          A suite of 23 correctness probes executed across DuckDB, DuckDB+Delta, PostgreSQL, and Databricks SQL. Rather than timing performance (which varies by serverless hardware allocation), these probes measure **semantic determinism**: integer division, NULL ordering in ASC scans, VARCHAR overflow behavior, and constraint enforcement paths.
+
+          The key finding: Databricks SQL accepts inline `CHECK` constraints in `CREATE TABLE` without enforcing them, while the identical constraint added via `ALTER TABLE ADD CONSTRAINT` is strictly enforced and raises `DELTA_VIOLATE_CONSTRAINT_WITH_VALUES`. A query 20% slower costs money; a query that silently returns different rows across engines costs trust.
+        figures:
+          - src: "assets/lakehouse-semantics-probes.svg"
+            alt: "Seven SQL semantics probes run on DuckDB, PostgreSQL and Databricks SQL, with the engine that disagrees with the other two marked on each row"
+            caption: "Seven of the 23 probes. The marked cell on each row is the engine that disagrees with the other two &mdash; DuckDB on three, Databricks on three, PostgreSQL on one. Strictness reverses by probe: Databricks raises on <code>1/0</code> where DuckDB returns <code>inf</code>, and accepts a duplicate <code>PRIMARY KEY</code> where the others reject it. That last one is <a href=\"https://docs.databricks.com/aws/en/tables/constraints\">documented behaviour</a>, not a discovery &mdash; PK, FK and UNIQUE are informational there. <code>duckdb+delta</code> matched <code>duckdb</code> on all 23, which is the control arm that makes the Databricks column readable."
+        links:
+          - text: "lakehouse-semantics"
+            url: "https://github.com/rctruta/lakehouse-semantics"
+
+  - id: agent-evaluation
+    title: "AI evaluation"
+    summary: "Whether a model or an agent did what it claimed, and what a deployment will cost. Instrumenting systems and reading what they actually did, rather than asking them. Relates to [OWASP LLM06 (excessive agency)](https://genai.owasp.org/llmrisk/llm06-excessive-agency/) and [OWASP LLM09 (misinformation)](https://genai.owasp.org/llmrisk/llm09-misinformation/)."
+    items:
+      - id: harness-bench
+        title: "harness-bench — measuring a deployment before it is a deployment"
+        blurb: "Parses an agent's tool surface, runs content-addressed study contracts against it, traces every turn and grades deterministically — 16 studies, 7 models, 110+ graded runs."
+        activity: built
+        tags: [AI evaluation, Deterministic grading, Per-turn tracing, Content addressing, MCP, Python, Data contracts, Pre-commit gates]
+        description: |
+          I engineered **harness-bench** to evaluate agent deployments before they reach production. While skills and MCP servers are shipped widely, harness-bench parses tool surfaces, infers execution taxonomies, executes content-addressed YAML study contracts, traces every turn, and deterministically grades agent execution to report real token costs and failure modes — token cost per architecture, which guidance layers pay for themselves, which model tier suffices, and which states the harness is missing.
+
+          Four results it was built on, each measured rather than assumed:
+
+          - **Harness architecture dominates model choice.** Decomposing a monolithic agent into specialists cut cost 20.7× at equal answer quality, and pulled five models across two vendors into a single 18–35K token band.
+          - **Prompt guidance is the weakest lever.** An AGENTS.md added roughly 50K tokens per run for no behavioral difference. Tool schemas and role prompts are what move frontier models.
+          - **Words don't bind; gates do.** Every prompt-level instruction was eventually ignored by some model. Every mechanical gate held.
+          - **Uniform cross-model failure is a harness defect, not a model defect** — running a model ladder inside one contract makes that signature identify itself.
+
+          **Skills are a variable it measures, not a feature it assumes.** A study contract declares its cells — baseline against skills-injected — and the same goals run through both, so the cost and behaviour of a skill layer is a measurement rather than a claim in a README. That is what produced the Malloy Publisher result below.
+
+          The states it checks for were not designed in advance. Refusal, suspend and resume, a librarian role, resource caps — each was discovered by cheap probe runs and only then given a name.
+
+          The engine is generalized from a working implementation rather than designed on paper: the sqlbenchdag adapter carries its own graders, roles and tool surface, and the two runners — monolith and state machine — are the pair whose comparison produced the 20.7× result above. A new target is a new adapter against the same runners.
+        figures:
+          - src: "assets/sbd-state-machine.png"
+            alt: "State machine: librarian specialist branching to answered, refused, or config builder; config builder to the poller, refused, or config_builder_failed; poller to the analyzer or poll_failed; analyzer to complete or analyzer_failed"
+            caption: "The specialist state machine. A goal enters at the librarian, which can answer it from the existing catalog, refuse it as impossible, or send it on to build a fresh experiment. Every path ends in a named terminal state, including the failures — <code>refused</code>, <code>poll_failed</code>, <code>analyzer_failed</code> — so a run that goes wrong says where, rather than thrashing. Most of these states were discovered by probing, not designed up front."
+          - src: "assets/harness-gating-cost.svg"
+            alt: "Token totals per model for three goals run against a bare MCP surface and the same surface behind mechanical gates"
+            caption: "Three goals against the MotherDuck MCP surface, run bare and then behind mechanical gates. All twelve runs graded PASS in both arms, so the question is what gating costs &mdash; and the answer depends on the model. GPT-4o-mini spent 56% more tokens getting there; Claude Sonnet 5 spent 8% fewer. The cheap model pays for the guardrail."
+        links:
+          - text: "harness-bench"
+            url: "https://github.com/rctruta/harness-bench"
+      - id: malloy-study
+        title: "Do bundled agent skills actually reach the agent? — Malloy Publisher study"
+        resume: "[YOURS: draft — Malloy Publisher study: Ran an 18-run ablation (3 goals × 3 models, with and without skills) testing whether agent skills bundled with an MCP server reach the agent. Found the released image served 4 utility prompts instead of the 28 skills on the main branch. Published all per-turn traces, every table derived from them by script.]"
+        activity: research
+        tags: [AI evaluation, Ablation study, Per-turn tracing, MCP]
+        description: |
+          The Malloy Publisher ships agent skills alongside its MCP server. Two questions: do those skills reach an autonomous agent at all, and what changes when they do. Eighteen runs — three goals × three models × baseline against skills-injected — with the full per-turn traces published and every table in the report derived from them by script. No number in it is hand-typed.
+
+          **Measured 15 July 2026**, against `malloydata/publisher@ad6c09b`: the released image served four utility prompts rather than the twenty-eight skills then present on the project's main branch. The skills existed; an agent pulling the official image did not get them.
+
+          **Fixed upstream, beginning 20 July 2026.** The project shipped the skills as their own package ([#899](https://github.com/malloydata/publisher/pull/899)), then bundled each skill as an MCP prompt ([#944](https://github.com/malloydata/publisher/pull/944), 29 July), and by 2 September added a manifest with tests holding every delivery channel to it ([#1088](https://github.com/malloydata/publisher/pull/1088)). The server's own code now states the intent: hosts that only speak MCP receive the same guidance as hosts that read skill files directly. Skills on main today: 44.
+
+          <p class="sub small">Both dates are checkable. Nothing here claims one caused the other. Re-verified 29 September 2026.</p>
+
+          The second cuts both ways. Injecting the skills rescued the weaker models — one went from exhausting its turn budget after twenty turns, 123,191 tokens and seventeen query errors, to a correct answer in five turns, 31,658 tokens and one error. On the model that was already succeeding, the same skills raised token use roughly sixfold on that goal for the same correct answer. Guidance is not free, and it is worth most to whoever needs it most.
+        figures:
+          - src: "assets/malloy-skills-tokens.svg"
+            alt: "Tokens per run, baseline versus skills injected, across three goals and three models"
+            caption: "All 18 runs. Injecting the skills collapses the two models that were struggling — Haiku on the count goal from 123,191 tokens and an exhausted turn budget to 31,658 and a correct answer — and adds cost to Sonnet 5, which was already answering correctly. Derived from the per-turn traces in the study repository; n=1 per cell."
+        links:
+          - text: "Study & all 18 traces"
+            url: "https://github.com/rctruta/malloy-publisher-agent-study"
+      - id: agent-traces
+        title: "Reading agent traces"
+        blurb: "Per-turn agent traces against a commercial lakehouse platform. Surfaced three defects I reported upstream — #369, #370, #371 — including an error message that actively sends an agent in the wrong direction."
+        activity: research
+        tags: [AI evaluation, Per-turn tracing, Deterministic grading, Python, Process telemetry]
+        description: |
+          Per-turn tracing and deterministic grading of coding agents working against a commercial lakehouse platform. The traces surfaced three defects I reported upstream — including an error message that actively sends an agent in the wrong direction, suggesting `tanh` for a date function.
+        links:
+          - text: "Study & traces"
+            url: "https://github.com/rctruta/bauplan-agent-parse-study"
+          - text: "Issue #369"
+            url: "https://github.com/BauplanLabs/bauplan/issues/369"
+          - text: "#370"
+            url: "https://github.com/BauplanLabs/bauplan/issues/370"
+          - text: "#371"
+            url: "https://github.com/BauplanLabs/bauplan/issues/371"
+      - id: agent-telemetry
+        title: "agent-telemetry — transcript-derived process metrology for coding agents"
+        activity: built
+        tags: [AI evaluation, Process telemetry, Deterministic grading, Python]
+        description: |
+          A local analytics package that parses raw JSONL session transcripts from coding agents (Claude Code) into un-opinionated process metrics: `tool_calls_per_turn`, `reads_before_first_edit`, `repeated_commands`, `error_rate`, `seconds_to_first_write`, and `edit_revisits`.
+
+          Prose instructions (in `CLAUDE.md` or prompt guidance) are hypotheses about agent behavior. By comparing session telemetry before and after introducing a rule, `agent-telemetry` evaluates whether a prompt-level instruction actually shifted model behavior. If a rule does not move its metric, the rule does not bind.
+        links:
+          - text: "agent-telemetry"
+            url: "https://github.com/rctruta/agent-telemetry"
+      - id: rag-accuracy
+        title: "A RAG system answering 17 of 20 questions its sources couldn't support"
+        resume: "[YOURS: draft — podcast-rag: Built a local-first RAG system over podcast transcripts (LanceDB, no hosted cluster or API key) that links each answer to the second it was said. Built a labelled eval set, found it answering 17 of 20 questions its sources couldn't support, and recalibrated the refusal threshold to raise precision from 0.56 to 0.87.]"
+        blurb: "Ask a question about a podcast, get an answer and a link to the exact second someone said it. LanceDB, local-first, no cluster and no API key. Built a labelled eval set and found it answering 17 of 20 questions its sources couldn't support; recalibrated precision 0.56 → 0.87."
+        activity: built
+        tags: [AI evaluation, Evaluation sets, Python, RAG, LanceDB]
+        description: |
+          I built a labelled evaluation set for a retrieval system I had written myself, and found it answering fluently, with citations, and with no error of any kind. Recalibrated the refusal threshold from 0.56 to 0.87 precision and validated out-of-sample. Confident output is not evidence; the failure mode to fear is the plausible one, not the obvious one.
+
+          Runs entirely from a local directory — LanceDB for vector, full-text and hybrid search, sentence-transformers for embeddings, no hosted cluster and no API key. Ask a question, get an answer and a link to the timestamp where it's answered.
+        figures:
+          - src: "assets/rag-calibration.svg"
+            alt: "Left: retrieval precision before and after the refusal threshold moved. Right: F-beta of three candidate signals, with the bi-encoder cosine highest"
+            caption: "Left: moving the refusal threshold from 0.25 to 0.541 took precision from 0.564 to 0.870, with recall at 0.909 across 42 questions over 7,377 chunks. Right: the signal was chosen by trying three &mdash; a plain bi-encoder cosine beat both a cross-encoder and the two combined, and cross-validated at 0.83. The cheaper signal won, which is why it is worth measuring rather than assuming."
+        links:
+          - text: "podcast-rag"
+            url: "https://github.com/rctruta/podcast-rag"
+      - id: music-recommender
+        title: "Music recommendation system — MIT Professional Education capstone"
+        activity: research
+        tags: [AI evaluation, Evaluation sets, Python]
+        description: |
+          Top-10 song recommendation over the Million Song Dataset Taste Profile Subset: two million listening events, ten thousand songs. Four algorithm families compared — user-user and item-item collaborative filtering, SVD matrix factorization, co-clustering, and content-based — with grid-search cross-validation over each.
+
+          Revisited in 2026, the interesting result is the evaluation rather than the models. Every one of the eight configurations reported Precision@10 of 1.0 while RMSE sat between 1.009 and 1.088, which cannot both be true of a working measurement. The relevance threshold was a play count of one, and the test set contains only songs a user already played — so every candidate counted as relevant and the metric reduced to k/k. Perfect scores produced by arithmetic, not by the recommenders.
+        links:
+          - text: "music_recommendation_system"
+            url: "https://github.com/rctruta/music_recommendation_system"
+
+  - id: memory-security
+    title: "AI security"
+    summary: "Attacks on what an agent reads, stores and later trusts — and the controls that hold against them. Maps to [OWASP LLM01 (indirect prompt injection)](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) and [OWASP LLM04 (data poisoning)](https://genai.owasp.org/llmrisk/llm04-data-and-model-poisoning/)."
+    items:
+      - id: agent-memory
+        title: "Semantic injection into agent memory"
+        activity: research
+        tags: [AI security, AI evaluation]
+        description: |
+          A deterministic exploit against an open-source agent memory system: text that reads as ordinary content to a human, but that the extraction pipeline turns into a stored fact the agent later treats as its own knowledge. Disclosed responsibly. Separately, a forensic read of a coding agent's local state directory — what it writes to disk, in plaintext, without telling you.
+        links:
+          - text: "The Blueberry Muffin Exploit"
+            url: "https://ramonactruta.substack.com/p/the-blueberry-muffin-exploit-semantic"
+          - text: "Inside ~/.claude/"
+            url: "https://ramonactruta.substack.com/p/inside-claude-structure-is-not-security"
+        notes:
+          - text: "Authorised researcher, Anthropic Cyber Verification Program."
+      - id: consensus-contagion
+        title: "Consensus Contagion — status bias and the RLHF tax in agent routing"
+        activity: research
+        tags: [AI evaluation, Deterministic grading, Ablation study, RLHF, Data contracts, AI security, Python]
+        description: |
+          Based on my **adversarial-judgement-research** framework (14 study contracts, 205 graded runs across 10 models from 4 vendors, with a successor testbed extending the matrix to local models): I proved that generalized LLM orchestrators evaluate simulated social status over technical merit. Injecting a high-status persona into routing decisions causes agentic state to collapse into authority bias (the RLHF tax). Prompt-level instructions fail under pressure; mechanical gates hold.
+        blurb: "Metatracing engine and execution traces for structural failure modes in multi-agent LLM consensus pipelines: status bias, persona bleed, frame break, axiomatic refusal, consensus contagion, semantic camouflage."
+        links:
+          - text: "adversarial-judgement-research"
+            url: "https://github.com/rctruta/adversarial-judgement-research"
+        notes:
+          - text: "Presented at the Canadian Women in Cybersecurity Conference, Toronto, May 2026."
+          - text: "Experiments varying a protected attribute are held back, with their findings: a single name pair cannot separate a name-specific effect from a systematic one. The published README says so rather than leaving a gap."
+      - id: security-testbed
+        title: "AI security testbed — semantic privilege escalation under adversarial audit"
+        activity: research
+        tags: [AI security, AI evaluation, Deterministic grading, Ablation study, Content addressing, Python]
+        description: |
+          The successor to **adversarial-judgement-research**, built to test one premise: that
+          wrapping a model in a system prompt does not make a multi-agent pipeline secure, because
+          the control plane and the data plane are both just text. A transformer has no role-based
+          access control, so an instruction and a social authority payload arrive the same way.
+
+          A deterministic matrix engine runs a 2x2 factorial at temperature 0 with replication,
+          sweeping model, adversary status and thinking budget, and grades every run by rule. The
+          corpus is 416 traces across frontier and local models — GPT-4.1, Gemini 3.1 Pro, Claude
+          Opus 4.6, Cohere Command-R, Groq, HuggingFace, and Ollama running llama3, mistral and
+          gemma2 on my own machine. Running the same scenarios locally is what makes the sweep
+          affordable to replicate rather than a one-off purchase.
+
+          The engine, the study contracts and every trace are public. My own working notes are
+          not: those are research in progress, and they are the only thing held back.
+        blurb: "A deterministic matrix engine for adversarial audit of multi-agent pipelines: temperature 0, replication, status and thinking-budget sweeps, rule-based grading. 416 traces across frontier and local models."
+        links:
+          - text: "ai-security-testbed"
+            url: "https://github.com/rctruta/ai-security-testbed"
+        notes:
+          - text: "Measurements are dated: they describe the model versions named in each study contract, at the time each study ran. Model behaviour changes; an undated claim about a model ages into a false one."
+      - id: agent-tools
+        title: "Tools and playbooks for collaborating with coding agents"
+        resume: "[YOURS: draft — ai-agent-utils: Built a repository bootstrap that installs enforced gates for agent-driven work: git hooks that block unregistered or banned claims before commit, and a checkpoint that refuses to record a working state unless a proof command passes. Enforced by hooks, so it binds any coding agent.]"
+        blurb: "Boilerplate and security guidelines for collaborating safely with autonomous coding agents, with the gates already enforced rather than written down and hoped for."
+        activity: built
+        tags: [AI security, Deterministic grading, Python, Pre-commit gates]
+        description: |
+          **ai-agent-utils** — a bootstrap that starts a repository with gates already enforced, rather than rules written down and hoped for. Two families: git discipline, and claim integrity — every load-bearing number registered with a source and re-checked before commit, fabricated claims blocked by pattern, and a checkpoint that refuses to record a working state unless a proof command passes. Enforcement is git hooks and stdlib scripts, so it binds whichever agent is driving; the Claude and Cursor files only describe it. **The Pedantic Medallion** — community-curated playbooks for building shared understanding, from the framework of the same name.
+        links:
+          - text: "ai-agent-utils"
+            url: "https://github.com/rctruta/ai-agent-utils"
+          - text: "awesome-pedantic-medallion"
+            url: "https://github.com/rctruta/awesome-pedantic-medallion"
+          - text: "A README is a Set of Falsifiable Claims"
+            url: "https://ramonactruta.substack.com/p/a-readme-is-a-set-of-falsifiable"
+        # XERJ recognition is HELD BACK until they confirm publicly.
+        #
+        # A handshake in a private email cannot be verified by a reader, which
+        # is the whole standard this site holds itself to. Checked 2026-10-20:
+        # hub.xerj.org (511 entries, 11 domains), GitHub code search on
+        # xerj-org/xerj, and a shallow clone of that repository (3,074 files)
+        # grepped for rctruta, truta, ai-agent-utils, agent-utils,
+        # prove_gates, no_orphans and check_voice -- zero matches for all
+        # seven. Their NOTICE credits only "The XERJ Authors".
+        #
+        # Nothing here suggests bad faith; their own note said the entry was
+        # pending. But until it is live there is nothing a reader can open, so
+        # this renders nowhere. Uncomment the block when the entry exists, and
+        # point `url` at the entry rather than at the hub's front page.
+        #
+        # recognition:
+        #   - who: "XERJ"
+        #     what: "selected the two gates in commit `6b800eb8` for its public Corpus Hub, as a worked reference a coding agent is given when it hits the same problem. Found by review, not submitted"
+        #     date: "2026-10-19"
+        #     # The hub, not the engine repo: this points where the entry lives.
+        #     # Replace with the registry entry's own URL once it exists --
+        #     # tools/xerj-code/hub/<name>.json on the corpus-hub branch -- so the
+        #     # link resolves to the artifact rather than to its neighbourhood.
+        #     url: "https://hub.xerj.org/"
+        #     # The attribution clause is commented out, not deleted, until it
+        #     # can be pointed at. Checked 2026-10-20: searched hub.xerj.org
+        #     # (511 entries, 11 domains), ran GitHub code search on
+        #     # xerj-org/xerj, and shallow-cloned that repo (3,074 files) and
+        #     # grepped the whole tree for rctruta, truta, ai-agent-utils,
+        #     # agent-utils, prove_gates, no_orphans and check_voice. Zero
+        #     # matches for all seven. Their NOTICE credits only "The XERJ
+        #     # Authors", and .contributors does not list this account.
+        #     #
+        #     # Nothing here suggests bad faith -- the likeliest reading is that
+        #     # the inclusion has not shipped yet, which their own "pending" says.
+        #     # But a line on a public page claiming attribution, when the
+        #     # repository it names does not say so, is a claim a reader can
+        #     # check and find missing. Restore it when the entry is live:
+        #     #
+        #     # terms: "Under the repository's MIT licence, attributed to rctruta/ai-agent-utils. Agreed 2026-10-19; the registry entry is pending."
+        #     terms: "Agreed 2026-10-19 by XERJ's founder, under the repository's MIT licence. The registry entry is not live yet, so this records what was agreed rather than something you can go and read."

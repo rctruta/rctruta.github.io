@@ -1,0 +1,113 @@
+# Faceted Controlled Vocabulary and Scope Notes for portfolio projects, writing, speaking, and course materials (ANSI/NISO Z39.19 / ISO 25964 compliant).
+
+facets:
+  discipline:
+    label: "Discipline"
+    note: "What the work is about."
+    order: 1
+  method:
+    label: "Method"
+    note: "How a claim was established, rather than what it was about."
+    order: 2
+  technology:
+    label: "Technology"
+    note: "What it was built with."
+    order: 3
+
+kinds:
+  project:
+    category: "Projects"
+    note: "Software repositories, pipeline architectures, or datasets"
+    order: 1
+  article:
+    category: "Writing"
+    note: "Published essays, research notes, or Substack posts"
+    order: 2
+  talk:
+    category: "Speaking"
+    note: "Conference presentations, keynotes, or workshops"
+    order: 3
+  podcast:
+    category: "Speaking"
+    note: "Podcast guest or host appearances"
+    order: 3
+  teaching:
+    category: "Teaching"
+    note: "Course offerings or curriculum design"
+    order: 4
+  course material:
+    category: "Teaching"
+    note: "Handouts, assignments, or worked code examples"
+    order: 4
+
+vocabulary:
+
+  discipline:
+    Data modeling: Representing a domain faithfully, so the structure survives contact with the data.
+    Entity resolution: Deciding whether two records describe the same thing, when nothing says so.
+    Data quality: Finding what is wrong in source data, and proving it is wrong.
+    Metadata architecture: Structures that describe other data — catalogs, authority files, controlled vocabularies — so a fact about a source is recorded once and can be checked.
+    Benchmarking: Measuring a system under conditions stated well enough to reproduce.
+    AI evaluation: Deciding whether a model or agent actually did what it claimed.
+    AI security: Attacks on what an agent reads, stores, and later trusts.
+    Migration: Moving a working system to a new platform without stopping its users.
+    Team leadership: Running the people doing the work, and the mechanism that checks it.
+    Teaching: Course material or explanatory writing built so a learner arrives at the answer rather than watching it appear.
+    Human agency: What people give up to a system, and what it costs them.
+    Storytelling: An analogy from lived experience carrying a technical idea, so the reader arrives at the mechanism through something they already know.
+    RLHF: Measuring how RLHF alignment and status bias shift agent decision routing under pressure.
+
+  method:
+    Deterministic grading: Scoring outcomes by rule, not by judgement, so a result can be re-derived.
+    Per-turn tracing: Recording every step an agent took, rather than asking it afterwards.
+    Evaluation sets: A labelled set of cases, built so a system's accuracy is measurable.
+    Ablation study: Running the same goals with one thing changed, to isolate what it costs.
+    Content addressing: Fingerprinting input configurations and query state via SHA-256 cryptographic hashes.
+    Cold-cache measurement: Clearing every cache before each run, so the engine is measured and not the buffer pool.
+    Pre-commit gates: Enforcing automated hooks, claim verifiers, and privacy rules before code commits.
+    Process telemetry: Deriving quantitative behavioral metrics directly from execution logs without judgment.
+    Data contracts: Enforcing reproducible experimental parameters and data schemas via immutable YAML specifications.
+
+  technology:
+    PostgreSQL:
+    DuckDB:
+    Python:
+    Dagster:
+    Polars:
+    Arrow / ADBC:
+    MCP:
+    RAG:
+    SQL:
+    XQuery:
+    LanceDB:
+    Knowledge graphs:
+    PyPI:
+    # Steganography:
+    # Vision security:
+
+# The synonym ring (Z39.19 "UF", used-for). An entry term is a label someone
+# else uses for work indexed here under a different name — a reader searching,
+# or a keyword filter screening a resume. It is never a descriptor: nothing is
+# tagged with it and it carries no count.
+#
+# The rule for adding one: the term on the left must already have the work. An
+# entry term makes existing work findable; it never claims new work. Two words
+# deliberately absent, because the evidence is not here — "threat modeling"
+# (no attack trees, no STRIDE) and "cloud security" (none).
+
+synonyms:
+  AI security: [red teaming, AI red teaming, adversarial testing, prompt injection, responsible disclosure, vulnerability research]
+  AI evaluation: [model evaluation, agent evaluation, LLM evaluation, LLM-as-judge]
+  Pre-commit gates: [security automation, policy as code, guardrails, shift-left]
+  Per-turn tracing: [execution tracing, agent traces]
+  Process telemetry: [observability, behavioural metrics]
+  Evaluation sets: [ground truth, labelled data, test sets]
+  Deterministic grading: [rule-based scoring, automated grading]
+  Entity resolution: [record linkage, deduplication, fuzzy matching]
+  Data quality: [data validation, data profiling]
+  Data modeling: [schema design, normalization, dimensional modeling]
+  Metadata architecture: [authority control, master data management, taxonomy, data catalog]
+  Benchmarking: [performance testing, performance engineering]
+  Migration: [replatforming, platform migration]
+  Team leadership: [technical leadership, mentoring]
+  Data contracts: [schema enforcement, data validation contracts]
