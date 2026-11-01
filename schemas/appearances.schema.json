@@ -1,0 +1,230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ramonactruta.com/schemas/appearances.schema.json",
+  "title": "Portfolio Appearances document",
+  "description": "Structural contract. Additional cross-record rules are enforced by tools/contracts.py and documented in docs/contracts.md.",
+  "type": "object",
+  "properties": {
+    "guest_host_note": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/appearance"
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "guest_host_note",
+    "items"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "appearance": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "org": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "talk",
+            "podcast"
+          ]
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "live",
+            "recorded"
+          ]
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "guest",
+            "guest host",
+            "co-host",
+            "panelist"
+          ]
+        },
+        "eventType": {
+          "type": "string",
+          "enum": [
+            "talk",
+            "keynote",
+            "panel",
+            "workshop"
+          ]
+        },
+        "location": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "counterpart": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "slidesUrl": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "videoUrl": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "transcriptUrl": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "org",
+        "date",
+        "kind",
+        "tags"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "talk"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "eventType",
+              "location"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "role"
+                  ]
+                },
+                {
+                  "required": [
+                    "format"
+                  ]
+                },
+                {
+                  "required": [
+                    "counterpart"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "podcast"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "role",
+              "format"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "eventType"
+                  ]
+                },
+                {
+                  "required": [
+                    "location"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "role": {
+                "const": "guest host"
+              }
+            },
+            "required": [
+              "role"
+            ]
+          },
+          "then": {
+            "required": [
+              "counterpart"
+            ]
+          }
+        }
+      ],
+      "dependentSchemas": {
+        "counterpart": {
+          "properties": {
+            "role": {
+              "const": "guest host"
+            }
+          },
+          "required": [
+            "role"
+          ]
+        }
+      }
+    }
+  }
+}

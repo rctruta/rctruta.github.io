@@ -37,7 +37,7 @@ Every item across the site belongs to an explicit content `kind`, mapped to a to
 
 ## Index Facets & Lexicographical Ordering
 
-All tags in `data/TAGS.yaml` belong to controlled facets, declared in `facets:` and `kinds:`:
+All indexed concepts in `data/TAGS.yaml` reference facets declared in `facets:`; `kinds:` separately declares content kinds:
 
 1. **`discipline`**: What the work is about.
 2. **`method`**: How a claim was established, rather than what it was about.
@@ -68,8 +68,7 @@ Items under each category in the index are rendered inside an ordered list (`<ol
 | `panel`    | multi-person discussion, no single presenter                 |
 | `workshop` | hands-on, participants do the work                           |
 
-A demo is not an event type. A talk with a demo is a `talk`; tag it `demo` if
-that matters for a given talk.
+A demo is not an event type. A talk with a demo is a `talk`; a new concept requires a separate taxonomy decision if that distinction matters.
 
 **`location`** — city, or `virtual`. Not the venue name; that is `org`.
 
@@ -84,17 +83,14 @@ that matters for a given talk.
 | `co-host`    | I shared the chair for an episode                              |
 | `panelist`   | several voices, no single interviewer                          |
 
-**"Itinerant podcaster"** is a practice, not a chair, so it is a tag —
-`itinerant-podcaster` — and never a `role`.
+**"Itinerant podcaster"** is a practice, not a chair, and is not a separate `role`. It is not currently a declared taxonomy concept.
 
 The role says which seat I was in. The tag says why I was there: turning up
 on a friend's own show to interview them about something they have done, on the
 principle that people who spend their time celebrating others deserve to be
-celebrated on their own show. Every itinerant-podcaster episode is also
-`role: guest host`; not every `guest host` episode earns the tag.
+celebrated on their own show. Such an episode has `role: guest host`; the role does not by itself establish the broader practice.
 
-Being a tag is what lets me decide episode by episode. A role value would
-decide for me.
+Any future taxonomy assignment must be an explicit per-episode choice.
 
 **`format`** — `live` or `recorded`. Determined by how it was captured, not how
 you watch it now. A YouTube URL containing `/live/` was a live stream.
@@ -110,7 +106,7 @@ you watch it now. A YouTube URL containing `/live/` was a live stream.
 | `org`    | the show or event, spelled one way everywhere. See below.        |
 | `url`    | canonical link. One per episode — see canonical URLs.            |
 | `note`   | anything true that no field holds.                               |
-| `tags`   | lowercase, kebab-case, reused across entries.                    |
+| `tags`   | Stable concept IDs from `TAGS.yaml`; display labels are resolved when rendered. |
 
 ## org names — spelled one way
 
@@ -154,3 +150,7 @@ There is no status field to keep current.
 - **podcasts** render once they have a `url`
 
 To publish an episode, paste its link. That is the whole workflow.
+
+## Enforced contract
+
+See [the executable contract rules](../docs/contracts.md). Source documents are validated before rendering and indexing; malformed records are never silently omitted. Generated organization names are an inventory, not an independent authority that detects spelling variants.

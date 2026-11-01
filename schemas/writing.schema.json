@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ramonactruta.com/schemas/writing.schema.json",
+  "title": "Portfolio Writing document",
+  "description": "Structural contract. Additional cross-record rules are enforced by tools/contracts.py and documented in docs/contracts.md.",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/article"
+  },
+  "minItems": 1,
+  "$defs": {
+    "article": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "platform": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "argues": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "url",
+        "platform",
+        "date",
+        "argues",
+        "tags"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

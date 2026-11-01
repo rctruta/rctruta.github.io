@@ -1,16 +1,5 @@
 {% extends "base.html" %}
 
-{#
-  Talks, then podcasts split by role. The guest-host section is not decoration:
-  it is work of a different kind, and the people interviewed are credited by
-  name. A rewrite dropped the split, the five credits and the line
-  introducing them, and all sixteen tests still passed — which is why
-  TestNothingVanishes exists in tools/test_tools.py.
-
-  It also carried the lede "Every talk presented with its slides or recording."
-  Measured: 0 of 8 talks have a slidesUrl, videoUrl or transcriptUrl. Removed.
-#}
-
 {% macro row(item, note='') -%}
     <li id="{{ item.id }}"><span class="when">{{ item.date|when }}</span><span class="what"><strong>{{ item.org }}</strong>{% if item.location and item.location != 'virtual' %}, {{ item.location }}{% endif %} &mdash; {% if item.url %}<a href="{{ item.url }}" target="_blank" rel="noopener">{{ item.title }}</a>{% else %}<em>{{ item.title }}</em>{% endif %}{% if note %} <em>({{ note }})</em>{% endif %}</span></li>
 {%- endmacro %}

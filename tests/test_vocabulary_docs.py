@@ -7,20 +7,10 @@ from . import ROOT
 
 
 class TestDocsMatchTheVocabulary(unittest.TestCase):
-    """The document that says how the vocabulary is applied must not contradict it.
-
-    The kinds table was typed into APPLICATION-RULES.md and also declared in
-    TAGS.yaml. They agreed by luck; nothing checked them.
-    """
+    """The document that says how the vocabulary is applied must not contradict it."""
 
     def test_org_authority_list_matches_the_appearances(self):
-        """An authority file that can disagree with its own records is not one.
-
-        The org list was hand-maintained so one show spelled two ways would not
-        split every count grouping by `org`. Nothing checked it: removing a talk
-        on 2026-10-16 left its org behind pointing at nothing, and three orgs
-        that were in use had never been added.
-        """
+        """Check the generated organization inventory."""
         doc = ROOT / "data" / "APPLICATION-RULES.md"
         if not doc.exists():
             self.skipTest("APPLICATION-RULES.md not present")

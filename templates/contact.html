@@ -64,7 +64,7 @@
     <h3>What I do</h3>
     <ul class="courses" style="margin-top: 8px;">
       {% for s in contact.services %}
-      <li><a href="tags.html#{{ s.tag|slug }}">{{ s.label }}</a>{% if not s.continues %} &mdash;{% endif %} {{ s.note }}</li>
+      <li><a href="tags.html#{{ s.tag|tag_anchor }}">{{ s.label }}</a>{% if not s.continues %} &mdash;{% endif %} {{ s.note }}</li>
       {% endfor %}
     </ul>
   </div>

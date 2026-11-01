@@ -1,0 +1,284 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ramonactruta.com/schemas/work.schema.json",
+  "title": "Portfolio Work document",
+  "description": "Structural contract. Additional cross-record rules are enforced by tools/contracts.py and documented in docs/contracts.md.",
+  "type": "object",
+  "properties": {
+    "sections": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/section"
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "sections"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "project": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "activity": {
+          "type": "string",
+          "enum": [
+            "built",
+            "research"
+          ]
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "blurb": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "resume": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "figures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/figure"
+          },
+          "minItems": 0
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/link"
+          },
+          "minItems": 0
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/note"
+          },
+          "minItems": 0
+        },
+        "recognition": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/recognition"
+          },
+          "minItems": 0
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "Optional genuine date; never supplied by a default or inferred from build time."
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "activity",
+        "tags",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "section": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/project"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "summary",
+        "items"
+      ],
+      "additionalProperties": false
+    },
+    "link": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "text",
+        "url"
+      ],
+      "additionalProperties": false
+    },
+    "figure": {
+      "type": "object",
+      "properties": {
+        "src": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "alt": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "caption": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "src",
+        "alt",
+        "caption"
+      ],
+      "additionalProperties": false
+    },
+    "note": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "text"
+          ]
+        },
+        {
+          "required": [
+            "label",
+            "url"
+          ]
+        }
+      ],
+      "dependentRequired": {
+        "label": [
+          "url"
+        ],
+        "url": [
+          "label"
+        ]
+      }
+    },
+    "recognition": {
+      "type": "object",
+      "properties": {
+        "who": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "what": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "terms": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "badge": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "badge_alt": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "who",
+        "what",
+        "date",
+        "url"
+      ],
+      "additionalProperties": false,
+      "dependentRequired": {
+        "badge": [
+          "badge_alt"
+        ],
+        "badge_alt": [
+          "badge"
+        ]
+      }
+    }
+  }
+}

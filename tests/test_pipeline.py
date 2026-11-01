@@ -1,4 +1,3 @@
-import re
 import unittest
 
 from config_loader import load_config
@@ -62,14 +61,9 @@ class TestSitePipeline(unittest.TestCase):
         self.assertGreater(len(appearances), 0, "data/appearances.yaml must have appearances")
 
     def test_teaching_yaml_integrity(self):
-        """Verify data/teaching.yaml exists and contains valid tags."""
-        teaching_path = ROOT / "data" / "teaching.yaml"
-        self.assertTrue(teaching_path.exists(), "data/teaching.yaml must exist")
-        text = teaching_path.read_text(encoding="utf-8")
-        for m in re.finditer(r"tags: \[(.*?)\]", text):
-            tags = [t.strip() for t in m.group(1).split(",") if t.strip()]
-            for t in tags:
-                self.assertIn(t, self.vocab, f"Teaching tag '{t}' not in vocabulary")
+        """Teaching input must satisfy its schema and concept references."""
+        from contracts import content_document
+        self.assertTrue(content_document('teaching')['materials'])
 
     def test_tags_html_list_structure(self):
         """Verify tags.html uses ordered lists (<ol class="tag-list">) for items."""

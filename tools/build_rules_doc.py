@@ -1,14 +1,4 @@
-"""Write the kinds table into the application-rules document from the vocabulary.
-
-    python3 tools/build_rules_doc.py
-
-The table listing every content kind and its category was typed into the
-document and also declared in the controlled vocabulary. Two copies, agreeing
-by luck, in the one document that says how the vocabulary is applied.
-
-Only the table is generated. The rest of the document is prose rules for a
-person, and prose is not data.
-"""
+"""Write the kinds table into the application-rules document from the vocabulary."""
 import pathlib
 from config_loader import load_config
 from model import load_taxonomy, load_appearances
@@ -31,14 +21,7 @@ def table() -> str:
 
 
 def orgs() -> str:
-    """The authority list of org names, from the appearances that use them.
-
-    This list exists so one show spelled two ways does not split every count
-    that groups by `org`. It was hand-maintained, and nothing checked it
-    against the data — so when a talk was removed on 2026-10-16 the org stayed
-    behind as a term pointing at nothing. An authority file that can disagree
-    with its own records is not an authority file.
-    """
+    """The authority list of org names, from the appearances that use them."""
     names = sorted({a.org for a in load_appearances(load_taxonomy()) if a.org},
                    key=str.lower)
     out = ["<!-- generated from data/appearances.yaml by tools/build_rules_doc.py;"

@@ -1,69 +1,80 @@
-# Ramona C. Truta — Personal Website & Portfolio Architecture
+# Contract-driven static portfolio
 
-Contract-driven, data-modeled static website. All content pages (`work.html`, `teaching.html`, `writing.html`, `speaking.html`, `tags.html`) are compiled directly from structured YAML data files in `data/`.
+A static portfolio generated from public YAML documents and governed by portable JSON Schemas. Work, teaching, writing and appearances share a controlled taxonomy and a validated index projection.
 
-## Architecture & Data Flow
+## Local setup
 
-```
-                                  +---------------------------------+
-                                  |    config.yaml  (Meta Layer)    |
-                                  |  Site Metadata, Author, Nav     |
-                                  +---------------------------------+
-                                                   |
-                                                   v
-                                  +---------------------------------+
-                                  |   data/TAGS.yaml  (Taxonomy)    |
-                                  |  Facets, Vocab, Project Tags    |
-                                  +---------------------------------+
-                                                   |
-         +-----------------------+-----------------+-----------------------+-----------------------+
-         |                       |                                         |                       |
-         v                       v                                         v                       v
-+------------------+    +------------------+                      +------------------+    +------------------+
-|  data/work.yaml  |    |data/teaching.yaml|                      |data/writing.yaml |    |appearances.yaml  |
-|  (Work Projects) |    | (Teaching Data)  |                      |  (Articles/Blog) |    |    (Speaking)    |
-+------------------+    +------------------+                      +------------------+    +------------------+
-         |                       |                                         |                       |
-         v                       v                                         v                       v
-     work.html             teaching.html                              writing.html           speaking.html
+Requires Python 3.12+ and Node.js 22.12+. Install from the checked-in dependency versions:
+
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.lock
+npm ci
+pipx install pre-commit==4.5.1
 ```
 
-## Quickstart & Local Development
+If pre-commit is already installed, reuse it. Select the repository's checked-in hook explicitly:
 
-### Prerequisites
-- Python 3.10+ (with `pyyaml`)
-- `pre-commit` (`pip install pre-commit`)
-- Node.js (for `pagefind` search indexing)
-
-```bash
-# Clone the repository
-git clone https://github.com/rctruta/rctruta.github.io.git
-cd rctruta.github.io
-
-# Build all static pages from data/
-./build
-
-# Run unit tests directly
-python3 -m unittest discover -s tests -t .
+```sh
+git config core.hooksPath .githooks
 ```
 
-## Generated Files & Build Order
+This is a local Git setting, not something cloning installs automatically. CI runs required checks independently of local hooks. A normal build also runs all declared pre-commit checks. Initial tool installation requires network access.
 
-Never edit generated HTML files by hand. Run `./build` to recompile everything:
+## Commit messages
 
-```bash
+Use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
+
+```text
+fix(links): validate local destinations
+```
+
+The `commit-msg` hook runs pinned commitlint with the conventional configuration. CI checks incoming commit ranges independently. Breaking source-format changes use `!` and a `BREAKING CHANGE:` footer. Keep messages concise and technical.
+
+Validate a draft without committing:
+
+```sh
+npm run lint:commits -- --edit path/to/message.txt
+```
+
+## Build and validate
+
+```sh
 ./build
 ```
 
-Build steps executed by `./build`:
-1. `tools/build_work.py` — Generates `work.html` from `data/work.yaml`.
-2. `tools/build_teaching.py` — Generates `teaching.html` from `data/teaching.yaml`.
-3. `tools/build_speaking.py` — Generates `speaking.html` from `data/appearances.yaml`.
-4. `tools/build_writing.py` — Generates `writing.html` from `data/writing.yaml`.
-5. `tools/build_contact.py` — Generates `contact.html` from `data/contact.yaml`.
-6. `tools/build_index.py` — Generates home page from `data/home.yaml`.
-7. `tools/build_rules_doc.py` — Generates rules documentation from taxonomy.
-8. `tools/build_tags.py` — Generates `tags.html` from `data/TAGS.yaml`.
-9. `tools/build_nav.py` — Generates navigation bar from `config.yaml`.
-10. `tools/build_search.py` — Builds Pagefind search index over generated HTML files.
-11. Pre-commit hooks verification & full unit test suite (`tests/`).
+The build selects `.venv/bin/python` when available; `PYTHON` may select another prepared interpreter. It validates sources first, generates pages and index, rebuilds pinned Pagefind output, runs declared checks, validates final links/anchors/index membership, and runs tests. Invalid input stops the command; it is never skipped.
+
+For read-only validation or tests using the prepared environment:
+
+```sh
+.venv/bin/python tools/validate_site.py --sources-only
+.venv/bin/python tools/validate_site.py
+.venv/bin/python -m unittest discover -s tests -t .
+```
+
+The first command is the pre-generation phase. The second additionally requires existing generated output. Neither modifies source files. Generated HTML and `pagefind/` are committed artifacts; do not edit them manually.
+
+## Architecture and contracts
+
+- `config.yaml`: site metadata and navigation.
+- `data/TAGS.yaml`: stable concept IDs, display labels, facets, search terms and relationships.
+- `data/*.yaml`: content, referencing concept IDs.
+- `schemas/*.schema.json`: authoritative JSON Schema Draft 2020-12 documents.
+- `tools/contracts.py`: YAML parsing, schema enforcement and cross-record rules.
+- `tools/model.py`: validated rendering adapters.
+- `templates/`: shared page layout and page templates.
+- `tools/build_*.py`: generators called in dependency order by `./build`.
+- `tests/`: invalid-input, preservation and output checks.
+
+See [contract rules](docs/contracts.md), the [accepted standards decision and future roadmap](docs/decisions/001-portable-data-contracts.md), and [contributor instructions](AGENTS.md).
+
+## Reuse
+
+Replace public data and site configuration, choose a namespace for your concepts, and adapt schema `$id` URIs before publishing your own schema authority. Preserve concept identities separately from labels and HTML anchors. Follow validation errors rather than adding exceptions. Private resume drafts and employment data are not required to build the site.
+
+SKOS export, ODCS integration and OWL translation are recorded future work, not implemented features. The current site does not verify the factual truth of prose claims merely because their document structure validates.
+
+[Numerical provenance](docs/decisions/002-claims-and-numerical-provenance.md) is planned separately.
+
+CI runs the build and refuses stale committed HTML, rules documentation or search artifacts. This repository does not automatically publish from its build command.

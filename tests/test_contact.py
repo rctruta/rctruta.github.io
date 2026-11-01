@@ -8,7 +8,7 @@ from . import ROOT
 
 
 class TestContactAddresses(unittest.TestCase):
-    """The form endpoint was written in two places. Rotating one lost messages."""
+    """Check contact endpoints and taxonomy references."""
 
     def setUp(self):
         self.author = load_config()["site"]["author"]

@@ -1,11 +1,9 @@
-"""Generate teaching.html from data/teaching.yaml using Jinja2 templates.
-
-    python3 tools/build_teaching.py
-"""
+"""Generate teaching.html from data/teaching.yaml using Jinja2 templates."""
 import html
 import pathlib
 import re
-from model import load_education, load_service, load_courses, load_testimonial_notes
+from model import load_education, load_service, load_courses
+from contracts import content_document, taxonomy_document, render_tags
 from page import render_template, format_inline, format_blocks, render_tag_chips, AUTHOR
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -13,160 +11,53 @@ SPEC = ROOT / "data" / "teaching.yaml"
 
 
 def load_teaching_html_sections():
-    text = SPEC.read_text(encoding="utf-8")
+    data = content_document('teaching')
+    taxonomy = taxonomy_document()
 
-    # 1. Philosophy
-    m_lede = re.search(r"philosophy:\s*\n\s*lede: \|\n(.*?)(?=\n\s*quote:)", text, re.S)
-    m_qtext = re.search(r'quote:\s*\n\s*text: "(.*?)"', text)
-    m_qcite = re.search(r'cite: "(.*?)"', text)
-    m_princ = re.search(r"principles: \|\n(.*?)(?=\n\nleading:|\nleading:)", text, re.S)
+    def section(anchor, title, body):
+        return (f'<section><div class="wrap"><h2 id="{anchor}">{title}</h2>\n'
+                f'{body}\n<p class="totop"><a href="#top">&uarr; Top</a></p></div></section>')
 
-    lede_html = f"<p>{format_inline(m_lede.group(1).strip())}</p>" if m_lede else ""
-    quote_html = (
-        f'  <blockquote class="praise">\n'
-        f'    <p>&ldquo;{html.escape(m_qtext.group(1))}&rdquo;</p>\n'
-        f'    <cite>{html.escape(m_qcite.group(1))}</cite>\n'
-        f'  </blockquote>'
-    ) if m_qtext and m_qcite else ""
+    def quote(text, cite):
+        return (f'<blockquote class="praise"><p>&ldquo;{html.escape(text)}&rdquo;</p>'
+                f'<cite>{html.escape(cite)}</cite></blockquote>')
 
-    princ_html = format_blocks(m_princ.group(1)) if m_princ else ""
+    philosophy = data['philosophy']
+    phil_section = section('philosophy', 'Teaching philosophy',
+        f"<p>{format_inline(philosophy['lede'].strip())}</p>"
+        + quote(philosophy['quote']['text'], philosophy['quote']['cite'])
+        + format_blocks(philosophy['principles']))
 
-    phil_section = (
-        f'<section><div class="wrap">\n'
-        f'  <h2 id="philosophy">Teaching philosophy</h2>\n\n'
-        f'  {lede_html}\n\n'
-        f'{quote_html}\n\n'
-        f'  {princ_html}\n\n'
-        f'  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
-        f'</div></section>'
-    )
+    leading = render_tags(data['leading'], taxonomy)
+    leading_section = section('leading', 'Leading and managing',
+        f'<div class="proj" id="{leading["id"]}"><h3>{html.escape(leading["title"])}</h3>'
+        + format_blocks(leading['description']) + render_tag_chips(leading['tags']) + '</div>')
 
-    # 2. Leading
-    m_lead_id = re.search(r"leading:\s*\n\s*id: ([\w-]+)", text)
-    m_lead_title = re.search(r'leading:.*?title: "(.*?)"', text, re.S)
-    m_lead_tags = re.search(r"leading:.*?tags: \[(.*?)\]", text, re.S)
-    m_lead_desc = re.search(r"leading:.*?description: \|\n(.*?)(?=\n\nproduct:|\nproduct:)", text, re.S)
+    product = render_tags(data['product'], taxonomy)
+    highlights = ''.join(f'<li>{format_inline(item)}</li>' for item in product['highlights'])
+    product_section = section('product', 'A course is a product',
+        f'<div class="proj" id="{product["id"]}"><h3>{html.escape(product["title"])}</h3>'
+        + f'<p>{format_inline(product["intro"])}</p><ul class="courses">{highlights}</ul>'
+        + f'<p>{format_inline(product["outro"])}</p>' + render_tag_chips(product['tags']) + '</div>')
 
-    lead_id = m_lead_id.group(1) if m_lead_id else "academic-leadership"
-    if not m_lead_title:
-        raise ValueError("data/teaching.yaml: leading.title is missing")
-    lead_title = m_lead_title.group(1)
-    lead_tags = [t.strip() for t in m_lead_tags.group(1).split(",")] if m_lead_tags else []
-    lead_desc = format_blocks(m_lead_desc.group(1)) if m_lead_desc else ""
+    testimonial_body = []
+    for key, label in [('while_students', 'While they were students'), ('years_later', 'Years later')]:
+        group = data['testimonials'][key]
+        testimonial_body.append(f'<h3>{label}</h3><p>{format_inline(group["note"])}</p>')
+        testimonial_body.extend(quote(item['quote'], item['cite']) for item in group['items'])
+        if 'postscript' in group:
+            testimonial_body.append(f'<p>{format_inline(group["postscript"])}</p>')
+    testimonials_section = section('testimonials', 'Student testimonials', '\n'.join(testimonial_body))
 
-    leading_section = (
-        f'<section><div class="wrap">\n'
-        f'  <h2 id="leading">Leading and managing</h2>\n\n'
-        f'  <div class="proj" id="{lead_id}">\n'
-        f'    <h3>{html.escape(lead_title)}</h3>\n'
-        f'    {lead_desc}\n'
-        f'    {render_tag_chips(lead_tags)}\n'
-        f'  </div>\n\n'
-        f'  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
-        f'</div></section>'
-    )
+    materials = []
+    for item in data['materials']:
+        item = render_tags(item, taxonomy)
+        materials.append(f'<div class="proj" id="{item["id"]}">'
+            + f'<h3><a href="{html.escape(item["url"], quote=True)}">{html.escape(item["title"])}</a>'
+            + f' <span class="meta">{html.escape(item["meta"])}</span></h3>'
+            + format_blocks(item['description']) + render_tag_chips(item['tags']) + '</div>')
+    materials_section = section('assignment', 'Sample materials', '\n'.join(materials))
 
-    # 3. Product
-    m_prod_id = re.search(r"product:\s*\n\s*id: ([\w-]+)", text)
-    m_prod_title = re.search(r'product:.*?title: "(.*?)"', text, re.S)
-    m_prod_tags = re.search(r"product:.*?tags: \[(.*?)\]", text, re.S)
-    m_prod_intro = re.search(r'product:.*?intro: "(.*?)"', text, re.S)
-    m_prod_outro = re.search(r'product:.*?outro: "(.*?)"', text, re.S)
-    m_prod_hl = re.search(r"highlights:\s*\n(.*?)(?=\n\s*outro:)", text, re.S)
-
-    prod_id = m_prod_id.group(1) if m_prod_id else "course-product-design"
-    if not m_prod_title:
-        raise ValueError("data/teaching.yaml: product.title is missing")
-    prod_title = m_prod_title.group(1)
-    prod_tags = [t.strip() for t in m_prod_tags.group(1).split(",")] if m_prod_tags else []
-    prod_intro = m_prod_intro.group(1) if m_prod_intro else ""
-    prod_outro = m_prod_outro.group(1) if m_prod_outro else ""
-
-    hl_items = []
-    if m_prod_hl:
-        for line in m_prod_hl.group(1).splitlines():
-            line_str = line.strip()
-            if line_str.startswith("- "):
-                clean_text = line_str[2:].strip().strip('"')
-                hl_items.append(f'      <li>{format_inline(clean_text)}</li>')
-    hl_html = "\n".join(hl_items)
-
-    product_section = (
-        f'<section><div class="wrap">\n'
-        f'  <h2 id="product">A course is a product</h2>\n\n'
-        f'  <div class="proj" id="{prod_id}">\n'
-        f'    <h3>{html.escape(prod_title)}</h3>\n'
-        f'    <p>{format_inline(prod_intro)}</p>\n\n'
-        f'    <ul class="courses">\n{hl_html}\n    </ul>\n\n'
-        f'    <p>{format_inline(prod_outro)}</p>\n'
-        f'    {render_tag_chips(prod_tags)}\n'
-        f'  </div>\n\n'
-        f'  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
-        f'</div></section>'
-    )
-
-    # 4. Testimonials
-    m_test_while = re.findall(r'quote: "(.*?)"\s*\n\s*cite: "(.*?)"', text[text.find("while_students:"):text.find("years_later:")], re.S)
-    m_test_years = re.findall(r'quote: "(.*?)"\s*\n\s*cite: "(.*?)"', text[text.find("years_later:"):text.find("materials:")], re.S)
-
-    while_html = "\n\n".join(
-        f'  <blockquote class="praise">\n'
-        f'    <p>&ldquo;{html.escape(q)}&rdquo;</p>\n'
-        f'    <cite>{html.escape(c)}</cite>\n'
-        f'  </blockquote>'
-        for q, c in m_test_while
-    )
-
-    years_html = "\n\n".join(
-        f'  <blockquote class="praise">\n'
-        f'    <p>&ldquo;{html.escape(q)}&rdquo;</p>\n'
-        f'    <cite>{html.escape(c)}</cite>\n'
-        f'  </blockquote>'
-        for q, c in m_test_years
-    )
-
-    notes = load_testimonial_notes()
-
-    testimonials_section = (
-        f'<section><div class="wrap">\n'
-        f'  <h2 id="testimonials">Student testimonials</h2>\n\n'
-        f'  <h3>While they were students</h3>\n\n'
-        f'  <p>{format_inline(notes["while_students"])}</p>\n\n'
-        f'{while_html}\n\n'
-        f'  <p>{format_inline(notes["postscript"])}</p>\n\n'
-        f'  <h3>Years later</h3>\n\n'
-        f'  <p>{format_inline(notes["years_later"])}</p>\n\n'
-        f'{years_html}\n\n'
-        f'  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
-        f'</div></section>'
-    )
-
-    # 5. Materials
-    mat_blocks = []
-    m_mat_all = re.findall(r'- id: ([\w-]+)\s*\n\s*title: "(.*?)"\s*\n\s*activity:.*?\n\s*url: "(.*?)"\s*\n\s*meta: "(.*?)"\s*\n\s*tags: \[(.*?)\].*?description: \|\n(.*?)(?=\n  - id:|\ncourses:|\n\ncourses:)', text, re.S)
-
-    for mid, mtitle, murl, mmeta, mtags_str, mdesc in m_mat_all:
-        mtags = [t.strip() for t in mtags_str.split(",")]
-        desc_formatted = format_blocks(mdesc)
-        mat_blocks.append(
-            f'  <div class="proj" id="{mid}">\n'
-            f'  <h3><a href="{murl}">{html.escape(mtitle)}</a>\n'
-            f'  <span class="meta">{html.escape(mmeta)}</span></h3>\n\n'
-            f'  {desc_formatted}\n\n'
-            f'  {render_tag_chips(mtags)}\n'
-            f'  </div>'
-        )
-
-    materials_section = (
-        f'<section><div class="wrap">\n'
-        f'  <h2 id="assignment">Sample materials</h2>\n\n'
-        f'{chr(10).join(mat_blocks)}\n\n'
-        f'  <p class="totop"><a href="#top">&uarr; Top</a></p>\n'
-        f'</div></section>'
-    )
-
-    # 6. Courses, rendered from data/teaching.yaml. Fourteen course titles
-    # were literal HTML here while the same titles sat in the data file.
     courses = load_courses()
 
     def course_group(g):
@@ -186,11 +77,6 @@ def load_teaching_html_sections():
         '</div></section>'
     )
 
-    # 7 and 8. Education and Service, rendered from data/teaching.yaml.
-    # These were hardcoded HTML here, which is why the certificates carried
-    # years the data file does not have: the data said what to show and the
-    # generator ignored it. load_education and load_service existed in model.py
-    # and were called by nothing.
     edu, svc = load_education(), load_service()
 
     def degree_line(d):
@@ -212,20 +98,10 @@ def load_teaching_html_sections():
                 + '  </ul>\n\n')
 
     def cert_line(c):
-        """A certificate, linked to its proof when the issuer provides one.
-
-        The name keeps its markdown, because one of these carries a
-        hand-written link -- the MIT capstone. Unlinked is not a defect: the
-        Waterloo, Babes-Bolyai and U of T certificates have no public
-        verification page, and saying so by omission is accurate.
-        """
+        """A certificate, linked to its proof when the issuer provides one."""
         text = format_inline(c.name)
         if not c.url:
             return text
-        # If the name already contains a link -- the MIT entry carries a
-        # hand-written capstone link -- wrapping it produces a nested <a>,
-        # which is invalid HTML and which browsers silently unnest. Put the
-        # verification link beside it instead of around it.
         meta = ""
         if c.expires:
             meta = f' <span class="meta">expires {html.escape(c.expires)}</span>'
@@ -236,13 +112,7 @@ def load_teaching_html_sections():
                 f'{meta}')
 
     def course_certificates_html(courses):
-        """The 99 course completions, grouped by who issued them.
-
-        Published for one reason: each links to proof the course was taken, so
-        a skill claim is checkable instead of asserted. Grouping by issuer is
-        what keeps 99 links readable -- without it this is a wall, and a wall
-        gets skipped.
-        """
+        """Render course certificates grouped by issuer."""
         if not courses:
             return ""
         by_issuer = {}
@@ -250,9 +120,6 @@ def load_teaching_html_sections():
             by_issuer.setdefault(c.issuer or "Other", []).append(c)
         order = sorted(by_issuer, key=lambda k: (-len(by_issuer[k]), k.lower()))
 
-        # No lede on purpose. A sentence introducing this list is the author's
-        # to write; an agent-written placeholder on a personal site is exactly
-        # what must not happen here. The heading and the links say what it is.
         out = ['  <h3>Courses</h3>\n']
         for issuer in order:
             items = sorted(by_issuer[issuer], key=lambda c: c.name.lower())

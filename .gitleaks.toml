@@ -1,9 +1,3 @@
-# gitleaks configuration, installed as .gitleaks.toml.
-#
-# gitleaks' built-in rules cover credentials: API keys, tokens, private keys.
-# The one rule added here covers a home-directory path, which ties a file to
-# one machine and names the account it came from.
-
 title = "gitleaks defaults plus home-directory paths"
 
 [extend]

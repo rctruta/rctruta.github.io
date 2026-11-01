@@ -1,43 +1,45 @@
 #!/bin/sh
-# Rebuild everything the data drives, in dependency order.
-#
-#     ./build
-#
-# Safe to run at any time. Every step is idempotent.
 
 set -e
 cd "$(dirname "$0")"
-export PATH="/opt/homebrew/bin:$PATH"
+if [ -x .venv/bin/python ]; then
+  PYTHON="${PYTHON:-.venv/bin/python}"
+else
+  PYTHON="${PYTHON:-python3}"
+fi
+
+echo "validate source contracts"
+"$PYTHON" tools/validate_site.py --sources-only
 
 echo "1/10 work          <- data/work.yaml"
-python3 tools/build_work.py
+"$PYTHON" tools/build_work.py
 
 echo "2/10 teaching      <- data/teaching.yaml"
-python3 tools/build_teaching.py
+"$PYTHON" tools/build_teaching.py
 
 echo "3/10 speaking      <- data/appearances.yaml"
-python3 tools/build_speaking.py
+"$PYTHON" tools/build_speaking.py
 
 echo "4/10 writing       <- data/writing.yaml"
-python3 tools/build_writing.py
+"$PYTHON" tools/build_writing.py
 
 echo "5/10 contact       <- data/contact.yaml + config.yaml"
-python3 tools/build_contact.py
+"$PYTHON" tools/build_contact.py
 
 echo "6/10 home          <- data/home.yaml + config.yaml"
-python3 tools/build_index.py
+"$PYTHON" tools/build_index.py
 
 echo "7/10 rules doc     <- data/TAGS.yaml + data/appearances.yaml"
-python3 tools/build_rules_doc.py
+"$PYTHON" tools/build_rules_doc.py
 
 echo "8/10 tag index     <- data/TAGS.yaml + content data"
-python3 tools/build_tags.py
+"$PYTHON" tools/build_tags.py
 
 echo "9/10 navigation    <- config.yaml / tools/build_nav.py"
-python3 tools/build_nav.py
+"$PYTHON" tools/build_nav.py
 
 echo "10/10 search       <- generated HTML pages"
-python3 tools/build_search.py
+"$PYTHON" tools/build_search.py
 
 echo
 echo "declared checks   <- .pre-commit-config.yaml"
@@ -48,8 +50,10 @@ else
   exit 3
 fi
 
+"$PYTHON" tools/validate_site.py
+
 echo "unit tests        <- tests/"
-python3 -m unittest discover -s tests -t .
+"$PYTHON" -m unittest discover -s tests -t .
 
 echo
 echo "Build complete. Review changes with: git status"

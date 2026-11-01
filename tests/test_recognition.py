@@ -6,14 +6,7 @@ from . import ROOT
 
 
 class TestRecognition(unittest.TestCase):
-    """Recognition must name who, when, and where to check it.
-
-    It was first written into `notes`, which is the field for caveats -- so
-    "someone else selected this" rendered in the same box as "what this entry
-    does not claim". Recognition without a date and a source link is the shape
-    a claim takes when it inflates quietly, so the model requires all four and
-    this asserts the data actually carries them.
-    """
+    """Recognition must name who, when, and where to check it."""
 
     def setUp(self):
         self.vocab = load_taxonomy()
@@ -31,12 +24,7 @@ class TestRecognition(unittest.TestCase):
                                 f"{item.id}: recognition needs an absolute source url")
 
     def test_a_recognition_badge_is_served_by_the_recognising_party(self):
-        """A badge must be an absolute https image URL.
-
-        The point of a badge rather than a typed score is that the source
-        serves it, so a relative path or a copy committed into assets/ would
-        defeat it -- it would go stale exactly like the number it replaced.
-        """
+        """A badge must be an absolute https image URL."""
         for item in self.items:
             for r in item.recognition:
                 if not r.badge:

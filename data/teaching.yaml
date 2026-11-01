@@ -1,4 +1,4 @@
-# Teaching data and page sections for teaching.html
+# yaml-language-server: $schema=../schemas/teaching.schema.json
 
 philosophy:
   lede: |
@@ -17,7 +17,7 @@ leading:
   id: academic-leadership
   title: "Academic leadership & TA management"
   activity: teaching
-  tags: [Team leadership, Teaching, Migration, PostgreSQL]
+  tags: [team-leadership, teaching, migration, postgresql]
   description: |
     Teaching at this scale is a management job that happens to involve a classroom. I ran teams of up to ten teaching assistants per course, with the allocation, training and marking uniformity that implies. I supervised individual students through project and design courses at two universities — ECE496, CSC494, and graduation projects — which is one-to-one management rather than instruction. And I led the department's migration from IBM DB2 to PostgreSQL: not only the platform evaluation and the rewriting of materials, but retraining the instructors who had to deliver them and carrying several hundred students through a change none of them asked for.
 
@@ -25,7 +25,7 @@ product:
   id: course-product-design
   title: "A course is a product — course operations & engineering"
   activity: teaching
-  tags: [Team leadership, Teaching, Data quality, Human agency]
+  tags: [team-leadership, teaching, data-quality, human-agency]
   intro: "I ran each course the way you run something people depend on. The students were its users, the term was its release cycle, and every term shipped changes nobody had asked me for."
   highlights:
     - "Surveyed students and kept the data, rather than relying on impressions"
@@ -82,7 +82,7 @@ materials:
     activity: course material
     url: "assets/csc343-clinical-trials-xquery.pdf"
     meta: "PDF, 6 pages"
-    tags: [Data modeling, Teaching, XQuery]
+    tags: [data-modeling, teaching, xquery]
     description: |
       Students were given 10,000 XML records of real clinical trials from [clinicaltrials.gov](https://clinicaltrials.gov/), with the collection's DTD. Before writing a query they had to read that DTD and explore the registry's own search interface — ten of the hundred points, awarded to anyone who submitted anything, because the point was to make them look at the data. Then seven XQuery queries against a 114MB collection, each in its own file, each output in its own, run through Saxon.
 
@@ -93,7 +93,7 @@ materials:
     activity: course material
     url: "assets/csc343-3nf-decomposition.pdf"
     meta: "PDF, 4 pages"
-    tags: [Data modeling, Teaching]
+    tags: [data-modeling, teaching]
     description: |
       These handouts were something I introduced, and nobody asked me to. Each one is deliberately empty: a relation, its functional dependencies, then every step of the decomposition printed with its algorithm above it and the answer left blank — closures, candidate keys, minimal cover, redundant attributes on the left-hand side, redundant dependencies, the decomposition itself.
 
@@ -155,43 +155,43 @@ education:
       year: "1996"
 
   certificates:
-    # `date` is LinkedIn's "Started On", which is the ISSUE date.
-    # Its "Finished On" column is the EXPIRY, set on one row out of
-    # 105; reading whichever was filled printed an expiry as a
-    # completion date, which is why one entry read 2028.
-    #
-    # professional: true -- goes on the resume.
     - name: "Business Analyst Certificate — University of Waterloo"
+      issuer: "University of Waterloo"
       professional: true
     - name: "Teaching Certificate — “Babeș-Bolyai” University: psychology, pedagogy, methodology, practicum"
+      issuer: "“Babeș-Bolyai” University"
       professional: true
     - name: "Delivering a Polished Classroom Presentation — Office of Teaching Advancement, University of Toronto"
+      issuer: "University of Toronto"
       professional: true
       date: "Jun 2006"
     - name: "Applied Data Science Program: Leveraging AI for Effective Decision-Making — MIT Professional Education. Capstone: [music recommendation system](https://github.com/rctruta/music_recommendation_system)"
+      issuer: "MIT Professional Education"
       professional: true
       url: "https://www.credential.net/3c2e7528-cdfc-4623-b85e-3b6dceeebbfe"
       date: "Jun 2023"
     - name: "Large Language Models — Databricks / edX"
+      issuer: "Databricks / edX"
       professional: true
       url: "https://courses.edx.org/certificates/99e898c0d3c54f48a7643009cd687a7d"
       date: "Jul 2023"
     - name: "Certified Data & AI Product Manager — HROI Certification Training"
+      issuer: "HROI Certification Training"
       professional: true
       url: "https://badgr.com/public/assertions/9NrdqZcESYSevpMbWeCspw"
       date: "Jun 2024"
     - name: "Neo4j Certified Professional"
+      issuer: "Neo4j"
       professional: true
       url: "https://graphacademy.neo4j.com/c/5a659d9e-fff5-4d3e-b224-9b86c8bdb9dc/"
-      # The certificate itself reads "has completed all requirements for
-      # Neo4j Certified Professional", 10 November 2024. LinkedIn's export
-      # said Oct 2024; the certificate is the source, so it wins.
       date: "Nov 2024"
     - name: "Agentic AI — DeepLearning.AI"
+      issuer: "DeepLearning.AI"
       professional: true
       url: "https://learn.deeplearning.ai/accomplishments/5b3d11a5-75ec-4fe0-80f6-6fa8ee234889?usp=sharing"
       date: "Oct 2025"
     - name: "Foundation: Introduction to LangChain (Python) — LangChain Academy"
+      issuer: "LangChain Academy"
       professional: true
       url: "https://academy.langchain.com/certificates/8md2szuzbs"
       date: "Aug 2026"
@@ -590,8 +590,8 @@ service:
     - "Group leader, Gr8 Designs for Gr8 Girls, University of Toronto"
     - "Mentoring female students in computer science, throughout my teaching"
     - "Invited lecture, Computing Insights, University of Toronto"
-    note: |
-      Encouraging women in computing was not an add-on. Female enrolment in Canadian computer science and engineering programs is small, and students told me directly that having a female instructor mattered, and that they had felt threatened by male peers. That is a thing a teacher can do something about from inside a classroom.
+  outreach_note: |
+    Encouraging women in computing was not an add-on. Female enrolment in Canadian computer science and engineering programs is small, and students told me directly that having a female instructor mattered, and that they had felt threatened by male peers. That is a thing a teacher can do something about from inside a classroom.
 
   affiliations:
     - "Canadian Association of University Teachers"

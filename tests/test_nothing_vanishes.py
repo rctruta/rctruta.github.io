@@ -8,14 +8,7 @@ from . import ROOT
 
 
 class TestNothingVanishes(unittest.TestCase):
-    """Every record in the data must appear on its page.
-
-    A template rewrite dropped the guest-host section, the five interview
-    credits and a line of prose kept in the data, and all sixteen tests passed:
-    they checked navigation, anchors and descriptions, and nothing checked that
-    the content survived. A page can lose a whole section and still be
-    well-formed.
-    """
+    """Every record in the data must appear on its page."""
 
     def setUp(self):
         self.vocab = load_taxonomy()
@@ -37,11 +30,7 @@ class TestNothingVanishes(unittest.TestCase):
                               f"speaking.html does not credit {a.counterpart}")
 
     def test_no_escaped_markup_reaches_a_page(self):
-        """Tags printed as text instead of rendered.
-
-        Jinja autoescapes a variable, so HTML built in Python and passed into a
-        template arrives as visible &lt;em&gt;. It reached the live speaking page.
-        """
+        """Reject HTML markup rendered as literal text."""
         for name in ("index.html", "work.html", "teaching.html", "speaking.html",
                      "writing.html", "tags.html", "contact.html"):
             page = ROOT / name

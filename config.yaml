@@ -1,5 +1,3 @@
-# Master Site Configuration (No hardcoded values in build tools)
-
 site:
   title: "Ramona C. Truta"
   tagline: "Data Engineering, AI Evaluation, and Database Performance"
@@ -53,7 +51,4 @@ navigation:
     enabled: true
 
 data:
-  # The controlled vocabulary every tag is validated against. Required: there is
-  # no fallback filename, so removing this line fails the build rather than
-  # quietly building against a file nobody chose.
   controlled_vocabulary: "TAGS.yaml"

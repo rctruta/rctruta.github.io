@@ -200,8 +200,10 @@
   </div>
   
   <div class="proj" id="site-infrastructure">
-    <h3>rctruta.github.io — contract-driven portfolio &amp; claim verification pipeline</h3>
-    <p>The repository powering this website is built as a data modeling project. Numbers that carry weight are registered in <code>FACTS.yaml</code> with their source and checked against it by a pre-commit hook, which also reports every unregistered number for review and blocks any claim on the banned list. A second hook refuses to commit personal contact details. Vocabulary is governed by <code>TAGS.yaml</code> and <code>APPLICATION-RULES.md</code>: an unknown tag fails the build. Python and Node generators compile the writing list, the speaking list, the tag index, the navigation and the search index &mdash; so a page and the data behind it cannot disagree.</p>
+    <h3>rctruta.github.io — contract-driven portfolio &amp; validated publishing pipeline</h3>
+    <p>The repository powering this website is built as a data modeling project. Public content lives in YAML and is validated against JSON Schemas before rendering. Unknown fields, missing required values, duplicate IDs and invalid taxonomy references stop the build. A shared taxonomy supplies stable concept IDs, display labels and published anchors to the pages and their index.</p>
+
+<p>Python generators render the pages, and Pagefind builds search. After generation, checks validate local links, anchors and index membership for each term. Local hooks and CI run declared checks; a privacy guard checks staged content for email addresses, phone numbers and explicit private-file markers. These checks enforce document structure and consistency. They do not independently verify factual claims in prose.</p>
     
 
     <div class="tags">
@@ -424,7 +426,7 @@
       
     <figure>
       <img src="assets/lakehouse-semantics-probes.svg" alt="Seven SQL semantics probes run on DuckDB, PostgreSQL and Databricks SQL, with the engine that disagrees with the other two marked on each row">
-      <figcaption>Seven of the 23 probes. The marked cell on each row is the engine that disagrees with the other two &mdash; DuckDB on three, Databricks on three, PostgreSQL on one. Strictness reverses by probe: Databricks raises on <code>1/0</code> where DuckDB returns <code>inf</code>, and accepts a duplicate <code>PRIMARY KEY</code> where the others reject it. That last one is <a href=\"https://docs.databricks.com/aws/en/tables/constraints\">documented behaviour</a>, not a discovery &mdash; PK, FK and UNIQUE are informational there. <code>duckdb+delta</code> matched <code>duckdb</code> on all 23, which is the control arm that makes the Databricks column readable.</figcaption>
+      <figcaption>Seven of the 23 probes. The marked cell on each row is the engine that disagrees with the other two &mdash; DuckDB on three, Databricks on three, PostgreSQL on one. Strictness reverses by probe: Databricks raises on <code>1/0</code> where DuckDB returns <code>inf</code>, and accepts a duplicate <code>PRIMARY KEY</code> where the others reject it. That last one is <a href="https://docs.databricks.com/aws/en/tables/constraints">documented behaviour</a>, not a discovery &mdash; PK, FK and UNIQUE are informational there. <code>duckdb+delta</code> matched <code>duckdb</code> on all 23, which is the control arm that makes the Databricks column readable.</figcaption>
     </figure>
       
     

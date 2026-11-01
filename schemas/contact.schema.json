@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ramonactruta.com/schemas/contact.schema.json",
+  "title": "Portfolio Contact document",
+  "description": "Authoritative structural contract; see docs/contracts.md for mandatory relationship constraints.",
+  "type": "object",
+  "properties": {
+    "form": {
+      "type": "object",
+      "properties": {
+        "heading": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "intro": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "button": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "topics": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "heading",
+        "intro",
+        "button",
+        "topics"
+      ],
+      "additionalProperties": false
+    },
+    "cards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "heading": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "button": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "link": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        },
+        "required": [
+          "heading",
+          "text",
+          "button",
+          "link"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "services": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "description": "Stable concept ID in the taxonomy."
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "note": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "continues": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "tag",
+          "label",
+          "note"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "form",
+    "cards",
+    "services"
+  ],
+  "additionalProperties": false
+}

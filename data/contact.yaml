@@ -1,10 +1,3 @@
-# The contact page. It was the last hand-written page on the site, which meant
-# the Formspree endpoint lived here *and* in config.yaml with nothing keeping
-# them equal — rotate one and the live form posts to the old address silently.
-#
-# Links (form, calendar, Substack, GitHub, LinkedIn, ORCID) come from
-# config.yaml, as does the page lede. Only the words below are here.
-
 form:
   heading: "Send a message"
   intro: "Have a project proposal, speaking invitation, or technical inquiry? Send a note below and I will reply directly."
@@ -26,22 +19,21 @@ cards:
     button: "Subscribe on Substack"
     link: substack
 
-# Each service links into the Index, so a claim resolves to the work behind it.
 services:
-  - tag: "AI security"
+  - tag: "ai-security"
     label: "AI Security & System Integrity"
     note: "red-teaming and exploit research on agent memory, vision encoders, and routing nodes"
-  - tag: "Benchmarking"
+  - tag: "benchmarking"
     label: "Benchmarking"
     note: "databases and query engines, with the experiment published alongside the result"
     continues: true
-  - tag: "AI evaluation"
+  - tag: "ai-evaluation"
     label: "AI and agent evaluation"
     note: "what a deployment will cost, and where it will fail"
-  - tag: "Teaching"
+  - tag: "teaching"
     label: "Teaching"
     note: "and technical enablement"
     continues: true
-  - tag: "Data modeling"
+  - tag: "data-modeling"
     label: "Data modeling"
     note: "source systems into structures analysts and models can use"

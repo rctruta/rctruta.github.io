@@ -1,10 +1,4 @@
-"""Prevent accidental commit of personal contact details to the public repository.
-
-Exits non-zero if a staged file contains a personal email address or phone number
-not explicitly declared in ALLOWED.
-
-To publish a contact address deliberately, add it to ALLOWED below.
-"""
+"""Prevent accidental commit of personal contact details to the public repository."""
 import pathlib
 import re
 import subprocess
@@ -12,9 +6,7 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
-# Addresses chosen for publication.
 ALLOWED = {
-    # "you@yourdomain.com",
 }
 
 PATTERNS = [
@@ -25,10 +17,17 @@ PATTERNS = [
 SKIP_FILES = {"AGENTS.md", "tools/check_private.py"}
 SKIP_DIRS = ("pagefind/", "node_modules/")
 
-staged = subprocess.run(
-    ["git", "diff", "--cached", "--name-only", "--diff-filter=ACMR"],
-    capture_output=True, text=True, cwd=ROOT,
-).stdout.split()
+all_files = '--all-files' in sys.argv
+command = ['git', 'ls-files', '-z'] if all_files else [
+    'git', 'diff', '--cached', '--name-only', '-z', '--diff-filter=ACMR']
+staged = subprocess.check_output(command, cwd=ROOT).decode().split('\0')
+staged = [name for name in staged if name]
+
+
+def contents(name):
+    if all_files:
+        return (ROOT / name).read_text(errors='ignore')
+    return subprocess.check_output(['git', 'show', ':' + name], cwd=ROOT).decode(errors='ignore')
 
 PRIVATE_MARKER = re.compile(
     r"\bPRIVATE:\s*do not commit\b|\bnever enter the public repository\b", re.I)
@@ -36,14 +35,14 @@ PRIVATE_MARKER = re.compile(
 declared = []
 for name in staged:
     path = ROOT / name
-    if not path.exists() or not path.is_file():
+    if all_files and (not path.exists() or not path.is_file()):
         continue
     if name in SKIP_FILES:
         continue
     try:
-        head = path.read_text(errors="ignore")[:800]
-    except Exception:
-        continue
+        head = contents(name)[:800]
+    except (OSError, subprocess.CalledProcessError) as exc:
+        sys.exit(f'Cannot inspect public content {name}: {exc}')
     if PRIVATE_MARKER.search(head):
         declared.append(name)
 
@@ -58,9 +57,9 @@ for name in staged:
     if name in SKIP_FILES or name.startswith(SKIP_DIRS) or not name.endswith((".html", ".css", ".js", ".yaml", ".md", ".json")):
         continue
     path = ROOT / name
-    if not path.exists():
+    if all_files and not path.exists():
         continue
-    text = path.read_text(errors="ignore")
+    text = contents(name)
     for label, pattern in PATTERNS:
         for hit in pattern.findall(text):
             if hit in ALLOWED:

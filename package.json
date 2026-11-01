@@ -1,0 +1,16 @@
+{
+  "name": "contract-driven-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "devDependencies": {
+    "@commitlint/cli": "21.2.4",
+    "@commitlint/config-conventional": "21.2.4",
+    "pagefind": "1.5.2"
+  },
+  "scripts": {
+    "lint:commits": "commitlint --strict"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

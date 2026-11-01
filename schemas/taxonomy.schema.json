@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ramonactruta.com/schemas/taxonomy.schema.json",
+  "title": "Portfolio Taxonomy document",
+  "description": "Structural contract. Additional cross-record rules are enforced by tools/contracts.py and documented in docs/contracts.md.",
+  "type": "object",
+  "properties": {
+    "facets": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/facet"
+      }
+    },
+    "kinds": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/kind"
+      },
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      }
+    },
+    "concepts": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/concept"
+      }
+    },
+    "namespace": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://[^\\s]+[/#]$",
+      "description": "Stable concept URI prefix. A concept URI is this namespace followed by its immutable map key; not a claim of a live endpoint."
+    }
+  },
+  "required": [
+    "facets",
+    "kinds",
+    "concepts",
+    "namespace"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "facet": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "label",
+        "note",
+        "order"
+      ],
+      "additionalProperties": false
+    },
+    "kind": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "category",
+        "note",
+        "order"
+      ],
+      "additionalProperties": false
+    },
+    "concept": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S",
+          "description": "Preferred display label; maps to skos:prefLabel under the documented language policy."
+        },
+        "facet": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "description": "Reference to a declared facet; grouping, not an inferred skos:broader relationship."
+        },
+        "anchor": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "description": "Stable published HTML anchor; retained when the display label changes."
+        },
+        "scope_note": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S",
+          "description": "Scope of this concept; maps to skos:scopeNote."
+        },
+        "alternate_labels": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 0,
+          "uniqueItems": true,
+          "description": "Equivalent lexical labels; maps to skos:altLabel."
+        },
+        "search_terms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 0,
+          "uniqueItems": true,
+          "description": "Discovery phrases only; no automatic SKOS relation or equivalence is asserted."
+        },
+        "related": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "minItems": 0,
+          "uniqueItems": true,
+          "description": "References to other concept IDs; associative, not hierarchical. Proposed export maps to skos:related."
+        }
+      },
+      "required": [
+        "label",
+        "facet",
+        "anchor"
+      ],
+      "additionalProperties": false,
+      "description": "A controlled-vocabulary concept, identified independently from its labels. See docs/contracts.md for the SKOS mapping."
+    }
+  }
+}

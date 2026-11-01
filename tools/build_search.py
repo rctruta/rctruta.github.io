@@ -1,19 +1,9 @@
-"""Build the static search index and put the search box on every page.
-
-    python3 tools/build_search.py
-
-Pagefind builds the index at publish time and the search runs entirely in the
-reader's browser — no server, no query logging, nothing to keep running. Re-run
-it after any content change, or the index describes the previous version of the
-site.
-
-Requires node. The index lands in pagefind/ and is committed, because GitHub
-Pages serves files rather than building them.
-"""
+"""Build the static search index and put the search box on every page."""
 import pathlib
 import re
 import subprocess
 import sys
+import shutil
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 PAGES = [
@@ -91,13 +81,18 @@ SNIPPET = """<!-- search:start -->
 </script>
 <!-- search:end -->"""
 
+binary = ROOT / 'node_modules' / '.bin' / 'pagefind'
+if not binary.is_file():
+    sys.exit('Pagefind is not installed. Run npm ci using package-lock.json.')
+if (ROOT / 'pagefind').exists():
+    shutil.rmtree(ROOT / 'pagefind')
 run = subprocess.run(
-    ["npx", "-y", "pagefind", "--site", ".", "--glob", "*.html"],
+    [str(binary), "--site", ".", "--glob", "*.html"],
     cwd=ROOT, capture_output=True, text=True,
 )
 if run.returncode != 0:
     sys.exit("pagefind failed:\n" + run.stderr[-2000:])
-print(re.sub(r"\n+", " ", re.search(r"Total:.*?sorts", run.stdout, re.S).group(0)))
+print(run.stdout.strip())
 
 placed = 0
 for name in PAGES:
@@ -105,9 +100,6 @@ for name in PAGES:
     if not page.exists():
         continue
     text = page.read_text()
-    # strip any previous block wholesale — the snippet contains two </script>
-    # tags, so a non-greedy match to the first one leaves debris behind and the
-    # next run stacks a second search UI on top of it
     text = re.sub(r'<!-- search:start -->.*?<!-- search:end -->\n?', "", text, flags=re.S)
     text = re.sub(r'<div class="search(?:box|modal)".*?</script>\n?', "", text, flags=re.S)
     text = re.sub(r'<link href="pagefind/.*?</script>\n?', "", text, flags=re.S)

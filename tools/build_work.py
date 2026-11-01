@@ -1,7 +1,4 @@
-"""Generate work.html from data/work.yaml using Jinja2 templates.
-
-    python3 tools/build_work.py
-"""
+"""Generate work.html from data/work.yaml using Jinja2 templates."""
 import html
 import pathlib
 from model import load_taxonomy, load_work_sections
@@ -22,7 +19,8 @@ doc = render_template(
     generator_name="build_work.py",
     source_yaml="work.yaml",
     subnav_html=subnav_html,
-    sections=sections
+    sections=sections,
+    tag_anchors=vocab.anchors
 )
 
 (ROOT / "work.html").write_text(doc, encoding="utf-8")

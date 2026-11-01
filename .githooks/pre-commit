@@ -1,0 +1,4 @@
+#!/bin/sh
+# This directory is selected explicitly during local setup; CI runs checks independently.
+set -eu
+exec pre-commit run --hook-stage pre-commit

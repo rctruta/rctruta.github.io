@@ -20,7 +20,7 @@
 
     <div class="tags">
       {% for t in item.tags %}
-      <a class="tag" href="tags.html#{{ t|slug }}">{{ t }}</a>
+      <a class="tag" href="tags.html#{{ tag_anchors[t] }}">{{ t }}</a>
       {% endfor %}
     </div>
     {% if item.links %}

@@ -8,12 +8,7 @@ from . import ROOT
 
 
 class TestDescriptionsPropagate(unittest.TestCase):
-    """A hand-written home page stops being true without telling anyone.
-
-    Each page's one-line description is written once, in config.yaml. It is the
-    meta description, the hover on that page's nav link, and the line beside the
-    link on the home page. These assert the three are the same string.
-    """
+    """Check descriptions against site configuration."""
 
     def setUp(self):
         self.nav = load_config()["navigation"]

@@ -1,28 +1,10 @@
-"""The bio, written once in data/home.yaml, rendered for wherever it is going.
-
-    python3 tools/bio.py            # plain text, no links — LinkedIn, resume
-    python3 tools/bio.py --markdown # absolute links — GitHub, Substack
-    python3 tools/bio.py --html     # relative links — this site
-
-The bio used to be typed into the home page, the GitHub profile, LinkedIn and
-the resume separately, and they had drifted. It referred to sections by
-hand-typed anchor, so "database engineering" pointed at a heading reading
-"Data modeling" and nothing could catch it.
-
-Now the bio names a term or a section:
-
-    [any words](tag:System integrity)   -> a term in data/TAGS.yaml
-    [any words](work:benchmarking)      -> a section in data/work.yaml
-
-An unknown term or section fails the build. The link text is mine; the
-canonical name is what the link resolves to.
-"""
+"""Render the configured bio as plain text, Markdown or HTML."""
 import html
 import re
 import sys
 from config_loader import load_config
 from model import load_taxonomy, load_work_sections, load_home
-from page import format_inline, slug
+from page import format_inline
 
 SITE_URL = load_config()["site"].get("url", "").rstrip("/")
 
@@ -41,7 +23,7 @@ def _resolve(text, link, drop_links=False):
         term = m.group(2)
         if term not in vocab.vocabulary:
             raise ValueError(f"bio links to tag '{term}', which is not in data/TAGS.yaml")
-        return m.group(1) if drop_links else link(m.group(1), f"tags.html#{slug(term)}", term)
+        return m.group(1) if drop_links else link(m.group(1), f"tags.html#{vocab.anchors[term]}", term)
 
     def work_ref(m):
         sec = m.group(2)
@@ -66,7 +48,6 @@ def as_markdown(bio: str) -> str:
     def link(text, href, canonical):
         return f"[{text}]({SITE_URL}/{href})"
     text = _resolve(bio, link)
-    # the remaining relative markdown links need the domain too
     return re.sub(r"\]\((?!https?://)([a-z_]+\.html[^)]*)\)", rf"]({SITE_URL}/\1)", text)
 
 

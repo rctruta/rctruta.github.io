@@ -1,13 +1,4 @@
-"""Generate index.html from data/home.yaml, config.yaml, work.yaml and teaching.yaml.
-
-    python3 tools/build_index.py
-
-The home page was hand-written, so nothing propagated into it. The link list
-and its descriptions now come from config.yaml (the same string each page shows
-as its own lede), the social links from config.yaml, the disciplines in the
-structured data from the section titles in work.yaml, and the number of
-testimonials from teaching.yaml.
-"""
+"""Generate index.html from data/home.yaml, config.yaml, work.yaml and teaching.yaml."""
 import html
 import json
 import pathlib
@@ -20,7 +11,6 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 CONFIG = load_config()
 A = CONFIG["site"]["author"]
 
-# path data for the icons, keyed by the config.yaml field holding the address
 ICONS = {
     "linkedin": ("LinkedIn", "fill",
                  "M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05a3.74 3.74 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zm1.78 13.02H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"),
@@ -29,7 +19,6 @@ ICONS = {
     "substack": ("Substack", "fill",
                  "M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"),
 }
-# the two that point inside the site or need a stroke outline
 MAIL_ICON = '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/>'
 CAL_ICON = '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>'
 
@@ -38,14 +27,6 @@ home = load_home()
 sections = load_work_sections(vocab)
 
 
-# Every recognition on the work page, newest first, for the front page.
-#
-# Derived from work.yaml, not retyped here. mcprush graded the MCP server A
-# and nobody would find that without opening work.html and scrolling into one
-# project's detail, which is where recognition lives and should keep living --
-# a claim belongs next to the thing it is about. The front page gets the same
-# rows from the same source, so the two can never disagree and adding a
-# recognition to work.yaml puts it on both pages.
 def recognitions(sections):
     out = []
     for section in sections:
@@ -86,8 +67,6 @@ structured_data = {
     "image": SITE_IMAGE,
     "sameAs": [address("linkedin"), address("github"), address("substack"), address("orcid")],
     "jobTitle": home.job_title,
-    # the disciplines are the work.yaml section titles, so adding a section
-    # adds it here too
     "knowsAbout": [s.title for s in sections],
 }
 

@@ -1,13 +1,10 @@
-"""Generate tags.html from data/TAGS.yaml and all content models using Jinja2 templates.
-
-    python3 tools/build_tags.py
-"""
+"""Generate tags.html from data/TAGS.yaml and all content models using Jinja2 templates."""
 import html
 import pathlib
-import re
 from collections import defaultdict
-from model import load_taxonomy, load_work_sections, load_articles, load_appearances
-from page import render_template, slug, AUTHOR
+from model import load_taxonomy
+from contracts import index_records, taxonomy_document
+from page import render_template, AUTHOR
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
@@ -18,52 +15,12 @@ vocab = vocab_model.vocabulary
 
 index = defaultdict(list)
 
-# 1. Index Work Projects
-work_sections = load_work_sections(vocab_model)
-for sec in work_sections:
-    for item in sec.items:
-        date_str = item.date_val
-        for t in item.tags:
-            index[t].append(("work.html", item.id, item.title, "project", date_str))
+taxonomy = taxonomy_document()
+for record in index_records():
+    for cid in record['tags']:
+        label = taxonomy['concepts'][cid]['label']
+        index[label].append((record['page'], record['id'], record['title'], record['kind'], record['date']))
 
-# 2. Index Teaching Items
-teaching_yaml_path = ROOT / "data" / "teaching.yaml"
-if teaching_yaml_path.exists():
-    text = teaching_yaml_path.read_text(encoding="utf-8")
-    for block in re.split(r"\n(?=\s*- id:|\n\w+:)", text):
-        m_id = re.search(r"id:\s*([\w-]+)", block)
-        m_title = re.search(r'title:\s*"(.*?)"', block)
-        m_tags = re.search(r"tags:\s*\[(.*?)\]", block)
-        if m_id and m_title and m_tags:
-            pid = m_id.group(1)
-            title = m_title.group(1)
-            tags = [t.strip() for t in m_tags.group(1).split(",") if t.strip()]
-            kind = "course material" if "assets/" in block or "assignment" in pid or "handout" in pid else "teaching"
-            for t in tags:
-                if t in vocab:
-                    index[t].append(("teaching.html", pid, title, kind, "2026"))
-
-# 3. Index Articles
-articles = load_articles(vocab_model)
-for a in articles:
-    for t in a.tags:
-        index[t].append(("writing.html", a.id, a.title, "article", a.date))
-
-# 4. Index Appearances
-appearances = load_appearances(vocab_model)
-for app in appearances:
-    # Visibility is derived the same way speaking.html derives it: a talk always
-    # renders, a podcast only once it has a url. Indexing one that does not
-    # render produces a link to an anchor that is not on the page — latent here
-    # until the first episode is recorded but not yet published.
-    if app.kind == "podcast" and not app.url:
-        continue
-    full_title = f"{app.org} — {app.title}" if app.org else app.title
-    for t in app.tags:
-        index[t].append(("speaking.html", app.id, full_title, app.kind, app.date))
-
-
-# Category ordering from kinds_meta
 category_order_map = {}
 for meta in kinds_meta.values():
     cat = meta.category
@@ -77,14 +34,15 @@ CATEGORY_ORDER = sorted(category_order_map.keys(), key=lambda c: category_order_
 def entries(items):
     groups = defaultdict(list)
     for pg, pid, title, kind, date_val in items:
-        cat_meta = kinds_meta.get(kind, None)
-        cat = cat_meta.category if cat_meta else kind.title()
+        cat = kinds_meta[kind].category
         groups[cat].append((pg, pid, title, kind, date_val))
 
     out = []
     for cat in CATEGORY_ORDER:
         if cat in groups:
-            group_items = sorted(groups[cat], key=lambda e: (str(e[4]), e[2].lower()), reverse=True)
+            group_items = groups[cat]
+            if cat in {"Writing", "Speaking"}:
+                group_items = sorted(group_items, key=lambda e: e[4], reverse=True)
             item_html = "\n".join(
                 f'      <li><span class="what"><a href="{pg}#{pid}">{html.escape(title)}</a></span></li>'
                 for pg, pid, title, kind, date_val in group_items
@@ -116,17 +74,16 @@ def facet_html(facet):
     out = []
     for tag in sorted(facets[facet], key=alphabetical_sort):
         items = index[tag]
-        # The scope note says what the term covers; the entry terms say what
-        # else the same work gets called. Both are written in TAGS.yaml and both
-        # belong on the page — a definition nobody can read is not a definition,
-        # and an entry term only does its job once it is indexed.
         note = vocab_model.notes.get(tag, "")
         note_html = f'  <p class="scope-note">{html.escape(note)}</p>\n' if note else ""
         syns = vocab_model.synonyms.get(tag, [])
+        search_terms = vocab_model.search_terms.get(tag, [])
         syn_html = (f'  <p class="entry-terms">Also called '
                     f'{html.escape(", ".join(syns))}.</p>\n') if syns else ""
+        if search_terms:
+            syn_html += f'  <p class="entry-terms">Search terms: {html.escape(", ".join(search_terms))}.</p>\n'
         out.append(
-            f'  <h3 id="{slug(tag)}">{html.escape(tag)}'
+            f'  <h3 id="{vocab_model.anchors[tag]}">{html.escape(tag)}'
             f' <span class="tag-count">{len(items)}</span></h3>\n'
             f'{note_html}{syn_html}'
             f'{entries(items)}\n'
@@ -137,7 +94,7 @@ def facet_html(facet):
 
 def chiprow(facet):
     chips = "".join(
-        f'<a class="chip" href="#{slug(tag)}">{html.escape(tag)}'
+        f'<a class="chip" href="#{vocab_model.anchors[tag]}">{html.escape(tag)}'
         f'<b>{len(index[tag])}</b></a>'
         for tag in sorted(facets[facet], key=alphabetical_sort)
     )
@@ -146,8 +103,8 @@ def chiprow(facet):
 
 sections = "\n".join(
     f"""<section><div class="wrap">
-  <h2 id="{f}">{facets_meta.get(f, None).label if f in facets_meta else f.title()}</h2>
-  <p class="lede">{facets_meta.get(f, None).note if f in facets_meta else ''} {len(facets[f])} terms.</p>
+  <h2 id="{f}">{facets_meta[f].label}</h2>
+  <p class="lede">{facets_meta[f].note} {len(facets[f])} terms.</p>
 
 {chiprow(f)}
 
@@ -158,7 +115,7 @@ sections = "\n".join(
     for f in present
 )
 
-subnav_html = "\n".join(f'  <a href="#{f}">{facets_meta.get(f, None).label if f in facets_meta else f.title()}</a>' for f in present)
+subnav_html = "\n".join(f'  <a href="#{f}">{facets_meta[f].label}</a>' for f in present)
 
 doc = render_template(
     template_name="tags.html",

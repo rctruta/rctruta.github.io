@@ -7,13 +7,7 @@ from . import ROOT
 
 
 class TestVocabularyReachesThePage(unittest.TestCase):
-    """A definition nobody can read is not a definition.
-
-    Scope notes were written for 22 terms in TAGS.yaml and parsed away: the
-    loader kept the term and dropped the text after the colon, so none of them
-    reached tags.html. The synonym ring has the same failure mode — an entry
-    term only does its job once it is indexed on a page.
-    """
+    """Check taxonomy definitions and discovery terms in the index."""
 
     def setUp(self):
         self.vocab = load_taxonomy()
@@ -30,6 +24,11 @@ class TestVocabularyReachesThePage(unittest.TestCase):
                    for syn in syns if html.escape(syn) not in self.page]
         self.assertEqual([], missing,
                          f"entry terms that no search will ever find: {missing}")
+
+    def test_every_search_term_reaches_the_index(self):
+        terms = [term for values in self.vocab.search_terms.values() for term in values]
+        self.assertTrue(terms, 'the existing discovery terms must survive migration')
+        self.assertEqual([], [term for term in terms if html.escape(term) not in self.page])
 
     def test_no_entry_term_is_also_a_descriptor(self):
         """An entry term is never tagged with, so it must not look taggable."""

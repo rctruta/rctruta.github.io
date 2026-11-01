@@ -1,0 +1,508 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ramonactruta.com/schemas/teaching.schema.json",
+  "title": "Portfolio Teaching document",
+  "description": "Structural contract. Additional cross-record rules are enforced by tools/contracts.py and documented in docs/contracts.md.",
+  "type": "object",
+  "properties": {
+    "philosophy": {
+      "type": "object",
+      "properties": {
+        "lede": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "quote": {
+          "$ref": "#/$defs/quote"
+        },
+        "principles": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "lede",
+        "quote",
+        "principles"
+      ],
+      "additionalProperties": false
+    },
+    "leading": {
+      "$ref": "#/$defs/leading"
+    },
+    "product": {
+      "$ref": "#/$defs/product"
+    },
+    "testimonials": {
+      "type": "object",
+      "properties": {
+        "while_students": {
+          "$ref": "#/$defs/testgroup"
+        },
+        "years_later": {
+          "$ref": "#/$defs/testgroup"
+        }
+      },
+      "required": [
+        "while_students",
+        "years_later"
+      ],
+      "additionalProperties": false
+    },
+    "materials": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/material"
+      },
+      "minItems": 1
+    },
+    "courses": {
+      "type": "object",
+      "properties": {
+        "instructor_of_record": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/coursegroup"
+          },
+          "minItems": 1
+        },
+        "teaching_assistant": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/coursegroup"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "instructor_of_record",
+        "teaching_assistant"
+      ],
+      "additionalProperties": false
+    },
+    "education": {
+      "type": "object",
+      "properties": {
+        "degrees": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/degree"
+          },
+          "minItems": 1
+        },
+        "certificates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/certificate"
+          },
+          "minItems": 0
+        },
+        "honours": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "degrees",
+        "certificates",
+        "honours"
+      ],
+      "additionalProperties": false
+    },
+    "service": {
+      "type": "object",
+      "properties": {
+        "reviewing": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 0
+        },
+        "outreach": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 0
+        },
+        "outreach_note": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "volunteering": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 0
+        },
+        "affiliations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "reviewing",
+        "outreach",
+        "outreach_note",
+        "affiliations"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "philosophy",
+    "leading",
+    "product",
+    "testimonials",
+    "materials",
+    "courses",
+    "education",
+    "service"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "quote": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "cite": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "text",
+        "cite"
+      ],
+      "additionalProperties": false
+    },
+    "testimonial": {
+      "type": "object",
+      "properties": {
+        "quote": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "cite": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "quote",
+        "cite"
+      ],
+      "additionalProperties": false
+    },
+    "testgroup": {
+      "type": "object",
+      "properties": {
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/testimonial"
+          },
+          "minItems": 1
+        },
+        "postscript": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "note",
+        "items"
+      ],
+      "additionalProperties": false
+    },
+    "leading": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "activity": {
+          "const": "teaching"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "activity",
+        "tags",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "product": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "activity": {
+          "const": "teaching"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "intro": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "highlights": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 1
+        },
+        "outro": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "activity",
+        "tags",
+        "intro",
+        "highlights",
+        "outro"
+      ],
+      "additionalProperties": false
+    },
+    "material": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "activity": {
+          "const": "course material"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "meta": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "activity",
+        "url",
+        "meta",
+        "tags",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "coursegroup": {
+      "type": "object",
+      "properties": {
+        "institution": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "dept": {
+          "type": "string"
+        },
+        "courses": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "institution",
+        "dept",
+        "courses"
+      ],
+      "additionalProperties": false
+    },
+    "degree": {
+      "type": "object",
+      "properties": {
+        "degree": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "institution": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "year": {
+          "type": "string",
+          "pattern": "^[0-9]{4}$"
+        },
+        "thesis": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "advisor": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "isbn": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "degree",
+        "institution"
+      ],
+      "additionalProperties": false
+    },
+    "certificate": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "issuer": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "date": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "expires": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "professional": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "issuer"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,5 +1,6 @@
 # Dependencies and builds
 node_modules/
+.venv/
 dist/
 .astro/
 __pycache__/
@@ -17,6 +18,7 @@ Thumbs.db
 *.log
 *.zip
 *.pdf
+!assets/*.pdf
 scratch/
 .chrome_temp/
 static-site-template/

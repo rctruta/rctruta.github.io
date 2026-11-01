@@ -1,7 +1,4 @@
-"""Generate contact.html from data/contact.yaml and config.yaml using Jinja2.
-
-    python3 tools/build_contact.py
-"""
+"""Generate contact.html from data/contact.yaml and config.yaml using Jinja2."""
 import pathlib
 from model import load_taxonomy, load_contact
 from page import render_template, AUTHOR

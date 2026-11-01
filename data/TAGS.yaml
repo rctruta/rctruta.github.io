@@ -1,113 +1,265 @@
-# Faceted Controlled Vocabulary and Scope Notes for portfolio projects, writing, speaking, and course materials (ANSI/NISO Z39.19 / ISO 25964 compliant).
+# yaml-language-server: $schema=../schemas/taxonomy.schema.json
+namespace: https://ramonactruta.com/concepts/
 
 facets:
   discipline:
-    label: "Discipline"
-    note: "What the work is about."
+    label: Discipline
+    note: What the work is about.
     order: 1
   method:
-    label: "Method"
-    note: "How a claim was established, rather than what it was about."
+    label: Method
+    note: How a claim was established, rather than what it was about.
     order: 2
   technology:
-    label: "Technology"
-    note: "What it was built with."
+    label: Technology
+    note: What it was built with.
     order: 3
-
 kinds:
   project:
-    category: "Projects"
-    note: "Software repositories, pipeline architectures, or datasets"
+    category: Projects
+    note: Software repositories, pipeline architectures, or datasets
     order: 1
   article:
-    category: "Writing"
-    note: "Published essays, research notes, or Substack posts"
+    category: Writing
+    note: Published essays, research notes, or Substack posts
     order: 2
   talk:
-    category: "Speaking"
-    note: "Conference presentations, keynotes, or workshops"
+    category: Speaking
+    note: Conference presentations, keynotes, or workshops
     order: 3
   podcast:
-    category: "Speaking"
-    note: "Podcast guest or host appearances"
+    category: Speaking
+    note: Podcast guest or host appearances
     order: 3
   teaching:
-    category: "Teaching"
-    note: "Course offerings or curriculum design"
+    category: Teaching
+    note: Course offerings or curriculum design
     order: 4
   course material:
-    category: "Teaching"
-    note: "Handouts, assignments, or worked code examples"
+    category: Teaching
+    note: Handouts, assignments, or worked code examples
     order: 4
-
-vocabulary:
-
-  discipline:
-    Data modeling: Representing a domain faithfully, so the structure survives contact with the data.
-    Entity resolution: Deciding whether two records describe the same thing, when nothing says so.
-    Data quality: Finding what is wrong in source data, and proving it is wrong.
-    Metadata architecture: Structures that describe other data — catalogs, authority files, controlled vocabularies — so a fact about a source is recorded once and can be checked.
-    Benchmarking: Measuring a system under conditions stated well enough to reproduce.
-    AI evaluation: Deciding whether a model or agent actually did what it claimed.
-    AI security: Attacks on what an agent reads, stores, and later trusts.
-    Migration: Moving a working system to a new platform without stopping its users.
-    Team leadership: Running the people doing the work, and the mechanism that checks it.
-    Teaching: Course material or explanatory writing built so a learner arrives at the answer rather than watching it appear.
-    Human agency: What people give up to a system, and what it costs them.
-    Storytelling: An analogy from lived experience carrying a technical idea, so the reader arrives at the mechanism through something they already know.
-    RLHF: Measuring how RLHF alignment and status bias shift agent decision routing under pressure.
-
-  method:
-    Deterministic grading: Scoring outcomes by rule, not by judgement, so a result can be re-derived.
-    Per-turn tracing: Recording every step an agent took, rather than asking it afterwards.
-    Evaluation sets: A labelled set of cases, built so a system's accuracy is measurable.
-    Ablation study: Running the same goals with one thing changed, to isolate what it costs.
-    Content addressing: Fingerprinting input configurations and query state via SHA-256 cryptographic hashes.
-    Cold-cache measurement: Clearing every cache before each run, so the engine is measured and not the buffer pool.
-    Pre-commit gates: Enforcing automated hooks, claim verifiers, and privacy rules before code commits.
-    Process telemetry: Deriving quantitative behavioral metrics directly from execution logs without judgment.
-    Data contracts: Enforcing reproducible experimental parameters and data schemas via immutable YAML specifications.
-
-  technology:
-    PostgreSQL:
-    DuckDB:
-    Python:
-    Dagster:
-    Polars:
-    Arrow / ADBC:
-    MCP:
-    RAG:
-    SQL:
-    XQuery:
-    LanceDB:
-    Knowledge graphs:
-    PyPI:
-    # Steganography:
-    # Vision security:
-
-# The synonym ring (Z39.19 "UF", used-for). An entry term is a label someone
-# else uses for work indexed here under a different name — a reader searching,
-# or a keyword filter screening a resume. It is never a descriptor: nothing is
-# tagged with it and it carries no count.
-#
-# The rule for adding one: the term on the left must already have the work. An
-# entry term makes existing work findable; it never claims new work. Two words
-# deliberately absent, because the evidence is not here — "threat modeling"
-# (no attack trees, no STRIDE) and "cloud security" (none).
-
-synonyms:
-  AI security: [red teaming, AI red teaming, adversarial testing, prompt injection, responsible disclosure, vulnerability research]
-  AI evaluation: [model evaluation, agent evaluation, LLM evaluation, LLM-as-judge]
-  Pre-commit gates: [security automation, policy as code, guardrails, shift-left]
-  Per-turn tracing: [execution tracing, agent traces]
-  Process telemetry: [observability, behavioural metrics]
-  Evaluation sets: [ground truth, labelled data, test sets]
-  Deterministic grading: [rule-based scoring, automated grading]
-  Entity resolution: [record linkage, deduplication, fuzzy matching]
-  Data quality: [data validation, data profiling]
-  Data modeling: [schema design, normalization, dimensional modeling]
-  Metadata architecture: [authority control, master data management, taxonomy, data catalog]
-  Benchmarking: [performance testing, performance engineering]
-  Migration: [replatforming, platform migration]
-  Team leadership: [technical leadership, mentoring]
-  Data contracts: [schema enforcement, data validation contracts]
+concepts:
+  data-modeling:
+    label: Data modeling
+    facet: discipline
+    anchor: data-modeling
+    scope_note: Representing a domain faithfully, so the structure survives contact with the data.
+    search_terms:
+    - schema design
+    - normalization
+    - dimensional modeling
+  entity-resolution:
+    label: Entity resolution
+    facet: discipline
+    anchor: entity-resolution
+    scope_note: Deciding whether two records describe the same thing, when nothing says so.
+    search_terms:
+    - record linkage
+    - deduplication
+    - fuzzy matching
+  data-quality:
+    label: Data quality
+    facet: discipline
+    anchor: data-quality
+    scope_note: Finding what is wrong in source data, and proving it is wrong.
+    search_terms:
+    - data validation
+    - data profiling
+  metadata-architecture:
+    label: Metadata architecture
+    facet: discipline
+    anchor: metadata-architecture
+    scope_note: Structures that describe other data — catalogs, authority files, controlled vocabularies — so a
+      fact about a source is recorded once and can be checked.
+    search_terms:
+    - authority control
+    - master data management
+    - taxonomy
+    - data catalog
+  benchmarking:
+    label: Benchmarking
+    facet: discipline
+    anchor: benchmarking
+    scope_note: Measuring a system under conditions stated well enough to reproduce.
+    search_terms:
+    - performance testing
+    - performance engineering
+  ai-evaluation:
+    label: AI evaluation
+    facet: discipline
+    anchor: ai-evaluation
+    scope_note: Deciding whether a model or agent actually did what it claimed.
+    search_terms:
+    - model evaluation
+    - agent evaluation
+    - LLM evaluation
+    - LLM-as-judge
+  ai-security:
+    label: AI security
+    facet: discipline
+    anchor: ai-security
+    scope_note: Attacks on what an agent reads, stores, and later trusts.
+    search_terms:
+    - red teaming
+    - AI red teaming
+    - adversarial testing
+    - prompt injection
+    - responsible disclosure
+    - vulnerability research
+  migration:
+    label: Migration
+    facet: discipline
+    anchor: migration
+    scope_note: Moving a working system to a new platform without stopping its users.
+    search_terms:
+    - replatforming
+    - platform migration
+  team-leadership:
+    label: Team leadership
+    facet: discipline
+    anchor: team-leadership
+    scope_note: Running the people doing the work, and the mechanism that checks it.
+    search_terms:
+    - technical leadership
+    - mentoring
+  teaching:
+    label: Teaching
+    facet: discipline
+    anchor: teaching
+    scope_note: Course material or explanatory writing built so a learner arrives at the answer rather than watching
+      it appear.
+  human-agency:
+    label: Human agency
+    facet: discipline
+    anchor: human-agency
+    scope_note: What people give up to a system, and what it costs them.
+  storytelling:
+    label: Storytelling
+    facet: discipline
+    anchor: storytelling
+    scope_note: An analogy from lived experience carrying a technical idea, so the reader arrives at the mechanism
+      through something they already know.
+  rlhf:
+    label: RLHF
+    facet: discipline
+    anchor: rlhf
+    scope_note: Measuring how RLHF alignment and status bias shift agent decision routing under pressure.
+  deterministic-grading:
+    label: Deterministic grading
+    facet: method
+    anchor: deterministic-grading
+    scope_note: Scoring outcomes by rule, not by judgement, so a result can be re-derived.
+    search_terms:
+    - rule-based scoring
+    - automated grading
+  per-turn-tracing:
+    label: Per-turn tracing
+    facet: method
+    anchor: per-turn-tracing
+    scope_note: Recording every step an agent took, rather than asking it afterwards.
+    search_terms:
+    - execution tracing
+    - agent traces
+  evaluation-sets:
+    label: Evaluation sets
+    facet: method
+    anchor: evaluation-sets
+    scope_note: A labelled set of cases, built so a system's accuracy is measurable.
+    search_terms:
+    - ground truth
+    - labelled data
+    - test sets
+  ablation-study:
+    label: Ablation study
+    facet: method
+    anchor: ablation-study
+    scope_note: Running the same goals with one thing changed, to isolate what it costs.
+  content-addressing:
+    label: Content addressing
+    facet: method
+    anchor: content-addressing
+    scope_note: Fingerprinting input configurations and query state via SHA-256 cryptographic hashes.
+  cold-cache-measurement:
+    label: Cold-cache measurement
+    facet: method
+    anchor: cold-cache-measurement
+    scope_note: Clearing every cache before each run, so the engine is measured and not the buffer pool.
+  pre-commit-gates:
+    label: Pre-commit gates
+    facet: method
+    anchor: pre-commit-gates
+    scope_note: Enforcing automated hooks, claim verifiers, and privacy rules before code commits.
+    search_terms:
+    - security automation
+    - policy as code
+    - guardrails
+    - shift-left
+  process-telemetry:
+    label: Process telemetry
+    facet: method
+    anchor: process-telemetry
+    scope_note: Deriving quantitative behavioral metrics directly from execution logs without judgment.
+    search_terms:
+    - observability
+    - behavioural metrics
+  data-contracts:
+    label: Data contracts
+    facet: method
+    anchor: data-contracts
+    scope_note: Enforcing reproducible experimental parameters and data schemas via immutable YAML specifications.
+    search_terms:
+    - schema enforcement
+    - data validation contracts
+  postgresql:
+    label: PostgreSQL
+    facet: technology
+    anchor: postgresql
+  duckdb:
+    label: DuckDB
+    facet: technology
+    anchor: duckdb
+  python:
+    label: Python
+    facet: technology
+    anchor: python
+  dagster:
+    label: Dagster
+    facet: technology
+    anchor: dagster
+  polars:
+    label: Polars
+    facet: technology
+    anchor: polars
+  arrow-adbc:
+    label: Arrow / ADBC
+    facet: technology
+    anchor: arrow-adbc
+  mcp:
+    label: MCP
+    facet: technology
+    anchor: mcp
+  rag:
+    label: RAG
+    facet: technology
+    anchor: rag
+  sql:
+    label: SQL
+    facet: technology
+    anchor: sql
+  xquery:
+    label: XQuery
+    facet: technology
+    anchor: xquery
+  lancedb:
+    label: LanceDB
+    facet: technology
+    anchor: lancedb
+  knowledge-graphs:
+    label: Knowledge graphs
+    facet: technology
+    anchor: knowledge-graphs
+  pypi:
+    label: PyPI
+    facet: technology
+    anchor: pypi

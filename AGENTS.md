@@ -30,9 +30,12 @@ This website is a contract-driven, static portfolio. Content pages are compiled 
 
 ## Controlled Vocabulary & Taxonomy
 
-- **Appearances:** `data/APPLICATION-RULES.md` defines the allowed values for `role`, `format`, `eventType`, and organization names.
-- **Tags:** `data/TAGS.yaml` defines the taxonomy. A tag must describe a common attribute shared by projects, or a dimension readers would filter on.
-- All project IDs and tagged entries must be registered in `data/TAGS.yaml`.
+- **Appearances:** `schemas/appearances.schema.json` defines the allowed values for `role`, `format`, `eventType`, and organization names.
+- **Tags:** `data/TAGS.yaml` defines the taxonomy. Records use stable concept IDs; templates resolve display labels. A tag must describe a common attribute shared by projects, or a dimension readers would filter on.
+- Project IDs are unique within the Work page; assigned concept IDs must exist in `data/TAGS.yaml`.
+- JSON Schemas in `schemas/` are authoritative structural contracts. Cross-record validators in `tools/contracts.py` are mandatory. Never weaken a check, add exclusions or silently omit invalid records to pass a build.
+- Consult `docs/contracts.md` and `docs/decisions/001-portable-data-contracts.md` before changing data models or standards integration.
+- Preserve published anchors when changing labels. Schema `$id` and taxonomy namespace are explicit portability decisions.
 
 ## Design & Layout Conventions
 
@@ -42,6 +45,11 @@ This website is a contract-driven, static portfolio. Content pages are compiled 
 
 ## Code Standards & Hygiene
 
-- **Testing:** Run `python3 -m unittest discover -s tests -t .` to verify all page contracts.
+- **Testing:** Run `.venv/bin/python -m unittest discover -s tests -t .` to verify all page contracts.
 - **Secrets & Privacy:** PII and credentials must never be committed. `gitleaks` and `tools/check_private.py` run on commit to prevent accidental exposures.
 - **Git Commits:** Use standard Conventional Commit messages (`feat: ...`, `fix: ...`, `docs: ...`, `chore: ...`).
+- **Commit validation:** The `commit-msg` hook and CI use pinned commitlint. Validate proposed messages before requesting approval. Do not bypass hooks.
+
+## Public writing
+
+Keep comments, docstrings and documentation concise and technical. Exclude incident histories, personal context, chat references and agent narratives.

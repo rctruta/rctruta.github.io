@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ramonactruta.com/schemas/home.schema.json",
+  "title": "Portfolio Home document",
+  "description": "Authoritative structural contract; see docs/contracts.md for mandatory relationship constraints.",
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "bio": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "portrait_alt": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "testimonials_link": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "google_site_verification": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "job_title": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "praise": {
+      "type": "object",
+      "properties": {
+        "quote": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "author": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "author_url": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "work": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "work_url": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "quote",
+        "author",
+        "author_url",
+        "source",
+        "work",
+        "work_url"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "description",
+    "bio",
+    "portrait_alt",
+    "testimonials_link",
+    "google_site_verification",
+    "job_title",
+    "praise"
+  ],
+  "additionalProperties": false
+}

@@ -1,7 +1,4 @@
-"""Generate writing.html from data/writing.yaml using Jinja2 templates.
-
-    python3 tools/build_writing.py
-"""
+"""Generate writing.html from data/writing.yaml using Jinja2 templates."""
 import pathlib
 from model import load_taxonomy, load_articles
 from page import render_template, AUTHOR, SUBSTACK_RSS

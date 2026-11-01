@@ -4,7 +4,7 @@ import hashlib
 import pathlib
 import re
 from typing import List, Optional
-from jinja2 import Environment, FileSystemLoader, select_autoescape
+from jinja2 import Environment, FileSystemLoader, StrictUndefined, select_autoescape
 from config_loader import load_config
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -73,8 +73,10 @@ def when(d: str) -> str:
 
 def render_tag_chips(tags: List[str]) -> str:
     """Render tag chips linking to tags.html#slug."""
+    from model import load_taxonomy
+    anchors = load_taxonomy().anchors
     cells = "".join(
-        f'<a class="tag" href="tags.html#{slug(t)}">{html.escape(t)}</a>' for t in tags
+        f'<a class="tag" href="tags.html#{anchors[t]}">{html.escape(t)}</a>' for t in tags
     )
     return f'<div class="tags">{cells}</div>'
 
@@ -87,30 +89,26 @@ def nav_description(here_page: str) -> str:
     raise KeyError(f"no navigation entry in config.yaml for '{here_page}.html'")
 
 
-# Jinja2 Environment setup
 env = Environment(
     loader=FileSystemLoader(str(TEMPLATES_DIR)),
-    autoescape=select_autoescape(["html", "xml"])
+    autoescape=select_autoescape(["html", "xml"]),
+    undefined=StrictUndefined,
 )
+
+
+def tag_anchor(label):
+    from model import load_taxonomy
+    return load_taxonomy().anchors[label]
 
 env.filters["slug"] = slug
 env.filters["format_inline"] = format_inline
 env.filters["format_blocks"] = format_blocks
 env.filters["when"] = when
+env.filters['tag_anchor'] = tag_anchor
 
 
 def stylesheet_version() -> str:
-    """A short content hash of style.css, for the stylesheet's query string.
-
-    Without it, a browser that has style.css cached keeps serving the old one
-    and a style change is invisible -- which happened on 2026-10-20: the
-    front-page quote box was changed from blue to green, the deployed CSS was
-    correct, and the change could not be seen. A style change nobody can see
-    is a style change nobody can review.
-
-    Content-addressed rather than a build timestamp, so the URL changes when
-    the CSS changes and not on every build.
-    """
+    """A short content hash of style.css, for the stylesheet's query string."""
     css = ROOT / "style.css"
     if not css.is_file():
         raise FileNotFoundError(f"{css} is missing but every page links it")

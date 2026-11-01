@@ -6,14 +6,7 @@ from . import ROOT
 
 
 class TestOneBio(unittest.TestCase):
-    """The bio is one string. Every rendering of it says the same words.
-
-    It was split into a travelling `bio` and a home-page-only `site_note`, on
-    the reasoning that "this site" has no referent off the website. The
-    sentence belongs everywhere, so `tools/bio.py` — the command that produces
-    text for LinkedIn and the resume — quietly returned a shorter bio than the
-    website and GitHub were showing. Three renderings, two of them agreeing.
-    """
+    """The bio is one string. Every rendering of it says the same words."""
 
     def test_all_three_renderings_carry_the_same_words(self):
         from bio import as_plain, as_markdown, as_html

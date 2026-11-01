@@ -6,17 +6,13 @@ from . import ROOT
 
 
 class TestNavigationIntegrity(unittest.TestCase):
-    """Two defects that reached the live site and were found by eye, not by test."""
+    """Check navigation labels and anchor destinations."""
 
     PAGES = ["index.html", "work.html", "teaching.html", "speaking.html",
              "writing.html", "tags.html", "contact.html"]
 
     def test_subnav_labels_match_their_headings(self):
-        """A sub-nav link must read the same as the heading it points at.
-
-        The nav once said "Philosophy" over a heading reading "Teaching", and
-        "AI" over "AI & Agent Evaluation". Two labels for one thing.
-        """
+        """A sub-nav link must read the same as the heading it points at."""
         for name in self.PAGES:
             page = ROOT / name
             if not page.exists():
@@ -34,11 +30,7 @@ class TestNavigationIntegrity(unittest.TestCase):
                         f"{name}: nav says '{label.strip()}', heading says '{heading}'")
 
     def test_internal_anchors_resolve(self):
-        """Every page.html#anchor link must point at an id that exists.
-
-        work.html#tooling sat broken in the home page bio after a section was
-        renamed, and nothing caught it.
-        """
+        """Every page.html#anchor link must point at an id that exists."""
         broken = []
         for name in self.PAGES:
             page = ROOT / name
