@@ -4,6 +4,7 @@ import re
 import subprocess
 import sys
 import shutil
+from search_contract import write_manifest
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 PAGES = [
@@ -108,3 +109,4 @@ for name in PAGES:
     placed += 1
 
 print(f"search box placed on {placed} pages")
+write_manifest(ROOT / 'pagefind')
