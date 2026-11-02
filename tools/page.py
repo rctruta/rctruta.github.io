@@ -100,6 +100,19 @@ def tag_anchor(label):
     from model import load_taxonomy
     return load_taxonomy().anchors[label]
 
+def concept_anchor(cid):
+    from contracts import taxonomy_document
+    return taxonomy_document()['concepts'][cid]['anchor']
+
+
+def concept_label(cid):
+    from contracts import taxonomy_document
+    return taxonomy_document()['concepts'][cid]['label']
+
+
+env.filters['concept_anchor'] = concept_anchor
+env.filters['concept_label'] = concept_label
+
 env.filters["slug"] = slug
 env.filters["format_inline"] = format_inline
 env.filters["format_blocks"] = format_blocks

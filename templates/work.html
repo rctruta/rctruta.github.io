@@ -7,7 +7,7 @@
   <p class="sub small cat-note">{{ sec.summary|format_inline|safe }}</p>
   {% for item in sec.items %}
   <div class="proj" id="{{ item.id }}">
-    <h3>{% if item.url %}<a href="{{ item.url }}">{{ item.title }}</a>{% if item.meta %} <span class="meta">{{ item.meta }}</span>{% endif %}{% else %}{{ item.title }}{% endif %}</h3>
+    <h3>{{ item.title }}</h3>
     {% if item.description %}{{ item.description|format_blocks|safe }}{% endif %}
     {% if item.figures %}
       {% for fig in item.figures %}
@@ -20,7 +20,7 @@
 
     <div class="tags">
       {% for t in item.tags %}
-      <a class="tag" href="tags.html#{{ tag_anchors[t] }}">{{ t }}</a>
+      <a class="tag" href="tags.html#{{ t|concept_anchor }}">{{ t|concept_label }}</a>
       {% endfor %}
     </div>
     {% if item.links %}

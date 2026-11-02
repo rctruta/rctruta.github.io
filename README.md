@@ -79,3 +79,7 @@ SKOS export, ODCS integration and OWL translation are recorded future work, not 
 
 CI runs the build and refuses stale committed HTML and rules documentation. The local build does not publish.
 CI checks search integrity through its build manifest. See [development and release](docs/development-workflow.md) for PR protection and gated Pages deployment.
+
+### Python models
+
+JSON Schemas in `schemas/` are the source of the Pydantic models in `tools/generated/`. After changing a schema, run `.venv/bin/datamodel-codegen`. The existing contract check runs `datamodel-codegen --check` and rejects stale generated models. Do not edit generated models by hand. `tools/model.py` contains loaders and derived presentation helpers. JSON Schema validation remains authoritative for constraints not represented by the generator, including unique items and dependent fields. Dates and URIs remain strings for rendering; JSON Schema validates their formats.

@@ -14,7 +14,7 @@
     <p>{{ a.argues }}</p>
     <div class="tags">
       {% for t in a.tags %}
-      <a class="tag" href="tags.html#{{ t|tag_anchor }}">{{ t }}</a>
+      <a class="tag" href="tags.html#{{ t|concept_anchor }}">{{ t|concept_label }}</a>
       {% endfor %}
     </div>
   </div>
