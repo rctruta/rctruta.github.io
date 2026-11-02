@@ -19,8 +19,7 @@ doc = render_template(
     generator_name="build_work.py",
     source_yaml="work.yaml",
     subnav_html=subnav_html,
-    sections=sections,
-    tag_anchors=vocab.anchors
+    sections=sections
 )
 
 (ROOT / "work.html").write_text(doc, encoding="utf-8")

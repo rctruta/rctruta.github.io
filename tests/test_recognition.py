@@ -15,7 +15,7 @@ class TestRecognition(unittest.TestCase):
 
     def test_every_recognition_is_sourced_and_dated(self):
         for item in self.items:
-            for r in item.recognition:
+            for r in item.recognition or []:
                 self.assertTrue(r.who.strip(), f"{item.id}: recognition with no `who`")
                 self.assertTrue(r.what.strip(), f"{item.id}: recognition with no `what`")
                 self.assertRegex(r.date, r"^\d{4}-\d{2}-\d{2}$",
@@ -26,7 +26,7 @@ class TestRecognition(unittest.TestCase):
     def test_a_recognition_badge_is_served_by_the_recognising_party(self):
         """A badge must be an absolute https image URL."""
         for item in self.items:
-            for r in item.recognition:
+            for r in item.recognition or []:
                 if not r.badge:
                     continue
                 self.assertTrue(
@@ -40,7 +40,7 @@ class TestRecognition(unittest.TestCase):
 
     def test_recognition_reaches_the_page(self):
         for item in self.items:
-            for r in item.recognition:
+            for r in item.recognition or []:
                 self.assertIn(r.url, self.page,
                               f"{item.id}: recognition from {r.who} is in the data "
                               f"but its source link is not on work.html")
@@ -50,7 +50,7 @@ class TestRecognition(unittest.TestCase):
         signals = ("selected for", "selected the", "indexed, then claimed",
                    "featured in", "chosen for")
         for item in self.items:
-            for n in item.notes:
+            for n in item.notes or []:
                 blob = f"{n.label or ''} {n.text or ''}".lower()
                 for s in signals:
                     self.assertNotIn(s, blob,

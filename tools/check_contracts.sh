@@ -2,6 +2,9 @@
 set -eu
 cd "$(dirname "$0")/.."
 if [ -x .venv/bin/python ]; then
-  exec .venv/bin/python tools/validate_site.py --sources-only
+  PYTHON=.venv/bin/python
+else
+  PYTHON="${PYTHON:-python3}"
 fi
-exec "${PYTHON:-python3}" tools/validate_site.py --sources-only
+"$PYTHON" -m datamodel_code_generator --check
+exec "$PYTHON" tools/validate_site.py --sources-only

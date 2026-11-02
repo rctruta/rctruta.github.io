@@ -1,0 +1,14 @@
+[tool.datamodel-codegen]
+allow-remote-refs = false
+collapse-root-models = true
+disable-timestamp = true
+enum-field-as-literal = "all"
+formatters = ["builtin"]
+input = "schemas"
+input-file-type = "jsonschema"
+output = "tools/generated"
+output-model-type = "pydantic_v2.BaseModel"
+strict-types = ["str", "int", "float", "bool"]
+target-python-version = "3.11"
+type-mappings = ["string+date=string", "string+uri=string"]
+use-standard-collections = true
