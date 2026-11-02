@@ -39,11 +39,15 @@ The shared index projection contains record identity, kind, title, destination, 
 
 Counts represent record/concept relationships. Pagefind indexes generated public pages using the pinned dependency. Rebuilds replace obsolete search artifacts.
 
+Search output is build-only. Its manifest records input and dependency hashes plus all generated artifact hashes. Validation rejects stale inputs, missing files and changed artifacts.
+
 ## Build and CI
 
 Follow the setup in the root README and run `./build`. It validates sources, generates pages and search, runs declared checks, validates output and runs tests. CI repeats the build and rejects stale committed artifacts.
 
 Privacy checks inspect staged content. Python dependencies and Pagefind are pinned. Public assets referenced by content must be included in the repository.
+
+See [development and release](development-workflow.md) for required PR checks and deployment controls.
 
 ## Future work
 

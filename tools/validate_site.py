@@ -8,6 +8,7 @@ from urllib.parse import unquote, urlsplit
 from contracts import ROOT, ContractError, index_records, taxonomy_document, validate_all
 from config_loader import load_config
 from model import load_contact, load_home, load_taxonomy
+from search_contract import validate_search
 
 
 class Page(HTMLParser):
@@ -33,6 +34,7 @@ class Page(HTMLParser):
 
 
 def validate_outputs():
+    validate_search()
     config = load_config()
     names = ['index.html'] + [n['href'] for n in config['navigation']]
     pages = {}

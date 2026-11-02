@@ -20,7 +20,7 @@ This website is a contract-driven, static portfolio. Content pages are compiled 
 
 ### The Build Script
 
-**Never edit generated HTML files by hand.** Edit the data in `data/`, run `./build`, and commit both the data and the generated output:
+**Never edit generated HTML files by hand.** Edit the data in `data/`, run `./build`, and include generated HTML with the source changes. `pagefind/` and `dist/` are build-only:
 
 ```bash
 ./build
@@ -44,6 +44,11 @@ This website is a contract-driven, static portfolio. Content pages are compiled 
 - **Links & Metadata:** Visible metadata belongs in `span.meta`. Avoid tooltips or hover-only text for essential details to maintain mobile accessibility.
 
 ## Code Standards & Hygiene
+
+- **Branches:** Create a work branch before editing. Never commit or push directly to `main`.
+- **Pull requests:** Submit changes through a PR. Required CI must pass before merge.
+- **Git actions:** The owner runs commit, push and merge commands. Agents provide the commands but do not execute them. Do not rewrite published history or bypass hooks or repository protection.
+- **Staging:** Stage explicit file paths after reviewing the diff. Do not use bulk staging commands.
 
 - **Testing:** Run `.venv/bin/python -m unittest discover -s tests -t .` to verify all page contracts.
 - **Secrets & Privacy:** PII and credentials must never be committed. `gitleaks` and `tools/check_private.py` run on commit to prevent accidental exposures.

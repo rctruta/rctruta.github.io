@@ -53,7 +53,7 @@ For read-only validation or tests using the prepared environment:
 .venv/bin/python -m unittest discover -s tests -t .
 ```
 
-The first command is the pre-generation phase. The second additionally requires existing generated output. Neither modifies source files. Generated HTML and `pagefind/` are committed artifacts; do not edit them manually.
+The first command is the pre-generation phase. The second additionally requires existing generated output. Neither modifies source files. Generated HTML is committed; `pagefind/` and `dist/` are build-only artifacts. Do not edit generated files manually.
 
 ## Architecture and contracts
 
@@ -77,4 +77,5 @@ SKOS export, ODCS integration and OWL translation are recorded future work, not 
 
 [Numerical provenance](docs/decisions/002-claims-and-numerical-provenance.md) is planned separately.
 
-CI runs the build and refuses stale committed HTML, rules documentation or search artifacts. This repository does not automatically publish from its build command.
+CI runs the build and refuses stale committed HTML and rules documentation. The local build does not publish.
+CI checks search integrity through its build manifest. See [development and release](docs/development-workflow.md) for PR protection and gated Pages deployment.
