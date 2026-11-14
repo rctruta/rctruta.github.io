@@ -111,8 +111,7 @@
       },
       "required": [
         "degrees",
-        "certificates",
-        "honours"
+        "certificates"
       ],
       "additionalProperties": false
     },
@@ -161,12 +160,6 @@
           "minItems": 0
         }
       },
-      "required": [
-        "reviewing",
-        "outreach",
-        "outreach_note",
-        "affiliations"
-      ],
       "additionalProperties": false
     }
   },
@@ -177,8 +170,7 @@
     "testimonials",
     "materials",
     "courses",
-    "education",
-    "service"
+    "education"
   ],
   "additionalProperties": false,
   "$defs": {

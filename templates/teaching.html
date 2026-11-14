@@ -1,5 +1,128 @@
 {% extends "base.html" %}
 
+{% macro top_link() -%}
+<p class="totop"><a href="#top">&uarr; Top</a></p>
+{%- endmacro %}
+
+{% macro quote(text, cite) -%}
+<blockquote class="praise"><p>&ldquo;{{ text }}&rdquo;</p><cite>{{ cite }}</cite></blockquote>
+{%- endmacro %}
+
+{% macro tag_chips(tags) -%}
+<div class="tags">
+  {% for tag in tags %}<a class="tag" href="tags.html#{{ tag|concept_anchor }}">{{ tag|concept_label }}</a>{% endfor %}
+</div>
+{%- endmacro %}
+
+{% macro course_group(group) -%}
+<p class="inst">{{ group.institution|format_inline|safe }}{% if group.dept %} <span class="dept">&mdash; {{ group.dept }}</span>{% endif %}</p>
+<ul class="courses">{% for course in group.courses %}<li>{{ course|format_inline|safe }}</li>{% endfor %}</ul>
+{%- endmacro %}
+
+{% macro degree_line(degree) -%}
+<strong>{{ degree.degree }}</strong> &mdash; {{ degree.institution }}{% if degree.thesis %}. Thesis: {% if degree.url %}<a href="{{ degree.url }}"><em>{{ degree.thesis }}</em></a>{% else %}<em>{{ degree.thesis }}</em>{% endif %}{% if degree.advisor %}, supervised by {{ degree.advisor }}{% endif %}{% if degree.isbn %} <span class="meta">ISBN {{ degree.isbn }}</span>{% endif %}{% endif %}
+{%- endmacro %}
+
 {% block content %}
-{{ body_html|safe }}
+<section><div class="wrap">
+  <h2 id="philosophy">Teaching philosophy</h2>
+  <p>{{ teaching.philosophy.lede|format_inline|safe }}</p>
+  {{ quote(teaching.philosophy.quote.text, teaching.philosophy.quote.cite) }}
+  {{ teaching.philosophy.principles|format_blocks|safe }}
+  {{ top_link() }}
+</div></section>
+
+<section><div class="wrap">
+  <h2 id="leading">Leading and managing</h2>
+  <div class="proj" id="{{ teaching.leading.id }}">
+    <h3>{{ teaching.leading.title }}</h3>
+    {{ teaching.leading.description|format_blocks|safe }}
+    {{ tag_chips(teaching.leading.tags) }}
+  </div>
+  {{ top_link() }}
+</div></section>
+
+<section><div class="wrap">
+  <h2 id="product">A course is a product</h2>
+  <div class="proj" id="{{ teaching.product.id }}">
+    <h3>{{ teaching.product.title }}</h3>
+    <p>{{ teaching.product.intro|format_inline|safe }}</p>
+    <ul class="courses">{% for highlight in teaching.product.highlights %}<li>{{ highlight|format_inline|safe }}</li>{% endfor %}</ul>
+    <p>{{ teaching.product.outro|format_inline|safe }}</p>
+    {{ tag_chips(teaching.product.tags) }}
+  </div>
+  {{ top_link() }}
+</div></section>
+
+<section><div class="wrap">
+  <h2 id="testimonials">Student testimonials</h2>
+  {% for label, group in [('While they were students', teaching.testimonials.while_students), ('Years later', teaching.testimonials.years_later)] %}
+  <h3>{{ label }}</h3><p>{{ group.note|format_inline|safe }}</p>
+  {% for item in group.items %}{{ quote(item.quote, item.cite) }}{% endfor %}
+  {% if group.postscript %}<p>{{ group.postscript|format_inline|safe }}</p>{% endif %}
+  {% endfor %}
+  {{ top_link() }}
+</div></section>
+
+<section><div class="wrap">
+  <h2 id="assignment">Sample materials</h2>
+  {% for material in teaching.materials %}
+  <div class="proj" id="{{ material.id }}">
+    <h3><a href="{{ material.url }}">{{ material.title }}</a> <span class="meta">{{ material.meta }}</span></h3>
+    {{ material.description|format_blocks|safe }}
+    {{ tag_chips(material.tags) }}
+  </div>
+  {% endfor %}
+  {{ top_link() }}
+</div></section>
+
+<section><div class="wrap">
+  <h2 id="courses">Courses</h2>
+  <p class="role">Instructor of record</p>
+  {% for group in teaching.courses.instructor_of_record %}{{ course_group(group) }}{% endfor %}
+  <p class="role">Teaching assistant</p>
+  {% for group in teaching.courses.teaching_assistant %}{{ course_group(group) }}{% endfor %}
+  {{ top_link() }}
+</div></section>
+
+<section><div class="wrap">
+  <h2 id="education">Education &amp; credentials</h2>
+  <h3>Degrees</h3>
+  <ul class="courses">{% for degree in teaching.education.degrees %}<li>{{ degree_line(degree) }}</li>{% endfor %}</ul>
+  {% if professional_certificates %}
+  <h3>Certificates</h3>
+  <ul class="courses">
+    {% for certificate in professional_certificates %}
+    {% set name_html = certificate.name|format_inline %}
+    <li>{% if certificate.url %}{% if '<a ' in name_html %}{{ name_html|safe }} <a href="{{ certificate.url }}" target="_blank" rel="noopener" class="meta">verify</a>{% else %}<a href="{{ certificate.url }}" target="_blank" rel="noopener">{{ name_html|safe }}</a>{% endif %}{% else %}{{ name_html|safe }}{% endif %}{% if certificate.expires %} <span class="meta">expires {{ certificate.expires }}</span>{% endif %}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% if course_certificate_groups %}
+  <h3>Courses</h3>
+  {% for issuer, certificates in course_certificate_groups %}
+  <h4>{{ issuer }}</h4>
+  <ul class="courses">{% for certificate in certificates %}
+    <li>{% if certificate.url %}<a href="{{ certificate.url }}" target="_blank" rel="noopener">{{ certificate.name }}</a>{% else %}{{ certificate.name }}{% endif %}{% if certificate.date %} <span class="meta">{{ certificate.date }}</span>{% endif %}</li>
+  {% endfor %}</ul>
+  {% endfor %}
+  {% endif %}
+  {% if teaching.education.honours %}
+  <h3>Honours</h3>
+  <ul class="courses">{% for honour in teaching.education.honours %}<li>{{ honour|format_inline|safe }}</li>{% endfor %}</ul>
+  {% endif %}
+  {{ top_link() }}
+</div></section>
+
+{% if show_service %}
+<section><div class="wrap">
+  <h2 id="service">Service</h2>
+  {% if teaching.service.reviewing %}<h3>Reviewing and editorial</h3><ul class="courses">{% for item in teaching.service.reviewing %}<li>{{ item|format_inline|safe }}</li>{% endfor %}</ul>{% endif %}
+  {% if teaching.service.outreach %}<h3>Outreach</h3><ul class="courses">{% for item in teaching.service.outreach %}<li>{{ item|format_inline|safe }}</li>{% endfor %}</ul>{% endif %}
+  {% if teaching.service.outreach_note %}<p class="sub small">{{ teaching.service.outreach_note|format_inline|safe }}</p>{% endif %}
+  {% if teaching.service.volunteering %}<h3>Volunteering</h3><ul class="courses">{% for item in teaching.service.volunteering %}<li>{{ item|format_inline|safe }}</li>{% endfor %}</ul>{% endif %}
+  {% if teaching.service.affiliations %}<h3>Affiliations</h3><ul class="courses">{% for item in teaching.service.affiliations %}<li>{{ item|format_inline|safe }}</li>{% endfor %}</ul>{% endif %}
+  {{ top_link() }}
+</div></section>
+{% endif %}
 {% endblock %}

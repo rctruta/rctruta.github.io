@@ -48,6 +48,11 @@
           },
           "minItems": 1,
           "uniqueItems": true
+        },
+        "repoURL":  {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
         }
       },
       "required": [

@@ -6,6 +6,7 @@
   platform: Substack
   date: 2026-11-10
   argues: "In Cohere's public job feed, 38 postings list a location named Canada and 84 have Canada in a listed location's address. The difference matters for what candidates expect a country filter to find."
+  repoURL: https://github.com/rctruta/ashby-location-filter
   tags: [data-modeling]
 
 - id: readme-falsifiable

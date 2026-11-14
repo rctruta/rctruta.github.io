@@ -19,6 +19,7 @@ class Article(BaseModel):
     tags: list[constr(pattern=r'^[a-z0-9]+(?:-[a-z0-9]+)*$', strict=True)] = Field(
         ..., min_length=1
     )
+    repoURL: constr(pattern=r'\S', min_length=1, strict=True) | None = None
 
 
 class PortfolioWritingDocument(RootModel[list[Article]]):

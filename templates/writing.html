@@ -17,6 +17,11 @@
       <a class="tag" href="tags.html#{{ t|concept_anchor }}">{{ t|concept_label }}</a>
       {% endfor %}
     </div>
+    {% if a.repoURL %}
+    <div class="links">
+      <a href="{{ a.repoURL }}" target="_blank" rel="noopener">Companion repository</a>
+    </div>
+    {% endif %}
   </div>
     {% endif %}
   {% endfor %}
