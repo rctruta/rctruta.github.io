@@ -164,7 +164,7 @@ def validate_records(name, data, taxonomy):
         validate_tags(record, taxonomy, source, path)
         if '[YOURS' in record.get('resume', ''):
             fail(source, path + '.resume', 'unapproved draft is not exportable text')
-        for key in ('url', 'slidesUrl', 'videoUrl', 'transcriptUrl'):
+        for key in ('url', 'repoURL', 'slidesUrl', 'videoUrl', 'transcriptUrl'):
             if key in record:
                 validate_reference(record[key], source, path + '.' + key)
         for link in record.get('links', []):

@@ -12,18 +12,18 @@ class Service(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    reviewing: list[constr(pattern=r'\S', min_length=1, strict=True)] = Field(
-        ..., min_length=0
+    reviewing: list[constr(pattern=r'\S', min_length=1, strict=True)] | None = Field(
+        None, min_length=0
     )
-    outreach: list[constr(pattern=r'\S', min_length=1, strict=True)] = Field(
-        ..., min_length=0
+    outreach: list[constr(pattern=r'\S', min_length=1, strict=True)] | None = Field(
+        None, min_length=0
     )
-    outreach_note: constr(pattern=r'\S', min_length=1, strict=True)
+    outreach_note: constr(pattern=r'\S', min_length=1, strict=True) | None = None
     volunteering: list[constr(pattern=r'\S', min_length=1, strict=True)] | None = Field(
         None, min_length=0
     )
-    affiliations: list[constr(pattern=r'\S', min_length=1, strict=True)] = Field(
-        ..., min_length=0
+    affiliations: list[constr(pattern=r'\S', min_length=1, strict=True)] | None = Field(
+        None, min_length=0
     )
 
 
@@ -164,8 +164,8 @@ class Education(BaseModel):
     )
     degrees: list[Degree] = Field(..., min_length=1)
     certificates: list[Certificate] = Field(..., min_length=0)
-    honours: list[constr(pattern=r'\S', min_length=1, strict=True)] = Field(
-        ..., min_length=0
+    honours: list[constr(pattern=r'\S', min_length=1, strict=True)] | None = Field(
+        None, min_length=0
     )
 
 
@@ -180,4 +180,4 @@ class PortfolioTeachingDocument(BaseModel):
     materials: list[Material] = Field(..., min_length=1)
     courses: Courses
     education: Education
-    service: Service
+    service: Service | None = None

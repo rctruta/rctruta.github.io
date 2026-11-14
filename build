@@ -8,6 +8,9 @@ else
   PYTHON="${PYTHON:-python3}"
 fi
 
+echo "generate Pydantic models <- schemas/"
+"$PYTHON" -m datamodel_code_generator
+
 echo "validate source contracts"
 "$PYTHON" tools/validate_site.py --sources-only
 
