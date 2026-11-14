@@ -10,6 +10,9 @@ from model import load_articles, load_taxonomy
 import validate_site
 
 
+PROJECT_COUNT = sum(len(section['items']) for section in content_document('work')['sections'])
+
+
 class TestContracts(unittest.TestCase):
     def setUp(self):
         self.taxonomy = taxonomy_document()
@@ -141,7 +144,7 @@ class TestContracts(unittest.TestCase):
 
     def test_index_has_no_synthetic_work_or_teaching_dates(self):
         records = index_records()
-        self.assertEqual(21, sum(r['kind'] == 'project' for r in records))
+        self.assertEqual(PROJECT_COUNT, sum(r['kind'] == 'project' for r in records))
         self.assertTrue(all(r['date'] is None for r in records if r['page'] in {'work.html','teaching.html'}))
 
     def test_real_folded_note_and_caption_are_parsed(self):
