@@ -8,6 +8,7 @@ items:
     date: 2026-11-12
     title: 'Structure Is Not Security: Poisoning Graph-Based Agent Memory Through the Extraction Pipeline'
     org: Neo4j NODES
+    url: "https://github.com/rctruta/nodes26"
     eventType: talk
     location: virtual
     tags: [ai-security, knowledge-graphs]
