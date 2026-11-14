@@ -141,7 +141,7 @@ class TestContracts(unittest.TestCase):
 
     def test_index_has_no_synthetic_work_or_teaching_dates(self):
         records = index_records()
-        self.assertEqual(20, sum(r['kind'] == 'project' for r in records))
+        self.assertEqual(21, sum(r['kind'] == 'project' for r in records))
         self.assertTrue(all(r['date'] is None for r in records if r['page'] in {'work.html','teaching.html'}))
 
     def test_real_folded_note_and_caption_are_parsed(self):

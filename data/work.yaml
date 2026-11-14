@@ -1,167 +1,5 @@
 # yaml-language-server: $schema=../schemas/work.schema.json
 sections:
-  - id: data-engineering
-    title: "Data modeling"
-    summary: "Data modeling is the throughline. Source systems into structures analysts and models can use — migration, entity resolution, record linkage, annotation quality control, and the SQL behaviour underneath it."
-    items:
-      - id: guelph-migration
-        title: "Legacy-to-PostgreSQL migration and record linkage — University of Guelph, 2011–2015"
-        activity: built
-        tags: [data-modeling, entity-resolution, data-quality, migration, postgresql, team-leadership]
-        description: |
-          Sole architect of the migration of a historical research database to PostgreSQL: the data model cut storage by 73%. The result was a production system with researchers as its direct clients — requirements gathering, stakeholder translation, and ongoing support were part of the job, not adjacent to it.
-
-          On top of it, probabilistic record linkage connecting WWI military service records to census data: 97% linkage across 450,000 records at 89% precision. Blocking and scoring were only half the problem; the harder half was validation, so I automated family re-creation to check links against household structure, which raised verification speed fourfold.
-
-          Two properties of that work carry into anything with dirty source data: the ground truth is never handed to you, and a linkage rate means nothing without the precision beside it.
-
-          The coding work was not a solo exercise. I led a team of twenty research assistants doing the manual verification, and built the monitoring that made their work checkable at the level of a single record — one line, in one file, among a great many. The scarce resource was their attention, so the system's job was to spend it only where a disagreement actually existed.
-      - id: name-coding
-        title: "Automating a hand-built name dictionary — first-name standardization across seven censuses"
-        activity: built
-        tags: [data-modeling, metadata-architecture, entity-resolution, evaluation-sets, data-quality, postgresql, python]
-        description: |
-          Historians had been coding first names by hand: each name assigned a three- to five-letter code standing for an equivalence class of spellings. It did not scale, and every new census arrived with a fresh tail of names nobody had seen. I automated it, starting from their 1871 dictionary as the seed.
-
-          The equivalence relation was phonetic and orthographic together — double metaphone for blocking, then minimum Levenshtein distance within the block. A second variant added substring substitution, which is what made French spellings tractable. Two phases: generate candidate codes over a sample of 70,000 strings, then apply the replacement rules to whatever was left. Strings that survived both were reported as unassigned rather than forced.
-
-          The finding that shaped the design: **the expert dictionary contradicted itself.** Two strings sharing a code were not always equivalent under any formal definition, and strings with different codes sometimes were. So instead of emitting one answer, the system emitted several candidates and let the experts choose — and some strings the experts themselves coded more than one way. When the ground truth disagrees with itself, widening the output is more honest than picking a winner.
-
-          Every candidate carried a verdict, good or bad, which made the system measurable. Twenty research assistants did that checking — each code looked at independently by two people, with disagreements adjudicated rather than averaged. **237,203 codes were checked by hand out of a corpus of 1,367,022 strings: 90.96% of them good, 95.29% setting aside a class of special cases.** I checked the other direction too — whether *wrong* codes also sit at minimum distance — since a metric that scores well but cannot discriminate is worth nothing.
-
-          The 17% that needed a person is the number I would defend the design on. Across 63 batches the median was 92.5%, and the spread ran from 97.2% down to 34.0% on one small batch — which is why the aggregate is the honest figure and a range is not.
-
-          The coded names carried forward across the 1852, 1871, 1880, 1881, 1891, 1901 and 1911 censuses, with a full ingest pipeline per census: process, detect inconsistencies, apply coding, prepare for the model downstream.
-      - id: age-modeling
-        title: "Fitting the agreement function for record linkage — age difference across censuses"
-        activity: research
-        tags: [data-modeling, entity-resolution, evaluation-sets, data-quality]
-        description: |
-          Two records ten years apart rarely agree on age. To link them you need a function turning that disagreement into evidence: `ageDiff` mapping an age difference onto a weight between one and zero. I fitted five candidates — normalized by constant factors, by frequency percentage, and by a fast-increasing function — and chose between them on standard deviation against observed frequencies, across five independent datasets and 11,813 records.
-
-          I also tested the received wisdom that women misreport age more often than men. Running the regression separately by gender, the difference was slight: both curves were the same function shifted by about a year. Not two models. One model and an offset — which is the result you only get by checking rather than assuming.
-      - id: police-gazette
-        title: "Getting convict transport records out of OCR — Police Gazette"
-        activity: built
-        tags: [data-modeling, metadata-architecture, data-quality, evaluation-sets]
-        description: |
-          Nineteenth-century Police Gazettes recording prisoners transported to Tasmania, held as OCR'd scans. The data the historians needed was in tables inside those documents, and OCR does not respect a table. I wrote the extraction design: fixed layouts for the two table types, one table per output file, a naming convention tying every file back to its source page, and a separate metadata table holding what is true of a whole file — its description, its row count, who extracted it, who checked it — recorded once instead of repeated on every row.
-
-          My proposal secured the grant to carry out the work: one table per file, so extraction and checking could run independently and be verified in small units, and a metatable recording each file's facts once — including who extracted it, who checked it, and the row count.
-
-          Reading it back in 2026: the metatable is a metadata catalog, the filename scheme is a canonical identifier carrying lineage, and `ExtractedBy` / `CheckedBy` / `RowCount` are a provenance trail. I had none of those words in 2011.
-        links:
-          - text: "The 2011 design document (PDF)"
-            url: "assets/police-gazette-transcripts-2011.pdf"
-      - id: db2-postgres
-        title: "Departmental migration from IBM DB2 to PostgreSQL — University of Toronto"
-        activity: built
-        tags: [migration, postgresql, team-leadership, teaching]
-        description: |
-          Led the Computer Science department's move off DB2: platform evaluation, rewriting the course materials that depended on it, retraining instructors, and supporting students through the change. A migration whose hardest constraint was that several hundred people had to keep working through it.
-      - id: site-infrastructure
-        title: "rctruta.github.io — contract-driven portfolio & validated publishing pipeline"
-        activity: built
-        tags: [data-modeling, metadata-architecture, pre-commit-gates, python, data-contracts]
-        description: |
-          The repository powering this website is built as a data modeling project. Public content lives in YAML and is validated against JSON Schemas before rendering. Unknown fields, missing required values, duplicate IDs and invalid taxonomy references stop the build. A shared taxonomy supplies stable concept IDs, display labels and published anchors to the pages and their index.
-
-          Python generators render the pages, and Pagefind builds search. After generation, checks validate local links, anchors and index membership for each term. Local hooks and CI run declared checks; a privacy guard checks staged content for email addresses, phone numbers and explicit private-file markers. These checks enforce document structure and consistency. They do not independently verify factual claims in prose.
-        links:
-          - text: "rctruta.github.io"
-            url: "https://github.com/rctruta/rctruta.github.io"
-
-  - id: benchmarking
-    title: "Benchmarking"
-    summary: "Measuring engines and protocols under conditions stated well enough to reproduce. Every result ships with the experiment that produced it."
-    items:
-      - id: sqlbenchdag
-        title: "sqlbenchdag — a reproducible benchmarking laboratory"
-        activity: built
-        tags: [benchmarking, content-addressing, cold-cache-measurement, dagster, duckdb, postgresql, polars, arrow-adbc, python, mcp, sql, data-contracts, pre-commit-gates, pypi]
-        description: |
-          Every experiment is a capsule addressed by an 8-character SHA-256 fingerprint over its config, SQL, and every line of measurement-relevant Python. Change the method and the ID changes. Cold-cache execution, hard row-count assertions, and an integrity seal on every capsule. The four published Quack capsules additionally carry OpenTimestamps proofs anchored to Bitcoin.
-        figures:
-          - src: "assets/quack-vs-postgres.png"
-            alt: "DuckDB-over-Quack vs PostgreSQL, query duration by table size"
-            caption: "Capsule <code>902d1277</code> — DuckDB-over-Quack (pushdown) against PostgreSQL: 4.4× at 100K rows, 6.1× at 1M, 13.2× at 10M. Bands are replication min–max, cold cache, arm64, 8 cores, DuckDB 1.5.3. Caveat disclosed in the config: PostgreSQL pays a macOS Docker-VM tax on this bench."
-          - src: "assets/quack-execution-modes.png"
-            alt: "Quack attach mode vs pushdown vs in-process DuckDB"
-            caption: "Capsule <code>b8e2bfaf</code> — attach-mode overhead grows with scan size (2.6× at 100K → 9.5× at 10M); pushdown stays flat at ~2×. Attach mode streams table data client-side; pushdown ships only results. The residual 2× traced to reduced server-side parallelism, not transport (capsule <code>25b0e134</code>)."
-        links:
-          - text: "sql-benchmarks-dagster"
-            url: "https://github.com/rctruta/sql-benchmarks-dagster"
-          - text: "pip install sqlbenchdag"
-            url: "https://pypi.org/project/sqlbenchdag/"
-          - text: "Write-up"
-            url: "https://ramonactruta.substack.com/p/measuring-quack-duckdbs-new-client"
-        notes:
-          - label: "Published Python package on PyPI"
-            text: "— reproducible benchmarking laboratory. Install with <code>pip install sqlbenchdag</code>."
-            url: "https://pypi.org/project/sqlbenchdag/"
-          - label: "MCP server in the official Model Context Protocol registry"
-            text: "— v0.1.2, 10 tools, active since 2026-08-10. Run it with <code>uvx --from sqlbenchdag sqlbench-mcp</code>: the package name is not the command, and <code>uvx sqlbenchdag</code> exits 1."
-            url: "https://registry.modelcontextprotocol.io/v0/servers?search=sqlbenchdag"
-          - label: "One command, cold, with nothing else running"
-            text: "— the published server reads the committed capsules directly, so it needs no REST API, no config and no key. A scheduled CI job installs it from PyPI on a clean machine weekly and fails if the handshake or any tool description breaks."
-            url: "https://github.com/rctruta/sql-benchmarks-dagster/blob/main/.github/workflows/published_mcp.yml"
-        recognition:
-          - who: "mcprush"
-            what: "found the MCP server in the official registry, scanned the published artifact and graded it: security A, 94/100, on v0.1.3"
-            date: "2026-10-20"
-            url: "https://mcprush.com/rctruta/sql-benchmarks-lab-mcp"
-            terms: "Their scan of a snapshot, under their own methodology. Not a certification."
-            badge: "https://mcprush.com/badge/sql-benchmarks-lab-mcp/card.svg"
-            badge_alt: "mcprush listing for SQL Benchmarks Lab MCP server: security A, trust score 94 out of 100"
-      - id: sql-behaviour
-        title: "SQL behaviour under measurement"
-        activity: research
-        tags: [benchmarking, cold-cache-measurement, data-modeling, postgresql, duckdb, sql]
-        description: |
-          Findings from the laboratory that are about the database rather than the benchmark. Postgres index selectivity has a crossover: on cold cache a bitmap heap scan at 5% selectivity is slower than a sequential scan, so the index becomes a liability — EXPLAIN-confirmed, with the sequential scan winning outright past roughly 10%. Separately, on three-valued logic: the null-safe `IS NOT DISTINCT FROM` operator does not remove the quadratic cost of a join over nullable keys. It decides whether the query degrades or hangs. That is an optimizer cliff in Postgres, not something intrinsic to the semantics.
-        links:
-          - text: "The Pizza Logic You Didn't Know You Kneaded"
-            url: "https://ramonactruta.substack.com/p/the-pizza-logic-you-didnt-know-you"
-      - id: result-transport
-        title: "What the connectivity layer costs — ADBC, connectorx and psycopg out of PostgreSQL"
-        blurb: "On primitive columns the row path is level with Arrow; on jsonb at 10M rows it is 6.9× slower, because it builds a Python object per value."
-        activity: research
-        tags: [benchmarking, cold-cache-measurement, content-addressing, arrow-adbc, postgresql, python, sql]
-        description: |
-          One question, asked properly: when a client pulls a large result out of PostgreSQL, what does the **transport** cost, separately from the query? Same server, same SQL, trivial `SELECT *` so execution does not dominate — only the client varies: psycopg fetching rows, ADBC over Arrow, connectorx over Arrow. Timed from execute to the result fully materialised in memory.
-
-          **The answer is not "Arrow is faster."** On primitive columns the two paths are level and at 100K rows psycopg is marginally ahead (0.88×). What changes the picture is column type. On `jsonb` at 10 million rows psycopg takes 143 seconds against ADBC's 20.8 — **6.9×** — and on a mixed nested column 165 seconds against 29.9. The row path does not scale because it materialises a Python object per value; Arrow stays linear. The penalty widens with size exactly where that cost lives: jsonb goes 2.70× at 100K, 3.42× at 1M, 6.88× at 10M, while primitives sit at 1.22× throughout.
-
-          The two Arrow clients are close but not interchangeable: ADBC wins `jsonb` at 10M (20.8s vs 35.0s), connectorx wins `int[]` (11.4s vs 12.2s). I shared the results with Ian Cook at Voltron Data, whose Arrow work prompted the question.
-        figures:
-          - src: "assets/transport-row-path-collapse.svg"
-            alt: "Row-path penalty by column type at 100K, 1M and 10M rows: primitives stay near 1x while jsonb reaches 6.88x"
-            caption: "Capsule <code>af6ba593</code>, generated from the capsule's own CSV. psycopg divided by the faster Arrow client. Replication 3, cold cache, Darwin arm64, 16 GB, <code>sqlbenchdag@9105c38</code>."
-        notes:
-          - text: "Exploratory tier, not in the verified published set: two capsules on one machine, replication 3. It is a shape, not a benchmark result to quote against someone else's hardware — compare the ratios, not the seconds."
-          - text: "A day's work, and it leaned on the laboratory already being there. The value is that the harness made a proper cold-cache, sealed, content-addressed run cheap enough to do in an afternoon."
-          - text: "Says nothing about Arrow IPC or Flight as protocols, nor about ADBC drivers in general — one alpha Quack driver was measured separately and is not this result."
-        links:
-          - text: "capsule af6ba593"
-            url: "https://github.com/rctruta/sql-benchmarks-dagster/tree/main/sql_benchmarks/experiments/results/af6ba593"
-          - text: "the experiment config"
-            url: "https://github.com/rctruta/sql-benchmarks-dagster/blob/main/sql_benchmarks/experiments/queue/transport_adbc_scale.yaml"
-      - id: lakehouse-semantics
-        title: "lakehouse-semantics — SQL correctness and engine divergence matrix"
-        activity: built
-        tags: [benchmarking, postgresql, duckdb, sql, python]
-        description: |
-          A suite of 23 correctness probes executed across DuckDB, DuckDB+Delta, PostgreSQL, and Databricks SQL. Rather than timing performance (which varies by serverless hardware allocation), these probes measure **semantic determinism**: integer division, NULL ordering in ASC scans, VARCHAR overflow behavior, and constraint enforcement paths.
-
-          The key finding: Databricks SQL accepts inline `CHECK` constraints in `CREATE TABLE` without enforcing them, while the identical constraint added via `ALTER TABLE ADD CONSTRAINT` is strictly enforced and raises `DELTA_VIOLATE_CONSTRAINT_WITH_VALUES`. A query 20% slower costs money; a query that silently returns different rows across engines costs trust.
-        figures:
-          - src: "assets/lakehouse-semantics-probes.svg"
-            alt: "Seven SQL semantics probes run on DuckDB, PostgreSQL and Databricks SQL, with the engine that disagrees with the other two marked on each row"
-            caption: "Seven of the 23 probes. The marked cell on each row is the engine that disagrees with the other two &mdash; DuckDB on three, Databricks on three, PostgreSQL on one. Strictness reverses by probe: Databricks raises on <code>1/0</code> where DuckDB returns <code>inf</code>, and accepts a duplicate <code>PRIMARY KEY</code> where the others reject it. That last one is <a href=\"https://docs.databricks.com/aws/en/tables/constraints\">documented behaviour</a>, not a discovery &mdash; PK, FK and UNIQUE are informational there. <code>duckdb+delta</code> matched <code>duckdb</code> on all 23, which is the control arm that makes the Databricks column readable."
-        links:
-          - text: "lakehouse-semantics"
-            url: "https://github.com/rctruta/lakehouse-semantics"
-
   - id: agent-evaluation
     title: "AI evaluation"
     summary: "Whether a model or an agent did what it claimed, and what a deployment will cost. Instrumenting systems and reading what they actually did, rather than asking them. Relates to [OWASP LLM06 (excessive agency)](https://genai.owasp.org/llmrisk/llm06-excessive-agency/) and [OWASP LLM09 (misinformation)](https://genai.owasp.org/llmrisk/llm09-misinformation/)."
@@ -276,6 +114,22 @@ sections:
     title: "AI security"
     summary: "Attacks on what an agent reads, stores and later trusts — and the controls that hold against them. Maps to [OWASP LLM01 (indirect prompt injection)](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) and [OWASP LLM04 (data poisoning)](https://genai.owasp.org/llmrisk/llm04-data-and-model-poisoning/)."
     items:
+      - id: nodes26
+        title: "nodes26 — a controlled, reproducible graph memory lab"
+        blurb: "Controlled, reproducible experiments trace a false claim from document to agent answer, then expose a failure in the agent's source-verification tools."
+        activity: research
+        tags: [ai-security, ai-evaluation, ablation-study, knowledge-graphs, python]
+        description: |
+          **nodes26** is a controlled, reproducible case study of one graph-backed agent-memory pipeline. A fictional catalog entry describes a desk lamp that does not exist. The lab uses the official `neo4j-agent-memory` ingestion and search APIs, pins the library version, and runs separate control, single-claim, repeated-copy, and independently worded-source arms in isolated databases. Each run preserves its experiment definition, graph records, retrieval scores, and agent tool traces so another reader can inspect the path from document to answer.
+
+          Across three runs — the library's default schema, a procurement ontology, and the library's example ontology — the fictional lamp became a typed, retrievable entity and appeared in later agent answers. Strict type validation did not establish whether the catalog claim was true. Repeating the claim added source links but did not improve that entity's similarity score.
+
+          The lab also exposed a break in the agent's evidence-checking path, reported in [neo4j-labs/agent-memory issue #392](https://github.com/neo4j-labs/agent-memory/issues/392). `search_memory` gives the agent entity names without IDs, while `get_entity_provenance` requires a UUID and silently answers `Sources (0)` for an unknown one. Default ingestion writes `MENTIONS` links, but that lookup reads `EXTRACTED_FROM`, which default ingestion does not write. In each of two runs where source links *were* written, 16 of 17 agent provenance calls returned no sources. Agent answers then said there was no provenance, although the graph held four source links; the one call supplied a real ID returned all four. The failure is in carrying evidence through the tools to the agent, with an empty result presented as if it were an authoritative check. These runs establish that behavior for this pipeline and these inputs; they do not measure a general failure rate or test a fix.
+        links:
+          - text: "nodes26 — experiment, records and analysis"
+            url: "https://github.com/rctruta/nodes26"
+          - text: "Agent source-verification failure — issue #392"
+            url: "https://github.com/neo4j-labs/agent-memory/issues/392"
       - id: agent-memory
         title: "Semantic injection into agent memory"
         activity: research
@@ -341,3 +195,164 @@ sections:
             url: "https://github.com/rctruta/awesome-pedantic-medallion"
           - text: "A README is a Set of Falsifiable Claims"
             url: "https://ramonactruta.substack.com/p/a-readme-is-a-set-of-falsifiable"
+  - id: benchmarking
+    title: "Benchmarking"
+    summary: "Measuring engines and protocols under conditions stated well enough to reproduce. Every result ships with the experiment that produced it."
+    items:
+      - id: sqlbenchdag
+        title: "sqlbenchdag — a reproducible benchmarking laboratory"
+        activity: built
+        tags: [benchmarking, content-addressing, cold-cache-measurement, dagster, duckdb, postgresql, polars, arrow-adbc, python, mcp, sql, data-contracts, pre-commit-gates, pypi]
+        description: |
+          Every experiment is a capsule addressed by an 8-character SHA-256 fingerprint over its config, SQL, and every line of measurement-relevant Python. Change the method and the ID changes. Cold-cache execution, hard row-count assertions, and an integrity seal on every capsule. The four published Quack capsules additionally carry OpenTimestamps proofs anchored to Bitcoin.
+        figures:
+          - src: "assets/quack-vs-postgres.png"
+            alt: "DuckDB-over-Quack vs PostgreSQL, query duration by table size"
+            caption: "Capsule <code>902d1277</code> — DuckDB-over-Quack (pushdown) against PostgreSQL: 4.4× at 100K rows, 6.1× at 1M, 13.2× at 10M. Bands are replication min–max, cold cache, arm64, 8 cores, DuckDB 1.5.3. Caveat disclosed in the config: PostgreSQL pays a macOS Docker-VM tax on this bench."
+          - src: "assets/quack-execution-modes.png"
+            alt: "Quack attach mode vs pushdown vs in-process DuckDB"
+            caption: "Capsule <code>b8e2bfaf</code> — attach-mode overhead grows with scan size (2.6× at 100K → 9.5× at 10M); pushdown stays flat at ~2×. Attach mode streams table data client-side; pushdown ships only results. The residual 2× traced to reduced server-side parallelism, not transport (capsule <code>25b0e134</code>)."
+        links:
+          - text: "sql-benchmarks-dagster"
+            url: "https://github.com/rctruta/sql-benchmarks-dagster"
+          - text: "pip install sqlbenchdag"
+            url: "https://pypi.org/project/sqlbenchdag/"
+          - text: "Write-up"
+            url: "https://ramonactruta.substack.com/p/measuring-quack-duckdbs-new-client"
+        notes:
+          - label: "Published Python package on PyPI"
+            text: "— reproducible benchmarking laboratory. Install with <code>pip install sqlbenchdag</code>."
+            url: "https://pypi.org/project/sqlbenchdag/"
+          - label: "MCP server in the official Model Context Protocol registry"
+            text: "— v0.1.2, 10 tools, active since 2026-08-10. Run it with <code>uvx --from sqlbenchdag sqlbench-mcp</code>: the package name is not the command, and <code>uvx sqlbenchdag</code> exits 1."
+            url: "https://registry.modelcontextprotocol.io/v0/servers?search=sqlbenchdag"
+          - label: "One command, cold, with nothing else running"
+            text: "— the published server reads the committed capsules directly, so it needs no REST API, no config and no key. A scheduled CI job installs it from PyPI on a clean machine weekly and fails if the handshake or any tool description breaks."
+            url: "https://github.com/rctruta/sql-benchmarks-dagster/blob/main/.github/workflows/published_mcp.yml"
+        recognition:
+          - who: "mcprush"
+            what: "found the MCP server in the official registry, scanned the published artifact and graded it: security A, 94/100, on v0.1.3"
+            date: "2026-10-20"
+            url: "https://mcprush.com/rctruta/sql-benchmarks-lab-mcp"
+            terms: "Their scan of a snapshot, under their own methodology. Not a certification."
+            badge: "https://mcprush.com/badge/sql-benchmarks-lab-mcp/card.svg"
+            badge_alt: "mcprush listing for SQL Benchmarks Lab MCP server: security A, trust score 94 out of 100"
+      - id: sql-behaviour
+        title: "SQL behaviour under measurement"
+        activity: research
+        tags: [benchmarking, cold-cache-measurement, data-modeling, postgresql, duckdb, sql]
+        description: |
+          Findings from the laboratory that are about the database rather than the benchmark. Postgres index selectivity has a crossover: on cold cache a bitmap heap scan at 5% selectivity is slower than a sequential scan, so the index becomes a liability — EXPLAIN-confirmed, with the sequential scan winning outright past roughly 10%. Separately, on three-valued logic: the null-safe `IS NOT DISTINCT FROM` operator does not remove the quadratic cost of a join over nullable keys. It decides whether the query degrades or hangs. That is an optimizer cliff in Postgres, not something intrinsic to the semantics.
+        links:
+          - text: "The Pizza Logic You Didn't Know You Kneaded"
+            url: "https://ramonactruta.substack.com/p/the-pizza-logic-you-didnt-know-you"
+      - id: result-transport
+        title: "What the connectivity layer costs — ADBC, connectorx and psycopg out of PostgreSQL"
+        blurb: "On primitive columns the row path is level with Arrow; on jsonb at 10M rows it is 6.9× slower, because it builds a Python object per value."
+        activity: research
+        tags: [benchmarking, cold-cache-measurement, content-addressing, arrow-adbc, postgresql, python, sql]
+        description: |
+          One question, asked properly: when a client pulls a large result out of PostgreSQL, what does the **transport** cost, separately from the query? Same server, same SQL, trivial `SELECT *` so execution does not dominate — only the client varies: psycopg fetching rows, ADBC over Arrow, connectorx over Arrow. Timed from execute to the result fully materialised in memory.
+
+          **The answer is not "Arrow is faster."** On primitive columns the two paths are level and at 100K rows psycopg is marginally ahead (0.88×). What changes the picture is column type. On `jsonb` at 10 million rows psycopg takes 143 seconds against ADBC's 20.8 — **6.9×** — and on a mixed nested column 165 seconds against 29.9. The row path does not scale because it materialises a Python object per value; Arrow stays linear. The penalty widens with size exactly where that cost lives: jsonb goes 2.70× at 100K, 3.42× at 1M, 6.88× at 10M, while primitives sit at 1.22× throughout.
+
+          The two Arrow clients are close but not interchangeable: ADBC wins `jsonb` at 10M (20.8s vs 35.0s), connectorx wins `int[]` (11.4s vs 12.2s). I shared the results with Ian Cook at Voltron Data, whose Arrow work prompted the question.
+        figures:
+          - src: "assets/transport-row-path-collapse.svg"
+            alt: "Row-path penalty by column type at 100K, 1M and 10M rows: primitives stay near 1x while jsonb reaches 6.88x"
+            caption: "Capsule <code>af6ba593</code>, generated from the capsule's own CSV. psycopg divided by the faster Arrow client. Replication 3, cold cache, Darwin arm64, 16 GB, <code>sqlbenchdag@9105c38</code>."
+        notes:
+          - text: "Exploratory tier, not in the verified published set: two capsules on one machine, replication 3. It is a shape, not a benchmark result to quote against someone else's hardware — compare the ratios, not the seconds."
+          - text: "A day's work, and it leaned on the laboratory already being there. The value is that the harness made a proper cold-cache, sealed, content-addressed run cheap enough to do in an afternoon."
+          - text: "Says nothing about Arrow IPC or Flight as protocols, nor about ADBC drivers in general — one alpha Quack driver was measured separately and is not this result."
+        links:
+          - text: "capsule af6ba593"
+            url: "https://github.com/rctruta/sql-benchmarks-dagster/tree/main/sql_benchmarks/experiments/results/af6ba593"
+          - text: "the experiment config"
+            url: "https://github.com/rctruta/sql-benchmarks-dagster/blob/main/sql_benchmarks/experiments/queue/transport_adbc_scale.yaml"
+      - id: lakehouse-semantics
+        title: "lakehouse-semantics — SQL correctness and engine divergence matrix"
+        activity: built
+        tags: [benchmarking, postgresql, duckdb, sql, python]
+        description: |
+          A suite of 23 correctness probes executed across DuckDB, DuckDB+Delta, PostgreSQL, and Databricks SQL. Rather than timing performance (which varies by serverless hardware allocation), these probes measure **semantic determinism**: integer division, NULL ordering in ASC scans, VARCHAR overflow behavior, and constraint enforcement paths.
+
+          The key finding: Databricks SQL accepts inline `CHECK` constraints in `CREATE TABLE` without enforcing them, while the identical constraint added via `ALTER TABLE ADD CONSTRAINT` is strictly enforced and raises `DELTA_VIOLATE_CONSTRAINT_WITH_VALUES`. A query 20% slower costs money; a query that silently returns different rows across engines costs trust.
+        figures:
+          - src: "assets/lakehouse-semantics-probes.svg"
+            alt: "Seven SQL semantics probes run on DuckDB, PostgreSQL and Databricks SQL, with the engine that disagrees with the other two marked on each row"
+            caption: "Seven of the 23 probes. The marked cell on each row is the engine that disagrees with the other two &mdash; DuckDB on three, Databricks on three, PostgreSQL on one. Strictness reverses by probe: Databricks raises on <code>1/0</code> where DuckDB returns <code>inf</code>, and accepts a duplicate <code>PRIMARY KEY</code> where the others reject it. That last one is <a href=\"https://docs.databricks.com/aws/en/tables/constraints\">documented behaviour</a>, not a discovery &mdash; PK, FK and UNIQUE are informational there. <code>duckdb+delta</code> matched <code>duckdb</code> on all 23, which is the control arm that makes the Databricks column readable."
+        links:
+          - text: "lakehouse-semantics"
+            url: "https://github.com/rctruta/lakehouse-semantics"
+
+  - id: data-engineering
+    title: "Data engineering"
+    summary: "Data modeling is the throughline. Source systems into structures analysts and models can use — migration, entity resolution, record linkage, annotation quality control, and the SQL behaviour underneath it."
+    items:
+      - id: guelph-migration
+        title: "Legacy-to-PostgreSQL migration and record linkage — University of Guelph, 2011–2015"
+        activity: built
+        tags: [data-modeling, entity-resolution, data-quality, migration, postgresql, team-leadership]
+        description: |
+          Sole architect of the migration of a historical research database to PostgreSQL: the data model cut storage by 73%. The result was a production system with researchers as its direct clients — requirements gathering, stakeholder translation, and ongoing support were part of the job, not adjacent to it.
+
+          On top of it, probabilistic record linkage connecting WWI military service records to census data: 97% linkage across 450,000 records at 89% precision. Blocking and scoring were only half the problem; the harder half was validation, so I automated family re-creation to check links against household structure, which raised verification speed fourfold.
+
+          Two properties of that work carry into anything with dirty source data: the ground truth is never handed to you, and a linkage rate means nothing without the precision beside it.
+
+          The coding work was not a solo exercise. I led a team of twenty research assistants doing the manual verification, and built the monitoring that made their work checkable at the level of a single record — one line, in one file, among a great many. The scarce resource was their attention, so the system's job was to spend it only where a disagreement actually existed.
+      - id: name-coding
+        title: "Automating a hand-built name dictionary — first-name standardization across seven censuses"
+        activity: built
+        tags: [data-modeling, metadata-architecture, entity-resolution, evaluation-sets, data-quality, postgresql, python]
+        description: |
+          Historians had been coding first names by hand: each name assigned a three- to five-letter code standing for an equivalence class of spellings. It did not scale, and every new census arrived with a fresh tail of names nobody had seen. I automated it, starting from their 1871 dictionary as the seed.
+
+          The equivalence relation was phonetic and orthographic together — double metaphone for blocking, then minimum Levenshtein distance within the block. A second variant added substring substitution, which is what made French spellings tractable. Two phases: generate candidate codes over a sample of 70,000 strings, then apply the replacement rules to whatever was left. Strings that survived both were reported as unassigned rather than forced.
+
+          The finding that shaped the design: **the expert dictionary contradicted itself.** Two strings sharing a code were not always equivalent under any formal definition, and strings with different codes sometimes were. So instead of emitting one answer, the system emitted several candidates and let the experts choose — and some strings the experts themselves coded more than one way. When the ground truth disagrees with itself, widening the output is more honest than picking a winner.
+
+          Every candidate carried a verdict, good or bad, which made the system measurable. Twenty research assistants did that checking — each code looked at independently by two people, with disagreements adjudicated rather than averaged. **237,203 codes were checked by hand out of a corpus of 1,367,022 strings: 90.96% of them good, 95.29% setting aside a class of special cases.** I checked the other direction too — whether *wrong* codes also sit at minimum distance — since a metric that scores well but cannot discriminate is worth nothing.
+
+          The 17% that needed a person is the number I would defend the design on. Across 63 batches the median was 92.5%, and the spread ran from 97.2% down to 34.0% on one small batch — which is why the aggregate is the honest figure and a range is not.
+
+          The coded names carried forward across the 1852, 1871, 1880, 1881, 1891, 1901 and 1911 censuses, with a full ingest pipeline per census: process, detect inconsistencies, apply coding, prepare for the model downstream.
+      - id: age-modeling
+        title: "Fitting the agreement function for record linkage — age difference across censuses"
+        activity: research
+        tags: [data-modeling, entity-resolution, evaluation-sets, data-quality]
+        description: |
+          Two records ten years apart rarely agree on age. To link them you need a function turning that disagreement into evidence: `ageDiff` mapping an age difference onto a weight between one and zero. I fitted five candidates — normalized by constant factors, by frequency percentage, and by a fast-increasing function — and chose between them on standard deviation against observed frequencies, across five independent datasets and 11,813 records.
+
+          I also tested the received wisdom that women misreport age more often than men. Running the regression separately by gender, the difference was slight: both curves were the same function shifted by about a year. Not two models. One model and an offset — which is the result you only get by checking rather than assuming.
+      - id: police-gazette
+        title: "Getting convict transport records out of OCR — Police Gazette"
+        activity: built
+        tags: [data-modeling, metadata-architecture, data-quality, evaluation-sets]
+        description: |
+          Nineteenth-century Police Gazettes recording prisoners transported to Tasmania, held as OCR'd scans. The data the historians needed was in tables inside those documents, and OCR does not respect a table. I wrote the extraction design: fixed layouts for the two table types, one table per output file, a naming convention tying every file back to its source page, and a separate metadata table holding what is true of a whole file — its description, its row count, who extracted it, who checked it — recorded once instead of repeated on every row.
+
+          My proposal secured the grant to carry out the work: one table per file, so extraction and checking could run independently and be verified in small units, and a metatable recording each file's facts once — including who extracted it, who checked it, and the row count.
+
+          Reading it back in 2026: the metatable is a metadata catalog, the filename scheme is a canonical identifier carrying lineage, and `ExtractedBy` / `CheckedBy` / `RowCount` are a provenance trail. I had none of those words in 2011.
+        links:
+          - text: "The 2011 design document (PDF)"
+            url: "assets/police-gazette-transcripts-2011.pdf"
+      - id: db2-postgres
+        title: "Departmental migration from IBM DB2 to PostgreSQL — University of Toronto"
+        activity: built
+        tags: [migration, postgresql, team-leadership, teaching]
+        description: |
+          Led the Computer Science department's move off DB2: platform evaluation, rewriting the course materials that depended on it, retraining instructors, and supporting students through the change. A migration whose hardest constraint was that several hundred people had to keep working through it.
+      - id: site-infrastructure
+        title: "rctruta.github.io — contract-driven portfolio & validated publishing pipeline"
+        activity: built
+        tags: [data-modeling, metadata-architecture, pre-commit-gates, python, data-contracts]
+        description: |
+          The repository powering this website is built as a data modeling project. Public content lives in YAML and is validated against JSON Schemas before rendering. Unknown fields, missing required values, duplicate IDs and invalid taxonomy references stop the build. A shared taxonomy supplies stable concept IDs, display labels and published anchors to the pages and their index.
+
+          Python generators render the pages, and Pagefind builds search. After generation, checks validate local links, anchors and index membership for each term. Local hooks and CI run declared checks; a privacy guard checks staged content for email addresses, phone numbers and explicit private-file markers. These checks enforce document structure and consistency. They do not independently verify factual claims in prose.
+        links:
+          - text: "rctruta.github.io"
+            url: "https://github.com/rctruta/rctruta.github.io"

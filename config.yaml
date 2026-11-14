@@ -21,7 +21,7 @@ site:
 navigation:
   - id: work
     label: "Work"
-    description: "Database benchmarking, AI security, agent evaluation, system integrity, and retrieval accuracy. Where the work is public, the experiment is attached."
+    description: "AI evaluation, AI security, benchmarking, and data engineering. Where the work is public, the experiment is attached."
     href: "work.html"
     enabled: true
   - id: teaching
