@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../schemas/writing.schema.json
 
+- id: ashby-location-filters
+  title: "Why does a job board show more postings for Toronto than for Canada?"
+  url: https://ramonactruta.substack.com/p/why-does-a-job-board-show-more-postings
+  platform: Substack
+  date: 2026-11-10
+  argues: "In Cohere's public job feed, 38 postings list a location named Canada and 84 have Canada in a listed location's address. The difference matters for what candidates expect a country filter to find."
+  tags: [data-modeling]
+
 - id: readme-falsifiable
   title: "A README is a Set of Falsifiable Claims"
   url: https://ramonactruta.substack.com/p/a-readme-is-a-set-of-falsifiable
