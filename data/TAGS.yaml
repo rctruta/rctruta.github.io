@@ -263,3 +263,11 @@ concepts:
     label: PyPI
     facet: technology
     anchor: pypi
+  javascript:
+    label: JavaScript
+    facet: technology
+    anchor: javascript
+  npm:
+    label: npm
+    facet: technology
+    anchor: npm

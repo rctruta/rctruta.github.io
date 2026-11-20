@@ -356,3 +356,30 @@ sections:
         links:
           - text: "rctruta.github.io"
             url: "https://github.com/rctruta/rctruta.github.io"
+      - id: ashby-location-filter
+        title: "ashby-location-filter — multi-company job search and canonical location filter for Ashby job boards"
+        activity: built
+        tags: [data-modeling, data-quality, python, javascript, npm, mcp]
+        description: |
+          Multi-company job search and canonical location filter for public Ashby job boards, powered by a zero-dependency Unicode CLDR (`Intl.DisplayNames`) normalizer and scope classifier (`global`, `country`, `region`, `metro`), daily GitHub Actions diff tracking, an npm package, and an MCP server.
+
+          Built with Python and JavaScript (ES Modules / Node.js) and published across GitHub Pages, npm, and the official Model Context Protocol registry (stdio MCP server).
+        links:
+          - text: "Live Web App"
+            url: "https://rctruta.github.io/ashby-location-filter/"
+          - text: "GitHub Repo"
+            url: "https://github.com/rctruta/ashby-location-filter"
+          - text: "npm Package"
+            url: "https://www.npmjs.com/package/ashby-location-filter"
+          - text: "Official MCP Registry"
+            url: "https://registry.modelcontextprotocol.io/v0/servers/io.github.rctruta%2Fashby-location-filter/versions/latest"
+          - text: "Why does a job board show more postings for Toronto than for Canada?"
+            url: "https://ramonactruta.substack.com/p/why-does-a-job-board-show-more-postings"
+        notes:
+          - label: "npm package (v0.2.2)"
+            text: "— JavaScript (ES Modules / Node.js) package for canonical location normalization and scope classification."
+            url: "https://www.npmjs.com/package/ashby-location-filter"
+          - label: "MCP server in the official Model Context Protocol registry"
+            text: "— v0.2.2, stdio transport."
+            url: "https://registry.modelcontextprotocol.io/v0/servers/io.github.rctruta%2Fashby-location-filter/versions/latest"
+          - text: "Version 0.2.2. License: Apache-2.0 (code) / CC BY 4.0 (docs & snapshots)."
