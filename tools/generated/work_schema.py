@@ -62,6 +62,9 @@ class Project(BaseModel):
     )
     id: constr(pattern=r'^[a-z0-9]+(?:-[a-z0-9]+)*$', strict=True)
     title: constr(pattern=r'\S', min_length=1, strict=True)
+    short_title: constr(pattern=r'\S', min_length=1, strict=True) = Field(
+        ..., description='Concise label used for the work directory pill navigation.'
+    )
     activity: Literal['built', 'research']
     tags: list[constr(pattern=r'^[a-z0-9]+(?:-[a-z0-9]+)*$', strict=True)] = Field(
         ..., min_length=1

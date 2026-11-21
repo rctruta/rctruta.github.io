@@ -6,6 +6,7 @@ sections:
     items:
       - id: harness-bench
         title: "harness-bench — measuring a deployment before it is a deployment"
+        short_title: "harness-bench"
         blurb: "Parses an agent's tool surface, runs content-addressed study contracts against it, traces every turn and grades deterministically — 16 studies, 7 models, 110+ graded runs."
         activity: built
         tags: [ai-evaluation, deterministic-grading, per-turn-tracing, content-addressing, mcp, python, data-contracts, pre-commit-gates]
@@ -36,6 +37,7 @@ sections:
             url: "https://github.com/rctruta/harness-bench"
       - id: malloy-study
         title: "Do bundled agent skills actually reach the agent? — Malloy Publisher study"
+        short_title: "Malloy Publisher study"
         activity: research
         tags: [ai-evaluation, ablation-study, per-turn-tracing, mcp]
         description: |
@@ -57,6 +59,7 @@ sections:
             url: "https://github.com/rctruta/malloy-publisher-agent-study"
       - id: agent-traces
         title: "Reading agent traces"
+        short_title: "Reading agent traces"
         blurb: "Per-turn agent traces against a commercial lakehouse platform. Surfaced three defects I reported upstream — #369, #370, #371 — including an error message that actively sends an agent in the wrong direction."
         activity: research
         tags: [ai-evaluation, per-turn-tracing, deterministic-grading, python, process-telemetry]
@@ -73,6 +76,7 @@ sections:
             url: "https://github.com/BauplanLabs/bauplan/issues/371"
       - id: agent-telemetry
         title: "agent-telemetry — transcript-derived process metrology for coding agents"
+        short_title: "agent-telemetry"
         activity: built
         tags: [ai-evaluation, process-telemetry, deterministic-grading, python]
         description: |
@@ -84,6 +88,7 @@ sections:
             url: "https://github.com/rctruta/agent-telemetry"
       - id: rag-accuracy
         title: "A RAG system answering 17 of 20 questions its sources couldn't support"
+        short_title: "podcast-rag"
         blurb: "Ask a question about a podcast, get an answer and a link to the exact second someone said it. LanceDB, local-first, no cluster and no API key. Built a labelled eval set and found it answering 17 of 20 questions its sources couldn't support; recalibrated precision 0.56 → 0.87."
         activity: built
         tags: [ai-evaluation, evaluation-sets, python, rag, lancedb]
@@ -100,6 +105,7 @@ sections:
             url: "https://github.com/rctruta/podcast-rag"
       - id: music-recommender
         title: "Music recommendation system — MIT Professional Education capstone"
+        short_title: "Music recommender"
         activity: research
         tags: [ai-evaluation, evaluation-sets, python]
         description: |
@@ -116,6 +122,7 @@ sections:
     items:
       - id: nodes26
         title: "nodes26 — a controlled, reproducible graph memory lab"
+        short_title: "nodes26"
         blurb: "Controlled, reproducible experiments trace a false claim from document to agent answer, then expose a failure in the agent's source-verification tools."
         activity: research
         tags: [ai-security, ai-evaluation, ablation-study, knowledge-graphs, python]
@@ -132,6 +139,7 @@ sections:
             url: "https://github.com/neo4j-labs/agent-memory/issues/392"
       - id: agent-memory
         title: "Semantic injection into agent memory"
+        short_title: "Semantic injection"
         activity: research
         tags: [ai-security, ai-evaluation]
         description: |
@@ -145,6 +153,7 @@ sections:
           - text: "Authorised researcher, Anthropic Cyber Verification Program."
       - id: consensus-contagion
         title: "Consensus Contagion — status bias and the RLHF tax in agent routing"
+        short_title: "Consensus Contagion"
         activity: research
         tags: [ai-evaluation, deterministic-grading, ablation-study, rlhf, data-contracts, ai-security, python]
         description: |
@@ -158,6 +167,7 @@ sections:
           - text: "Experiments varying a protected attribute are held back, with their findings: a single name pair cannot separate a name-specific effect from a systematic one. The published README says so rather than leaving a gap."
       - id: security-testbed
         title: "AI security testbed — semantic privilege escalation under adversarial audit"
+        short_title: "ai-security-testbed"
         activity: research
         tags: [ai-security, ai-evaluation, deterministic-grading, ablation-study, content-addressing, python]
         description: |
@@ -183,6 +193,7 @@ sections:
           - text: "Measurements are dated: they describe the model versions named in each study contract, at the time each study ran. Model behaviour changes; an undated claim about a model ages into a false one."
       - id: agent-tools
         title: "Tools and playbooks for collaborating with coding agents"
+        short_title: "ai-agent-utils"
         blurb: "Boilerplate and security guidelines for collaborating safely with autonomous coding agents, with the gates already enforced rather than written down and hoped for."
         activity: built
         tags: [ai-security, deterministic-grading, python, pre-commit-gates]
@@ -201,6 +212,7 @@ sections:
     items:
       - id: sqlbenchdag
         title: "sqlbenchdag — a reproducible benchmarking laboratory"
+        short_title: "sqlbenchdag"
         activity: built
         tags: [benchmarking, content-addressing, cold-cache-measurement, dagster, duckdb, postgresql, polars, arrow-adbc, python, mcp, sql, data-contracts, pre-commit-gates, pypi]
         description: |
@@ -239,6 +251,7 @@ sections:
             badge_alt: "mcprush listing for SQL Benchmarks Lab MCP server: security A, trust score 94 out of 100"
       - id: sql-behaviour
         title: "SQL behaviour under measurement"
+        short_title: "SQL behaviour"
         activity: research
         tags: [benchmarking, cold-cache-measurement, data-modeling, postgresql, duckdb, sql]
         description: |
@@ -248,6 +261,7 @@ sections:
             url: "https://ramonactruta.substack.com/p/the-pizza-logic-you-didnt-know-you"
       - id: result-transport
         title: "What the connectivity layer costs — ADBC, connectorx and psycopg out of PostgreSQL"
+        short_title: "Result transport (ADBC)"
         blurb: "On primitive columns the row path is level with Arrow; on jsonb at 10M rows it is 6.9× slower, because it builds a Python object per value."
         activity: research
         tags: [benchmarking, cold-cache-measurement, content-addressing, arrow-adbc, postgresql, python, sql]
@@ -272,6 +286,7 @@ sections:
             url: "https://github.com/rctruta/sql-benchmarks-dagster/blob/main/sql_benchmarks/experiments/queue/transport_adbc_scale.yaml"
       - id: lakehouse-semantics
         title: "lakehouse-semantics — SQL correctness and engine divergence matrix"
+        short_title: "lakehouse-semantics"
         activity: built
         tags: [benchmarking, postgresql, duckdb, sql, python]
         description: |
@@ -292,6 +307,7 @@ sections:
     items:
       - id: guelph-migration
         title: "Legacy-to-PostgreSQL migration and record linkage — University of Guelph, 2011–2015"
+        short_title: "Guelph migration"
         activity: built
         tags: [data-modeling, entity-resolution, data-quality, migration, postgresql, team-leadership]
         description: |
@@ -304,6 +320,7 @@ sections:
           The coding work was not a solo exercise. I led a team of twenty research assistants doing the manual verification, and built the monitoring that made their work checkable at the level of a single record — one line, in one file, among a great many. The scarce resource was their attention, so the system's job was to spend it only where a disagreement actually existed.
       - id: name-coding
         title: "Automating a hand-built name dictionary — first-name standardization across seven censuses"
+        short_title: "Name dictionary coding"
         activity: built
         tags: [data-modeling, metadata-architecture, entity-resolution, evaluation-sets, data-quality, postgresql, python]
         description: |
@@ -320,6 +337,7 @@ sections:
           The coded names carried forward across the 1852, 1871, 1880, 1881, 1891, 1901 and 1911 censuses, with a full ingest pipeline per census: process, detect inconsistencies, apply coding, prepare for the model downstream.
       - id: age-modeling
         title: "Fitting the agreement function for record linkage — age difference across censuses"
+        short_title: "Census age modeling"
         activity: research
         tags: [data-modeling, entity-resolution, evaluation-sets, data-quality]
         description: |
@@ -328,6 +346,7 @@ sections:
           I also tested the received wisdom that women misreport age more often than men. Running the regression separately by gender, the difference was slight: both curves were the same function shifted by about a year. Not two models. One model and an offset — which is the result you only get by checking rather than assuming.
       - id: police-gazette
         title: "Getting convict transport records out of OCR — Police Gazette"
+        short_title: "Police Gazette OCR"
         activity: built
         tags: [data-modeling, metadata-architecture, data-quality, evaluation-sets]
         description: |
@@ -341,12 +360,14 @@ sections:
             url: "assets/police-gazette-transcripts-2011.pdf"
       - id: db2-postgres
         title: "Departmental migration from IBM DB2 to PostgreSQL — University of Toronto"
+        short_title: "DB2 → PostgreSQL"
         activity: built
         tags: [migration, postgresql, team-leadership, teaching]
         description: |
           Led the Computer Science department's move off DB2: platform evaluation, rewriting the course materials that depended on it, retraining instructors, and supporting students through the change. A migration whose hardest constraint was that several hundred people had to keep working through it.
       - id: site-infrastructure
         title: "rctruta.github.io — contract-driven portfolio & validated publishing pipeline"
+        short_title: "rctruta.github.io"
         activity: built
         tags: [data-modeling, metadata-architecture, pre-commit-gates, python, data-contracts]
         description: |
@@ -358,6 +379,7 @@ sections:
             url: "https://github.com/rctruta/rctruta.github.io"
       - id: ashby-location-filter
         title: "ashby-location-filter — multi-company job search and canonical location filter for Ashby job boards"
+        short_title: "ashby-location-filter"
         activity: built
         tags: [data-modeling, data-quality, python, javascript, npm, mcp]
         description: |
@@ -365,7 +387,7 @@ sections:
 
           Built with Python and JavaScript (ES Modules / Node.js) and published across GitHub Pages, npm, and the official Model Context Protocol registry (stdio MCP server).
         links:
-          - text: "Live Web App"
+          - text: "Live Demo"
             url: "https://rctruta.github.io/ashby-location-filter/"
           - text: "GitHub Repo"
             url: "https://github.com/rctruta/ashby-location-filter"
@@ -376,10 +398,12 @@ sections:
           - text: "Why does a job board show more postings for Toronto than for Canada?"
             url: "https://ramonactruta.substack.com/p/why-does-a-job-board-show-more-postings"
         notes:
-          - label: "npm package (v0.2.2)"
+          - label: "npm package"
             text: "— JavaScript (ES Modules / Node.js) package for canonical location normalization and scope classification."
             url: "https://www.npmjs.com/package/ashby-location-filter"
           - label: "MCP server in the official Model Context Protocol registry"
-            text: "— v0.2.2, stdio transport."
+            text: "— stdio transport."
             url: "https://registry.modelcontextprotocol.io/v0/servers/io.github.rctruta%2Fashby-location-filter/versions/latest"
-          - text: "Version 0.2.2. License: Apache-2.0 (code) / CC BY 4.0 (docs & snapshots)."
+          - label: "MCP server published in mcprush"
+            text: "— stdio transport."
+            url: "https://mcprush.com/to/ashby-location-filter-mcp-2"

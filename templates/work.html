@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
+<section id="top" data-pagefind-ignore><div class="wrap">
+  {% for sec in sections %}
+  <div class="chipgroup"><a href="#{{ sec.id }}">{{ sec.title }}</a></div>
+  <div class="chiprow">
+    {% for item in sec.items %}
+    <a class="chip" href="#{{ item.id }}">{{ item.short_title }}</a>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div></section>
 {% for sec in sections %}
 <section><div class="wrap">
   <h2 id="{{ sec.id }}">{{ sec.title }}</h2>
