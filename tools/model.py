@@ -83,6 +83,11 @@ def load_work_sections(vocab):
     return document.sections
 
 
+def load_upstream_issues():
+    document = PortfolioWorkDocument.model_validate(content_document('work'))
+    return document.upstream_issues or []
+
+
 def load_articles(vocab):
     document = PortfolioWritingDocument.model_validate(content_document('writing'))
     return sorted(document.root, key=lambda a: a.date, reverse=True)

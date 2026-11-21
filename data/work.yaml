@@ -407,3 +407,44 @@ sections:
           - label: "MCP server published in mcprush"
             text: "— stdio transport."
             url: "https://mcprush.com/to/ashby-location-filter-mcp-2"
+
+upstream_issues:
+  - repo: neo4j-labs/agent-memory
+    number: 392
+    title: 'pydantic_ai tools: `search_memory` omits entity IDs, and `get_entity_provenance` returns "Sources (0)" for an unknown ID'
+    url: https://github.com/neo4j-labs/agent-memory/issues/392
+    date: "2026-11-12"
+    state: open
+    work_id: nodes26
+  - repo: BauplanLabs/bauplan
+    number: 371
+    title: '`pysdk`: no way to diff two refs — git-for-data without `git diff`'
+    url: https://github.com/BauplanLabs/bauplan/issues/371
+    date: "2026-07-26"
+    state: closed
+    closed_date: "2026-07-29"
+    work_id: agent-traces
+  - repo: BauplanLabs/bauplan
+    number: 370
+    title: 'query: unknown-function suggestions are unrelated to the input and mislead agents (`date` → `tanh`)'
+    url: https://github.com/BauplanLabs/bauplan/issues/370
+    date: "2026-07-26"
+    state: closed
+    closed_date: "2026-07-29"
+    work_id: agent-traces
+  - repo: BauplanLabs/bauplan
+    number: 369
+    title: '`pysdk: client.run()` project-file parse errors carry no diagnostic detail'
+    url: https://github.com/BauplanLabs/bauplan/issues/369
+    date: "2026-07-26"
+    state: closed
+    closed_date: "2026-07-29"
+    work_id: agent-traces
+  - repo: anthropics/claude-code
+    number: 43675
+    title: '[DOCS] `~/.claude/` directory is undocumented — community deep dive available for incorporation'
+    url: https://github.com/anthropics/claude-code/issues/43675
+    date: "2026-04-04"
+    state: closed
+    closed_date: "2026-04-07"
+    work_id: agent-memory

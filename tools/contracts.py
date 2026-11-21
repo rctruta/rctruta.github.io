@@ -137,7 +137,7 @@ def validate_reference(url, source, path, external_only=False):
 def validate_records(name, data, taxonomy):
     source = f'data/{name}.yaml'
     reserved = {
-        'work': {'top'},
+        'work': {'top', 'upstream-issues'},
         'teaching': {'top', 'philosophy', 'leading', 'product', 'testimonials', 'assignment', 'courses', 'education', 'service'},
         'appearances': {'top', 'talks', 'podcasts', 'guest-host', 'as-guest'},
         'writing': {'top'},
@@ -180,6 +180,14 @@ def validate_records(name, data, taxonomy):
             validate_reference(recognition['url'], source, path + '.recognition', external_only=True)
             if 'badge' in recognition:
                 validate_reference(recognition['badge'], source, path + '.badge', external_only=True)
+    if name == 'work':
+        project_ids = {record['id'] for record in records}
+        for i, issue in enumerate(data.get('upstream_issues', [])):
+            path = f'upstream_issues[{i}] ({issue["repo"]}#{issue["number"]})'
+            validate_reference(issue['url'], source, path + '.url', external_only=True)
+            work_id = issue.get('work_id')
+            if work_id is not None and work_id not in project_ids:
+                fail(source, path + '.work_id', f'unknown work ID {work_id!r}')
     return data
 
 

@@ -11,6 +11,13 @@
         "$ref": "#/$defs/section"
       },
       "minItems": 1
+    },
+    "upstream_issues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/upstream_issue"
+      },
+      "minItems": 0
     }
   },
   "required": [
@@ -286,6 +293,57 @@
           "badge"
         ]
       }
+    },
+    "upstream_issue": {
+      "type": "object",
+      "properties": {
+        "repo": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+        },
+        "number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "open",
+            "closed"
+          ]
+        },
+        "closed_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "work_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        }
+      },
+      "required": [
+        "repo",
+        "number",
+        "title",
+        "url",
+        "date",
+        "state"
+      ],
+      "additionalProperties": false
     }
   }
 }
