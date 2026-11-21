@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, constr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, conint, constr
 
 
 class Link(BaseModel):
@@ -56,6 +56,20 @@ class Recognition(BaseModel):
     badge_alt: constr(pattern=r'\S', min_length=1, strict=True) | None = None
 
 
+class UpstreamIssue(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    repo: constr(pattern=r'^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$', strict=True)
+    number: conint(ge=1, strict=True)
+    title: constr(pattern=r'\S', min_length=1, strict=True)
+    url: constr(pattern=r'\S', min_length=1, strict=True)
+    date: StrictStr
+    state: Literal['open', 'closed']
+    closed_date: StrictStr | None = None
+    work_id: constr(pattern=r'^[a-z0-9]+(?:-[a-z0-9]+)*$', strict=True) | None = None
+
+
 class Project(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -97,3 +111,4 @@ class PortfolioWorkDocument(BaseModel):
         extra='forbid',
     )
     sections: list[Section] = Field(..., min_length=1)
+    upstream_issues: list[UpstreamIssue] | None = Field(None, min_length=0)

@@ -176,6 +176,12 @@ class TestContracts(unittest.TestCase):
         with self.assertRaises(UndefinedError):
             env.from_string('{{ missing_contract_field }}').render()
 
+    def test_upstream_issue_unknown_work_id_rejected(self):
+        data = read_document('work')
+        data['upstream_issues'][0]['work_id'] = 'nonexistent-work-item'
+        with self.assertRaisesRegex(ContractError, 'unknown work ID'):
+            validate_records('work', data, self.taxonomy)
+
 
 if __name__ == '__main__':
     unittest.main()

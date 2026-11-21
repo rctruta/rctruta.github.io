@@ -10,6 +10,9 @@
     {% endfor %}
   </div>
   {% endfor %}
+  {% if upstream_issues %}
+  <div class="chipgroup"><a href="#upstream-issues">Upstream issues</a></div>
+  {% endif %}
 </div></section>
 {% for sec in sections %}
 <section><div class="wrap">
@@ -67,4 +70,23 @@
   <p class="totop"><a href="#top">&uarr; Top</a></p>
 </div></section>
 {% endfor %}
+{% if upstream_issues %}
+<section><div class="wrap">
+  <h2 id="upstream-issues">Upstream issues</h2>
+  <p class="sub small cat-note">Bug reports, DX findings and documentation gaps filed on external repositories during empirical work.</p>
+  <ul class="clean">
+    {% for issue in upstream_issues %}
+    <li>
+      <span class="when">{{ issue.date }}</span>
+      <span class="what">
+        <a href="{{ issue.url }}" target="_blank" rel="noopener">{{ issue.repo }} #{{ issue.number }}</a>
+        &mdash; {{ issue.title|format_inline|safe }}
+        <span class="meta">{% if issue.state == 'closed' and issue.closed_date %}closed {{ issue.closed_date }}{% else %}{{ issue.state }}{% endif %}{% if issue.work_id %} &middot; <a href="#{{ issue.work_id }}">{{ work_short_titles[issue.work_id] }}</a>{% endif %}</span>
+      </span>
+    </li>
+    {% endfor %}
+  </ul>
+  <p class="totop"><a href="#top">&uarr; Top</a></p>
+</div></section>
+{% endif %}
 {% endblock %}
