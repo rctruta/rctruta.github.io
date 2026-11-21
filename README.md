@@ -1,5 +1,12 @@
 # Contract-driven static portfolio
 
+[![site CI](https://github.com/rctruta/rctruta.github.io/actions/workflows/test.yaml/badge.svg?branch=main)](https://github.com/rctruta/rctruta.github.io/actions/workflows/test.yaml)
+[![Live site](https://img.shields.io/badge/site-live-brightgreen)](https://ramonactruta.com)
+[![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue)](https://www.python.org/)
+[![JSON Schema 2020-12](https://img.shields.io/badge/JSON%20Schema-2020--12-blue)](docs/contracts.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-purple)](LICENSE)
+[![Content license: CC BY-NC-SA 4.0](https://img.shields.io/badge/content-CC%20BY--NC--SA%204.0-purple)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
 A static portfolio generated from public YAML documents and governed by portable JSON Schemas. Work, teaching, writing and appearances share a controlled taxonomy and a validated index projection.
 
 ## Local setup
