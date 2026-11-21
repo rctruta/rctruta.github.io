@@ -409,6 +409,12 @@ sections:
             url: "https://mcprush.com/to/ashby-location-filter-mcp-2"
 
 upstream_issues:
+  - repo: InfluxCommunity/influxdb3-python
+    number: 257
+    title: 'Contributing setup: install fails in `zsh`, integration tests skip silently, setup script unusable outside CircleCI'
+    url: https://github.com/InfluxCommunity/influxdb3-python/issues/257
+    date: "2026-11-21"
+    state: open
   - repo: neo4j-labs/agent-memory
     number: 392
     title: 'pydantic_ai tools: `search_memory` omits entity IDs, and `get_entity_provenance` returns "Sources (0)" for an unknown ID'
