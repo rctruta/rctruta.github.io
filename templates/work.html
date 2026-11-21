@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section id="top" data-pagefind-ignore><div class="wrap">
+<section id="top" class="work-dir" data-pagefind-ignore><div class="wrap">
   {% for sec in sections %}
-  <div class="chipgroup"><a href="#{{ sec.id }}">{{ sec.title }}</a></div>
-  <div class="chiprow">
+  <div class="chipgroup"><a href="#{{ sec.id }}" data-tip="{{ section_tips[sec.id] }}">{{ sec.title }}</a></div>
+  <div class="chiprow" data-cat="{{ sec.id }}">
     {% for item in sec.items %}
     <a class="chip" href="#{{ item.id }}">{{ item.short_title }}</a>
     {% endfor %}
   </div>
   {% endfor %}
   {% if upstream_issues %}
-  <div class="chipgroup"><a href="#upstream-issues">Upstream issues</a></div>
+  <div class="chipgroup"><a href="#upstream-issues" data-tip="Bug reports, DX findings and documentation gaps filed on external repositories during empirical work.">Upstream issues</a></div>
   {% endif %}
 </div></section>
 {% for sec in sections %}
