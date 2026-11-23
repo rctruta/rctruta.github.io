@@ -408,6 +408,13 @@
     <h3>Tools and playbooks for collaborating with coding agents</h3>
     <p><strong>ai-agent-utils</strong> &mdash; a bootstrap that starts a repository with gates already enforced, rather than rules written down and hoped for. Two families: git discipline, and claim integrity &mdash; every load-bearing number registered with a source and re-checked before commit, fabricated claims blocked by pattern, and a checkpoint that refuses to record a working state unless a proof command passes. Enforcement is git hooks and stdlib scripts, so it binds whichever agent is driving; the Claude and Cursor files only describe it. <strong>The Pedantic Medallion</strong> &mdash; community-curated playbooks for building shared understanding, from the framework of the same name.</p>
     
+      
+    <figure>
+      <img src="assets/gates-architecture.svg" alt="Two-layer enforcement architecture for ai-agent-utils: Workspace with external scratch symlink flows through Layer 1 local git hooks (pre-commit and pre-push) and Layer 2 remote CI and branch protection to the protected main branch">
+      <figcaption>Two-layer guardrail architecture in <code>ai-agent-utils</code>: local <code>.githooks/pre-commit</code> and <code>pre-push</code> gates refuse secrets, home paths, hardcoded duplicates, and claim drift before push; SHA-pinned, cached GitHub Actions CI and branch protection act as an unbypassable backstop on <code>main</code>, while <code>scratch/</code> stays symlinked outside Git.</figcaption>
+    </figure>
+      
+    
 
     <div class="tags">
       
