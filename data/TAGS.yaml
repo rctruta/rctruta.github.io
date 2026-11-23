@@ -271,3 +271,11 @@ concepts:
     label: npm
     facet: technology
     anchor: npm
+  rust:
+    label: Rust
+    facet: technology
+    anchor: rust
+  datafusion:
+    label: DataFusion
+    facet: technology
+    anchor: datafusion

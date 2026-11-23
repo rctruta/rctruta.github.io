@@ -68,6 +68,8 @@ class UpstreamIssue(BaseModel):
     state: Literal['open', 'closed']
     closed_date: StrictStr | None = None
     work_id: constr(pattern=r'^[a-z0-9]+(?:-[a-z0-9]+)*$', strict=True) | None = None
+    pr_number: conint(ge=1, strict=True) | None = None
+    pr_url: constr(pattern=r'\S', min_length=1, strict=True) | None = None
 
 
 class Project(BaseModel):

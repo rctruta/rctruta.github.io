@@ -333,6 +333,15 @@
         "work_id": {
           "type": "string",
           "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "pr_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "pr_url": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
         }
       },
       "required": [
@@ -343,6 +352,14 @@
         "date",
         "state"
       ],
+      "dependentRequired": {
+        "pr_number": [
+          "pr_url"
+        ],
+        "pr_url": [
+          "pr_number"
+        ]
+      },
       "additionalProperties": false
     }
   }

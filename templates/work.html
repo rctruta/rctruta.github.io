@@ -81,7 +81,7 @@
       <span class="what">
         <a href="{{ issue.url }}" target="_blank" rel="noopener">{{ issue.repo }} #{{ issue.number }}</a>
         &mdash; {{ issue.title|format_inline|safe }}
-        <span class="meta">{% if issue.state == 'closed' and issue.closed_date %}closed {{ issue.closed_date }}{% else %}{{ issue.state }}{% endif %}{% if issue.work_id %} &middot; <a href="#{{ issue.work_id }}">{{ work_short_titles[issue.work_id] }}</a>{% endif %}</span>
+        <span class="meta">{% if issue.state == 'closed' and issue.closed_date %}closed {{ issue.closed_date }}{% else %}{{ issue.state }}{% endif %}{% if issue.pr_url and issue.pr_number %} &middot; <a href="{{ issue.pr_url }}" target="_blank" rel="noopener">PR #{{ issue.pr_number }}</a>{% endif %}{% if issue.work_id %} &middot; <a href="#{{ issue.work_id }}">{{ work_short_titles[issue.work_id] }}</a>{% endif %}</span>
       </span>
     </li>
     {% endfor %}

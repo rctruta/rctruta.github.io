@@ -410,6 +410,15 @@ sections:
           Led the Computer Science department's move off DB2: platform evaluation, rewriting the course materials that depended on it, retraining instructors, and supporting students through the change. A migration whose hardest constraint was that several hundred people had to keep working through it.
 
 upstream_issues:
+  - repo: apache/datafusion
+    number: 27673
+    title: '`suggest_valid_function` is non-deterministic and has no edit-distance threshold'
+    url: https://github.com/apache/datafusion/issues/27673
+    date: "2026-11-23"
+    state: open
+    pr_number: 27674
+    pr_url: https://github.com/apache/datafusion/pull/27674
+    work_id: agent-traces
   - repo: InfluxCommunity/influxdb3-python
     number: 257
     title: 'Contributing setup: install fails in `zsh`, integration tests skip silently, setup script unusable outside CircleCI'
