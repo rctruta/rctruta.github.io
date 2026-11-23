@@ -184,6 +184,10 @@ def validate_records(name, data, taxonomy):
         project_ids = {record['id'] for record in records}
         for i, issue in enumerate(data.get('upstream_issues', [])):
             path = f'upstream_issues[{i}] ({issue["repo"]}#{issue["number"]})'
+            if issue['id'] in seen:
+                fail(source, path, 'duplicate/reserved ID')
+            seen.add(issue['id'])
+            validate_tags(issue, taxonomy, source, path)
             validate_reference(issue['url'], source, path + '.url', external_only=True)
             if 'pr_url' in issue:
                 validate_reference(issue['pr_url'], source, path + '.pr_url', external_only=True)
@@ -222,9 +226,14 @@ def index_records():
                         'title':item['title'], 'tags':item['tags'],
                         'date':item.get('date')})
 
-    for section in content_document('work')['sections']:
+    work = content_document('work')
+    for section in work['sections']:
         for item in section['items']:
             add(item, 'project', 'work.html')
+    for issue in work.get('upstream_issues', []):
+        pr_part = f" (PR #{issue['pr_number']})" if issue.get('pr_number') else ''
+        label = f"{issue['repo']} #{issue['number']}{pr_part} — {issue['title']}"
+        add({**issue, 'title': label}, 'upstream', 'work.html')
     teaching = content_document('teaching')
     for item in [teaching['leading'], teaching['product']]:
         add(item, 'teaching', 'teaching.html')

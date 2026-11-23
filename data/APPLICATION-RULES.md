@@ -33,6 +33,7 @@ Every item across the site belongs to an explicit content `kind`, mapped to a to
 | `talk` | `Speaking` | Conference presentations, keynotes, or workshops |
 | `course material` | `Teaching` | Handouts, assignments, or worked code examples |
 | `teaching` | `Teaching` | Course offerings or curriculum design |
+| `upstream` | `Upstream` | Upstream bug reports, DX findings, and pull requests on external repositories |
 <!-- kinds:end -->
 
 ## Index Facets & Lexicographical Ordering

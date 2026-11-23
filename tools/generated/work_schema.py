@@ -60,6 +60,7 @@ class UpstreamIssue(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
+    id: constr(pattern=r'^[a-z0-9]+(?:-[a-z0-9]+)*$', strict=True)
     repo: constr(pattern=r'^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$', strict=True)
     number: conint(ge=1, strict=True)
     title: constr(pattern=r'\S', min_length=1, strict=True)
@@ -67,6 +68,9 @@ class UpstreamIssue(BaseModel):
     date: StrictStr
     state: Literal['open', 'closed']
     closed_date: StrictStr | None = None
+    tags: list[constr(pattern=r'^[a-z0-9]+(?:-[a-z0-9]+)*$', strict=True)] = Field(
+        ..., min_length=1
+    )
     work_id: constr(pattern=r'^[a-z0-9]+(?:-[a-z0-9]+)*$', strict=True) | None = None
     pr_number: conint(ge=1, strict=True) | None = None
     pr_url: constr(pattern=r'\S', min_length=1, strict=True) | None = None

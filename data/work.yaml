@@ -410,57 +410,71 @@ sections:
           Led the Computer Science department's move off DB2: platform evaluation, rewriting the course materials that depended on it, retraining instructors, and supporting students through the change. A migration whose hardest constraint was that several hundred people had to keep working through it.
 
 upstream_issues:
-  - repo: apache/datafusion
+  - id: issue-datafusion-27673
+    repo: apache/datafusion
     number: 27673
     title: '`suggest_valid_function` is non-deterministic and has no edit-distance threshold'
     url: https://github.com/apache/datafusion/issues/27673
     date: "2026-11-23"
     state: open
+    tags: [datafusion, rust, sql, ai-evaluation]
     pr_number: 27674
     pr_url: https://github.com/apache/datafusion/pull/27674
     work_id: agent-traces
-  - repo: InfluxCommunity/influxdb3-python
+  - id: issue-influxdb3-257
+    repo: InfluxCommunity/influxdb3-python
     number: 257
     title: 'Contributing setup: install fails in `zsh`, integration tests skip silently, setup script unusable outside CircleCI'
     url: https://github.com/InfluxCommunity/influxdb3-python/issues/257
     date: "2026-11-21"
     state: open
-  - repo: neo4j-labs/agent-memory
+    tags: [datafusion, python]
+  - id: issue-neo4j-392
+    repo: neo4j-labs/agent-memory
     number: 392
     title: 'pydantic_ai tools: `search_memory` omits entity IDs, and `get_entity_provenance` returns "Sources (0)" for an unknown ID'
     url: https://github.com/neo4j-labs/agent-memory/issues/392
     date: "2026-11-12"
     state: open
+    tags: [ai-security, ai-evaluation, knowledge-graphs, python]
     work_id: nodes26
-  - repo: BauplanLabs/bauplan
+  - id: issue-bauplan-371
+    repo: BauplanLabs/bauplan
     number: 371
     title: '`pysdk`: no way to diff two refs — git-for-data without `git diff`'
     url: https://github.com/BauplanLabs/bauplan/issues/371
     date: "2026-07-26"
     state: closed
     closed_date: "2026-07-29"
+    tags: [ai-evaluation, per-turn-tracing, python]
     work_id: agent-traces
-  - repo: BauplanLabs/bauplan
+  - id: issue-bauplan-370
+    repo: BauplanLabs/bauplan
     number: 370
     title: 'query: unknown-function suggestions are unrelated to the input and mislead agents (`date` → `tanh`)'
     url: https://github.com/BauplanLabs/bauplan/issues/370
     date: "2026-07-26"
     state: closed
     closed_date: "2026-07-29"
+    tags: [ai-evaluation, per-turn-tracing, datafusion, sql]
     work_id: agent-traces
-  - repo: BauplanLabs/bauplan
+  - id: issue-bauplan-369
+    repo: BauplanLabs/bauplan
     number: 369
     title: '`pysdk: client.run()` project-file parse errors carry no diagnostic detail'
     url: https://github.com/BauplanLabs/bauplan/issues/369
     date: "2026-07-26"
     state: closed
     closed_date: "2026-07-29"
+    tags: [ai-evaluation, per-turn-tracing, python]
     work_id: agent-traces
-  - repo: anthropics/claude-code
+  - id: issue-claude-code-43675
+    repo: anthropics/claude-code
     number: 43675
     title: '[DOCS] `~/.claude/` directory is undocumented — community deep dive available for incorporation'
     url: https://github.com/anthropics/claude-code/issues/43675
     date: "2026-04-04"
     state: closed
     closed_date: "2026-04-07"
+    tags: [ai-security]
     work_id: agent-memory
