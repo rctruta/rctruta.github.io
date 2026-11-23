@@ -185,6 +185,8 @@ def validate_records(name, data, taxonomy):
         for i, issue in enumerate(data.get('upstream_issues', [])):
             path = f'upstream_issues[{i}] ({issue["repo"]}#{issue["number"]})'
             validate_reference(issue['url'], source, path + '.url', external_only=True)
+            if 'pr_url' in issue:
+                validate_reference(issue['pr_url'], source, path + '.pr_url', external_only=True)
             work_id = issue.get('work_id')
             if work_id is not None and work_id not in project_ids:
                 fail(source, path + '.work_id', f'unknown work ID {work_id!r}')
