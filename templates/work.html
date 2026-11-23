@@ -76,7 +76,7 @@
   <p class="sub small cat-note">Bug reports, DX findings and documentation gaps filed on external repositories during empirical work.</p>
   <ul class="clean">
     {% for issue in upstream_issues %}
-    <li>
+    <li id="{{ issue.id }}">
       <span class="when">{{ issue.date }}</span>
       <span class="what">
         <a href="{{ issue.url }}" target="_blank" rel="noopener">{{ issue.repo }} #{{ issue.number }}</a>

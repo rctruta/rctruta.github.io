@@ -41,7 +41,7 @@ def entries(items):
     for cat in CATEGORY_ORDER:
         if cat in groups:
             group_items = groups[cat]
-            if cat in {"Writing", "Speaking"}:
+            if cat in {"Writing", "Speaking", "Upstream"}:
                 group_items = sorted(group_items, key=lambda e: e[4], reverse=True)
             item_html = "\n".join(
                 f'      <li><span class="what"><a href="{pg}#{pid}">{html.escape(title)}</a></span></li>'

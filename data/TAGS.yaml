@@ -39,6 +39,10 @@ kinds:
     category: Teaching
     note: Handouts, assignments, or worked code examples
     order: 4
+  upstream:
+    category: Upstream
+    note: Upstream bug reports, DX findings, and pull requests on external repositories
+    order: 5
 concepts:
   data-modeling:
     label: Data modeling
