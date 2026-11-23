@@ -411,6 +411,7 @@ sections:
 
 upstream_issues:
   - id: issue-datafusion-27673
+    org: Apache DataFusion
     repo: apache/datafusion
     number: 27673
     title: '`suggest_valid_function` is non-deterministic and has no edit-distance threshold'
@@ -422,6 +423,7 @@ upstream_issues:
     pr_url: https://github.com/apache/datafusion/pull/27674
     work_id: agent-traces
   - id: issue-influxdb3-257
+    org: InfluxData
     repo: InfluxCommunity/influxdb3-python
     number: 257
     title: 'Contributing setup: install fails in `zsh`, integration tests skip silently, setup script unusable outside CircleCI'
@@ -430,6 +432,7 @@ upstream_issues:
     state: open
     tags: [datafusion, python]
   - id: issue-neo4j-392
+    org: Neo4j
     repo: neo4j-labs/agent-memory
     number: 392
     title: 'pydantic_ai tools: `search_memory` omits entity IDs, and `get_entity_provenance` returns "Sources (0)" for an unknown ID'
@@ -439,6 +442,7 @@ upstream_issues:
     tags: [ai-security, ai-evaluation, knowledge-graphs, python]
     work_id: nodes26
   - id: issue-bauplan-371
+    org: Bauplan
     repo: BauplanLabs/bauplan
     number: 371
     title: '`pysdk`: no way to diff two refs — git-for-data without `git diff`'
@@ -449,6 +453,7 @@ upstream_issues:
     tags: [ai-evaluation, per-turn-tracing, python]
     work_id: agent-traces
   - id: issue-bauplan-370
+    org: Bauplan
     repo: BauplanLabs/bauplan
     number: 370
     title: 'query: unknown-function suggestions are unrelated to the input and mislead agents (`date` → `tanh`)'
@@ -459,6 +464,7 @@ upstream_issues:
     tags: [ai-evaluation, per-turn-tracing, datafusion, sql]
     work_id: agent-traces
   - id: issue-bauplan-369
+    org: Bauplan
     repo: BauplanLabs/bauplan
     number: 369
     title: '`pysdk: client.run()` project-file parse errors carry no diagnostic detail'
@@ -469,6 +475,7 @@ upstream_issues:
     tags: [ai-evaluation, per-turn-tracing, python]
     work_id: agent-traces
   - id: issue-claude-code-43675
+    org: Anthropic
     repo: anthropics/claude-code
     number: 43675
     title: '[DOCS] `~/.claude/` directory is undocumented — community deep dive available for incorporation'

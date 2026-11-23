@@ -301,6 +301,12 @@
           "type": "string",
           "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
         },
+        "org": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S",
+          "description": "Organization or project name displayed as a pill in the work directory."
+        },
         "repo": {
           "type": "string",
           "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
@@ -359,6 +365,7 @@
       },
       "required": [
         "id",
+        "org",
         "repo",
         "number",
         "title",

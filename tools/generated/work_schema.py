@@ -61,6 +61,10 @@ class UpstreamIssue(BaseModel):
         extra='forbid',
     )
     id: constr(pattern=r'^[a-z0-9]+(?:-[a-z0-9]+)*$', strict=True)
+    org: constr(pattern=r'\S', min_length=1, strict=True) = Field(
+        ...,
+        description='Organization or project name displayed as a pill in the work directory.',
+    )
     repo: constr(pattern=r'^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$', strict=True)
     number: conint(ge=1, strict=True)
     title: constr(pattern=r'\S', min_length=1, strict=True)

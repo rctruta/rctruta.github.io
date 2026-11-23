@@ -9,6 +9,12 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 vocab = load_taxonomy()
 sections = load_work_sections(vocab)
 upstream_issues = load_upstream_issues()
+upstream_orgs = []
+seen_orgs = set()
+for issue in upstream_issues:
+    if issue.org not in seen_orgs:
+        seen_orgs.add(issue.org)
+        upstream_orgs.append((issue.org, issue.id))
 work_short_titles = {item.id: item.short_title for sec in sections for item in sec.items}
 section_tips = {
     sec.id: re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", sec.summary).strip()
@@ -24,6 +30,7 @@ doc = render_template(
     subnav_html=None,
     sections=sections,
     upstream_issues=upstream_issues,
+    upstream_orgs=upstream_orgs,
     work_short_titles=work_short_titles,
     section_tips=section_tips
 )

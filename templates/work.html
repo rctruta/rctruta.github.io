@@ -12,6 +12,11 @@
   {% endfor %}
   {% if upstream_issues %}
   <div class="chipgroup"><a href="#upstream-issues" data-tip="Bug reports, DX findings and documentation gaps filed on external repositories during empirical work.">Upstream issues</a></div>
+  <div class="chiprow" data-cat="upstream-issues">
+    {% for org, anchor_id in upstream_orgs %}
+    <a class="chip" href="#{{ anchor_id }}">{{ org }}</a>
+    {% endfor %}
+  </div>
   {% endif %}
 </div></section>
 {% for sec in sections %}

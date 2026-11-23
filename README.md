@@ -2,6 +2,7 @@
 
 [![site CI](https://github.com/rctruta/rctruta.github.io/actions/workflows/test.yaml/badge.svg?branch=main)](https://github.com/rctruta/rctruta.github.io/actions/workflows/test.yaml)
 [![Live site](https://img.shields.io/badge/site-live-brightgreen)](https://ramonactruta.com)
+[![Last commit](https://img.shields.io/github/last-commit/rctruta/rctruta.github.io)](https://github.com/rctruta/rctruta.github.io/commits/main)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue)](https://www.python.org/)
 [![JSON Schema 2020-12](https://img.shields.io/badge/JSON%20Schema-2020--12-blue)](docs/contracts.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple)](LICENSE)
